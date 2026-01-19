@@ -1,43 +1,21 @@
-using System;
-using System.Collections;
-using UnityEngine;
-using UnityEngine.Windows;
+using UnityEngine.InputSystem;
 
-public class MenuInputHandler : MonoBehaviour
+public class MenuInputHandler : InputHandler
 {
-    private GameInput m_input;
-    private InputManager m_inputManager;
-    private SceneManager m_sceneManager;
-
-    private void OnEnable()
+    protected override void BindEvents()
     {
-        if(m_sceneManager == null)
-        {
-            m_sceneManager = SceneManager.Instance;
-        }
-
-        if (m_inputManager == null)
-        {
-            m_inputManager = InputManager.Instance;
-        }
-
-        if (m_input == null)
-        {
-            m_input = m_inputManager.InputActions;
-        }
-
         m_input.Menu.CloseMenu.performed += OnCloseMenu;
         m_inputManager.SetToMenuInputs();
     }
 
-    private void OnDisable()
+    protected override void UnBindEvents()
     {
         m_input.Menu.CloseMenu.performed -= OnCloseMenu;
         m_inputManager.SetToPlayerInputs();
     }
 
-    private void OnCloseMenu(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    private void OnCloseMenu(InputAction.CallbackContext context)
     {
-        m_sceneManager.UnloadScene(Scenes.Menu);
+        SceneManager.Instance.UnloadScene(Scenes.Menu);
     }
 }

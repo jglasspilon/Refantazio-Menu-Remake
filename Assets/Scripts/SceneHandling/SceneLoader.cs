@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneLoader : MonoBehaviour
+public abstract class SceneLoader : MonoBehaviour
 {
     [SerializeField]
     private Scenes m_sceneName;
@@ -13,13 +12,6 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(Load());
     }
 
-    public virtual IEnumerator Load()
-    {
-        yield break;
-    }
-
-    public virtual IEnumerator Unload()
-    {
-        yield break;
-    }
+    public abstract IEnumerator Load();
+    public abstract IEnumerator Unload();
 }
