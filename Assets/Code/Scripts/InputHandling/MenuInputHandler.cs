@@ -34,6 +34,6 @@ public class MenuInputHandler : InputHandler
 
     private void OnCloseMenu(InputAction.CallbackContext context)
     {
-        m_menu.Close();
+        m_menu.Back();
     }
 }

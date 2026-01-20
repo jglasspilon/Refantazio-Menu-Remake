@@ -1,5 +1,6 @@
+using Cysharp.Threading.Tasks;
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuPage : MonoBehaviour
@@ -12,32 +13,56 @@ public class MenuPage : MonoBehaviour
     [SerializeField]
     private Animator m_anim;
 
+    private Stack<object> m_breadcrumb = new Stack<object>(); //TODO: change to actual page segment once implemented. 
     public EMenuPages PageName {  get { return m_pageName; } }
 
-    public virtual void Open(int pageCount)
+    public virtual async UniTask OpenAsync(int pageCount)
     {
+        gameObject.SetActive(true);
         m_anim.SetInteger("PageCount", pageCount);
-        m_anim.SetBool("IsActive", true);       
+        m_anim.SetBool("IsActive", true);
+        await WaitForCurrentAnimationToEnd();
+    }
+
+    public virtual async UniTask CloseAsync()
+    {
+        m_anim.SetBool("IsActive", false);
+        await WaitForCurrentAnimationToEnd();
+        gameObject.SetActive(false);
+    }
+
+    public virtual void NavigateTo(object newSegment) //TODO: change to actual page segment once implemented
+    {
+        m_breadcrumb.Push(newSegment);
+        //TODO: show new segment
+    }
+
+    public virtual bool TryGoBack()
+    {
+        if(m_breadcrumb.Count > 0)
+        {
+            object goBackFrom = m_breadcrumb.Pop(); //TODO: change to actual page segment once implemented
+            //TODO: close last breadcrumb 
+            return true;
+        }
+
+        return false;
     }
 
     public virtual void Close()
     {
         m_anim.SetBool("IsActive", false);
+        gameObject.SetActive(false);
     }
 
-    /// <summary>
-    /// Animation event function for invoking the OnOpened event. Should not be used by external classes.
-    /// </summary>
-    public void AnimEvent_OpenFinished()
+    public virtual void ResetPage()
     {
-        OnOpened?.Invoke();
+        //TODO: reset the page
     }
 
-    /// <summary>
-    /// Animation event function for invoking the OnClosed event. Should not be used by external classes.
-    /// </summary>
-    public void AnimEvent_CloseFinished()
+    private async UniTask WaitForCurrentAnimationToEnd()
     {
-        OnClosed?.Invoke();
+        await UniTask.NextFrame();
+        await UniTask.Delay(TimeSpan.FromSeconds(m_anim.GetCurrentAnimatorStateInfo(0).length), ignoreTimeScale: false);
     }
 }

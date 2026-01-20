@@ -46,9 +46,18 @@
             "id": "334dbda6-24ad-455b-b155-5aebac6d5948",
             "actions": [
                 {
-                    "name": "CloseMenu",
+                    "name": "Back",
                     "type": "Button",
                     "id": "1bed2723-9d6d-4c7d-bb6b-218f8492791e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Confirm",
+                    "type": "Button",
+                    "id": "07a1053c-9698-4dd6-8c0e-db1e157f2f9c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -63,18 +72,40 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "CloseMenu",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "c2294a39-764c-4866-b46b-082f4b30937b",
-                    "path": "<Gamepad>/start",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "CloseMenu",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0854621c-b401-4fea-872a-cdd7fd4dfa3d",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Confirm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "05fc9b69-739a-499d-ad2e-276d6a661428",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Confirm",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
