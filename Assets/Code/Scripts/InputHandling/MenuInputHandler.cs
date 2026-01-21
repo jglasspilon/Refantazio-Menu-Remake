@@ -24,15 +24,15 @@ public class MenuInputHandler : InputHandler
 
     private void EnableMenuBinding()
     {
-        m_input.Menu.CloseMenu.performed += OnCloseMenu;
+        m_input.Menu.Back.performed += OnBack;
     }
 
     private void DisableMenuBinding()
     {
-        m_input.Menu.CloseMenu.performed -= OnCloseMenu;
+        m_input.Menu.Back.performed -= OnBack;
     }
 
-    private void OnCloseMenu(InputAction.CallbackContext context)
+    private void OnBack(InputAction.CallbackContext context)
     {
         m_menu.Back();
     }

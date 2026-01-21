@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuPage : MonoBehaviour
+public abstract class MenuPage : MonoBehaviour
 {
     public event Action OnOpened, OnClosed;
 
@@ -21,19 +21,18 @@ public class MenuPage : MonoBehaviour
         gameObject.SetActive(true);
         m_anim.SetInteger("PageCount", pageCount);
         m_anim.SetBool("IsActive", true);
-        await WaitForCurrentAnimationToEnd();
+        await WaitForCurrentPageAnimationToEnd();
     }
 
     public virtual async UniTask CloseAsync()
     {
         m_anim.SetBool("IsActive", false);
-        await WaitForCurrentAnimationToEnd();
+        await WaitForCurrentPageAnimationToEnd();
         gameObject.SetActive(false);
     }
 
-    public virtual void NavigateTo(object newSegment) //TODO: change to actual page segment once implemented
+    public virtual void Confirm()
     {
-        m_breadcrumb.Push(newSegment);
         //TODO: show new segment
     }
 
@@ -55,12 +54,9 @@ public class MenuPage : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public virtual void ResetPage()
-    {
-        //TODO: reset the page
-    }
+    public abstract void ResetPage();
 
-    private async UniTask WaitForCurrentAnimationToEnd()
+    protected async UniTask WaitForCurrentPageAnimationToEnd()
     {
         await UniTask.NextFrame();
         await UniTask.Delay(TimeSpan.FromSeconds(m_anim.GetCurrentAnimatorStateInfo(0).length), ignoreTimeScale: false);
