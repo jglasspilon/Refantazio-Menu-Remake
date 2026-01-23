@@ -7,7 +7,7 @@ public class PageIndexDisplay : MonoBehaviour
     private TextMeshProUGUI m_pageIndexText;
 
     [SerializeField]
-    private PageSelecterList m_pageSelecterList;
+    private MainMenuPage m_parentPage;
 
     [SerializeField]
     private float m_nudgeDistance;
@@ -27,13 +27,13 @@ public class PageIndexDisplay : MonoBehaviour
 
     private void OnEnable()
     {
-        m_pageSelecterList.OnIndexChanged += UpdateText;
-        UpdateText(m_pageSelecterList.CurrentPageIndex);
+        m_parentPage.OnPageIndexChanged += UpdateText;
+        UpdateText(m_parentPage.CurrentPageIndex);
     }
 
     private void OnDisable()
     {
-        m_pageSelecterList.OnIndexChanged -= UpdateText;
+        m_parentPage.OnPageIndexChanged -= UpdateText;
     }
 
     private void Update()
@@ -70,7 +70,7 @@ public class PageIndexDisplay : MonoBehaviour
         string richTextFix = "";
         float xScale = 1.0f;
 
-        //Manually fix the text size, voffset and xScale based on number since the font sheet used does not have optimal numeral glyph sizing
+        //Manually fix the text size, voffset and xScale based on pageIndex since the font sheet used does not have consistent numeral glyph sizing
         switch (pageIndex)
         {
             case 1:
