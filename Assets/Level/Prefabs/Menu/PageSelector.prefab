@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 2759692470730623483}
   - component: {fileID: 8389953222441441665}
   - component: {fileID: 105979325398363541}
+  - component: {fileID: 362979562984674492}
   m_Layer: 7
   m_Name: SelectionSplotch
   m_TagString: Untagged
@@ -395,6 +396,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PointerForwarderToParent
   m_target: {fileID: 0}
+--- !u!114 &362979562984674492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119479081321225481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9db1f826e368624db555b583852966d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeshTextureCycler
+  m_texturesToCycle:
+  - {fileID: 2800000, guid: b52ffa17a102dd341b3e1206ead7cff0, type: 3}
+  - {fileID: 2800000, guid: bb0405cc6e075fa408bb822a2cecb044, type: 3}
+  - {fileID: 2800000, guid: d0bacf5fdea8dac49b910a5f6b889715, type: 3}
+  m_texturePropertyName: _MainTex
+  m_cycleDuration: 0.15
 --- !u!1 &2705355864700249329
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,6 +461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PageSelecter
   m_targetPage: 0
+  m_parentPage: {fileID: 0}
   m_label: {fileID: 9195457188041216152}
   m_selectionSplotch: {fileID: 2119479081321225481}
   m_subtitleContainer: {fileID: 1909908008317147347}
