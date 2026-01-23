@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
 
@@ -13,6 +14,9 @@ public class MainMenuPage : MenuPage
 
     [SerializeField]
     private GameObject m_projectionContent;
+
+    [SerializeField]
+    private Animator m_projectionAnim;
 
     private Menu m_menuParent;
     private int m_currentPageIndex;
@@ -37,6 +41,26 @@ public class MainMenuPage : MenuPage
     {
         m_pageSelecterList.gameObject.SetActive(false);
         m_projectionContent.SetActive(false);
+    }
+
+    public override UniTask OpenAsync(int pageCount)
+    {
+        gameObject.SetActive(true);
+        m_projectionAnim.SetInteger("PageCount", pageCount);
+        m_projectionAnim.SetBool("IsActive", true);
+        return base.OpenAsync(pageCount);
+    }
+
+    public override UniTask CloseAsync()
+    {
+        m_projectionAnim.SetBool("IsActive", false);
+        return base.CloseAsync();
+    }
+
+    public override void Close()
+    {
+        m_projectionAnim.SetBool("IsActive", false);
+        base.Close();
     }
 
     public override void CycleUp()

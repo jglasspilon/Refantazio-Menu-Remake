@@ -54,19 +54,19 @@ public class MeshIPointerCaster : MonoBehaviour
     private void OnEnter(RaycastHit hit)
     {
         IPointerEnterHandler hitEnterHandler = hit.collider.gameObject.GetComponent<IPointerEnterHandler>();
-        hitEnterHandler?.OnPointerEnter(Helper.PointerEventFactory.FromRaycastHit(m_eventSystem, m_cam, hit, m_raycaster));
+        hitEnterHandler?.OnPointerEnter(Helper.Interaction.PointerEventFactory.FromRaycastHit(m_eventSystem, m_cam, hit, m_raycaster));
     }
 
     private void OnExit(RaycastHit hit)
     {
         IPointerExitHandler hitEnterHandler = m_hit.gameObject.GetComponent<IPointerExitHandler>();
-        hitEnterHandler?.OnPointerExit(Helper.PointerEventFactory.FromRaycastHit(m_eventSystem, m_cam, hit, m_raycaster));
+        hitEnterHandler?.OnPointerExit(Helper.Interaction.PointerEventFactory.FromRaycastHit(m_eventSystem, m_cam, hit, m_raycaster));
     }
 
     private void OnClick(RaycastHit hit)
     {
         IPointerClickHandler hitEnterHandler = hit.collider.gameObject.GetComponent<IPointerClickHandler>();
-        hitEnterHandler?.OnPointerClick(Helper.PointerEventFactory.FromRaycastHit(m_eventSystem, m_cam, hit, m_raycaster));
+        hitEnterHandler?.OnPointerClick(Helper.Interaction.PointerEventFactory.FromRaycastHit(m_eventSystem, m_cam, hit, m_raycaster));
     }
 
     private Vector2 MapMouseToRenderTexture()
