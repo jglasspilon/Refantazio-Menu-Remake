@@ -113,6 +113,7 @@ public class Menu : MonoBehaviour
                 if (!m_activePage.TryGoBack())
                 {
                     ChangePageAsync(EMenuPages.Main);
+                    return;
                 }
                 return;
             }
