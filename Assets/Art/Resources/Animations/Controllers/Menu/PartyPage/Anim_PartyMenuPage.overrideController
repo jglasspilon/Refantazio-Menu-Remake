@@ -6,14 +6,14 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Anim_ItemsMenuPage
+  m_Name: Anim_PartyMenuPage
   m_Controller: {fileID: 9100000, guid: c9341e8799acca24aa597f9188d46749, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 295ef25a1d550a4469572ac3fdf1c0b6, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 84d89e37b5373aa47b80ae1e68ae0cb7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b6fc5dd50c4fa444889f18670a27bd18, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: a9a770889bc37a9409e6bf14160be337, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 3589442ba29e7d047b330ce80c3e27e9, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 82ba8725e999203468895d1451041f88, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 4f53178c7d894854e983fac137158da4, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 2b0ef031958fbe74a83f3d1ccec46bfb, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e38c6370a7d30e7469479f1c50870fe6, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 01ace39b1da6d9b43ae1c547c6876246, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 40c604fc542179a4abc054b8fe3d53dc, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f7f92f8edb425e544a35ad57b4bb5ff2, type: 2}
