@@ -107,6 +107,17 @@
                 },
                 {
                     "name": "",
+                    "id": "15271853-99ab-4676-9b24-85c16e9aecea",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "0854621c-b401-4fea-872a-cdd7fd4dfa3d",
                     "path": "<Keyboard>/enter",
                     "interactions": "",
