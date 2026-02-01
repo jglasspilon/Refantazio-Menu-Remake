@@ -467,7 +467,7 @@ MonoBehaviour:
   m_subtitleContainer: {fileID: 1909908008317147347}
   m_labelColorActive: {r: 0, g: 0, b: 0, a: 1}
   m_labelColorInactive: {r: 1, g: 1, b: 1, a: 1}
-  m_labelColorDisabled: {r: 1, g: 1, b: 1, a: 0.19607843}
+  m_labelColorDisabled: {r: 1, g: 1, b: 1, a: 0.49019608}
 --- !u!1 &4539450947284562014
 GameObject:
   m_ObjectHideFlags: 0

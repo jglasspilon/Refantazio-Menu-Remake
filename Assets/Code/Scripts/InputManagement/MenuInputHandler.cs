@@ -4,7 +4,7 @@ using UnityEngine;
 public class MenuInputHandler : InputHandler
 {
     [SerializeField]
-    private Menu m_menu;
+    private MenuManager m_menu;
 
     protected override void BindEvents()
     {

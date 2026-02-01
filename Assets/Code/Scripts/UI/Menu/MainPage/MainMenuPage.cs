@@ -12,7 +12,7 @@ public class MainMenuPage : MenuPage
     [SerializeField]
     private PageSelecterList m_pageSelecterList;
 
-    private Menu m_menuParent;
+    private MenuManager m_menuParent;
     private int m_currentPageIndex;
     private const int MIN_INDEX = 1;
 
@@ -21,17 +21,17 @@ public class MainMenuPage : MenuPage
     private void Awake()
     {
         ResetPage();
-        m_menuParent = GetComponentInParent<Menu>();
+        m_menuParent = GetComponentInParent<MenuManager>();
     }
 
     public override void CycleUp()
     {
-        SetPageIndex(m_currentPageIndex - 1);
+        CyclePageIndex(-1);
     }
 
     public override void CycleDown()
     {
-        SetPageIndex(m_currentPageIndex + 1);
+        CyclePageIndex(1);
     }
 
     public override void Confirm()
@@ -56,7 +56,29 @@ public class MainMenuPage : MenuPage
         if (newIndex > maxIndex)
             newIndex = MIN_INDEX;
 
-        m_currentPageIndex = newIndex;       
+        m_currentPageIndex = newIndex;
+        OnPageIndexChanged?.Invoke(m_currentPageIndex);
+    }
+
+    public void CyclePageIndex(int cycleAmount)
+    {
+        int newIndex = m_currentPageIndex + cycleAmount;
+        int maxIndex = m_pageSelecterList.NumSelecters;
+
+        if (newIndex < MIN_INDEX)
+            newIndex = maxIndex;
+
+        if (newIndex > maxIndex)
+            newIndex = MIN_INDEX;
+
+        m_currentPageIndex = newIndex;
+
+        if (!m_pageSelecterList.IsSelectorAtIndexSelectable(m_currentPageIndex))
+        {
+            CyclePageIndex(cycleAmount);
+            return;
+        }
+
         OnPageIndexChanged?.Invoke(m_currentPageIndex);
     }
 }

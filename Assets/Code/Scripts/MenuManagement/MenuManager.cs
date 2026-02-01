@@ -4,8 +4,11 @@ using UnityEngine;
 using System;
 using Cysharp.Threading.Tasks;
 
-public class Menu : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
+    [SerializeField]
+    private Logger m_logger;
+
     public event Action OnPageChange, OnPageChangeComplete;
 
     private GameStateManager m_gameState;
@@ -51,7 +54,7 @@ public class Menu : MonoBehaviour
     {
         if(!m_menuPages.TryGetValue(page, out MenuPage nextPage))
         {
-            Debug.LogError($"Failed to open menu page '{page}'. '{page}' page was not present as a child page of the Menu Object.");
+            m_logger.LogError($"Failed to open menu page '{page}'. '{page}' page was not present as a child page of the Menu Object.", gameObject);
             return;
         }
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HUDManager : MonoBehaviour
 {
+    [SerializeField]
+    private Logger m_logger;
     private GameStateManager m_gameState;
     private Dictionary<EGameState, HUD> m_huds = new Dictionary<EGameState, HUD>();
     private HUD m_activeHUD;
@@ -32,7 +34,7 @@ public class HUDManager : MonoBehaviour
     {
         if (!m_huds.TryGetValue(gameState, out HUD nextHUD))
         {
-            Debug.LogError($"Failed to change HUD '{gameState}'. '{gameState}' HUD was not present as a child page of the Menu Object.");
+            m_logger.LogError($"Failed to change HUD '{gameState}'. '{gameState}' HUD was not present as a child page of the Menu Object.", gameObject);
             return;
         }
 

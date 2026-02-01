@@ -3,10 +3,16 @@ using UnityEngine.EventSystems;
 
 [RequireComponent (typeof(Camera))]
 [RequireComponent(typeof(PhysicsRaycaster))]
-public class MeshIPointerCaster : MonoBehaviour
+public class MeshPointerCaster : MonoBehaviour
 {
+    [SerializeField]
+    private Logger m_logger;
+
+    [SerializeField]
+    private bool m_debugLine;
+
     private Camera m_cam;
-    private GameObject m_hit;
+    private GameObject m_itemEntered;
     private RenderTexture m_renderTexture;
     private PhysicsRaycaster m_raycaster;
     private EventSystem m_eventSystem;
@@ -26,12 +32,14 @@ public class MeshIPointerCaster : MonoBehaviour
 
         if (Physics.Raycast(m_cam.ScreenPointToRay(mousePos), out RaycastHit hit))
         {
-            Debug.DrawLine(m_cam.transform.position, hit.point, Color.red, 0f, false);
-            if (m_hit == null)
+            if(m_debugLine)
+                Debug.DrawLine(m_cam.transform.position, hit.point, Color.red, 0f, false);
+
+            if (m_itemEntered == null)
             {
                 OnEnter(hit);
             }
-            else if (m_hit != hit.collider.gameObject)
+            else if (m_itemEntered != hit.collider.gameObject)
             {
                 OnEnter(hit);
                 OnExit(hit);
@@ -41,30 +49,36 @@ public class MeshIPointerCaster : MonoBehaviour
                 OnClick(hit);
             }
 
-            m_hit = hit.collider.gameObject;
+            m_itemEntered = hit.collider.gameObject;
             m_lastHit = hit;
         }
-        else if (m_hit != null)
+        else if (m_itemEntered != null)
         {
             OnExit(m_lastHit);
-            m_hit = null;
+            m_itemEntered = null;
         }
     }
 
     private void OnEnter(RaycastHit hit)
     {
+        string collisionName = GetCollisionName(hit.collider.gameObject);
+        m_logger.Log($"Entering {collisionName}", gameObject);
         IPointerEnterHandler hitEnterHandler = hit.collider.gameObject.GetComponent<IPointerEnterHandler>();
         hitEnterHandler?.OnPointerEnter(Helper.Interaction.PointerEventFactory.FromRaycastHit(m_eventSystem, m_cam, hit, m_raycaster));
     }
 
     private void OnExit(RaycastHit hit)
     {
-        IPointerExitHandler hitEnterHandler = m_hit.gameObject.GetComponent<IPointerExitHandler>();
+        string collisionName = GetCollisionName(m_itemEntered.gameObject);
+        m_logger.Log($"Exitting {collisionName}", gameObject);
+        IPointerExitHandler hitEnterHandler = m_itemEntered.gameObject.GetComponent<IPointerExitHandler>();
         hitEnterHandler?.OnPointerExit(Helper.Interaction.PointerEventFactory.FromRaycastHit(m_eventSystem, m_cam, hit, m_raycaster));
     }
 
     private void OnClick(RaycastHit hit)
     {
+        string collisionName = GetCollisionName(hit.collider.gameObject);
+        m_logger.Log($"Clicking {collisionName}", gameObject);
         IPointerClickHandler hitEnterHandler = hit.collider.gameObject.GetComponent<IPointerClickHandler>();
         hitEnterHandler?.OnPointerClick(Helper.Interaction.PointerEventFactory.FromRaycastHit(m_eventSystem, m_cam, hit, m_raycaster));
     }
@@ -74,5 +88,16 @@ public class MeshIPointerCaster : MonoBehaviour
         float x = Input.mousePosition.x * (m_renderTexture.width / (float)Screen.width);
         float y = Input.mousePosition.y * (m_renderTexture.height / (float)Screen.height);
         return new Vector2(x, y);
+    }
+
+    private string GetCollisionName(GameObject collisionObject)
+    {
+        if (collisionObject == null)
+            return "empty";
+
+        if (collisionObject.TryGetComponent(out PointerEventForwarder forwarder))
+            return forwarder.Target.name;
+
+        return collisionObject.name;
     }
 }
