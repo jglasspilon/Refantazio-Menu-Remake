@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class MeshPointerCaster : MonoBehaviour
 {
     [SerializeField]
-    private Logger m_logger;
+    private LoggingProfile m_logProfile;
 
     [SerializeField]
     private bool m_debugLine;
@@ -62,7 +62,7 @@ public class MeshPointerCaster : MonoBehaviour
     private void OnEnter(RaycastHit hit)
     {
         string collisionName = GetCollisionName(hit.collider.gameObject);
-        m_logger.Log($"Entering {collisionName}", gameObject);
+        Logger.Log($"Entering {collisionName}", gameObject, m_logProfile);
         IPointerEnterHandler hitEnterHandler = hit.collider.gameObject.GetComponent<IPointerEnterHandler>();
         hitEnterHandler?.OnPointerEnter(Helper.Interaction.PointerEventFactory.FromRaycastHit(m_eventSystem, m_cam, hit, m_raycaster));
     }
@@ -70,7 +70,7 @@ public class MeshPointerCaster : MonoBehaviour
     private void OnExit(RaycastHit hit)
     {
         string collisionName = GetCollisionName(m_itemEntered.gameObject);
-        m_logger.Log($"Exitting {collisionName}", gameObject);
+        Logger.Log($"Exitting {collisionName}", gameObject, m_logProfile);
         IPointerExitHandler hitEnterHandler = m_itemEntered.gameObject.GetComponent<IPointerExitHandler>();
         hitEnterHandler?.OnPointerExit(Helper.Interaction.PointerEventFactory.FromRaycastHit(m_eventSystem, m_cam, hit, m_raycaster));
     }
@@ -78,7 +78,7 @@ public class MeshPointerCaster : MonoBehaviour
     private void OnClick(RaycastHit hit)
     {
         string collisionName = GetCollisionName(hit.collider.gameObject);
-        m_logger.Log($"Clicking {collisionName}", gameObject);
+        Logger.Log($"Clicking {collisionName}", gameObject, m_logProfile);
         IPointerClickHandler hitEnterHandler = hit.collider.gameObject.GetComponent<IPointerClickHandler>();
         hitEnterHandler?.OnPointerClick(Helper.Interaction.PointerEventFactory.FromRaycastHit(m_eventSystem, m_cam, hit, m_raycaster));
     }

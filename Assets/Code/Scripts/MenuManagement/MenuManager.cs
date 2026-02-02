@@ -7,7 +7,7 @@ using Cysharp.Threading.Tasks;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField]
-    private Logger m_logger;
+    private LoggingProfile m_logProfile;
 
     public event Action OnPageChange, OnPageChangeComplete;
 
@@ -22,7 +22,7 @@ public class MenuManager : MonoBehaviour
         m_menuPages = GetComponentsInChildren<MenuPage>(true).ToDictionary(x => x.PageName, x => x);
         foreach(MenuPage page in m_menuPages.Values)
         {
-            page.gameObject.SetActive(false);
+            page.Close();
         }
     }
 
@@ -54,7 +54,8 @@ public class MenuManager : MonoBehaviour
     {
         if(!m_menuPages.TryGetValue(page, out MenuPage nextPage))
         {
-            m_logger.LogError($"Failed to open menu page '{page}'. '{page}' page was not present as a child page of the Menu Object.", gameObject);
+            string msg = $"Failed to open menu page '{page}'. '{page}' page was not found as a child of this Game Object.";
+            Logger.LogError(msg, gameObject, m_logProfile);
             return;
         }
 

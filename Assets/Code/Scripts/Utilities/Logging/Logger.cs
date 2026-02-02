@@ -1,36 +1,27 @@
 using UnityEngine;
 
-public class Logger : MonoBehaviour
+public static class Logger
 {
-    [SerializeField]
-    private bool m_logEnabled;
+    private static LoggingProfile m_fallbackLogProfile = new LoggingProfile();
 
-    [SerializeField]
-    private string m_prefix;
-
-    [SerializeField]
-    private Color m_prefixColor;
-
-    private string m_prefixString;
-
-    private void Awake()
+    public static void Log(string message, GameObject owner, LoggingProfile logProfile)
     {
-        string hexColor = ColorUtility.ToHtmlStringRGB(m_prefixColor);
-        m_prefixString = $"<color=#{hexColor}>{m_prefix}: </color>";
-    }
+        if(logProfile == null) 
+            logProfile = m_fallbackLogProfile;
 
-    public void Log(string message, GameObject owner)
-    {
-        if (!m_logEnabled)
+        if (!logProfile.LoggingEnabled)
             return;
 
-        string output = m_prefixString + message;
+        string output = logProfile.CreatePrefixString() + message;
         Debug.Log(output, owner);
     }
 
-    public void LogError(string message, GameObject owner)
+    public static void LogError(string message, GameObject owner, LoggingProfile logProfile)
     {
-        string output = m_prefixString + message;
+        if (logProfile == null)
+            logProfile = m_fallbackLogProfile;
+
+        string output = logProfile.CreatePrefixString() + message;
         Debug.LogError(output, owner);
     }
 }

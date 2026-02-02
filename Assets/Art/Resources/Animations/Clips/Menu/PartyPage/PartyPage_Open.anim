@@ -40,7 +40,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: ScaledContent
+    path: ScreenSpaceContent/ScaledContent
   m_FloatCurves:
   - serializedVersion: 2
     curve:
@@ -59,7 +59,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: AnimatedLine
+    path: ScreenSpaceContent/AnimatedLine
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -89,7 +89,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.x
-    path: AnimatedLine
+    path: ScreenSpaceContent/AnimatedLine
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -119,7 +119,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_SizeDelta.x
-    path: AnimatedLine
+    path: ScreenSpaceContent/AnimatedLine
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -140,7 +140,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: AnimatedLine1
+    path: ScreenSpaceContent/AnimatedLine1
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -188,7 +188,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: AnimatedLine1
+    path: ScreenSpaceContent/AnimatedLine1
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -209,7 +209,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: AnimatedLine2
+    path: ScreenSpaceContent/AnimatedLine2
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -257,7 +257,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: AnimatedLine2
+    path: ScreenSpaceContent/AnimatedLine2
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -278,7 +278,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: AnimatedLine3
+    path: ScreenSpaceContent/AnimatedLine3
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -326,7 +326,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: AnimatedLine3
+    path: ScreenSpaceContent/AnimatedLine3
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -347,7 +347,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: AnimatedLine4
+    path: ScreenSpaceContent/AnimatedLine4
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -395,7 +395,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: AnimatedLine4
+    path: ScreenSpaceContent/AnimatedLine4
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -425,7 +425,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Alpha
-    path: BackControlsDisplay
+    path: ScreenSpaceContent/BackControlsDisplay
     classID: 225
     script: {fileID: 0}
     flags: 0
@@ -455,7 +455,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.y
-    path: BackControlsDisplay
+    path: ScreenSpaceContent/BackControlsDisplay
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -485,7 +485,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.r
-    path: Bg
+    path: ScreenSpaceContent/Bg
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -515,7 +515,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.g
-    path: Bg
+    path: ScreenSpaceContent/Bg
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -545,7 +545,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.b
-    path: Bg
+    path: ScreenSpaceContent/Bg
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -575,7 +575,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Alpha
-    path: ConfirmCotrolsDisplay
+    path: ScreenSpaceContent/ConfirmCotrolsDisplay
     classID: 225
     script: {fileID: 0}
     flags: 0
@@ -605,7 +605,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.y
-    path: ConfirmCotrolsDisplay
+    path: ScreenSpaceContent/ConfirmCotrolsDisplay
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -644,7 +644,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: DiagonalLine
+    path: ScreenSpaceContent/DiagonalLine
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -665,7 +665,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Alpha
-    path: ScaledContent
+    path: ScreenSpaceContent/ScaledContent
     classID: 225
     script: {fileID: 0}
     flags: 0
@@ -704,7 +704,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Alpha
-    path: ScaledContent/HeadshotsFooter
+    path: ScreenSpaceContent/ScaledContent/HeadshotsFooter
     classID: 225
     script: {fileID: 0}
     flags: 0
@@ -734,7 +734,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.x
-    path: ScaledContent/HeadshotsFooter
+    path: ScreenSpaceContent/ScaledContent/HeadshotsFooter
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -764,7 +764,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: VerticalLine
+    path: ScreenSpaceContent/VerticalLine
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -777,7 +777,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1345892898
+      path: 597494966
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -786,7 +786,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 853546538
+      path: 1263010221
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -795,7 +795,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 853546538
+      path: 1263010221
       attribute: 1460864421
       script: {fileID: 0}
       typeID: 224
@@ -804,7 +804,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 853546538
+      path: 1263010221
       attribute: 1967290853
       script: {fileID: 0}
       typeID: 224
@@ -813,7 +813,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1482016375
+      path: 737179875
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -822,7 +822,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1482016375
+      path: 737179875
       attribute: 304273561
       script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
       typeID: 114
@@ -831,7 +831,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3244070861
+      path: 3002673497
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -840,7 +840,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3244070861
+      path: 3002673497
       attribute: 304273561
       script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
       typeID: 114
@@ -849,7 +849,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3059459931
+      path: 3321764303
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -858,7 +858,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3059459931
+      path: 3321764303
       attribute: 304273561
       script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
       typeID: 114
@@ -867,7 +867,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 675230456
+      path: 1536855148
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -876,7 +876,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 675230456
+      path: 1536855148
       attribute: 304273561
       script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
       typeID: 114
@@ -885,7 +885,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 980710724
+      path: 1064740954
       attribute: 1574349066
       script: {fileID: 0}
       typeID: 225
@@ -894,7 +894,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 980710724
+      path: 1064740954
       attribute: 538195251
       script: {fileID: 0}
       typeID: 224
@@ -903,7 +903,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1346423683
+      path: 3744456163
       attribute: 2526845255
       script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
       typeID: 114
@@ -912,7 +912,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1346423683
+      path: 3744456163
       attribute: 4215373228
       script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
       typeID: 114
@@ -921,7 +921,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1346423683
+      path: 3744456163
       attribute: 2334886179
       script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
       typeID: 114
@@ -930,7 +930,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 213820187
+      path: 547174319
       attribute: 1574349066
       script: {fileID: 0}
       typeID: 225
@@ -939,7 +939,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 213820187
+      path: 547174319
       attribute: 538195251
       script: {fileID: 0}
       typeID: 224
@@ -948,7 +948,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2017748662
+      path: 32272689
       attribute: 304273561
       script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
       typeID: 114
@@ -957,7 +957,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 746605583
+      path: 3769791456
       attribute: 1574349066
       script: {fileID: 0}
       typeID: 225
@@ -966,7 +966,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 746605583
+      path: 3769791456
       attribute: 1460864421
       script: {fileID: 0}
       typeID: 224
@@ -975,7 +975,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1813097226
+      path: 364493965
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -984,7 +984,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1345892898
+      path: 597494966
       attribute: 1574349066
       script: {fileID: 0}
       typeID: 225
@@ -1031,7 +1031,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: AnimatedLine
+    path: ScreenSpaceContent/AnimatedLine
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -1061,7 +1061,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.x
-    path: AnimatedLine
+    path: ScreenSpaceContent/AnimatedLine
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -1091,7 +1091,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_SizeDelta.x
-    path: AnimatedLine
+    path: ScreenSpaceContent/AnimatedLine
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -1112,7 +1112,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: AnimatedLine1
+    path: ScreenSpaceContent/AnimatedLine1
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -1160,7 +1160,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: AnimatedLine1
+    path: ScreenSpaceContent/AnimatedLine1
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -1181,7 +1181,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: AnimatedLine2
+    path: ScreenSpaceContent/AnimatedLine2
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -1229,7 +1229,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: AnimatedLine2
+    path: ScreenSpaceContent/AnimatedLine2
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -1250,7 +1250,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: AnimatedLine3
+    path: ScreenSpaceContent/AnimatedLine3
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -1298,7 +1298,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: AnimatedLine3
+    path: ScreenSpaceContent/AnimatedLine3
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -1319,7 +1319,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: AnimatedLine4
+    path: ScreenSpaceContent/AnimatedLine4
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -1367,7 +1367,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: AnimatedLine4
+    path: ScreenSpaceContent/AnimatedLine4
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -1397,7 +1397,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Alpha
-    path: BackControlsDisplay
+    path: ScreenSpaceContent/BackControlsDisplay
     classID: 225
     script: {fileID: 0}
     flags: 0
@@ -1427,7 +1427,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.y
-    path: BackControlsDisplay
+    path: ScreenSpaceContent/BackControlsDisplay
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -1457,7 +1457,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.r
-    path: Bg
+    path: ScreenSpaceContent/Bg
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -1487,7 +1487,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.g
-    path: Bg
+    path: ScreenSpaceContent/Bg
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -1517,7 +1517,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.b
-    path: Bg
+    path: ScreenSpaceContent/Bg
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -1547,7 +1547,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Alpha
-    path: ConfirmCotrolsDisplay
+    path: ScreenSpaceContent/ConfirmCotrolsDisplay
     classID: 225
     script: {fileID: 0}
     flags: 0
@@ -1577,7 +1577,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.y
-    path: ConfirmCotrolsDisplay
+    path: ScreenSpaceContent/ConfirmCotrolsDisplay
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -1616,7 +1616,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: DiagonalLine
+    path: ScreenSpaceContent/DiagonalLine
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 0
@@ -1637,7 +1637,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Alpha
-    path: ScaledContent
+    path: ScreenSpaceContent/ScaledContent
     classID: 225
     script: {fileID: 0}
     flags: 0
@@ -1667,7 +1667,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.x
-    path: ScaledContent
+    path: ScreenSpaceContent/ScaledContent
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -1697,7 +1697,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.y
-    path: ScaledContent
+    path: ScreenSpaceContent/ScaledContent
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -1727,7 +1727,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.z
-    path: ScaledContent
+    path: ScreenSpaceContent/ScaledContent
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -1766,7 +1766,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Alpha
-    path: ScaledContent/HeadshotsFooter
+    path: ScreenSpaceContent/ScaledContent/HeadshotsFooter
     classID: 225
     script: {fileID: 0}
     flags: 0
@@ -1796,7 +1796,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.x
-    path: ScaledContent/HeadshotsFooter
+    path: ScreenSpaceContent/ScaledContent/HeadshotsFooter
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -1826,7 +1826,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: VerticalLine
+    path: ScreenSpaceContent/VerticalLine
     classID: 1
     script: {fileID: 0}
     flags: 0

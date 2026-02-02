@@ -5,7 +5,7 @@ using UnityEngine;
 public class PageSelecterList : MonoBehaviour
 {
     [SerializeField]
-    private Logger m_logger;
+    private LoggingProfile m_logProfile;
 
     private Animator m_anim;
     private MainMenuPage m_parentPage;
@@ -35,7 +35,8 @@ public class PageSelecterList : MonoBehaviour
     {
         if(!m_pageSelectors.TryGetValue(pageIndex, out PageSelecter selecter))
         {
-            m_logger.Log($"Page selecter at page index {pageIndex} does not exist.", gameObject);
+            string msg = $"Page selecter at page index {pageIndex} does not exist.";
+            Logger.LogError(msg, gameObject, m_logProfile);
             return false;
         }
 

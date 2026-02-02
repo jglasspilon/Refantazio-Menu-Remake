@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fec5fcefa28579840b749e542aff6b13, type: 3}
+  m_Name: PhysicsLogs
+  m_EditorClassIdentifier: Assembly-CSharp::LoggingProfile
+  LogEnabled: 0
+  Prefix: Physics
+  PrefixColor: {r: 0.97735846, g: 0.36697033, b: 0.83224446, a: 1}

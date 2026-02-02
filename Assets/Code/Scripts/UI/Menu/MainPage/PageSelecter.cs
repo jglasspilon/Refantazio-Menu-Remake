@@ -20,6 +20,7 @@ public class PageSelecter : MonoBehaviour, IPointerEnterHandler, IPointerClickHa
     private Color m_labelColorActive, m_labelColorInactive, m_labelColorDisabled;
 
     private MainMenuPage m_parentPage;
+    private bool m_pointerMethodsEnabled;
 
     public EMenuPages TargetPage {  get { return m_targetPage; } }
     public bool CanSelect {  get { return m_canSelect; } }
@@ -29,15 +30,28 @@ public class PageSelecter : MonoBehaviour, IPointerEnterHandler, IPointerClickHa
         m_parentPage = GetComponentInParent<MainMenuPage>();
     }
 
+    private void OnEnable()
+    {
+        m_parentPage.OnOpened += EnablePointerMethods;
+        m_parentPage.OnClosing += DisablePointerMethods;
+    }
+
+    private void OnDisable()
+    {
+        m_pointerMethodsEnabled = false;
+        m_parentPage.OnOpened -= EnablePointerMethods;
+        m_parentPage.OnClosing -= DisablePointerMethods;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(m_canSelect)
+        if(m_canSelect && m_pointerMethodsEnabled)
             m_parentPage.SetPageIndex((int)m_targetPage);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(m_canSelect)
+        if(m_canSelect && m_pointerMethodsEnabled)
             m_parentPage.Confirm();
     }
 
@@ -52,5 +66,15 @@ public class PageSelecter : MonoBehaviour, IPointerEnterHandler, IPointerClickHa
 
         m_selectionSplotch.SetActive(isActive);
         m_subtitleContainer.SetActive(isActive);
+    }
+
+    private void EnablePointerMethods()
+    {
+        m_pointerMethodsEnabled = true;
+    }
+
+    private void DisablePointerMethods()
+    {
+        m_pointerMethodsEnabled = false;
     }
 }

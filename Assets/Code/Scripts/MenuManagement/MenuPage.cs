@@ -6,7 +6,7 @@ using UnityEngine;
 
 public abstract class MenuPage : MonoBehaviour
 {
-    public event Action OnOpened, OnClosed;
+    public event Action OnOpening, OnOpened, OnClosing, OnClosed;
 
     [SerializeField]
     private EMenuPages m_pageName;
@@ -14,24 +14,37 @@ public abstract class MenuPage : MonoBehaviour
     [SerializeField]
     private Animator m_anim;
 
+    [SerializeField]
+    private LoggingProfile m_logProfile;
+
     private Stack<object> m_breadcrumb = new Stack<object>(); //TODO: change to actual page segment once implemented. 
     public EMenuPages PageName {  get { return m_pageName; } }
     public int PageCount { get; private set; }
 
     public virtual async UniTask OpenAsync(int pageCount)
     {
+        OnOpening?.Invoke();
+        Logger.Log($"Opening menu page '{PageName}'.", gameObject, m_logProfile);
         gameObject.SetActive(true);
         PageCount = pageCount;
         m_anim.SetInteger("PageCount", pageCount);
         m_anim.SetBool("IsActive", true);
         await Helper.Animation.WaitForCurrentPageAnimationToEnd(m_anim);
+
+        Logger.Log($"Menu page '{PageName}' opened successfully.", gameObject, m_logProfile);
+        OnOpened?.Invoke();
     }
 
     public virtual async UniTask CloseAsync()
     {
+        OnClosing?.Invoke();
+        Logger.Log($"Closing menu page '{PageName}'.", gameObject, m_logProfile);        
         m_anim.SetBool("IsActive", false);
         await Helper.Animation.WaitForCurrentPageAnimationToEnd(m_anim);
+
         gameObject.SetActive(false);
+        Logger.Log($"Menu page '{PageName}' closed successfully.", gameObject, m_logProfile);
+        OnClosed?.Invoke();
     }
 
     public virtual bool TryGoBack()
@@ -50,6 +63,7 @@ public abstract class MenuPage : MonoBehaviour
     {
         m_anim.SetBool("IsActive", false);
         gameObject.SetActive(false);
+        Logger.Log($"Menu page {PageName} closed successfully.", gameObject, m_logProfile);
     }
 
     public abstract void CycleUp();
