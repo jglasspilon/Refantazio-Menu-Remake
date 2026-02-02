@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b37798acf11f8644cb7334e78f5d6055
+guid: 8f51b268823951542b232942c1355a85
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -95,12 +95,100 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: MC_Follower_Shoulders
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3467
+        width: 3140
+        height: 629
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2377c108fbf1ea0489bdc048713be6ee
+      internalID: -1423411454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC_Follower_head
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1492
+        width: 2227
+        height: 716
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 134ab93a34e4e73419ca7c02a7b57f75
+      internalID: -2076794063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC_Follower_neck
+      rect:
+        serializedVersion: 2
+        x: 2241
+        y: 1457
+        width: 1306
+        height: 410
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cd59721aa8b20c41abebb18efd37c46
+      internalID: -364043182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MC_Follower_collar
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 553
+        width: 1937
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 471ce7c2fced455499361660fa635424
+      internalID: 1627583505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 299ff7940c0bdf3479b39490cddf611c
     internalID: 0
     vertices: []
     indices: 
@@ -109,7 +197,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      MC_Follower_Shoulders: -1423411454
+      MC_Follower_collar: 1627583505
+      MC_Follower_head: -2076794063
+      MC_Follower_neck: -364043182
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
