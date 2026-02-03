@@ -215,7 +215,7 @@ TextureImporter:
         width: 979
         height: 454
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -224,6 +224,28 @@ TextureImporter:
       bones: []
       spriteID: d2669876b57399c46a5e85da55874f89
       internalID: 743353097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InkSwipe
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2767
+        width: 2168
+        height: 633
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1192b97590009a49aabc281053c19d3
+      internalID: 220476694
       vertices: []
       indices: 
       edges: []
@@ -246,6 +268,7 @@ TextureImporter:
       CASH: -592917978
       Dust: 1592078220
       FaddedLine3: -1323955762
+      InkSwipe: 220476694
       MAG: -1838065145
       Shadow: 743353097
       Shop_BackInkSplotch: 1486209003

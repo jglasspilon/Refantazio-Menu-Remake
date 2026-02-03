@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Anim_CalendarMenuPage
+  m_Controller: {fileID: 9100000, guid: c9341e8799acca24aa597f9188d46749, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 295ef25a1d550a4469572ac3fdf1c0b6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: eb91427683c628a47a555551876c9ced, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: a9a770889bc37a9409e6bf14160be337, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 859793a3ed6e27c4db40f0f4ae00f1f5, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4f53178c7d894854e983fac137158da4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f1735779356251742be38594fedd309d, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 01ace39b1da6d9b43ae1c547c6876246, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8ea5e28eca315fe4293f9814cbbe8df6, type: 2}
