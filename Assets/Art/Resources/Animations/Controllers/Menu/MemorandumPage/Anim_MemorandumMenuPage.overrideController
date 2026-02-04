@@ -6,14 +6,14 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Anim_ItemsMenuPage
+  m_Name: Anim_MemorandumMenuPage
   m_Controller: {fileID: 9100000, guid: c9341e8799acca24aa597f9188d46749, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 295ef25a1d550a4469572ac3fdf1c0b6, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 67b2d8f7ad0fa374695c6d3de2848ff4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 84d89e37b5373aa47b80ae1e68ae0cb7, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: a9a770889bc37a9409e6bf14160be337, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 982c64c8ad41b514da82a694f8fc4417, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3589442ba29e7d047b330ce80c3e27e9, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 4f53178c7d894854e983fac137158da4, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: cc125118642f9074f87cb31ba1173761, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2b0ef031958fbe74a83f3d1ccec46bfb, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 01ace39b1da6d9b43ae1c547c6876246, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 849bcadd86e80624dbacf06e790ba3ca, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 40c604fc542179a4abc054b8fe3d53dc, type: 2}
