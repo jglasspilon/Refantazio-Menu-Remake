@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class GameStateManager : Singleton<GameStateManager>
+public class GameStateManager : MonoBehaviour, IGameStateManagementService
 {
     public event Action<EGameState> OnGameStateChanged;
 
@@ -9,14 +9,23 @@ public class GameStateManager : Singleton<GameStateManager>
     private EGameState m_startingState;
 
     private EGameState m_currentState;
+    private EGameState m_gameplayState;
 
-    public EGameState CurrentState {  get { return m_currentState; } }
-    public EGameState CurrentSceneState { get; set; }
+    public EGameState CurrentState { get { return m_currentState; } }
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
+        ObjectResolver.Instance.Register<IGameStateManagementService>(this);        
+    }
+
+    public void Initialize()
+    {
         ChangeState(m_startingState);
+    }
+
+    public void Shutdown()
+    {
+        OnGameStateChanged = null;
     }
 
     public void ChangeState(EGameState newState)
@@ -25,11 +34,18 @@ public class GameStateManager : Singleton<GameStateManager>
         OnGameStateChanged?.Invoke(m_currentState);
     }
 
-    public void ReturnToSceneState()
+    public void ReturnToGameplaySate()
     {
-        m_currentState = CurrentSceneState;
+        m_currentState = m_gameplayState;
         OnGameStateChanged?.Invoke(m_currentState);
     }
+
+    public void UpdateGameplayState(EGameState state)
+    {
+        m_gameplayState = state;
+    }
+
+    
 }
 
 public enum EGameState

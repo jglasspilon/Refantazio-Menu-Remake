@@ -16,6 +16,12 @@ public class FieldInputHandler : InputHandler
 
     private void OnOpenMenu(InputAction.CallbackContext context)
     {
-        GameStateManager.Instance.ChangeState(EGameState.Menu);
+        if(!ObjectResolver.Instance.TryResolve(null, out IGameStateManagementService gameState))
+        {
+            Debug.LogError("Failed to open menu, no game state management service has been registered");
+            return;
+        }
+
+        gameState.ChangeState(EGameState.Menu);
     }
 }

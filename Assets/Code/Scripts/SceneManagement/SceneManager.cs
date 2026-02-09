@@ -1,10 +1,11 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneManager : Singleton<SceneManager>
+public class SceneManager : MonoBehaviour, ISceneLoaderService
 {
     [SerializeField]
     private Scenes m_launchScene;
@@ -15,22 +16,16 @@ public class SceneManager : Singleton<SceneManager>
     private Dictionary<Scenes, string> m_mappedScenesDict;
     private Dictionary<string, SceneLoader> m_loadedScenes = new Dictionary<string, SceneLoader>();
 
-    protected override void Awake()
+    protected void Awake()
     {
+        ObjectResolver.Instance.Register<ISceneLoaderService>(this);
         m_mappedScenesDict = m_mappedScenes.ToDictionary(x => x.Key, x => x.Value);
-
-        base.Awake();
-        LoadScene(m_launchScene);
+        LoadSceneAsync(m_launchScene);
     }
 
-    public void LoadScene(Scenes scene)
+    private void OnDestroy()
     {
-        StartCoroutine(LoadSceneAsync(GetSceneName(scene)));
-    }
-
-    public void UnloadScene(Scenes scene)
-    {
-        StartCoroutine(UnLoadSyncAsync(GetSceneName(scene)));
+        ObjectResolver.Instance.Unregister<ISceneLoaderService>();
     }
 
     public void RegisterSceneLoader(Scenes scene, SceneLoader loader)
@@ -39,38 +34,51 @@ public class SceneManager : Singleton<SceneManager>
 
         if(m_loadedScenes.ContainsKey(sceneName))
         {
-            Debug.LogError($"Trying to register an already existing scene loader for '{sceneName}' scene. " +
-                $"This is not supported, only a single scene loader should be present for each scene.");
-
+            Debug.LogError($"Trying to register an already existing scene loader for '{sceneName}' scene. This is not supported, only a single scene loader should be present for each scene.");
             return;
         }
 
         m_loadedScenes[sceneName] = loader;
     }
 
-    private IEnumerator LoadSceneAsync(string sceneName)
+    public void UnregisterSceneLoader(Scenes scene)
     {
-        Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName);
+        string sceneName = scene.ToString();
+
+        if (!m_loadedScenes.ContainsKey(sceneName))
+        {
+            Debug.LogError($"Trying to unregister '{sceneName}' which is not registered.");
+            return;
+        }
+
+        m_loadedScenes.Remove(sceneName);
+    }
+
+    public async UniTask LoadSceneAsync(Scenes sceneName)
+    {
+        string sceneString = GetSceneName(sceneName);
+        Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneString);
 
         if(scene.isLoaded)
         {
-            yield break;
+            return;
         }
 
-        yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneString, LoadSceneMode.Additive);
     }
 
-    private IEnumerator UnLoadSyncAsync(string sceneName)
+    public async UniTask UnLoadSceneAsync(Scenes sceneName)
     {
-        Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName);
+        string sceneString = GetSceneName(sceneName);
+        Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneString);
 
         if (!scene.isLoaded)
         {
             Debug.LogError($"Failed to unload scene, '{sceneName}' is not loaded.");
-            yield break;
+            return;
         }
 
-        if(m_loadedScenes.TryGetValue(sceneName, out SceneLoader loader))
+        if(m_loadedScenes.TryGetValue(sceneString, out SceneLoader loader))
         {
             if (loader == null)
             {
@@ -78,11 +86,12 @@ public class SceneManager : Singleton<SceneManager>
             }
             else
             {
-                yield return StartCoroutine(loader.Unload());
+                await loader.Unload();
+                UnregisterSceneLoader(sceneName);
             }
         }
 
-        yield return UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneName);
+        await UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneString);
     }
 
     private string GetSceneName(Scenes scene)

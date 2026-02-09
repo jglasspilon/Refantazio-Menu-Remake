@@ -11,29 +11,37 @@ public class MenuManager : MonoBehaviour
 
     public event Action OnPageChange, OnPageChangeComplete;
 
-    private GameStateManager m_gameState;
+    private IGameStateManagementService m_gameState;
     private Dictionary<EMenuPages, MenuPage> m_menuPages;
     private MenuPage m_activePage;
     private int m_pageCount;
 
     private void Awake()
     {
-        m_gameState = GameStateManager.Instance;
         m_menuPages = GetComponentsInChildren<MenuPage>(true).ToDictionary(x => x.PageName, x => x);
         foreach(MenuPage page in m_menuPages.Values)
         {
             page.Close();
         }
+
+        if(ObjectResolver.Instance.TryResolve(OnGameStateManagerChanged, out m_gameState))
+        {
+            m_gameState.OnGameStateChanged += OnGameStateChanged;
+        }
     }
 
-    private void OnEnable()
+    private void OnDestroy()
     {
+        if (m_gameState != null)
+        {
+            m_gameState.OnGameStateChanged -= OnGameStateChanged;
+        }
+    }
+
+    private void OnGameStateManagerChanged()
+    {
+        m_gameState = ObjectResolver.Instance.Resolve<IGameStateManagementService>();
         m_gameState.OnGameStateChanged += OnGameStateChanged;
-    }
-
-    private void OnDisable()
-    {
-        m_gameState.OnGameStateChanged -= OnGameStateChanged;
     }
 
     private void OnGameStateChanged(EGameState gameState)
@@ -124,7 +132,7 @@ public class MenuManager : MonoBehaviour
             m_activePage.Close();
         }
 
-        m_gameState.ReturnToSceneState();
+        m_gameState.ReturnToGameplaySate();
     }    
 }
 

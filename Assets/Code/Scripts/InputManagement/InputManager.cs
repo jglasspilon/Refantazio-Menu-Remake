@@ -1,35 +1,41 @@
-public class InputManager : Singleton<InputManager>
+using System;
+using UnityEngine;
+
+public class InputManager : MonoBehaviour, IInputManagementService
 {
     private GameInput m_input;
-    private GameStateManager m_gameState;
+    private IGameStateManagementService m_gameState;
 
-    public GameInput InputActions
+    public GameInput InputActions {get { return m_input; } }
+
+    private void Awake()
     {
-        get
+        m_input = new GameInput();
+        ObjectResolver.Instance.Register<IInputManagementService>(this);       
+
+        if(ObjectResolver.Instance.TryResolve(OnGameStateManagerChanged, out m_gameState))
         {
-            Initialize();
-            return m_input;
+            m_gameState.OnGameStateChanged += SetInputMapFromGameState;
+            SetInputMapFromGameState(m_gameState.CurrentState);
+        }      
+    }
+
+    private void OnDestroy()
+    {
+        if (m_gameState != null)
+        {
+            m_gameState.OnGameStateChanged -= SetInputMapFromGameState;
         }
     }
 
-    protected override void Awake()
+    private void OnGameStateManagerChanged()
     {
-        base.Awake();
-        Initialize();
-        SetInputMap(m_gameState.CurrentState);
+        m_gameState = ObjectResolver.Instance.Resolve<IGameStateManagementService>();
+        m_gameState.OnGameStateChanged += SetInputMapFromGameState;
+        SetInputMapFromGameState(m_gameState.CurrentState);
     }
 
-    private void OnEnable()
-    {
-        m_gameState.OnGameStateChanged += SetInputMap;
-    }
-
-    private void OnDisable()
-    {
-        m_gameState.OnGameStateChanged -= SetInputMap;
-    }
-
-    public void SetInputMap(EGameState state)
+    private void SetInputMapFromGameState(EGameState state)
     {
         m_input.Field.Disable();
         m_input.Menu.Disable();
@@ -42,19 +48,6 @@ public class InputManager : Singleton<InputManager>
             case EGameState.Menu:
                 m_input.Menu.Enable();
                 break;
-        }
-    }
-
-    private void Initialize()
-    {
-        if (m_input == null)
-        {
-            m_input = new GameInput();
-        }
-
-        if(m_gameState == null)
-        {
-            m_gameState = GameStateManager.Instance;
         }
     }
 }

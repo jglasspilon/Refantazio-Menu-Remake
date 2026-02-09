@@ -24,6 +24,12 @@ public class MenuInputHandler : InputHandler
 
     private void EnableMenuBinding()
     {
+        if (m_inputManager == null)
+        {
+            Debug.LogError("Failed to enable menu binding, input manager unresolved.");
+            return;
+        }
+
         m_input.Menu.Confirm.performed += OnConfirm;
         m_input.Menu.CycleUp.performed += OnCycleUp;
         m_input.Menu.CycleDown.performed += OnCycleDown;
@@ -32,6 +38,12 @@ public class MenuInputHandler : InputHandler
 
     private void DisableMenuBinding()
     {
+        if (m_inputManager == null)
+        {
+            Debug.LogError("Failed to disabled menu binding, input manager unresolved.");
+            return;
+        }
+
         m_input.Menu.Confirm.performed -= OnConfirm;
         m_input.Menu.CycleUp.performed -= OnCycleUp;
         m_input.Menu.CycleDown.performed -= OnCycleDown;

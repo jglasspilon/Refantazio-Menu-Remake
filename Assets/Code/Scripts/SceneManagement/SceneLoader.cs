@@ -1,4 +1,4 @@
-using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class SceneLoader : MonoBehaviour
@@ -9,18 +9,23 @@ public class SceneLoader : MonoBehaviour
     [SerializeField]
     private EGameState m_sceneState;
 
-    private void Awake()
+    private ISceneLoaderService m_sceneLoaderService;
+    private IGameStateManagementService m_gameStateManagementService;
+
+    protected virtual void Awake()
     {
-        SceneManager.Instance.RegisterSceneLoader(m_sceneName, this);
+        m_gameStateManagementService = ObjectResolver.Instance.Resolve<IGameStateManagementService>();
+        m_sceneLoaderService = ObjectResolver.Instance.Resolve<ISceneLoaderService>();
+        m_sceneLoaderService.RegisterSceneLoader(m_sceneName, this);
         Load();
     }
 
     public virtual void Load()
     {
-        GameStateManager.Instance.CurrentSceneState = m_sceneState;
+        m_gameStateManagementService.UpdateGameplayState(m_sceneState);
     }
-    public virtual IEnumerator Unload()
+    public virtual async UniTask Unload()
     {
-        yield break;
+        return;
     }
 }

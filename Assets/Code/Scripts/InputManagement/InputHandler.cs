@@ -1,28 +1,31 @@
+using System;
 using UnityEngine;
 
 public abstract class InputHandler : MonoBehaviour
 {
     protected GameInput m_input;
-    protected InputManager m_inputManager;
+    protected IInputManagementService m_inputManager;
 
     private void OnEnable()
     {
-        if (m_inputManager == null)
-        {
-            m_inputManager = InputManager.Instance;
-        }
-
-        if (m_input == null)
+        if (ObjectResolver.Instance.TryResolve(OnInputManagerChanged, out m_inputManager))
         {
             m_input = m_inputManager.InputActions;
+            BindEvents();
+            return;
         }
-
-        BindEvents();
     }
 
     private void OnDisable()
     {
         UnBindEvents();
+    }
+
+    private void OnInputManagerChanged()
+    {
+        m_inputManager = ObjectResolver.Instance.Resolve<IInputManagementService>();
+        m_input = m_inputManager.InputActions;
+        BindEvents();
     }
 
     protected abstract void BindEvents();
