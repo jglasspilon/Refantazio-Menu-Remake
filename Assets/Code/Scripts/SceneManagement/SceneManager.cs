@@ -8,13 +8,16 @@ using UnityEngine.SceneManagement;
 public class SceneManager : MonoBehaviour, ISceneLoaderService
 {
     [SerializeField]
-    private Scenes m_launchScene;
+    private EScenes m_launchScene;
 
     [SerializeField]
-    private SerializedKeyValuePair<Scenes, string>[] m_mappedScenes;
+    private SerializedKeyValuePair<EScenes, string>[] m_mappedScenes;
 
-    private Dictionary<Scenes, string> m_mappedScenesDict;
+    private Dictionary<EScenes, string> m_mappedScenesDict;
     private Dictionary<string, SceneLoader> m_loadedScenes = new Dictionary<string, SceneLoader>();
+    private SceneData m_currentGameplaySceneData;
+
+    public SceneData CurrentGameplaySceneData { get { return m_currentGameplaySceneData; } }
 
     protected void Awake()
     {
@@ -28,7 +31,7 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
         ObjectResolver.Instance.Unregister<ISceneLoaderService>();
     }
 
-    public void RegisterSceneLoader(Scenes scene, SceneLoader loader)
+    public void RegisterSceneLoader(EScenes scene, SceneLoader loader)
     {
         string sceneName = scene.ToString();
 
@@ -39,9 +42,12 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
         }
 
         m_loadedScenes[sceneName] = loader;
+
+        if (loader.SceneData.Data.SceneType == ESceneTypes.Gameplay)
+            m_currentGameplaySceneData = loader.SceneData;
     }
 
-    public void UnregisterSceneLoader(Scenes scene)
+    public void UnregisterSceneLoader(EScenes scene)
     {
         string sceneName = scene.ToString();
 
@@ -54,7 +60,7 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
         m_loadedScenes.Remove(sceneName);
     }
 
-    public async UniTask LoadSceneAsync(Scenes sceneName)
+    public async UniTask LoadSceneAsync(EScenes sceneName)
     {
         string sceneString = GetSceneName(sceneName);
         Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneString);
@@ -67,7 +73,7 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
         await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneString, LoadSceneMode.Additive);
     }
 
-    public async UniTask UnLoadSceneAsync(Scenes sceneName)
+    public async UniTask UnLoadSceneAsync(EScenes sceneName)
     {
         string sceneString = GetSceneName(sceneName);
         Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneString);
@@ -94,7 +100,7 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
         await UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneString);
     }
 
-    private string GetSceneName(Scenes scene)
+    private string GetSceneName(EScenes scene)
     {
         if(!m_mappedScenesDict.ContainsKey(scene))
         {
@@ -106,8 +112,15 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
     }
 }
 
-public enum Scenes
+public enum EScenes
 {
     Launch,
     Demo, 
+}
+
+public enum ESceneTypes
+{
+    Gameplay,
+    UI,
+    Launch
 }

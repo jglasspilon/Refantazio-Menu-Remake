@@ -877,8 +877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b12dc5377d7bd4f45b31332aed99c443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
-  m_sceneName: 1
-  m_sceneState: 1
+  m_sceneData: {fileID: 11400000, guid: 4fd5bc872c440b74e8db60a729062611, type: 2}
 --- !u!4 &1958821453
 Transform:
   m_ObjectHideFlags: 0

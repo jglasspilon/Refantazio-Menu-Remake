@@ -36815,8 +36815,6 @@ MonoBehaviour:
     Value: LaunchScene
   - Key: 1
     Value: DemoScene
-  - Key: 2
-    Value: MenuScene
 --- !u!4 &1178421308
 Transform:
   m_ObjectHideFlags: 0

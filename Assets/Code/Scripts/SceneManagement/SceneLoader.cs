@@ -4,25 +4,24 @@ using UnityEngine;
 public class SceneLoader : MonoBehaviour
 {
     [SerializeField]
-    private Scenes m_sceneName;
-
-    [SerializeField]
-    private EGameState m_sceneState;
+    private SceneData m_sceneData;
 
     private ISceneLoaderService m_sceneLoaderService;
     private IGameStateManagementService m_gameStateManagementService;
+
+    public SceneData SceneData {  get { return m_sceneData; } }
 
     protected virtual void Awake()
     {
         m_gameStateManagementService = ObjectResolver.Instance.Resolve<IGameStateManagementService>();
         m_sceneLoaderService = ObjectResolver.Instance.Resolve<ISceneLoaderService>();
-        m_sceneLoaderService.RegisterSceneLoader(m_sceneName, this);
+        m_sceneLoaderService.RegisterSceneLoader(m_sceneData.Data.SceneName, this);
         Load();
     }
 
     public virtual void Load()
     {
-        m_gameStateManagementService.UpdateGameplayState(m_sceneState);
+        m_gameStateManagementService.UpdateGameplayState(m_sceneData.Data.SceneState);
     }
     public virtual async UniTask Unload()
     {
