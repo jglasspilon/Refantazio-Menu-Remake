@@ -12,13 +12,13 @@ public class HUDContext : MonoBehaviour
     [SerializeField]
     private LoggingProfile m_logProfile;
 
-    private Dictionary<EWidgetTypes, HUDWidget> m_widgets = new Dictionary<EWidgetTypes, HUDWidget>();
+    private Dictionary<EWidgetTypes, IHUDWidget> m_widgets = new Dictionary<EWidgetTypes, IHUDWidget>();
 
     public EGameState HUDName { get { return m_hudName; } }
 
     private void Awake()
     {
-        m_widgets = GetComponentsInChildren<HUDWidget>().ToDictionary(x => x.WidgetType);
+        m_widgets = GetComponentsInChildren<IHUDWidget>().ToDictionary(x => x.WidgetType);
     }
 
     public async UniTask OpenAsync()
@@ -41,7 +41,7 @@ public class HUDContext : MonoBehaviour
     {
         foreach (EWidgetTypes widgetType in widgetsToShow)
         {
-            if(m_widgets.TryGetValue(widgetType, out HUDWidget widget))
+            if(m_widgets.TryGetValue(widgetType, out IHUDWidget widget))
             {
                 widget.ShowAsync();
             }
@@ -52,7 +52,7 @@ public class HUDContext : MonoBehaviour
     {
         foreach (EWidgetTypes widgetType in widgetsToHide)
         {
-            if (m_widgets.TryGetValue(widgetType, out HUDWidget widget))
+            if (m_widgets.TryGetValue(widgetType, out IHUDWidget widget))
             {
                 if (hideInstant)
                     widget.Hide();
@@ -65,7 +65,7 @@ public class HUDContext : MonoBehaviour
     public void Close()
     {
         gameObject.SetActive(false);
-        foreach (HUDWidget widget in m_widgets.Values)
+        foreach (IHUDWidget widget in m_widgets.Values)
         {
             widget.Hide();
         }

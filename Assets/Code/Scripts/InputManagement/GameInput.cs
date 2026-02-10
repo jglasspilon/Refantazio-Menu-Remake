@@ -128,6 +128,45 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""Town"",
+            ""id"": ""e3e888ad-80df-463f-ab87-a63dba9ad62e"",
+            ""actions"": [
+                {
+                    ""name"": ""OpenMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""c7a89fa3-40e8-4967-9d18-956e8aa6bb13"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""184dfa43-134d-4969-ae22-aeda20de14bb"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bf629d00-48ac-4494-9bbd-7f406b246398"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""Menu"",
             ""id"": ""334dbda6-24ad-455b-b155-5aebac6d5948"",
             ""actions"": [
@@ -276,6 +315,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         // Field
         m_Field = asset.FindActionMap("Field", throwIfNotFound: true);
         m_Field_OpenMenu = m_Field.FindAction("OpenMenu", throwIfNotFound: true);
+        // Town
+        m_Town = asset.FindActionMap("Town", throwIfNotFound: true);
+        m_Town_OpenMenu = m_Town.FindAction("OpenMenu", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Back = m_Menu.FindAction("Back", throwIfNotFound: true);
@@ -287,6 +329,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     ~@GameInput()
     {
         UnityEngine.Debug.Assert(!m_Field.enabled, "This will cause a leak and performance issues, GameInput.Field.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Town.enabled, "This will cause a leak and performance issues, GameInput.Town.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Menu.enabled, "This will cause a leak and performance issues, GameInput.Menu.Disable() has not been called.");
     }
 
@@ -456,6 +499,102 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     /// </summary>
     public FieldActions @Field => new FieldActions(this);
 
+    // Town
+    private readonly InputActionMap m_Town;
+    private List<ITownActions> m_TownActionsCallbackInterfaces = new List<ITownActions>();
+    private readonly InputAction m_Town_OpenMenu;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Town".
+    /// </summary>
+    public struct TownActions
+    {
+        private @GameInput m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public TownActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Town/OpenMenu".
+        /// </summary>
+        public InputAction @OpenMenu => m_Wrapper.m_Town_OpenMenu;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Town; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="TownActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(TownActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="TownActions" />
+        public void AddCallbacks(ITownActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TownActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TownActionsCallbackInterfaces.Add(instance);
+            @OpenMenu.started += instance.OnOpenMenu;
+            @OpenMenu.performed += instance.OnOpenMenu;
+            @OpenMenu.canceled += instance.OnOpenMenu;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="TownActions" />
+        private void UnregisterCallbacks(ITownActions instance)
+        {
+            @OpenMenu.started -= instance.OnOpenMenu;
+            @OpenMenu.performed -= instance.OnOpenMenu;
+            @OpenMenu.canceled -= instance.OnOpenMenu;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="TownActions.UnregisterCallbacks(ITownActions)" />.
+        /// </summary>
+        /// <seealso cref="TownActions.UnregisterCallbacks(ITownActions)" />
+        public void RemoveCallbacks(ITownActions instance)
+        {
+            if (m_Wrapper.m_TownActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="TownActions.AddCallbacks(ITownActions)" />
+        /// <seealso cref="TownActions.RemoveCallbacks(ITownActions)" />
+        /// <seealso cref="TownActions.UnregisterCallbacks(ITownActions)" />
+        public void SetCallbacks(ITownActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TownActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TownActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="TownActions" /> instance referencing this action map.
+    /// </summary>
+    public TownActions @Town => new TownActions(this);
+
     // Menu
     private readonly InputActionMap m_Menu;
     private List<IMenuActions> m_MenuActionsCallbackInterfaces = new List<IMenuActions>();
@@ -590,6 +729,21 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     /// <seealso cref="FieldActions.AddCallbacks(IFieldActions)" />
     /// <seealso cref="FieldActions.RemoveCallbacks(IFieldActions)" />
     public interface IFieldActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "OpenMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenMenu(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Town" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="TownActions.AddCallbacks(ITownActions)" />
+    /// <seealso cref="TownActions.RemoveCallbacks(ITownActions)" />
+    public interface ITownActions
     {
         /// <summary>
         /// Method invoked when associated input action "OpenMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.

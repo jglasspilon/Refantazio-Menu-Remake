@@ -15,6 +15,6 @@ MonoBehaviour:
   m_sceneData:
     SceneType: 0
     SceneName: 1
-    SceneState: 1
+    SceneState: 2
     ParentAreaName: Demo Scene
-    AreaName: UI Testing
+    AreaName: Town UI

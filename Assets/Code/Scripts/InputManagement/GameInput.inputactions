@@ -42,6 +42,45 @@
             ]
         },
         {
+            "name": "Town",
+            "id": "e3e888ad-80df-463f-ab87-a63dba9ad62e",
+            "actions": [
+                {
+                    "name": "OpenMenu",
+                    "type": "Button",
+                    "id": "c7a89fa3-40e8-4967-9d18-956e8aa6bb13",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "184dfa43-134d-4969-ae22-aeda20de14bb",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf629d00-48ac-4494-9bbd-7f406b246398",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "Menu",
             "id": "334dbda6-24ad-455b-b155-5aebac6d5948",
             "actions": [

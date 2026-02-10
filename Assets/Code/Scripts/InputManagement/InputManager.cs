@@ -39,9 +39,13 @@ public class InputManager : MonoBehaviour, IInputManagementService
     {
         m_input.Field.Disable();
         m_input.Menu.Disable();
+        m_input.Town.Disable();
 
         switch(state)
-        {          
+        {
+            case EGameState.Town:
+                m_input.Town.Enable();
+                break;
             case EGameState.Field:
                 m_input.Field.Enable();
                 break;

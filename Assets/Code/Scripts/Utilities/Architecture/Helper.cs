@@ -38,7 +38,15 @@ public class Helper
         public static async UniTask WaitForCurrentPageAnimationToEnd(Animator anim)
         {
             await UniTask.NextFrame();
-            await UniTask.Delay(TimeSpan.FromSeconds(anim.GetCurrentAnimatorStateInfo(0).length), ignoreTimeScale: false);
+            await Timing.DelaySeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        }        
+    }
+
+    public class Timing
+    {
+        public static async UniTask DelaySeconds(float seconds)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(seconds), ignoreTimeScale: false);
         }
     }
 }

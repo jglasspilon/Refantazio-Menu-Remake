@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public interface HUDWidget
+public interface IHUDWidget
 {
     public EWidgetTypes WidgetType { get; }
     public UniTask ShowAsync();

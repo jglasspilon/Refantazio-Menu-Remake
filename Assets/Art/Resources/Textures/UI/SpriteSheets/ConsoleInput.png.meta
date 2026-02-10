@@ -105,7 +105,7 @@ TextureImporter:
         width: 61
         height: 54
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -127,7 +127,7 @@ TextureImporter:
         width: 61
         height: 54
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -149,7 +149,7 @@ TextureImporter:
         width: 61
         height: 62
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -171,7 +171,7 @@ TextureImporter:
         width: 60
         height: 61
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -180,6 +180,248 @@ TextureImporter:
       bones: []
       spriteID: ce41049f4ed9e404a8b47d6a6e009413
       internalID: -850037012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PS5_R1_Light
+      rect:
+        serializedVersion: 2
+        x: 1262
+        y: 622
+        width: 62
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25365c00211b4e540a691a983114c6c1
+      internalID: 1377747979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PS5_Start
+      rect:
+        serializedVersion: 2
+        x: 1480
+        y: 723
+        width: 62
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0aa8367a391b524590ff9aa68e36215
+      internalID: 1841416633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PS5_Down
+      rect:
+        serializedVersion: 2
+        x: 1492
+        y: 942
+        width: 68
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f816a23f04c88e64ba6ea3fafdfe4107
+      internalID: -1437572157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PS5_Left
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 941
+        width: 68
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d38bc71239074514d923158e94454765
+      internalID: 1136019290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PS5_Up
+      rect:
+        serializedVersion: 2
+        x: 1476
+        y: 834
+        width: 67
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b697b061d8788a4aa5cdce25f2f147f
+      internalID: 2009387075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PS5_Right
+      rect:
+        serializedVersion: 2
+        x: 1816
+        y: 942
+        width: 68
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 544d68d96fda6204fac55a820a3ab78a
+      internalID: -15770380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PS5_Square
+      rect:
+        serializedVersion: 2
+        x: 1802
+        y: 728
+        width: 63
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00d4e55fda1c1c4498d9733a2a6dbe3e
+      internalID: -1839806366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PS5_Square_Light
+      rect:
+        serializedVersion: 2
+        x: 1909
+        y: 727
+        width: 65
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28c07b8fcfe2fce4682b2cf135786847
+      internalID: -292695845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PS5_Triangle
+      rect:
+        serializedVersion: 2
+        x: 1696
+        y: 620
+        width: 60
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c53943f65e7f4b14ebeddaebe750863e
+      internalID: 1767636465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PS5_Triangle_Light
+      rect:
+        serializedVersion: 2
+        x: 1803
+        y: 619
+        width: 62
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abe814c169656c6458a5e972dd976aac
+      internalID: -1681596288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PS5_Cross_Light
+      rect:
+        serializedVersion: 2
+        x: 1366
+        y: 403
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afc9211cfcd8b4f4ab6be0b9b0beca7f
+      internalID: -1575048820
       vertices: []
       indices: 
       edges: []
@@ -200,8 +442,19 @@ TextureImporter:
     nameFileIdTable:
       PS5_Circle: 668232390
       PS5_Cross: -850037012
+      PS5_Cross_Light: -1575048820
+      PS5_Down: -1437572157
       PS5_L1: -208500218
+      PS5_Left: 1136019290
       PS5_R1: 1301274962
+      PS5_R1_Light: 1377747979
+      PS5_Right: -15770380
+      PS5_Square: -1839806366
+      PS5_Square_Light: -292695845
+      PS5_Start: 1841416633
+      PS5_Triangle: 1767636465
+      PS5_Triangle_Light: -1681596288
+      PS5_Up: 2009387075
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
