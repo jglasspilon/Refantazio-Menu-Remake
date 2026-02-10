@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneData
   m_sceneData:
     SceneType: 0
-    SceneName: 0
-    SceneState: 0
+    SceneName: 1
+    SceneState: 1
     ParentAreaName: Demo Scene
     AreaName: UI Testing

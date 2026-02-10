@@ -13,6 +13,9 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
     [SerializeField]
     private SerializedKeyValuePair<EScenes, string>[] m_mappedScenes;
 
+    [SerializeField]
+    private LoggingProfile m_logProfile;
+
     private Dictionary<EScenes, string> m_mappedScenesDict;
     private Dictionary<string, SceneLoader> m_loadedScenes = new Dictionary<string, SceneLoader>();
     private SceneData m_currentGameplaySceneData;
@@ -37,7 +40,7 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
 
         if(m_loadedScenes.ContainsKey(sceneName))
         {
-            Debug.LogError($"Trying to register an already existing scene loader for '{sceneName}' scene. This is not supported, only a single scene loader should be present for each scene.");
+            Logger.LogError($"Trying to register an already existing scene loader for '{sceneName}' scene. This is not supported, only a single scene loader should be present for each scene.", gameObject, m_logProfile);
             return;
         }
 
@@ -53,7 +56,7 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
 
         if (!m_loadedScenes.ContainsKey(sceneName))
         {
-            Debug.LogError($"Trying to unregister '{sceneName}' which is not registered.");
+            Logger.LogError($"Trying to unregister '{sceneName}' which is not registered.", gameObject, m_logProfile);
             return;
         }
 
@@ -70,7 +73,9 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
             return;
         }
 
+        Logger.Log($"Stared loading '{sceneName}' scene.", gameObject, m_logProfile);
         await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneString, LoadSceneMode.Additive);
+        Logger.Log($"Loaded '{sceneName}' scene succesfully.", gameObject, m_logProfile);
     }
 
     public async UniTask UnLoadSceneAsync(EScenes sceneName)
@@ -80,7 +85,7 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
 
         if (!scene.isLoaded)
         {
-            Debug.LogError($"Failed to unload scene, '{sceneName}' is not loaded.");
+            Logger.LogError($"Failed to unload scene, '{sceneName}' is not loaded.", gameObject, m_logProfile);
             return;
         }
 
@@ -88,7 +93,7 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
         {
             if (loader == null)
             {
-                Debug.LogError($"Failed to to run sceneLoader unload, '{sceneName}' sceneLoader is null.");
+                Logger.LogError($"Failed to to run sceneLoader unload, '{sceneName}' sceneLoader is null.", gameObject, m_logProfile);
             }
             else
             {
@@ -97,14 +102,16 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
             }
         }
 
+        Logger.Log($"Stared unloading '{sceneName}' scene.", gameObject, m_logProfile);
         await UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneString);
+        Logger.Log($"Unloaded '{sceneName}' scene succesfully.", gameObject, m_logProfile);
     }
 
     private string GetSceneName(EScenes scene)
     {
         if(!m_mappedScenesDict.ContainsKey(scene))
         {
-            Debug.LogError($"Failed to find mapping for {scene}. Will try to parse to string but result may not be as expected.");
+            Logger.LogError($"Failed to find mapping for {scene}. Will try to parse to string but result may not be as expected.", gameObject, m_logProfile);
             return scene.ToString();
         }
 

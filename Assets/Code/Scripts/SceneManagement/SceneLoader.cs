@@ -21,7 +21,7 @@ public class SceneLoader : MonoBehaviour
 
     public virtual void Load()
     {
-        m_gameStateManagementService.UpdateGameplayState(m_sceneData.Data.SceneState);
+        m_gameStateManagementService.UpdateGameplayState(m_sceneData.Data.SceneState, m_sceneData.Data.SceneType == ESceneTypes.Gameplay);
     }
     public virtual async UniTask Unload()
     {

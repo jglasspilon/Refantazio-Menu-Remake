@@ -7,7 +7,7 @@ public interface IGameStateManagementService: IServiceWithLifecycle
     public EGameState CurrentState { get; }
 
     public void ChangeState(EGameState newState);
-    public void UpdateGameplayState(EGameState state);
+    public void UpdateGameplayState(EGameState state, bool changeCurrentState);
     public void ReturnToGameplaySate();
 
 }

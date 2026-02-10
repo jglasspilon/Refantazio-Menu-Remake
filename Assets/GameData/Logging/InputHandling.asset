@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fec5fcefa28579840b749e542aff6b13, type: 3}
-  m_Name: UIStateManagement
+  m_Name: InputHandling
   m_EditorClassIdentifier: Assembly-CSharp::LoggingProfile
   LoggingEnabled: 1
-  Prefix: UI State Management
-  PrefixColor: {r: 0, g: 0.9386678, b: 1, a: 1}
+  Prefix: Input Handling
+  PrefixColor: {r: 1, g: 0.5000677, b: 0.1641509, a: 1}

@@ -8,13 +8,13 @@ public class HUDManager : MonoBehaviour
     [SerializeField]
     private LoggingProfile m_logProfile;
     private IGameStateManagementService m_gameState;
-    private Dictionary<EGameState, HUD> m_huds = new Dictionary<EGameState, HUD>();
-    private HUD m_activeHUD;
+    private Dictionary<EGameState, HUDContext> m_huds = new Dictionary<EGameState, HUDContext>();
+    private HUDContext m_activeHUD;
 
     private void Awake()
     {
-        m_huds = GetComponentsInChildren<HUD>(true).ToDictionary(x => x.HUDName, x => x);
-        foreach (HUD hud in m_huds.Values)
+        m_huds = GetComponentsInChildren<HUDContext>(true).ToDictionary(x => x.HUDName, x => x);
+        foreach (HUDContext hud in m_huds.Values)
         {
             hud.Close();
         }
@@ -46,7 +46,7 @@ public class HUDManager : MonoBehaviour
 
     private async UniTask ChangeHUDContext(EGameState gameState)
     {
-        if (!m_huds.TryGetValue(gameState, out HUD nextHUD))
+        if (!m_huds.TryGetValue(gameState, out HUDContext nextHUD))
         {
             string msg = $"Failed to change HUD '{gameState}'. '{gameState}' HUD was not found as a child of this Game Object.";
             Logger.LogError(msg, gameObject, m_logProfile);

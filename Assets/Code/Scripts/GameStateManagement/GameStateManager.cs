@@ -1,15 +1,16 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class GameStateManager : MonoBehaviour, IGameStateManagementService
 {
     public event Action<EGameState> OnGameStateChanged;
 
     [SerializeField]
-    private EGameState m_startingState;
+    private LoggingProfile m_logProfile;
 
     private EGameState m_currentState;
-    private EGameState m_gameplayState;
+    private EGameState m_gameplayState = EGameState.Field;
 
     public EGameState CurrentState { get { return m_currentState; } }
 
@@ -20,7 +21,7 @@ public class GameStateManager : MonoBehaviour, IGameStateManagementService
 
     public void Initialize()
     {
-        ChangeState(m_startingState);
+        
     }
 
     public void Shutdown()
@@ -32,20 +33,25 @@ public class GameStateManager : MonoBehaviour, IGameStateManagementService
     {
         m_currentState = newState;
         OnGameStateChanged?.Invoke(m_currentState);
+        Logger.Log($"Changed game state to '{newState}'.", gameObject, m_logProfile);
     }
 
     public void ReturnToGameplaySate()
     {
         m_currentState = m_gameplayState;
         OnGameStateChanged?.Invoke(m_currentState);
+        Logger.Log($"Returned to gameplay state '{m_gameplayState}'.", gameObject, m_logProfile);
     }
 
-    public void UpdateGameplayState(EGameState state)
+    public void UpdateGameplayState(EGameState state, bool changeCurrentState)
     {
         m_gameplayState = state;
-    }
 
-    
+        if(changeCurrentState)
+        {
+            ChangeState(state);
+        }
+    }   
 }
 
 public enum EGameState
@@ -55,5 +61,6 @@ public enum EGameState
     Town,
     Combat,
     Dialoque,
-    Cinematic
+    Cinematic,
+    Launch
 }
