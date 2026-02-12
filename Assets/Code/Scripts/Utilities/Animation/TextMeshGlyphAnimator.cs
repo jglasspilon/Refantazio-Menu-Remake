@@ -19,9 +19,9 @@ public class TextMeshGlyphAnimator : MonoBehaviour
 
     private float m_previousTimer;
 
-    public float CurveTimer { get { return m_curveTimer; } set { m_curveTimer = value; } }
-    public bool IsDriversValid { get { return m_glyphDrivers.Length >= m_text.textInfo.characterCount; } }
-    public bool IsTextValid { get { return m_text != null; } }
+    public float CurveTimer => m_curveTimer;
+    public bool IsDriversValid => m_glyphDrivers.Length >= m_text.textInfo.characterCount;
+    public bool IsTextValid => m_text != null;
 
     private void Reset()
     {

@@ -18,7 +18,7 @@ public abstract class MenuPage : MonoBehaviour
     private LoggingProfile m_logProfile;
 
     private Stack<object> m_breadcrumb = new Stack<object>(); //TODO: change to actual page segment once implemented. 
-    public EMenuPages PageName {  get { return m_pageName; } }
+    public EMenuPages PageName => m_pageName;
     public int PageCount { get; private set; }
 
     public virtual async UniTask OpenAsync(int pageCount)

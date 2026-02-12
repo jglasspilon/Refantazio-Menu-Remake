@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450fa67aa3e3fe849bd946fb635b81d6, type: 3}
+  m_Name: EsotericHairVessel
+  m_EditorClassIdentifier: Assembly-CSharp::Item
+  m_id: 20037dfb-cd27-449e-98ed-01cdb6ce82f7
+  m_name: Esoteric Hair Vessel
+  m_category: 2
+  m_price: 0
+  m_description: A vessel for Elite Summoners to call upon Wilder. Wilder uses multi-target
+    Electric magic.

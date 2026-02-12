@@ -7,14 +7,14 @@ using System.Linq;
 public class HUDContext : MonoBehaviour
 {
     [SerializeField]
-    private EGameState m_hudName; 
+    private EGameStates m_hudName; 
 
     [SerializeField]
     private LoggingProfile m_logProfile;
 
     private Dictionary<EWidgetTypes, IHUDWidget> m_widgets = new Dictionary<EWidgetTypes, IHUDWidget>();
 
-    public EGameState HUDName { get { return m_hudName; } }
+    public EGameStates HUDName => m_hudName;
 
     private void Awake()
     {

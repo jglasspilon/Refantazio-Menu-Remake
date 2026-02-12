@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450fa67aa3e3fe849bd946fb635b81d6, type: 3}
+  m_Name: Amethyst
+  m_EditorClassIdentifier: Assembly-CSharp::Item
+  m_id: 799daba2-223b-48ae-9f07-d43067af52d0
+  m_name: Amethyst
+  m_category: 1
+  m_price: 3000
+  m_description: A gemstone with high trade value. Consider selling it.

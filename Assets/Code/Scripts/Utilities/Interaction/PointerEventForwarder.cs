@@ -6,7 +6,7 @@ public class PointerEventForwarder : MonoBehaviour, IPointerDownHandler, IPointe
     [SerializeField]
     private GameObject m_target;
 
-    public GameObject Target { get { return m_target; } }
+    public GameObject Target => m_target;
 
     public void OnPointerEnter(PointerEventData eventData)
     {

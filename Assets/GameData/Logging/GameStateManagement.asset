@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LoggingProfile
   LoggingEnabled: 1
   Prefix: Game State Management
-  PrefixColor: {r: 0.8867924, g: 0.09871833, b: 0.09871833, a: 1}
+  PrefixColor: {r: 0.09803923, g: 0.7761897, b: 0.8862745, a: 1}

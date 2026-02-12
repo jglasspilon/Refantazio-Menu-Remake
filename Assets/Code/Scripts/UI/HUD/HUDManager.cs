@@ -8,7 +8,7 @@ public class HUDManager : MonoBehaviour
     [SerializeField]
     private LoggingProfile m_logProfile;
     private IGameStateManagementService m_gameState;
-    private Dictionary<EGameState, HUDContext> m_huds = new Dictionary<EGameState, HUDContext>();
+    private Dictionary<EGameStates, HUDContext> m_huds = new Dictionary<EGameStates, HUDContext>();
     private HUDContext m_activeHUD;
 
     private void Awake()
@@ -39,12 +39,12 @@ public class HUDManager : MonoBehaviour
         m_gameState.OnGameStateChanged += OnGameStateChanged;
     }
 
-    private void OnGameStateChanged(EGameState gameState)
+    private void OnGameStateChanged(EGameStates gameState)
     {
         ChangeHUDContext(gameState);
     }
 
-    private async UniTask ChangeHUDContext(EGameState gameState)
+    private async UniTask ChangeHUDContext(EGameStates gameState)
     {
         if (!m_huds.TryGetValue(gameState, out HUDContext nextHUD))
         {

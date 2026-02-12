@@ -11,7 +11,7 @@ public class PageSelecterList : MonoBehaviour
     private MainMenuPage m_parentPage;
     private Dictionary<int, PageSelecter> m_pageSelectors;    
 
-    public int NumSelecters { get { return m_pageSelectors.Values.Count(); } } 
+    public int NumSelecters => m_pageSelectors.Values.Count(); 
 
     private void Awake()
     {

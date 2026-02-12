@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fec5fcefa28579840b749e542aff6b13, type: 3}
+  m_Name: PartyManagement
+  m_EditorClassIdentifier: Assembly-CSharp::LoggingProfile
+  LoggingEnabled: 1
+  Prefix: Party Management
+  PrefixColor: {r: 0.8867924, g: 0.5167704, b: 0.11210393, a: 1}
