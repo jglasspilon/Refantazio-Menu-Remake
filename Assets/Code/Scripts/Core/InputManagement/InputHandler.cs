@@ -8,11 +8,9 @@ public abstract class InputHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        if (ObjectResolver.Instance.TryResolve(OnInputManagerChanged, out m_inputManager))
+        if (ObjectResolver.Instance.TryResolve(OnInputManagerChanged, out IInputManagementService inputManager))
         {
-            m_input = m_inputManager.InputActions;
-            BindEvents();
-            return;
+            OnInputManagerChanged(inputManager);
         }
     }
 
@@ -21,9 +19,9 @@ public abstract class InputHandler : MonoBehaviour
         UnBindEvents();
     }
 
-    private void OnInputManagerChanged()
+    private void OnInputManagerChanged(IInputManagementService newReference)
     {
-        m_inputManager = ObjectResolver.Instance.Resolve<IInputManagementService>();
+        m_inputManager = newReference;
         m_input = m_inputManager.InputActions;
         BindEvents();
     }

@@ -13,10 +13,9 @@ public class InputManager : MonoBehaviour, IInputManagementService
         m_input = new GameInput();
         ObjectResolver.Instance.Register<IInputManagementService>(this);       
 
-        if(ObjectResolver.Instance.TryResolve(OnGameStateManagerChanged, out m_gameState))
+        if(ObjectResolver.Instance.TryResolve(OnGameStateManagerChanged, out IGameStateManagementService gameState))
         {
-            m_gameState.OnGameStateChanged += SetInputMapFromGameState;
-            SetInputMapFromGameState(m_gameState.CurrentState);
+            OnGameStateManagerChanged(gameState);
         }      
     }
 
@@ -28,9 +27,9 @@ public class InputManager : MonoBehaviour, IInputManagementService
         }
     }
 
-    private void OnGameStateManagerChanged()
+    private void OnGameStateManagerChanged(IGameStateManagementService newReference)
     {
-        m_gameState = ObjectResolver.Instance.Resolve<IGameStateManagementService>();
+        m_gameState = newReference;
         m_gameState.OnGameStateChanged += SetInputMapFromGameState;
         SetInputMapFromGameState(m_gameState.CurrentState);
     }

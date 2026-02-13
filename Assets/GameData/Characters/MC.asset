@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf56b077aa21c04ba7ca1fc34cce76b, type: 3}
   m_Name: MC
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSheet
+  m_characterType: 1
   m_name: Will
   m_startingLevel: 1
   m_startingArchetype: {fileID: 0}
@@ -25,6 +26,6 @@ MonoBehaviour:
     Luck: 3
   m_startingSkills: []
   m_profileIcon: {fileID: 0}
-  m_bannerIcon: {fileID: 0}
+  m_bannerIcon: {fileID: 1990312413, guid: f895790a5f7cbc04a906e42db2c954aa, type: 3}
   m_armIcon: {fileID: 0}
   m_mesh: {fileID: 0}

@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cf56b077aa21c04ba7ca1fc34cce76b, type: 3}
-  m_Name: Basilio
+  m_Name: Gallica
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSheet
-  m_characterType: 1
-  m_name: Basilio
-  m_startingLevel: 1
+  m_characterType: 3
+  m_name: Gallica
+  m_startingLevel: 0
   m_startingArchetype: {fileID: 0}
   m_baseStats:
-    HP: 120
-    MP: 85
-    Strength: 5
-    Magic: 2
-    Endurance: 4
-    Agility: 2
-    Luck: 3
+    HP: 0
+    MP: 0
+    Strength: 0
+    Magic: 0
+    Endurance: 0
+    Agility: 0
+    Luck: 0
   m_startingSkills: []
   m_profileIcon: {fileID: 0}
-  m_bannerIcon: {fileID: -232967186, guid: f895790a5f7cbc04a906e42db2c954aa, type: 3}
+  m_bannerIcon: {fileID: -1441686603, guid: f895790a5f7cbc04a906e42db2c954aa, type: 3}
   m_armIcon: {fileID: 0}
   m_mesh: {fileID: 0}

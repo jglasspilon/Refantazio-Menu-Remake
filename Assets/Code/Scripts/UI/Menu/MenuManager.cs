@@ -27,9 +27,9 @@ public class MenuManager : MonoBehaviour
             page.Close();
         }
 
-        if(ObjectResolver.Instance.TryResolve(OnGameStateManagerChanged, out m_gameState))
+        if(ObjectResolver.Instance.TryResolve(OnGameStateManagerChanged, out IGameStateManagementService gameState))
         {
-            m_gameState.OnGameStateChanged += OnGameStateChanged;
+            OnGameStateManagerChanged(gameState);
         }
     }
 
@@ -41,9 +41,9 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    private void OnGameStateManagerChanged()
+    private void OnGameStateManagerChanged(IGameStateManagementService newReference)
     {
-        m_gameState = ObjectResolver.Instance.Resolve<IGameStateManagementService>();
+        m_gameState = newReference;
         m_gameState.OnGameStateChanged += OnGameStateChanged;
     }
 

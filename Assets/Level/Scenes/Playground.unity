@@ -288,6 +288,20 @@ MonoBehaviour:
   m_partyData:
     m_party: []
     m_activeParty: []
+    m_guide:
+      m_characterBase: {fileID: 0}
+      m_leveledStats:
+        HP: 0
+        MP: 0
+        Strength: 0
+        Magic: 0
+        Endurance: 0
+        Agility: 0
+        Luck: 0
+      m_equipedArchetype:
+        m_baseData: {fileID: 0}
+        m_rank: 0
+      m_availableArchetypes: []
     m_logProfile: {fileID: 11400000, guid: a642efadcc484544aaac1ef44b6255f1, type: 2}
   m_starterCharacter:
   - {fileID: 11400000, guid: eb37cf8793b036f4e96f1b6a286746df, type: 2}
@@ -298,6 +312,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c25e33f6f7f2dcf47baf8b451640a7fe, type: 2}
   - {fileID: 11400000, guid: 2a889a29a8aa1c042a5b9bc08f54e89e, type: 2}
   - {fileID: 11400000, guid: 51e0838ed59dfa6448514009dd56f4d3, type: 2}
+  m_guideCharacter: {fileID: 11400000, guid: d12a712f819c9b242b9dfe102d12a4fe, type: 2}
 --- !u!4 &953358775
 Transform:
   m_ObjectHideFlags: 0

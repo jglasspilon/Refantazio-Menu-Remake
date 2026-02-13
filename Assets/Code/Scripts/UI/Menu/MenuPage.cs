@@ -17,7 +17,7 @@ public abstract class MenuPage : MonoBehaviour
     [SerializeField]
     private LoggingProfile m_logProfile;
 
-    private Stack<object> m_breadcrumb = new Stack<object>(); //TODO: change to actual page segment once implemented. 
+    private Stack<IPageSection> m_breadcrumb = new Stack<IPageSection>(); 
     public EMenuPages PageName => m_pageName;
     public int PageCount { get; private set; }
 
@@ -47,12 +47,18 @@ public abstract class MenuPage : MonoBehaviour
         OnClosed?.Invoke();
     }
 
+    public virtual void EnterSection(IPageSection section)
+    {
+        m_breadcrumb.Push(section);
+        section.Enter();
+    }
+
     public virtual bool TryGoBack()
     {
         if(m_breadcrumb.Count > 0)
         {
-            object goBackFrom = m_breadcrumb.Pop(); //TODO: change to actual page segment once implemented
-            //TODO: close last breadcrumb 
+            IPageSection goBackFrom = m_breadcrumb.Pop();
+            goBackFrom.Exit();
             return true;
         }
 

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ItemsMenuPage : MenuPage
 {
+
     public override void Confirm()
     {
         

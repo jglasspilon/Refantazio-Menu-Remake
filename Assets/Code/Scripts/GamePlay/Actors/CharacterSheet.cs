@@ -5,6 +5,9 @@ using UnityEngine;
 public class CharacterSheet : UniqueScriptableObject
 {
     [SerializeField]
+    private ECharacterType m_characterType;
+
+    [SerializeField]
     private string m_name;
 
     [SerializeField]
@@ -25,6 +28,7 @@ public class CharacterSheet : UniqueScriptableObject
     [SerializeField]
     private Mesh m_mesh;
 
+    public ECharacterType CharacterType => m_characterType;
     public string Name => m_name;
     public int StartingLevel => m_startingLevel;
     public ArchetypeData StartingArchetype => m_startingArchetype;
@@ -46,4 +50,13 @@ public struct CharacterStats
     public int Endurance;
     public int Agility;
     public int Luck;
+}
+
+public enum ECharacterType
+{
+    Leader,
+    Reserve,
+    Party,
+    Guide,
+    Enemy
 }

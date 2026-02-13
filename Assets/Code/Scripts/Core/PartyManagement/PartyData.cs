@@ -9,48 +9,70 @@ public class PartyData
     public event Action OnPartyChanged, OnActivePartyChanged;
 
     [SerializeField]
-    private List<Character> m_party = new List<Character>();
-
-    [SerializeField]
-    private List<Character> m_activeParty = new List<Character>();
-
-    [SerializeField]
     private LoggingProfile m_logProfile;
+
+    private Dictionary<string, Character> m_party = new Dictionary<string, Character>();
+    private Dictionary<string, Character> m_activeParty = new Dictionary<string, Character>();
+    private Character m_guide;
 
     private const int ACTIVE_PARTY_LIMIT = 4;
 
     public bool ActivePartyFull { get { return m_activeParty.Count >= 4; } }
+    public Character Guide { get { return m_guide; } }
 
     public Character[] GetAllPartyMembers()
     {
-        return m_party.ToArray();
+        return m_party.Values.ToArray();
     }
 
     public Character[] GetAllActivePartyMembers()
     {
-        return m_activeParty.ToArray();
+        return m_activeParty.Values.ToArray();
     }
 
-    public Character GetPartyMember(int index)
+    public bool TryGetPartyMember(string id, out Character character)
     {
-        if(index >= m_party.Count || index < 0)
+        if(id == null)
         {
-            Logger.LogError($"Failed to return party member at index '{index}'. Index is out of bounds.", m_logProfile);
-            return null;
+            Logger.LogError($"Failed to return party member, null id was provided.", m_logProfile);
+            character = null;
+            return false;
         }
 
-        return m_party[index];
+        if(!m_party.TryGetValue(id, out character))
+        {
+            Logger.LogError($"Failed to return party member, provided character id '{id}' was not recognized.", m_logProfile);
+            character = null;
+            return false;
+        }
+
+        return true;
     }
 
-    public Character GetActivePartyMember(int index)
+    public bool TryGetPartyMember(int index, out Character character)
+    {
+        if(index >= m_party.Count || index < 0)
+        {           
+            Logger.LogError($"Failed to return party member at index '{index}'. Index is out of bounds.", m_logProfile);
+            character = null;
+            return false;
+        }
+
+        character = GetAllPartyMembers()[index];
+        return true;
+    }
+
+    public bool TryGetActivePartyMember(int index, out Character character)
     {
         if (index >= m_activeParty.Count || index < 0)
         {
             Logger.LogError($"Failed to return party member from active party at index '{index}'. Index is out of bounds.", m_logProfile);
-            return null;
+            character = null;
+            return false;
         }
 
-        return m_activeParty[index];
+        character = GetAllActivePartyMembers()[index];
+        return true;
     }
 
     public void AddPartyMember(Character newPartyMember)
@@ -61,13 +83,13 @@ public class PartyData
             return;
         }
 
-        if(m_party.Contains(newPartyMember))
+        if(m_party.ContainsKey(newPartyMember.ID))
         {
             Logger.LogError($"Failed adding new party member '{newPartyMember.Name}'. Adding duplicate party members is not allowed.", m_logProfile);
             return;
         }
 
-        m_party.Add(newPartyMember);
+        m_party.Add(newPartyMember.ID, newPartyMember);
         OnPartyChanged?.Invoke();
 
         if(!ActivePartyFull)
@@ -84,13 +106,13 @@ public class PartyData
             return;
         }
 
-        if (!m_party.Contains(partyMember))
+        if (!m_party.ContainsKey(partyMember.ID))
         {
             Logger.LogError($"Failed removing party member '{partyMember.Name}'. Party member not found.", m_logProfile);
             return;
         }
 
-        m_party.Remove(partyMember);
+        m_party.Remove(partyMember.ID);
         OnPartyChanged?.Invoke();
     }
 
@@ -102,7 +124,7 @@ public class PartyData
             return;
         }
 
-        if (m_activeParty.Contains(newActivePartyMember))
+        if (m_activeParty.ContainsKey(newActivePartyMember.ID))
         {
             Logger.LogError($"Failed adding new active party member '{newActivePartyMember.Name}'. Adding duplicate party members is not allowed.", m_logProfile);
             return;
@@ -114,7 +136,8 @@ public class PartyData
             return;
         }
 
-        m_activeParty.Add(newActivePartyMember);
+        newActivePartyMember.SetCharacterToActiveParty();
+        m_activeParty.Add(newActivePartyMember.ID, newActivePartyMember);
         OnActivePartyChanged?.Invoke();
     }
 
@@ -126,13 +149,19 @@ public class PartyData
             return;
         }
 
-        if (!m_activeParty.Contains(activePartyMember))
+        if (!m_activeParty.ContainsKey(activePartyMember.ID))
         {
             Logger.LogError($"Failed removing party member '{activePartyMember.Name}'. Party member not found.", m_logProfile);
             return;
         }
 
-        m_activeParty.Remove(activePartyMember);
+        activePartyMember.RemoveCharacterFromActiveParty();
+        m_activeParty.Remove(activePartyMember.ID);
         OnActivePartyChanged?.Invoke();
+    }
+
+    public void InitializeGuide(CharacterSheet guide)
+    {
+        m_guide = new Character(guide);
     }
 }

@@ -16,7 +16,8 @@ public static class Extensions
 
     public static int Map(this int value, float originalMin, float originalMax, float newMin, float newMax)
     {
-        float mapped = value.Map(originalMin, originalMax, newMin, newMax);
+        float castedValue = value;
+        float mapped = castedValue.Map(originalMin, originalMax, newMin, newMax);
         return (int)Mathf.Round(mapped);
     }
 }
