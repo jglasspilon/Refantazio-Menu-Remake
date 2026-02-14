@@ -45,11 +45,25 @@ public class PartyTester : MonoBehaviour
             Logger.Log("Changed to Remove mode.", gameObject, m_logProfile);
         }
 
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            m_testingMode = EMode.AddToActiveParty;
+            Logger.Log($"Changed to Add to Active Party mode.", gameObject, m_logProfile);
+        }
+
+        if (Input.GetKeyUp(KeyCode.B))
+        {
+            m_testingMode = EMode.RemoveFromActiveParty;
+            Logger.Log($"Changed to Remove from Active Party mode.", gameObject, m_logProfile);
+        }
+
         if (Input.GetKeyUp(KeyCode.A))
         {
             m_partyData.AddPartyMember(new Character(m_characterToAdd));
             Logger.Log($"Adding {m_characterToAdd.Name} to party.", gameObject, m_logProfile);            
         }
+
+        
 
         if (Input.GetKeyUp(KeyCode.Alpha0))
         {
@@ -119,6 +133,18 @@ public class PartyTester : MonoBehaviour
                     m_partyData.RemovePartyMember(characterToRemove);
                 }
                 break;
+            case EMode.RemoveFromActiveParty:
+                if (m_partyData.TryGetPartyMember(index, out Character characterToRemoveActive))
+                {
+                    m_partyData.RemoveActivePartyMember(characterToRemoveActive);
+                }
+                break;
+            case EMode.AddToActiveParty:
+                if (m_partyData.TryGetPartyMember(index, out Character characterToAddActive))
+                {
+                    m_partyData.AddActivePartyMember(characterToAddActive);
+                }
+                break;
         }
     }
 
@@ -146,6 +172,8 @@ public class PartyTester : MonoBehaviour
         Heal,
         Damage,
         RemoveFromParty,
+        RemoveFromActiveParty,
+        AddToActiveParty
     }
 }
 

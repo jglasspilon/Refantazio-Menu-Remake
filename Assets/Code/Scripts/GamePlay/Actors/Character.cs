@@ -7,6 +7,7 @@ public class Character: IDisposable
 {
     public event Action<int, float> OnHealthChanged, OnManaChanged;
     public event Action<ECharacterType> OnTypeChange;
+    public event Action OnDeath;
 
     [SerializeField]
     private CharacterSheet m_characterBase;
@@ -60,6 +61,7 @@ public class Character: IDisposable
         ApplyStats();
 
         m_health.OnResourceChange += HandleHealthChanged;
+        m_health.OnEmpty += HandleOnDeath;
         m_mana.OnResourceChange += HandleManaChanged;
     }
 
@@ -102,9 +104,19 @@ public class Character: IDisposable
     #endregion
 
     #region Health & Mana Functions
+    public bool HasEnoughHealth(int amount)
+    {
+        return m_health.Current >= amount;
+    }
+    
     public void ApplyHealth(int amount)
     {
         m_health.Apply(amount);
+    }
+
+    public bool HasEnoughMana(int amount)
+    {
+        return m_mana.Current >= amount;
     }
 
     public void ApplyMana(int amount)
@@ -117,15 +129,22 @@ public class Character: IDisposable
         OnHealthChanged?.Invoke(current, proportion);
     }
 
+    private void HandleOnDeath()
+    {
+        OnDeath?.Invoke();
+    }
+
     private void HandleManaChanged(int current, float proportion)
     {
         OnManaChanged?.Invoke(current, proportion);
     }
     #endregion
 
+    #region Stats Functions
     private void ApplyStats()
     {
         m_health.SetMax(HP, true);
         m_mana.SetMax(MP, true);
     }
+    #endregion
 }

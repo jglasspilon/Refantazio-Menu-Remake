@@ -16,11 +16,6 @@ public class Resource
     public float CurrentProportion => Mathf.InverseLerp(0, m_max, m_current);
     public int Max => m_max;
 
-    public Resource()
-    {
-        OnResourceChange += (m_current, CurrentProportion) => Debug.Log($"Resource changed to {m_current}.");
-    }
-
     public void SetMax(int newMax, bool fill)
     {
         m_current = m_current.Map(0, m_max, 0, newMax);
