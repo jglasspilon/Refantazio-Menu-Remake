@@ -12,7 +12,9 @@ public class PartyData
     private LoggingProfile m_logProfile;
 
     private Dictionary<string, Character> m_party = new Dictionary<string, Character>();
+    private List<Character> m_orderedParty = new List<Character>();
     private Dictionary<string, Character> m_activeParty = new Dictionary<string, Character>();
+    private List<Character> m_orderedActiveParty = new List<Character>();
     private Character m_guide;
 
     private const int ACTIVE_PARTY_LIMIT = 4;
@@ -22,12 +24,12 @@ public class PartyData
 
     public Character[] GetAllPartyMembers()
     {
-        return m_party.Values.ToArray();
+        return m_orderedParty.ToArray();
     }
 
     public Character[] GetAllActivePartyMembers()
     {
-        return m_activeParty.Values.ToArray();
+        return m_orderedActiveParty.ToArray();
     }
 
     public bool TryGetPartyMember(string id, out Character character)
@@ -90,6 +92,7 @@ public class PartyData
         }
 
         m_party.Add(newPartyMember.ID, newPartyMember);
+        m_orderedParty.Add(newPartyMember);
         OnPartyChanged?.Invoke();
 
         if(!ActivePartyFull)
@@ -113,6 +116,7 @@ public class PartyData
         }
 
         m_party.Remove(partyMember.ID);
+        m_orderedParty.Remove(partyMember);
         OnPartyChanged?.Invoke();
     }
 
@@ -138,6 +142,7 @@ public class PartyData
 
         newActivePartyMember.SetCharacterToActiveParty();
         m_activeParty.Add(newActivePartyMember.ID, newActivePartyMember);
+        m_orderedActiveParty.Add(newActivePartyMember);
         OnActivePartyChanged?.Invoke();
     }
 
@@ -157,6 +162,7 @@ public class PartyData
 
         activePartyMember.RemoveCharacterFromActiveParty();
         m_activeParty.Remove(activePartyMember.ID);
+        m_orderedActiveParty.Remove(activePartyMember);
         OnActivePartyChanged?.Invoke();
     }
 

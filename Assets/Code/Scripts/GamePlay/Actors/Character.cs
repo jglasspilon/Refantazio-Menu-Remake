@@ -59,8 +59,8 @@ public class Character: IDisposable
         m_characterType = sheet.CharacterType;
         ApplyStats();
 
-        m_health.OnResourceChange += OnHealthChanged;
-        m_mana.OnResourceChange += OnManaChanged;
+        m_health.OnResourceChange += HandleHealthChanged;
+        m_mana.OnResourceChange += HandleManaChanged;
     }
 
     public void Dispose()
@@ -81,6 +81,7 @@ public class Character: IDisposable
         //TODO: load all saved character data 
     }
 
+    #region CharacterType Functions
     public void SetCharacterAsLeader()
     {
         m_characterType = ECharacterType.Leader;
@@ -98,6 +99,29 @@ public class Character: IDisposable
         m_characterType = m_characterBase.CharacterType;
         OnTypeChange?.Invoke(m_characterType);
     }
+    #endregion
+
+    #region Health & Mana Functions
+    public void ApplyHealth(int amount)
+    {
+        m_health.Apply(amount);
+    }
+
+    public void ApplyMana(int amount)
+    {
+        m_mana.Apply(amount);
+    }
+
+    private void HandleHealthChanged(int current, float proportion)
+    {
+        OnHealthChanged?.Invoke(current, proportion);
+    }
+
+    private void HandleManaChanged(int current, float proportion)
+    {
+        OnManaChanged?.Invoke(current, proportion);
+    }
+    #endregion
 
     private void ApplyStats()
     {
