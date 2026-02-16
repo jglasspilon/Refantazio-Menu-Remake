@@ -5,9 +5,8 @@ using UnityEngine;
 [Serializable]
 public class Character: IDisposable
 {
-    public event Action<int, float> OnHealthChanged, OnManaChanged;
     public event Action<ECharacterType> OnTypeChange;
-    public event Action OnDeath;
+    public event Action<bool> OnDeath;
 
     [SerializeField]
     private CharacterSheet m_characterBase;
@@ -25,9 +24,6 @@ public class Character: IDisposable
     private int m_levelsAttained;
 
     [SerializeField]
-    private CharacterStats m_leveledStats = new CharacterStats();
-
-    [SerializeField]
     private Archetype m_equipedArchetype;
 
     [SerializeField]
@@ -40,35 +36,24 @@ public class Character: IDisposable
     public Sprite Banner => m_characterBase.BannerIcon;
     public Sprite Profile => m_characterBase.ProfileIcon;
     public Sprite Arm => m_characterBase.ArmIcon;
+    public Resource HP => m_health;
+    public Resource MP => m_mana;
+    public CharacterStats Stats => m_characterBase.Stats;
+    public bool IsDead => m_health.Current == 0 && m_health.Max > 0;
 
-    public int Level => m_characterBase.StartingLevel + m_levelsAttained;
-    public int HP => m_characterBase.BaseStats.HP; //TODO: apply modifiers from equipment, level and End
-    public int CurrentHP => m_health.Current;
-    public float CurrentHPProportion => m_health.CurrentProportion;
-    public int MP => m_characterBase.BaseStats.MP; //TODO: apply modifiers from equipment, level and Mag
-    public int CurrentMP => m_mana.Current;
-    public float CurrentMPProportion => m_mana.CurrentProportion;
-    public int Str => m_characterBase.BaseStats.Strength; //TODO: apply modifiers from equipement and level
-    public int Mag => m_characterBase.BaseStats.Magic; //TODO: apply modifiers from equipement and level
-    public int End => m_characterBase.BaseStats.Endurance; //TODO: apply modifiers from equipement and level
-    public int Agi => m_characterBase.BaseStats.Agility; //TODO: apply modifiers from equipement and level
-    public int Luck => m_characterBase.BaseStats.Luck; //TODO: apply modifiers from equipement and level    
-
+    #region Life Cycle Functions
     public Character(CharacterSheet sheet)
     {
         m_characterBase = sheet;
         m_characterType = sheet.CharacterType;
         ApplyStats();
 
-        m_health.OnResourceChange += HandleHealthChanged;
-        m_health.OnEmpty += HandleOnDeath;
-        m_mana.OnResourceChange += HandleManaChanged;
+        HP.OnEmpty += HandleOnHealthEmpty;
     }
 
     public void Dispose()
     {
-        m_health.OnResourceChange -= OnHealthChanged;
-        m_mana.OnResourceChange -= OnManaChanged;
+        HP.OnEmpty -= HandleOnHealthEmpty;
     }
 
     public void LoadCharacterData(Character data)
@@ -82,6 +67,7 @@ public class Character: IDisposable
 
         //TODO: load all saved character data 
     }
+    #endregion
 
     #region CharacterType Functions
     public void SetCharacterAsLeader()
@@ -124,27 +110,17 @@ public class Character: IDisposable
         m_mana.Apply(amount);
     }
 
-    private void HandleHealthChanged(int current, float proportion)
+    private void HandleOnHealthEmpty(bool isEmpty)
     {
-        OnHealthChanged?.Invoke(current, proportion);
-    }
-
-    private void HandleOnDeath()
-    {
-        OnDeath?.Invoke();
-    }
-
-    private void HandleManaChanged(int current, float proportion)
-    {
-        OnManaChanged?.Invoke(current, proportion);
+        OnDeath?.Invoke(isEmpty);
     }
     #endregion
 
     #region Stats Functions
     private void ApplyStats()
     {
-        m_health.SetMax(HP, true);
-        m_mana.SetMax(MP, true);
+        m_health.SetMax(Stats.HP.Value, true);
+        m_mana.SetMax(Stats.MP.Value, true);
     }
     #endregion
 }

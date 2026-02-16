@@ -13,6 +13,9 @@ public class PartyBannerGenerator : MonoBehaviour
     private PartyBanner m_bannerPrefab;
 
     [SerializeField]
+    private Transform m_bannerHolder;
+
+    [SerializeField]
     private LoggingProfile m_logProfile;
 
     private List<PartyBanner> m_banners = new List<PartyBanner>();
@@ -109,16 +112,19 @@ public class PartyBannerGenerator : MonoBehaviour
         Character[] charactersToGenerate = m_activePartyOnly ? m_partyData.GetAllActivePartyMembers() : m_partyData.GetAllPartyMembers();
         foreach (Character character in charactersToGenerate)
         {
-            PartyBanner newBanner = m_assetPool.PullFrom(m_bannerPrefab.GetType(), transform) as PartyBanner;
-            newBanner.InitializeCharacter(character);
-            m_banners.Add(newBanner);
+            GenerateBanner(character);
         }
 
         if(m_partyData.Guide != null)
         {
-            PartyBanner guideBanner = m_assetPool.PullFrom(m_bannerPrefab.GetType(), transform) as PartyBanner;
-            guideBanner.InitializeCharacter(m_partyData.Guide);
-            m_banners.Add(guideBanner);
+            GenerateBanner(m_partyData.Guide);
         }
+    }
+
+    private void GenerateBanner(Character character)
+    {
+        PartyBanner newBanner = m_assetPool.PullFrom(m_bannerPrefab.GetType(), m_bannerHolder) as PartyBanner;
+        newBanner.InitializeCharacter(character);
+        m_banners.Add(newBanner);
     }
 }

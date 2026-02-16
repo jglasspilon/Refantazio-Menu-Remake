@@ -14,16 +14,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSheet
   m_characterType: 1
   m_name: Eupha
-  m_startingLevel: 1
   m_startingArchetype: {fileID: 0}
-  m_baseStats:
-    HP: 85
-    MP: 120
-    Strength: 2
-    Magic: 5
-    Endurance: 2
-    Agility: 3
-    Luck: 3
+  m_stats:
+    Level:
+      m_baseValue: 0
+      m_levelValue: 0
+      m_modifiers: []
+    HP:
+      m_baseValue: 80
+      m_levelValue: 0
+      m_modifiers: []
+    MP:
+      m_baseValue: 120
+      m_levelValue: 0
+      m_modifiers: []
+    Strength:
+      m_baseValue: 2
+      m_levelValue: 0
+      m_modifiers: []
+    Magic:
+      m_baseValue: 5
+      m_levelValue: 0
+      m_modifiers: []
+    Endurance:
+      m_baseValue: 2
+      m_levelValue: 0
+      m_modifiers: []
+    Agility:
+      m_baseValue: 3
+      m_levelValue: 0
+      m_modifiers: []
+    Luck:
+      m_baseValue: 3
+      m_levelValue: 0
+      m_modifiers: []
   m_startingSkills: []
   m_profileIcon: {fileID: 0}
   m_bannerIcon: {fileID: -511913250, guid: f895790a5f7cbc04a906e42db2c954aa, type: 3}

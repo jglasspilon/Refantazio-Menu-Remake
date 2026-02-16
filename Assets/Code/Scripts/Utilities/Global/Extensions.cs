@@ -20,4 +20,15 @@ public static class Extensions
         float mapped = castedValue.Map(originalMin, originalMax, newMin, newMax);
         return (int)Mathf.Round(mapped);
     }
+
+    public static float GetDuration(this AnimationCurve curve)
+    {
+        if(curve.length == 0)
+        {
+            Debug.LogError("Provided animation curve has no keyframes. Duration can't be calculated");
+            return 0;
+        }
+
+        return curve.keys[curve.length - 1].time;
+    }
 }

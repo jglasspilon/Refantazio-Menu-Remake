@@ -4,7 +4,7 @@ using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public abstract class PartyBanner : PoolableObject
-{
+{    
     protected Character m_character;
 
     public Character Character {  get { return m_character; } } 

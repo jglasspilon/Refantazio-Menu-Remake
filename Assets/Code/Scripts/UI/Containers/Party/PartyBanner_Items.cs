@@ -1,40 +1,52 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PartyBanner_Items : PartyBanner
 {
-    [SerializeField]
-    private TextMeshProUGUI m_characterTypeText, m_characterNameText, m_characterHPText, m_characterMPText;
-
+    [Header("Character Banner:")]
     [SerializeField]
     private Image m_characterBannerImage;
 
     [SerializeField]
-    private Slider m_hpSlider, m_mpSlider;
+    private TextMeshProUGUI m_characterNameText, m_characterTypeText, m_characterMPText;
 
     [SerializeField]
-    private GameObject m_hpSection, m_mpSection, m_guideOverlay;
+    private ResourceBar m_characterHp, m_characterMp;
+
+    [SerializeField]
+    private GameObject m_guideOverlay, m_deathIcon;
+   
+    [SerializeField]
+    private PartyBannerEffect[] m_healEffect;
+
+    [SerializeField]
+    private PartyBannerEffect[] m_damageEffect;
+
+    [SerializeField]
+    private PartyBannerEffect[] m_manaRestoreEffect;
 
     public override void InitializeCharacter(Character character)
     {
         base.InitializeCharacter(character);
+        m_characterHp.Initialize(character.HP);
+        m_characterMp.Initialize(character.MP);
         m_character.OnTypeChange += DisplayCharacterType;
-        m_character.OnHealthChanged += DisplayHP;
-        m_character.OnManaChanged += DisplayMp;
+        m_character.OnDeath += DisplayDeathIcon;
 
         DisplayCharacterType(character.CharacterType);
         DisplayCharacterName(character.Name);
         DisplayBannerSprite(character.Banner);
-        DisplayHP(character.CurrentHP, character.CurrentHPProportion);
-        DisplayMp(character.CurrentMP, character.CurrentMPProportion);
+        DisplayDeathIcon(character.IsDead);
     }
 
     public override void ResetForPool()
     {
         m_character.OnTypeChange -= DisplayCharacterType;
-        m_character.OnHealthChanged -= DisplayHP;
-        m_character.OnManaChanged -= DisplayMp;
+        m_character.OnDeath -= DisplayDeathIcon;
+        m_characterHp.Unbind();
+        m_characterMp.Unbind();
         base.ResetForPool();
     }
 
@@ -44,8 +56,8 @@ public class PartyBanner_Items : PartyBanner
         string output = $"{typeString.Substring(0,1)}<size=50%>{typeString.Substring(1)}";
         m_characterTypeText.text = output;
 
-        m_hpSection.SetActive(characterType != ECharacterType.Guide);
-        m_mpSection.SetActive(characterType != ECharacterType.Guide);
+        m_characterHp.gameObject.SetActive(characterType != ECharacterType.Guide);
+        m_characterMp.gameObject.SetActive(characterType != ECharacterType.Guide);
         m_guideOverlay.SetActive(characterType == ECharacterType.Guide);
     }
 
@@ -59,15 +71,8 @@ public class PartyBanner_Items : PartyBanner
         m_characterBannerImage.sprite = sprite;
     }
 
-    private void DisplayHP(int currentHp, float proportion)
+    private void DisplayDeathIcon(bool isDead)
     {
-        m_characterHPText.text = currentHp.ToString();
-        m_hpSlider.value = proportion;
-    }
-
-    private void DisplayMp(int currentMp, float proportion)
-    {
-        m_characterMPText.text = currentMp.ToString();
-        m_mpSlider.value = proportion;
+        m_deathIcon.SetActive(isDead);
     }
 }

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Resource
 {
-    public event Action<int, float> OnResourceChange;
-    public event Action OnEmpty;
+    public event Action<int, float, int> OnResourceChange;
+    public event Action<bool> OnEmpty;
 
     [SerializeField]
     private int m_current;
@@ -24,18 +24,26 @@ public class Resource
         if (fill) 
         {
             m_current = m_max;
-            OnResourceChange?.Invoke(m_current, CurrentProportion);
+            OnResourceChange?.Invoke(m_current, CurrentProportion, 0);
         }
     }
 
     public void Apply(int amount)
     {
+        int previous = m_current;
         m_current = Mathf.Clamp(m_current + amount, 0, m_max);
-        OnResourceChange?.Invoke(m_current, CurrentProportion);
+        int delta = m_current - previous;
+        OnResourceChange?.Invoke(m_current, CurrentProportion, delta);
+
+        if(previous == 0 && m_current > 0)
+        {
+            OnEmpty?.Invoke(false);
+            return;
+        }
 
         if(m_current == 0)
         {
-            OnEmpty?.Invoke();
+            OnEmpty?.Invoke(true);
         }
     }
 }

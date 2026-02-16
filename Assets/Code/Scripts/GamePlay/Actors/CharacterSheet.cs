@@ -11,13 +11,10 @@ public class CharacterSheet : UniqueScriptableObject
     private string m_name;
 
     [SerializeField]
-    private int m_startingLevel;
-
-    [SerializeField]
     private ArchetypeData m_startingArchetype;
 
     [SerializeField]
-    private CharacterStats m_baseStats;
+    private CharacterStats m_stats;
 
     [SerializeField]
     private Skill[] m_startingSkills;
@@ -30,9 +27,8 @@ public class CharacterSheet : UniqueScriptableObject
 
     public ECharacterType CharacterType => m_characterType;
     public string Name => m_name;
-    public int StartingLevel => m_startingLevel;
     public ArchetypeData StartingArchetype => m_startingArchetype;
-    public CharacterStats BaseStats => m_baseStats;
+    public CharacterStats Stats => m_stats;
     public Skill[] StartingSkills => m_startingSkills;
     public Sprite ProfileIcon => m_profileIcon;
     public Sprite BannerIcon => m_bannerIcon;
@@ -41,15 +37,16 @@ public class CharacterSheet : UniqueScriptableObject
 }
 
 [Serializable]
-public struct CharacterStats
+public class CharacterStats
 {
-    public int HP;
-    public int MP;
-    public int Strength;
-    public int Magic;
-    public int Endurance;
-    public int Agility;
-    public int Luck;
+    public Stat Level = new Stat();
+    public Stat HP = new Stat();
+    public Stat MP = new Stat();
+    public Stat Strength = new Stat();
+    public Stat Magic = new Stat();
+    public Stat Endurance = new Stat();
+    public Stat Agility = new Stat();
+    public Stat Luck = new Stat();
 }
 
 public enum ECharacterType
