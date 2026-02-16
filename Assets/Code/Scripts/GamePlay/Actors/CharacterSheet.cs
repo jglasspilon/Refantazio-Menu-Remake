@@ -39,6 +39,8 @@ public class CharacterSheet : UniqueScriptableObject
 [Serializable]
 public class CharacterStats
 {
+    public event Action<Stat> OnStatChange;
+
     public Stat Level = new Stat();
     public Stat HP = new Stat();
     public Stat MP = new Stat();
@@ -47,6 +49,23 @@ public class CharacterStats
     public Stat Endurance = new Stat();
     public Stat Agility = new Stat();
     public Stat Luck = new Stat();
+
+    public CharacterStats()
+    {
+        Level.OnValueChange += OnStatChange;
+        HP.OnValueChange += OnStatChange;
+        MP.OnValueChange += OnStatChange;
+        Strength.OnValueChange += OnStatChange;
+        Magic.OnValueChange += OnStatChange;
+        Endurance.OnValueChange += OnStatChange;
+        Agility.OnValueChange += OnStatChange;
+        Luck.OnValueChange += OnStatChange;
+    }
+
+    private void HandleOnStatChange(Stat statChange)
+    {
+        OnStatChange?.Invoke(statChange);
+    }
 }
 
 public enum ECharacterType

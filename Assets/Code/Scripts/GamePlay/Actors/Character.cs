@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Character: IDisposable
+public class Character
 {
     public event Action<ECharacterType> OnTypeChange;
     public event Action<bool> OnDeath;
+    public event Action OnCharacterUpdated;
 
     [SerializeField]
     private string m_name;
@@ -53,11 +54,9 @@ public class Character: IDisposable
         ApplyStats();
 
         HP.OnEmpty += HandleOnHealthEmpty;
-    }
-
-    public void Dispose()
-    {
-        HP.OnEmpty -= HandleOnHealthEmpty;
+        HP.OnResourceChange += HandleOnHealthChanged;
+        MP.OnResourceChange += HandleOnManaChanged;
+        Stats.OnStatChange += HandleStatUpdate;
     }
 
     public void LoadCharacterData(Character data)
@@ -114,6 +113,16 @@ public class Character: IDisposable
         m_mana.Apply(amount);
     }
 
+    private void HandleOnHealthChanged(int amount, float proportion, int delta)
+    {
+        OnCharacterUpdated?.Invoke();
+    }
+
+    private void HandleOnManaChanged(int amount, float proportion, int delta)
+    {
+        OnCharacterUpdated?.Invoke();
+    }
+
     private void HandleOnHealthEmpty(bool isEmpty)
     {
         OnDeath?.Invoke(isEmpty);
@@ -125,6 +134,11 @@ public class Character: IDisposable
     {
         m_health.SetMax(Stats.HP.Value, true);
         m_mana.SetMax(Stats.MP.Value, true);
+    }
+
+    private void HandleStatUpdate(Stat statChanged)
+    {
+        OnCharacterUpdated?.Invoke();
     }
     #endregion
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 [Serializable]
 public class Stat
 {
+    public event Action<Stat> OnValueChange;
+
     [SerializeField]
     private int m_baseValue, m_levelValue;
 
@@ -24,18 +26,27 @@ public class Stat
     public Stat()
     { }
 
-    public void ApplyLevel(int levelAmount)
+    public void AddToBase(int amount)
     {
-        m_levelValue += levelAmount;
+        m_baseValue += amount;
+        OnValueChange?.Invoke(this);
+    }
+
+    public void ApplyLevel(int amount)
+    {
+        m_levelValue += amount;
+        OnValueChange?.Invoke(this);
     }
 
     public void AddModifier(object modifier) //TODO: Replace with modifiers once they are created
     {
 
+        OnValueChange?.Invoke(this);
     }
 
     public void RemoveModifier(object modifier) //TODO: Replace with modifiers once they are created
     {
 
+        OnValueChange?.Invoke(this);
     }
 }

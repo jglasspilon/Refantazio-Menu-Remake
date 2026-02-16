@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class PartyData
+public class PartyData: IDisposable
 {
     public event Action OnPartyChanged, OnActivePartyChanged;
+    public event Action OnAnyPartyMemberUpdated, OnAnyActivePartyMemberUpdated;
 
     [SerializeField]
     private LoggingProfile m_logProfile;
@@ -21,11 +22,23 @@ public class PartyData
     private Dictionary<string, Character> m_activeParty = new Dictionary<string, Character>();   
     private Character m_guide;
 
+    private bool m_partyMemberUpdate, m_activePartyMemberUpdate, m_isDirty;
     private const int ACTIVE_PARTY_LIMIT = 4;
 
     public bool ActivePartyFull { get { return m_activeParty.Count >= 4; } }
     public Character Guide { get { return m_guide; } }
 
+    public PartyData()
+    {
+        LateFrameTicker.OnLateTick += Flush;
+    }
+
+    public void Dispose()
+    {
+        LateFrameTicker.OnLateTick -= Flush;
+    }
+
+    #region Party Member Management Functions
     public Character[] GetAllPartyMembers()
     {
         return m_orderedParty.ToArray();
@@ -68,6 +81,25 @@ public class PartyData
         return true;
     }
 
+    public bool TryGetActivePartyMember(string id, out Character character)
+    {
+        if (id == null)
+        {
+            Logger.LogError($"Failed to return active party member, null id was provided.", m_logProfile);
+            character = null;
+            return false;
+        }
+
+        if (!m_activeParty.TryGetValue(id, out character))
+        {
+            Logger.LogError($"Failed to return active party member, provided character id '{id}' was not recognized in active party.", m_logProfile);
+            character = null;
+            return false;
+        }
+
+        return true;
+    }
+
     public bool TryGetActivePartyMember(int index, out Character character)
     {
         if (index >= m_activeParty.Count || index < 0)
@@ -95,6 +127,7 @@ public class PartyData
             return;
         }
 
+        newPartyMember.OnCharacterUpdated += HandleOnPartyMemberStatUpdate;
         m_party.Add(newPartyMember.ID, newPartyMember);
         m_orderedParty.Add(newPartyMember);
         OnPartyChanged?.Invoke();
@@ -119,9 +152,15 @@ public class PartyData
             return;
         }
 
+        partyMember.OnCharacterUpdated -= HandleOnPartyMemberStatUpdate;
         m_party.Remove(partyMember.ID);
         m_orderedParty.Remove(partyMember);
         OnPartyChanged?.Invoke();
+
+        if(TryGetActivePartyMember(partyMember.ID, out Character activePartyMember))
+        {
+            RemoveActivePartyMember(activePartyMember);
+        }
     }
 
     public void AddActivePartyMember(Character newActivePartyMember)
@@ -144,6 +183,7 @@ public class PartyData
             return;
         }
 
+        newActivePartyMember.OnCharacterUpdated += HandleOnActivePartyMemberStatUpdate;
         newActivePartyMember.SetCharacterToActiveParty();
         m_activeParty.Add(newActivePartyMember.ID, newActivePartyMember);
         m_orderedActiveParty.Add(newActivePartyMember);
@@ -164,6 +204,7 @@ public class PartyData
             return;
         }
 
+        activePartyMember.OnCharacterUpdated -= HandleOnActivePartyMemberStatUpdate;
         activePartyMember.RemoveCharacterFromActiveParty();
         m_activeParty.Remove(activePartyMember.ID);
         m_orderedActiveParty.Remove(activePartyMember);
@@ -174,4 +215,42 @@ public class PartyData
     {
         m_guide = new Character(guide);
     }
+    #endregion
+
+
+    #region Event Handling Functions
+    private void Flush()
+    {
+        if (m_isDirty)
+        {
+            m_isDirty = false;
+
+            if (m_partyMemberUpdate)
+            {
+                m_partyMemberUpdate = false;
+                OnAnyPartyMemberUpdated?.Invoke();
+                Logger.Log("Party member stat update", m_logProfile);
+            }
+
+            if(m_activePartyMemberUpdate)
+            {
+                m_activePartyMemberUpdate = false;
+                OnActivePartyChanged?.Invoke();
+                Logger.Log("Active party member stat update", m_logProfile);
+            }
+        }
+    }
+
+    private void HandleOnPartyMemberStatUpdate()
+    {        
+        m_partyMemberUpdate = true;
+        m_isDirty = true;
+    }
+
+    private void HandleOnActivePartyMemberStatUpdate()
+    {    
+        m_activePartyMemberUpdate = true;
+        m_isDirty = true;
+    }
+    #endregion
 }
