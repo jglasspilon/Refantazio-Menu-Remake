@@ -11,10 +11,14 @@ public class PartyData
     [SerializeField]
     private LoggingProfile m_logProfile;
 
-    private Dictionary<string, Character> m_party = new Dictionary<string, Character>();
+    [SerializeField]
     private List<Character> m_orderedParty = new List<Character>();
-    private Dictionary<string, Character> m_activeParty = new Dictionary<string, Character>();
+
+    [SerializeField]
     private List<Character> m_orderedActiveParty = new List<Character>();
+
+    private Dictionary<string, Character> m_party = new Dictionary<string, Character>();
+    private Dictionary<string, Character> m_activeParty = new Dictionary<string, Character>();   
     private Character m_guide;
 
     private const int ACTIVE_PARTY_LIMIT = 4;

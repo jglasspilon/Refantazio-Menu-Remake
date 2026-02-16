@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[Serializable]
 public class Resource
 {
     public event Action<int, float, int> OnResourceChange;

@@ -9,10 +9,13 @@ public class Character: IDisposable
     public event Action<bool> OnDeath;
 
     [SerializeField]
-    private CharacterSheet m_characterBase;
+    private string m_name;
 
     [SerializeField]
     private ECharacterType m_characterType;
+
+    [SerializeField]
+    private CharacterStats m_stats; 
 
     [SerializeField]
     private Resource m_health = new Resource();
@@ -21,13 +24,12 @@ public class Character: IDisposable
     private Resource m_mana = new Resource();
 
     [SerializeField]
-    private int m_levelsAttained;
-
-    [SerializeField]
     private Archetype m_equipedArchetype;
 
     [SerializeField]
     private List<Archetype> m_availableArchetypes = new List<Archetype>();
+
+    private CharacterSheet m_characterBase;
 
     public string ID => m_characterBase.ID;
     public ECharacterType CharacterType => m_characterType;
@@ -38,13 +40,15 @@ public class Character: IDisposable
     public Sprite Arm => m_characterBase.ArmIcon;
     public Resource HP => m_health;
     public Resource MP => m_mana;
-    public CharacterStats Stats => m_characterBase.Stats;
+    public CharacterStats Stats => m_stats;
     public bool IsDead => m_health.Current == 0 && m_health.Max > 0;
 
     #region Life Cycle Functions
     public Character(CharacterSheet sheet)
     {
         m_characterBase = sheet;
+        m_name = sheet.Name;
+        m_stats = sheet.Stats;
         m_characterType = sheet.CharacterType;
         ApplyStats();
 
@@ -65,7 +69,7 @@ public class Character: IDisposable
             m_equipedArchetype = defaultArchetype;
         }
 
-        //TODO: load all saved character data 
+        //TODO: load saved character data 
     }
     #endregion
 
