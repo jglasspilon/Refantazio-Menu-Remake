@@ -33988,8 +33988,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1098406045}
-  - component: {fileID: 1098406047}
   - component: {fileID: 1098406046}
+  - component: {fileID: 1098406047}
   m_Layer: 5
   m_Name: ItemsList
   m_TagString: Untagged
@@ -34037,9 +34037,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1098406044}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Script: {fileID: 11500000, guid: b21f555829be5074997d744cf2459402, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
+  m_EditorClassIdentifier: Assembly-CSharp::StaggeredVerticalLayoutGroup
   m_Padding:
     m_Left: 0
     m_Right: 0
@@ -34054,6 +34054,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+  m_horizontalFactor: 0.42
 --- !u!1 &1101470601
 GameObject:
   m_ObjectHideFlags: 0
@@ -35118,6 +35119,9 @@ MonoBehaviour:
     m_isNew: 1
   - m_item: {fileID: 11400000, guid: 853998fda91ea6548948c2d52ac7fc78, type: 2}
     m_count: 6
+    m_isNew: 1
+  - m_item: {fileID: 11400000, guid: 687bf574da6f7d54e8ff8fbbd559a069, type: 2}
+    m_count: 12
     m_isNew: 1
 --- !u!1001 &1155849957
 PrefabInstance:
