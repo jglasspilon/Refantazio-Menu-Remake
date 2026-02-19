@@ -1,13 +1,10 @@
 using System.Collections.Generic;
-using System.Xml.Serialization;
-using TMPro;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class PartyBannerGenerator : MonoBehaviour
 {
     [SerializeField]
-    private bool m_activePartyOnly;
+    private bool m_activePartyOnly, m_showGuide;
 
     [SerializeField]
     private PartyBanner m_bannerPrefab;
@@ -55,6 +52,7 @@ public class PartyBannerGenerator : MonoBehaviour
 
     private void OnDisable()
     {
+        ClearBanners();
         if (m_partyData == null)
             return;
 
@@ -103,19 +101,14 @@ public class PartyBannerGenerator : MonoBehaviour
             return;
         }
 
-        if(m_banners.Count > 0)
-        {
-            m_assetPool.ReturnToPool(m_banners);
-            m_banners.Clear();
-        }
-
+        ClearBanners();
         Character[] charactersToGenerate = m_activePartyOnly ? m_partyData.GetAllActivePartyMembers() : m_partyData.GetAllPartyMembers();
         foreach (Character character in charactersToGenerate)
         {
             GenerateBanner(character);
         }
 
-        if(m_partyData.Guide != null)
+        if(m_partyData.Guide != null && m_showGuide)
         {
             GenerateBanner(m_partyData.Guide);
         }
@@ -126,5 +119,14 @@ public class PartyBannerGenerator : MonoBehaviour
         PartyBanner newBanner = m_assetPool.PullFrom(m_bannerPrefab.GetType(), m_bannerHolder) as PartyBanner;
         newBanner.InitializeCharacter(character);
         m_banners.Add(newBanner);
+    }
+
+    private void ClearBanners()
+    {
+        if (m_banners.Count > 0 && m_assetPool != null)
+        {
+            m_assetPool.ReturnToPool(m_banners);
+            m_banners.Clear();
+        }
     }
 }

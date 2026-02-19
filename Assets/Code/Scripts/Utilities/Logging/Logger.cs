@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class Logger
 {
-    private static LoggingProfile m_fallbackLogProfile = new LoggingProfile();
+    private static LoggingProfile m_fallbackLogProfile = ScriptableObject.CreateInstance(typeof(LoggingProfile)) as LoggingProfile;
 
     public static void Log(string message, GameObject owner, LoggingProfile logProfile)
     {

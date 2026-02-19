@@ -38,13 +38,13 @@ public class ResourceBar : MonoBehaviour
 
     private void DisplayInstant(int current, float proportion)
     {
-        m_valueText.text = FormatResourceValue(current);
+        m_valueText.text = Helper.StringFormatting.FormatIntForUI(current, 3, false);
         m_valueSlider.value = proportion;
     }
 
     private void Display(int current, float proportion, int delta)
     {       
-        m_valueText.text = FormatResourceValue(current);
+        m_valueText.text = Helper.StringFormatting.FormatIntForUI(current, 3, false);
         LerpSlider(proportion);      
 
         if (delta == 0)
@@ -73,26 +73,6 @@ public class ResourceBar : MonoBehaviour
         }
 
         m_valueSlider.value = newProportion;
-    }
-
-    private string FormatResourceValue(int current)
-    {
-        int insertAlphaAt = 0;
-        string lowOpacity = "<alpha=#66>";
-        string normalOpacity = "<alpha=#FF>";
-        string valueParse = current.ToString("000");
-
-        if (current < 10)
-            insertAlphaAt = 2;
-        else if (current < 100)
-            insertAlphaAt = 1;
-
-        if (insertAlphaAt > 0)
-        {
-            return $"{lowOpacity}{valueParse.Insert(insertAlphaAt, normalOpacity)}";
-        }
-
-        return valueParse;
     }
 
     private void PlayHealingEffects()

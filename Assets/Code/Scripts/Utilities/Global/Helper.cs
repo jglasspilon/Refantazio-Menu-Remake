@@ -1,6 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -47,6 +46,36 @@ public class Helper
         public static async UniTask DelaySeconds(float seconds)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(seconds), ignoreTimeScale: false);
+        }
+    }
+
+    public class StringFormatting
+    {
+        public static string FormatIntForUI(int value, int minSize, bool lowStrength)
+        {
+            int insertAlphaAt = 0;
+            string lowOpacity = lowStrength ? "<alpha=#11>" : "<alpha=#66>";
+            string normalOpacity = "<alpha=#FF>";
+            string format = "";
+
+            for(int i = 0; i < minSize; i++)
+            {
+                format += "0";
+            }
+
+            string valueParse = value.ToString(format);
+
+            if (value < 10)
+                insertAlphaAt = minSize - 1;
+            else if (value < 100)
+                insertAlphaAt = minSize - 2;
+
+            if (insertAlphaAt > 0)
+            {
+                return $"{lowOpacity}{valueParse.Insert(insertAlphaAt, normalOpacity)}";
+            }
+
+            return valueParse;
         }
     }
 }

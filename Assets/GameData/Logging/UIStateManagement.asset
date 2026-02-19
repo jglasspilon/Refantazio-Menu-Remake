@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fec5fcefa28579840b749e542aff6b13, type: 3}
   m_Name: UIStateManagement
   m_EditorClassIdentifier: Assembly-CSharp::LoggingProfile
-  LoggingEnabled: 1
+  LoggingEnabled: 0
   Prefix: UI State Management
   PrefixColor: {r: 0, g: 0.9386678, b: 1, a: 1}

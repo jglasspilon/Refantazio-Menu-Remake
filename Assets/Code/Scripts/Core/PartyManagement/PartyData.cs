@@ -130,6 +130,8 @@ public class PartyData: IDisposable
         newPartyMember.OnCharacterUpdated += HandleOnPartyMemberStatUpdate;
         m_party.Add(newPartyMember.ID, newPartyMember);
         m_orderedParty.Add(newPartyMember);
+
+        Logger.Log($"Added {newPartyMember.Name} to party.", m_logProfile);
         OnPartyChanged?.Invoke();
 
         if(!ActivePartyFull)
@@ -155,11 +157,13 @@ public class PartyData: IDisposable
         partyMember.OnCharacterUpdated -= HandleOnPartyMemberStatUpdate;
         m_party.Remove(partyMember.ID);
         m_orderedParty.Remove(partyMember);
+
+        Logger.Log($"removed {partyMember.Name} from party.", m_logProfile);
         OnPartyChanged?.Invoke();
 
-        if(TryGetActivePartyMember(partyMember.ID, out Character activePartyMember))
+        if(m_activeParty.ContainsKey(partyMember.ID))
         {
-            RemoveActivePartyMember(activePartyMember);
+            RemoveActivePartyMember(partyMember);
         }
     }
 
@@ -187,6 +191,8 @@ public class PartyData: IDisposable
         newActivePartyMember.SetCharacterToActiveParty();
         m_activeParty.Add(newActivePartyMember.ID, newActivePartyMember);
         m_orderedActiveParty.Add(newActivePartyMember);
+
+        Logger.Log($"Added {newActivePartyMember.Name} to active party.", m_logProfile);
         OnActivePartyChanged?.Invoke();
     }
 
@@ -208,12 +214,15 @@ public class PartyData: IDisposable
         activePartyMember.RemoveCharacterFromActiveParty();
         m_activeParty.Remove(activePartyMember.ID);
         m_orderedActiveParty.Remove(activePartyMember);
+
+        Logger.Log($"removed {activePartyMember.Name} from active party.", m_logProfile);
         OnActivePartyChanged?.Invoke();
     }
 
     public void InitializeGuide(CharacterSheet guide)
     {
         m_guide = new Character(guide);
+        Logger.Log($"Set {m_guide.Name} as party guide.", m_logProfile);
     }
     #endregion
 

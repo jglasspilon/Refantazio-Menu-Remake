@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fec5fcefa28579840b749e542aff6b13, type: 3}
-  m_Name: SceneLoading
+  m_Name: InventoryManagement
   m_EditorClassIdentifier: Assembly-CSharp::LoggingProfile
-  LoggingEnabled: 0
-  Prefix: Scene Loading
-  PrefixColor: {r: 1, g: 0.9603924, b: 0.18679237, a: 1}
+  LoggingEnabled: 1
+  Prefix: Inventory Management
+  PrefixColor: {r: 0.3239147, g: 0.7509433, b: 0.25362042, a: 1}

@@ -67,7 +67,9 @@ public abstract class MenuPage : MonoBehaviour
 
     public virtual void Close()
     {
-        m_anim.SetBool("IsActive", false);
+        if(m_anim.isActiveAndEnabled)
+            m_anim.SetBool("IsActive", false);
+
         gameObject.SetActive(false);
         Logger.Log($"Menu page {PageName} closed successfully.", gameObject, m_logProfile);
     }
