@@ -26,6 +26,9 @@ public class ItemsMenuPage : MenuPage
 
     public void SelectItem(InventoryEntry item)
     {
+        if (item.Item is not UsableItem usable || usable.BattleOnly)
+            return;
+
         m_selectedItem = item;
     }
 

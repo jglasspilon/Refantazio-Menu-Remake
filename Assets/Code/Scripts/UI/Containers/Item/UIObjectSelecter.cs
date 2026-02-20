@@ -3,16 +3,16 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class InventoryItemSelecter
+public class UIObjectSelecter<T> where T: MonoBehaviour, ISelectable 
 {
     [SerializeField][ReadOnly]
-    private InventoryItem m_selectedItem;
+    private T m_selectedItem;
     
-    private InventoryItem[] m_items;
+    private T[] m_items;
 
-    public InventoryItem SelectedItem => m_selectedItem;
+    public T SelectedItem => m_selectedItem;
 
-    public int UpdateItemsAndReturnIndex(InventoryItem[] items, int selectedIndex)
+    public int UpdateItemsAndReturnIndex(T[] items, int selectedIndex)
     {
         m_items = items;
         return SelectItem(selectedIndex);

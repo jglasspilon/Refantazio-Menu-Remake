@@ -57,6 +57,11 @@ public class InventoryItem_MenuBasic : InventoryItem
         m_anim.SetBool("IsSelected", selected);
     }
 
+    public override void Select()
+    {
+
+    }
+
     public override void ResetForPool()
     {
         if (m_inventoryEntry != null)

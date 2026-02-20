@@ -13,7 +13,7 @@ public class ItemSelectionSection : PageSection, IHandleOnConfirm, IHandleOnBack
     private InventoryItemGenerator m_itemGenerater;
 
     [SerializeField]
-    private InventoryItemSelecter m_itemSelecter;
+    private UIObjectSelecter<InventoryItem> m_itemSelecter;
 
     [SerializeField]
     private ContentFramer m_itemFramer;
