@@ -5,11 +5,11 @@ public class CharacterSelectionSection : PageSection
 {
     public override UniTask EnterSection()
     {
-        throw new System.NotImplementedException();
+        return default;
     }
 
     public override UniTask ExitSection()
     {
-        throw new System.NotImplementedException();
+        return default;
     }
 }

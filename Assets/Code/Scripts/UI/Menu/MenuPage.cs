@@ -20,7 +20,6 @@ public abstract class MenuPage : MonoBehaviour
     protected Stack<PageSection> m_breadcrumb = new Stack<PageSection>(); 
     public EMenuPages PageName => m_pageName;
     public int PageCount { get; private set; }
-    protected virtual PageSection CurrentPageSection => m_breadcrumb.Peek();
 
     public virtual async UniTask OpenAsync(int pageCount)
     {
@@ -59,14 +58,16 @@ public abstract class MenuPage : MonoBehaviour
 
     public virtual void EnterSection(PageSection section)
     {
-        m_breadcrumb.Push(section);
-        CurrentPageSection.ExitSection();
+        if (m_breadcrumb.Count > 0)
+            m_breadcrumb.Peek().ExitSection();
+
+        m_breadcrumb.Push(section);     
         section.EnterSection();
     }
 
     public virtual bool TryGoBack()
     {
-        if(m_breadcrumb.Count > 0)
+        if(m_breadcrumb.Count > 1)
         {
             PageSection goBackFrom = m_breadcrumb.Pop();
             PageSection landingSection = m_breadcrumb.Peek();
@@ -90,20 +91,26 @@ public abstract class MenuPage : MonoBehaviour
 
     public virtual void Confirm()
     {
-        if (CurrentPageSection is IHandleOnConfirm handler)
-            handler.OnConfirm();
+        if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandleOnConfirm handler)
+            return;
+
+        handler.OnConfirm();
     }
 
     public virtual void CycleUp()
     {
-        if (CurrentPageSection is IHandleOnCycleUp handler)
-            handler.OnCycleUp();
+        if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandleOnCycleUp handler)
+            return;
+
+        handler.OnCycleUp();
     }
 
     public virtual void CycleDown()
     {
-        if (CurrentPageSection is IHandleOnCycleDown handler)
-            handler.OnCycleDown();
+        if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandleOnCycleDown handler)
+            return;
+
+        handler.OnCycleDown();
     }
 
     public abstract void ResetPage();

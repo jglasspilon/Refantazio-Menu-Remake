@@ -435,6 +435,7 @@ MonoBehaviour:
   m_characterMp: {fileID: 6581969446288833172}
   m_guideOverlay: {fileID: 5739466705824899935}
   m_deathIcon: {fileID: 1579563736115664958}
+  m_characterTypeContent: {fileID: 7569013372795583769}
   m_healEffect:
   - {fileID: 438816018319554197}
   - {fileID: 2006809642906468755}

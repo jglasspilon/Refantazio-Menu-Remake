@@ -16,11 +16,9 @@ public class ItemsMenuPage : MenuPage
     private InventoryEntry m_selectedItem;
     private Character m_selectedCharacter;
 
-    protected override PageSection CurrentPageSection => m_breadcrumb.Count > 0 ? m_breadcrumb.Peek() : m_itemSelectionSection;
-
     public override UniTask EnterDefaultSection()
     {
-        m_itemSelectionSection.EnterSection();
+        EnterSection(m_itemSelectionSection);
         return default;
     }
 
@@ -30,6 +28,7 @@ public class ItemsMenuPage : MenuPage
             return;
 
         m_selectedItem = item;
+        EnterSection(m_characterSelectionSection);
     }
 
     public override void ResetPage()

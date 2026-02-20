@@ -16,7 +16,7 @@ public class PartyBanner_Items : PartyBanner
     private ResourceBar m_characterHp, m_characterMp;
 
     [SerializeField]
-    private GameObject m_guideOverlay, m_deathIcon;
+    private GameObject m_guideOverlay, m_deathIcon, m_characterTypeContent;
    
     [SerializeField]
     private PartyBannerEffect[] m_healEffect;
@@ -56,6 +56,7 @@ public class PartyBanner_Items : PartyBanner
         string output = $"{typeString.Substring(0,1)}<size=50%>{typeString.Substring(1)}";
         m_characterTypeText.text = output;
 
+        m_characterTypeContent.SetActive(characterType == ECharacterType.Leader || characterType == ECharacterType.Party);
         m_characterHp.gameObject.SetActive(characterType != ECharacterType.Guide);
         m_characterMp.gameObject.SetActive(characterType != ECharacterType.Guide);
         m_guideOverlay.SetActive(characterType == ECharacterType.Guide);

@@ -16,7 +16,7 @@ public class InventoryItem_MenuBasic : InventoryItem
     private CanvasGroup m_alphaGroup;
 
     [SerializeField]
-    private GameObject m_newFlag;
+    private GameObject m_newFlag, m_selectionSplotch, m_selectionFrame, m_shadow;
 
     [SerializeField]
     private Animator m_anim;
@@ -55,6 +55,15 @@ public class InventoryItem_MenuBasic : InventoryItem
     {
         base.SetAsSelected(selected);
         m_anim.SetBool("IsSelected", selected);
+        m_selectionFrame.SetActive(false);
+        m_selectionSplotch.SetActive(selected);
+        m_shadow.SetActive(!selected);
+    }
+
+    public override void PauseSelection()
+    {
+        m_selectionFrame.SetActive(true);
+        m_selectionSplotch.SetActive(false);
     }
 
     public override void Select()

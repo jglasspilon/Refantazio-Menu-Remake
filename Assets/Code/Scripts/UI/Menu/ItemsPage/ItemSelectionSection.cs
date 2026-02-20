@@ -69,12 +69,14 @@ public class ItemSelectionSection : PageSection, IHandleOnConfirm, IHandleOnBack
 
     public override UniTask EnterSection()
     {
-        return UniTask.WaitForEndOfFrame();
+        m_selectedItemIndex = m_itemSelecter.SelectItem(m_selectedItemIndex);
+        return default;
     }
 
     public override UniTask ExitSection()
     {
-        return UniTask.WaitForEndOfFrame();
+        SelectedItem.PauseSelection();
+        return default;
     }
 
     public void OnConfirm()
