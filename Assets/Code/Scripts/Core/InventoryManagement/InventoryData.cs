@@ -20,9 +20,9 @@ public class InventoryData
     public InventoryEntry[] GetAllItems(EItemCategories category)
     {
         if (category == EItemCategories.All)
-            return m_orderedEntries.OrderBy(x => x.Item.Category).ThenBy(x => x.Item.SortOrder).ToArray();
+            return m_orderedEntries.Where(x => x.Count > 0).OrderBy(x => x.Item.Category).ThenBy(x => x.Item.SortOrder).ToArray();
 
-        IEnumerable<InventoryEntry> entries = m_orderedEntries.Where(x => x.Item.Category == category);
+        IEnumerable<InventoryEntry> entries = m_orderedEntries.Where(x => x.Item.Category == category && x.Count > 0);
 
         if (category == EItemCategories.Usable)
             return entries.OrderBy(x => (x.Item as UsableItem).BattleOnly == false).ThenBy(x => x.Item.SortOrder).ToArray();
@@ -57,7 +57,7 @@ public class InventoryData
         }
         else if (amount < 0)
         {
-            Logger.Log($"removed {amount} {newItem.Name} from the inventory for a total of {entry.Count}", m_logProfile);
+            Logger.Log($"removed {Mathf.Abs(amount)} {newItem.Name} from the inventory for a total of {entry.Count}", m_logProfile);
             OnItemRemoved?.Invoke(entry);
         }
     }

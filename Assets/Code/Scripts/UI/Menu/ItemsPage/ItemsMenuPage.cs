@@ -1,21 +1,32 @@
+using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
 public class ItemsMenuPage : MenuPage
 {
+    public event Action<int> OnItemIndexChange, OnCharacterIndexChange;
+    public event Action<int> OnCategoryIndexChange;
 
-    public override void Confirm()
+    [SerializeField]
+    private ItemSelectionSection m_itemSelectionSection;
+
+    [SerializeField]
+    private PageSection m_characterSelectionSection;
+
+    private InventoryEntry m_selectedItem;
+    private Character m_selectedCharacter;
+
+    protected override PageSection CurrentPageSection => m_breadcrumb.Count > 0 ? m_breadcrumb.Peek() : m_itemSelectionSection;
+
+    public override UniTask EnterDefaultSection()
     {
-        
+        m_itemSelectionSection.EnterSection();
+        return default;
     }
 
-    public override void CycleDown()
+    public void SelectItem(InventoryEntry item)
     {
-        
-    }
-
-    public override void CycleUp()
-    {
-        
+        m_selectedItem = item;
     }
 
     public override void ResetPage()

@@ -15,24 +15,34 @@ public abstract class MenuPage : MonoBehaviour
     private Animator m_anim;
 
     [SerializeField]
-    private LoggingProfile m_logProfile;
+    protected LoggingProfile m_logProfile;
 
-    private Stack<IPageSection> m_breadcrumb = new Stack<IPageSection>(); 
+    protected Stack<PageSection> m_breadcrumb = new Stack<PageSection>(); 
     public EMenuPages PageName => m_pageName;
     public int PageCount { get; private set; }
+    protected virtual PageSection CurrentPageSection => m_breadcrumb.Peek();
 
     public virtual async UniTask OpenAsync(int pageCount)
     {
         OnOpening?.Invoke();
+
         Logger.Log($"Opening menu page '{PageName}'.", gameObject, m_logProfile);
         gameObject.SetActive(true);
         PageCount = pageCount;
+
+        await EnterDefaultSection();
         m_anim.SetInteger("PageCount", pageCount);
         m_anim.SetBool("IsActive", true);
+
         await Helper.Animation.WaitForCurrentPageAnimationToEnd(m_anim);
 
         Logger.Log($"Menu page '{PageName}' opened successfully.", gameObject, m_logProfile);
         OnOpened?.Invoke();
+    }
+
+    public virtual UniTask EnterDefaultSection()
+    {
+        return default;
     }
 
     public virtual async UniTask CloseAsync()
@@ -47,18 +57,22 @@ public abstract class MenuPage : MonoBehaviour
         OnClosed?.Invoke();
     }
 
-    public virtual void EnterSection(IPageSection section)
+    public virtual void EnterSection(PageSection section)
     {
         m_breadcrumb.Push(section);
-        section.Enter();
+        CurrentPageSection.ExitSection();
+        section.EnterSection();
     }
 
     public virtual bool TryGoBack()
     {
         if(m_breadcrumb.Count > 0)
         {
-            IPageSection goBackFrom = m_breadcrumb.Pop();
-            goBackFrom.Exit();
+            PageSection goBackFrom = m_breadcrumb.Pop();
+            PageSection landingSection = m_breadcrumb.Peek();
+
+            goBackFrom.ExitSection();
+            landingSection.EnterSection();
             return true;
         }
 
@@ -74,8 +88,23 @@ public abstract class MenuPage : MonoBehaviour
         Logger.Log($"Menu page {PageName} closed successfully.", gameObject, m_logProfile);
     }
 
-    public abstract void CycleUp();
-    public abstract void CycleDown();
-    public abstract void Confirm();
+    public virtual void Confirm()
+    {
+        if (CurrentPageSection is IHandleOnConfirm handler)
+            handler.OnConfirm();
+    }
+
+    public virtual void CycleUp()
+    {
+        if (CurrentPageSection is IHandleOnCycleUp handler)
+            handler.OnCycleUp();
+    }
+
+    public virtual void CycleDown()
+    {
+        if (CurrentPageSection is IHandleOnCycleDown handler)
+            handler.OnCycleDown();
+    }
+
     public abstract void ResetPage();
 }

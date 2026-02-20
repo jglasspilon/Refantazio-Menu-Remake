@@ -21,30 +21,21 @@ public class PartyBannerGenerator : MonoBehaviour
 
     public void OnEnable()
     {
-        bool partyDataResolved = m_partyData != null;
-        bool assetPoolResolved = m_assetPool != null;
+        if (m_assetPool == null)
+        {
+            if (ObjectResolver.Instance.TryResolve(OnAssetPoolChanged, out AssetPoolManager assetPool))
+            {
+                OnAssetPoolChanged(assetPool);
+            }
+        }
 
         if (m_partyData == null)
         {
             if (ObjectResolver.Instance.TryResolve(OnPartyDataChanged, out PartyData partyData))
             {
                 OnPartyDataChanged(partyData);
-                partyDataResolved = true;
+                return;
             }
-        }
-
-        if(m_assetPool == null)
-        {
-            if (ObjectResolver.Instance.TryResolve(OnAssetPoolChanged, out AssetPoolManager assetPool))
-            {
-                OnAssetPoolChanged(assetPool);
-                assetPoolResolved = true;
-            }
-        }
-
-        if (!partyDataResolved || !assetPoolResolved)
-        {
-            return;
         }
 
         OnPartyCompositionChanged();

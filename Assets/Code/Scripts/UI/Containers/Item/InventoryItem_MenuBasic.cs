@@ -1,8 +1,10 @@
+using NUnit.Framework;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuItem_Basic : MenuItem
+public class InventoryItem_MenuBasic : InventoryItem
 {
     [SerializeField]
     private Image m_icon;
@@ -29,6 +31,8 @@ public class MenuItem_Basic : MenuItem
     private const float UNUSABLE_ALPHA = 0.5f;
     private const float USABLE_ALPHA = 1.0f;
 
+    public override InventoryEntry InventoryEntry => m_inventoryEntry;
+
     public override void Initialize(InventoryEntry entry)
     {
         if(entry == null || entry.Item == null)
@@ -49,6 +53,7 @@ public class MenuItem_Basic : MenuItem
 
     public override void SetAsSelected(bool selected)
     {
+        base.SetAsSelected(selected);
         m_anim.SetBool("IsSelected", selected);
     }
 
