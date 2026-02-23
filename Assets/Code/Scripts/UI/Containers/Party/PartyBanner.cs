@@ -3,15 +3,15 @@ using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
-public abstract class PartyBanner : PoolableObject
+public abstract class PartyBanner : PoolableObjectFromData<Character>, ISelectable
 {    
     protected Character m_character;
 
-    public Character Character {  get { return m_character; } } 
+    public Character Character {  get { return m_character; } }
 
-    public virtual void InitializeCharacter(Character character)
+    public override void InitializeFromData(Character data)
     {
-        m_character = character;
+        m_character = data;
         transform.localScale = Vector3.one;
     }
 
@@ -19,4 +19,8 @@ public abstract class PartyBanner : PoolableObject
     {
         m_character = null;
     }
+
+    public abstract void SetAsSelected(bool value);
+    public abstract void PauseSelection();
 }
+

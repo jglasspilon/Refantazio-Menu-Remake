@@ -33,7 +33,7 @@ public class InventoryItem_MenuBasic : InventoryItem
 
     public override InventoryEntry InventoryEntry => m_inventoryEntry;
 
-    public override void Initialize(InventoryEntry entry)
+    public override void InitializeFromData(InventoryEntry entry)
     {
         if(entry == null || entry.Item == null)
         {
@@ -64,11 +64,6 @@ public class InventoryItem_MenuBasic : InventoryItem
     {
         m_selectionFrame.SetActive(true);
         m_selectionSplotch.SetActive(false);
-    }
-
-    public override void Select()
-    {
-
     }
 
     public override void ResetForPool()

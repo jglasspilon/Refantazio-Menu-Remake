@@ -1,87 +1,45 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class ItemSelectionSection : PageSection, IHandleOnConfirm, IHandleOnBack, IHandleOnCycleUp, IHandleOnCycleDown
+public class ItemSelectionSection : UIObjectSelectionSection<InventoryItem, InventoryItemGenerator, InventoryEntry, InventoryData>
+    ,IHandleOnConfirm, IHandleOnBack
 {
     [SerializeField]
-    private ItemsMenuPage m_parentPage;
+    private ContentFramer m_framer;
     
     [SerializeField]
     private EItemCategories m_selectedCategory;
 
     [SerializeField]
-    private InventoryItemGenerator m_itemGenerater;
+    private Animator m_sectionAnim;
 
     [SerializeField]
-    private UIObjectSelecter<InventoryItem> m_itemSelecter;
+    private AnimatedMover m_bodyMover;
 
-    [SerializeField]
-    private ContentFramer m_itemFramer;
+    private IItemSelectable m_parentPage;
 
-    private InventoryData m_inventoryData;
-    private AssetPoolManager m_assetPool;
-    private int m_selectedItemIndex;
-
-    public InventoryItem SelectedItem => m_itemSelecter.SelectedItem;
-
-    public void OnEnable()
+    private void Awake()
     {
-        if (m_assetPool == null)
-        {
-            if (ObjectResolver.Instance.TryResolve(OnAssetPoolChanged, out AssetPoolManager assetPool))
-            {
-                OnAssetPoolChanged(assetPool);
-            }
-        }
-
-        if (m_inventoryData == null)
-        {
-            if (ObjectResolver.Instance.TryResolve(OnInventoryDataChanged, out InventoryData inventoryData))
-            {
-                OnInventoryDataChanged(inventoryData);
-                return;
-            }
-        }
-
-        GenerateInventory(m_selectedCategory);
-    }
-
-    private void OnInventoryDataChanged(InventoryData inventoryData)
-    {
-        m_inventoryData = inventoryData;
-        m_itemGenerater ??= new InventoryItemGenerator();
-        m_itemGenerater.Initialize(inventoryData, m_assetPool);
-        GenerateInventory(m_selectedCategory);
-    }
-
-    private void OnAssetPoolChanged (AssetPoolManager assetPool)
-    {
-        m_assetPool = assetPool;
-        m_itemGenerater ??= new InventoryItemGenerator();
-        m_itemGenerater.Initialize(m_inventoryData, assetPool);
-    }
-
-    private void GenerateInventory(EItemCategories category)
-    {
-        var generatedItems = m_itemGenerater.GenerateInventory(m_selectedCategory);
-        m_selectedItemIndex = m_itemSelecter.UpdateItemsAndReturnIndex(generatedItems, m_selectedItemIndex);
+        m_parentPage = GetComponentInParent<IItemSelectable>();
     }
 
     public override UniTask EnterSection()
     {
-        m_selectedItemIndex = m_itemSelecter.SelectItem(m_selectedItemIndex);
+        m_sectionAnim.SetBool("CharSection", false);
+        m_bodyMover.MoveOut();
+        m_selectedIndex = m_selecter.Select(m_selectedIndex);
         return default;
     }
 
     public override UniTask ExitSection()
     {
-        SelectedItem.PauseSelection();
+        SelectedObject.PauseSelection();
         return default;
     }
 
     public void OnConfirm()
     {
-        m_parentPage.SelectItem(SelectedItem.InventoryEntry);
+        m_parentPage.SelectItem(SelectedObject.InventoryEntry);
     }
 
     public void OnBack()
@@ -89,21 +47,22 @@ public class ItemSelectionSection : PageSection, IHandleOnConfirm, IHandleOnBack
         m_parentPage.SelectItem(null);
     }
 
-    public void OnCycleUp()
+    public void RemoveSpentItem()
     {
-        m_selectedItemIndex--;
-        UpdateSelectedItem();
+        InventoryItem[] updatedList = m_generater.RemoveGeneratedObject(m_selecter.SelectedObject);
+        m_selecter.UpdateObjectsAndReturnIndex(updatedList, m_selectedIndex);
     }
 
-    public void OnCycleDown()
+    protected override void GenerateUIContent()
     {
-        m_selectedItemIndex++;
-        UpdateSelectedItem();
+        InventoryEntry[] itemsTopGenerate = m_dataModel.GetAllItems(m_selectedCategory);
+        var generatedItems = m_generater.GenerateContent(itemsTopGenerate);
+        m_selectedIndex = m_selecter.UpdateObjectsAndReturnIndex(generatedItems, m_selectedIndex);
     }
 
-    private void UpdateSelectedItem()
+    protected override void UpdateSelectedItem()
     {
-        m_selectedItemIndex = m_itemSelecter.SelectItem(m_selectedItemIndex);
-        m_itemFramer.EnsureVisible(m_itemSelecter.SelectedItem.GetComponent<RectTransform>());
+        base.UpdateSelectedItem();
+        m_framer.EnsureVisible(m_selecter.SelectedObject.GetComponent<RectTransform>());
     }
 }

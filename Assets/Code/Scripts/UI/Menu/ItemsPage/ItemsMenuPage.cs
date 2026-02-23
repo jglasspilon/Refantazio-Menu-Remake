@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
 
-public class ItemsMenuPage : MenuPage
+public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
 {
     public event Action<int> OnItemIndexChange, OnCharacterIndexChange;
     public event Action<int> OnCategoryIndexChange;
@@ -11,10 +11,10 @@ public class ItemsMenuPage : MenuPage
     private ItemSelectionSection m_itemSelectionSection;
 
     [SerializeField]
-    private PageSection m_characterSelectionSection;
+    private CharacterSelectionSection m_characterSelectionSection;
 
     private InventoryEntry m_selectedItem;
-    private Character m_selectedCharacter;
+    private ItemExecutor m_itemExecutor = new ItemExecutor();
 
     public override UniTask EnterDefaultSection()
     {
@@ -28,7 +28,36 @@ public class ItemsMenuPage : MenuPage
             return;
 
         m_selectedItem = item;
+
+        if(usable.TargetingType == ETargetingTypes.AllAllies || usable.TargetingType == ETargetingTypes.All)
+        {
+            m_characterSelectionSection.SelectAll();
+        }
+
         EnterSection(m_characterSelectionSection);
+    }
+
+    public void SelectCharacter(Character character)
+    {
+        Logger.Log($"Using {m_selectedItem.Item.Name} on {character.Name}", m_logProfile);        
+        UseItem(m_selectedItem.Item as UsableItem, character);
+
+        if (m_selectedItem.Count == 0)
+        {
+            m_itemSelectionSection.RemoveSpentItem();
+            TryGoBack();
+            return;
+        }
+
+        //TODO: add if no more selectable characters from item condition, go back
+    }
+
+
+    private void UseItem(UsableItem item, Character character)
+    {
+        m_selectedItem.ApplyAmount(-1);
+
+        //TODO: use item executer
     }
 
     public override void ResetPage()

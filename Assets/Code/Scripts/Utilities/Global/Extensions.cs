@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 
 public static class Extensions
@@ -30,5 +30,14 @@ public static class Extensions
         }
 
         return curve.keys[curve.length - 1].time;
+    }
+
+    public static void ForEach<T>(this T[] array, Action<T> action)
+    {
+        if (array == null) throw new ArgumentNullException(nameof(array));
+        if (action == null) throw new ArgumentNullException(nameof(action));
+
+        for (int i = 0; i < array.Length; i++)
+            action(array[i]);
     }
 }

@@ -56,12 +56,15 @@ public class Equipment : Item
 
 public class ItemExecutor
 {
-    public void Use(UsableItem item, Character[] target)
+    public void Use(InventoryEntry item, Character[] target)
     {
+        if (item.Item is not UsableItem usable)
+            return;
 
+        item.ApplyAmount(-1);
     }
 
-    public void Use(UsableItem item, Character target)
+    public void Use(InventoryEntry item, Character target)
     {
 
     }

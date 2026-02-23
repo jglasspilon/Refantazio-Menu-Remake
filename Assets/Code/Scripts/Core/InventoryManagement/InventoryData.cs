@@ -92,7 +92,7 @@ public class InventoryEntry
     public void ApplyAmount(int amount)
     {
         m_count = Mathf.Clamp(m_count + amount, 0, 99);
-        OnAmountChanged?.Invoke(amount);
+        OnAmountChanged?.Invoke(m_count);
     }
 
     public void MarkAsSeen()

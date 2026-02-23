@@ -9,9 +9,6 @@ public static class Logger
         if(logProfile == null) 
             logProfile = m_fallbackLogProfile;
 
-        if (!logProfile.LoggingEnabled)
-            return;
-
         string output = logProfile.CreatePrefixString() + message;
         Debug.Log(output, owner);
     }
@@ -21,7 +18,7 @@ public static class Logger
         if (logProfile == null)
             logProfile = m_fallbackLogProfile;
 
-        if (!logProfile.LoggingEnabled)
+        if (!Application.isEditor)
             return;
 
         string output = logProfile.CreatePrefixString() + message;

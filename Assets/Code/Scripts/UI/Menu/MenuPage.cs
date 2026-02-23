@@ -67,16 +67,19 @@ public abstract class MenuPage : MonoBehaviour
 
     public virtual bool TryGoBack()
     {
-        if(m_breadcrumb.Count > 1)
-        {
-            PageSection goBackFrom = m_breadcrumb.Pop();
-            PageSection landingSection = m_breadcrumb.Peek();
+        if (m_breadcrumb.Count == 0)
+            return false;
 
-            goBackFrom.ExitSection();
+        PageSection goBackFrom = m_breadcrumb.Pop();
+        goBackFrom.ExitSection();
+
+        if (m_breadcrumb.Count > 0)
+        {
+            PageSection landingSection = m_breadcrumb.Peek();
             landingSection.EnterSection();
             return true;
         }
-
+       
         return false;
     }
 

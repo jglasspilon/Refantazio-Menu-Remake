@@ -1,14 +1,13 @@
 using UnityEngine;
 
-public abstract class InventoryItem : PoolableObject, ISelectable
+public abstract class InventoryItem : PoolableObjectFromData<InventoryEntry>, ISelectable
 {
     public abstract InventoryEntry InventoryEntry { get; }
-    public abstract void Initialize(InventoryEntry entry);
-    public abstract void Select();
-    public abstract void PauseSelection();
     public virtual void SetAsSelected(bool selected)
     {
         if (selected)
             InventoryEntry.MarkAsSeen();
     }
+    public abstract void PauseSelection();
+    
 }

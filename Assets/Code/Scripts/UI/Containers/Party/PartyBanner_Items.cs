@@ -16,7 +16,7 @@ public class PartyBanner_Items : PartyBanner
     private ResourceBar m_characterHp, m_characterMp;
 
     [SerializeField]
-    private GameObject m_guideOverlay, m_deathIcon, m_characterTypeContent;
+    private GameObject m_guideOverlay, m_deathIcon, m_characterTypeContent, m_selectionSplotch;
    
     [SerializeField]
     private PartyBannerEffect[] m_healEffect;
@@ -27,9 +27,9 @@ public class PartyBanner_Items : PartyBanner
     [SerializeField]
     private PartyBannerEffect[] m_manaRestoreEffect;
 
-    public override void InitializeCharacter(Character character)
+    public override void InitializeFromData(Character character)
     {
-        base.InitializeCharacter(character);
+        base.InitializeFromData(character);
         m_characterHp.Initialize(character.HP);
         m_characterMp.Initialize(character.MP);
         m_character.OnTypeChange += DisplayCharacterType;
@@ -50,6 +50,19 @@ public class PartyBanner_Items : PartyBanner
         base.ResetForPool();
     }
 
+    #region Selectable Logic
+    public override void SetAsSelected(bool value)
+    {
+        m_selectionSplotch.SetActive(value);
+    }
+
+    public override void PauseSelection()
+    {
+        
+    }
+    #endregion
+
+    #region Display Logic
     private void DisplayCharacterType(ECharacterType characterType)
     {
         string typeString = characterType.ToString();
@@ -76,4 +89,5 @@ public class PartyBanner_Items : PartyBanner
     {
         m_deathIcon.SetActive(isDead);
     }
+    #endregion
 }
