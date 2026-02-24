@@ -3,9 +3,9 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Helper
+public static class Helper
 {
-    public class Interaction
+    public static class Interaction
     {
         public static class PointerEventFactory
         {
@@ -32,7 +32,7 @@ public class Helper
         }
     }
 
-    public class Animation
+    public static class Animation
     {
         public static async UniTask WaitForCurrentPageAnimationToEnd(Animator anim)
         {
@@ -41,7 +41,7 @@ public class Helper
         }        
     }
 
-    public class Timing
+    public static class Timing
     {
         public static async UniTask DelaySeconds(float seconds)
         {
@@ -49,7 +49,7 @@ public class Helper
         }
     }
 
-    public class StringFormatting
+    public static class StringFormatting
     {
         public static string FormatIntForUI(int value, int minSize, bool lowStrength)
         {
@@ -76,6 +76,23 @@ public class Helper
             }
 
             return valueParse;
+        }
+    }
+
+    public static class Arrays
+    {
+        public static int GetSafeIndex(int index, int max, bool loop)
+        {
+            if (loop)
+            {
+                if (index < 0)
+                    return index = max;
+                else if (index > max)
+                    return index = 0;
+                return index;
+            }
+
+            return Mathf.Clamp(index, 0, max);
         }
     }
 }

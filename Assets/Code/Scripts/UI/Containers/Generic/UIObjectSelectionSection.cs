@@ -16,7 +16,7 @@ public abstract class UIObjectSelectionSection<T, TGenerater, TData, TModel>: Pa
 
     public T SelectedObject => m_selecter.SelectedObject;
 
-    public void OnEnable()
+    protected virtual void OnEnable()
     {
         if (m_assetPool == null)
         {

@@ -8,6 +8,7 @@ public class InventoryData
 {
     public event Action<InventoryEntry> OnItemAdded;
     public event Action<InventoryEntry> OnItemRemoved;
+    public event Action<EItemCategories> OnLastMarkUnseen;
     
     [SerializeField]
     private List<InventoryEntry> m_orderedEntries = new List<InventoryEntry>();
@@ -25,7 +26,7 @@ public class InventoryData
         IEnumerable<InventoryEntry> entries = m_orderedEntries.Where(x => x.Item.Category == category && x.Count > 0);
 
         if (category == EItemCategories.Usable)
-            return entries.OrderBy(x => (x.Item as UsableItem).BattleOnly == false).ThenBy(x => x.Item.SortOrder).ToArray();
+            return entries.OrderBy(x => (x.Item as UsableItem).BattleOnly == true).ThenBy(x => x.Item.SortOrder).ToArray();
 
         return entries.OrderBy(x => x.Item.SortOrder).ToArray();
     }
@@ -46,6 +47,7 @@ public class InventoryData
             entry = new InventoryEntry(newItem);
             m_entries.Add(newItem.ID, entry);
             m_orderedEntries.Add(entry);
+            entry.OnMarkAsSeen += HandleItemMarkAsSeen;
         }
 
         entry.ApplyAmount(amount);
@@ -61,13 +63,23 @@ public class InventoryData
             OnItemRemoved?.Invoke(entry);
         }
     }
+
+    private void HandleItemMarkAsSeen(InventoryEntry entry)
+    {
+        EItemCategories category = entry.Item.Category;
+
+        if(GetAllItems(category).Where(x => x.IsNew).Count() == 0)
+        {
+            OnLastMarkUnseen?.Invoke(category);
+        }
+    }
 }
 
 [Serializable]
 public class InventoryEntry
 {
     public event Action<int> OnAmountChanged;
-    public event Action OnMarkAsSeen;
+    public event Action<InventoryEntry> OnMarkAsSeen;
 
     [SerializeField]
     private Item m_item;
@@ -98,7 +110,7 @@ public class InventoryEntry
     public void MarkAsSeen()
     {
         m_isNew = false;
-        OnMarkAsSeen?.Invoke();
+        OnMarkAsSeen?.Invoke(this);
     }
 }
 

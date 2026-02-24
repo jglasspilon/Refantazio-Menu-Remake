@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class MenuPage : MonoBehaviour
@@ -21,6 +20,7 @@ public abstract class MenuPage : MonoBehaviour
     public EMenuPages PageName => m_pageName;
     public int PageCount { get; private set; }
 
+    #region Life-cycle Functions
     public virtual async UniTask OpenAsync(int pageCount)
     {
         OnOpening?.Invoke();
@@ -39,11 +39,6 @@ public abstract class MenuPage : MonoBehaviour
         OnOpened?.Invoke();
     }
 
-    public virtual UniTask EnterDefaultSection()
-    {
-        return default;
-    }
-
     public virtual async UniTask CloseAsync()
     {
         OnClosing?.Invoke();
@@ -56,16 +51,42 @@ public abstract class MenuPage : MonoBehaviour
         OnClosed?.Invoke();
     }
 
+    public virtual void Close()
+    {
+        if (m_anim.isActiveAndEnabled)
+            m_anim.SetBool("IsActive", false);
+
+        gameObject.SetActive(false);
+        Logger.Log($"Menu page {PageName} closed successfully.", gameObject, m_logProfile);
+    }
+
+    public virtual void ResetPage()
+    {
+        while (m_breadcrumb.Count > 0)
+        {
+            PageSection closing = m_breadcrumb.Pop();
+            closing.ExitSection();
+            closing.ResetSection();
+        }
+    }
+    #endregion
+
+    #region Section Navigation
+    public virtual UniTask EnterDefaultSection()
+    {
+        return default;
+    }
+
     public virtual void EnterSection(PageSection section)
     {
         if (m_breadcrumb.Count > 0)
             m_breadcrumb.Peek().ExitSection();
 
-        m_breadcrumb.Push(section);     
+        m_breadcrumb.Push(section);
         section.EnterSection();
     }
 
-    public virtual bool TryGoBack()
+    public virtual bool TryExitCurrentSection()
     {
         if (m_breadcrumb.Count == 0)
             return false;
@@ -82,16 +103,9 @@ public abstract class MenuPage : MonoBehaviour
        
         return false;
     }
+    #endregion
 
-    public virtual void Close()
-    {
-        if(m_anim.isActiveAndEnabled)
-            m_anim.SetBool("IsActive", false);
-
-        gameObject.SetActive(false);
-        Logger.Log($"Menu page {PageName} closed successfully.", gameObject, m_logProfile);
-    }
-
+    #region Controls 
     public virtual void Confirm()
     {
         if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandleOnConfirm handler)
@@ -116,5 +130,37 @@ public abstract class MenuPage : MonoBehaviour
         handler.OnCycleDown();
     }
 
-    public abstract void ResetPage();
+    public virtual void PageLeftLv1()
+    {
+        if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandlePageLeftLv1 handler)
+            return;
+
+        handler.OnPageLeftLv1();
+    }
+
+    public virtual void PageLeftLv2()
+    {
+        if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandlePageLeftLv2 handler)
+            return;
+
+        handler.OnPageLeftLv2();
+    }
+
+    public virtual void PageRightLv1()
+    {
+        if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandlePageRightLv1 handler)
+            return;
+
+        handler.OnPageRightLv1();
+    }
+
+    public virtual void PageRightLv2()
+    {
+        if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandlePageRightLv2 handler)
+            return;
+
+        handler.OnPageRightLv2();
+    }
+
+    #endregion
 }

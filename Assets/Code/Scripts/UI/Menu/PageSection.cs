@@ -5,4 +5,6 @@ public abstract class PageSection: MonoBehaviour
 {
     public abstract UniTask EnterSection();
     public abstract UniTask ExitSection();
+
+    public abstract void ResetSection();
 }

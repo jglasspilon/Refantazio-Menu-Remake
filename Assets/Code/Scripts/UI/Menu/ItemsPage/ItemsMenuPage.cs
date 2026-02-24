@@ -45,7 +45,7 @@ public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
         if (m_selectedItem.Count == 0)
         {
             m_itemSelectionSection.RemoveSpentItem();
-            TryGoBack();
+            TryExitCurrentSection();
             return;
         }
 
@@ -58,10 +58,5 @@ public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
         m_selectedItem.ApplyAmount(-1);
 
         //TODO: use item executer
-    }
-
-    public override void ResetPage()
-    {
-        
     }
 }

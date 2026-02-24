@@ -39,6 +39,10 @@ public class CharacterSelectionSection: UIObjectSelectionSection<PartyBanner, Pa
         return default;
     }
 
+    public override void ResetSection()
+    {
+        m_generater.ClearGeneratedContent();
+    }
     public void SelectAll()
     {
         m_selectedAll = true;

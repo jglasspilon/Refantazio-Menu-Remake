@@ -45,7 +45,7 @@ public class InventoryItem_MenuBasic : InventoryItem
         m_inventoryEntry = entry;
         DisplayItemData(entry.Item);
         DisplayCount(entry.Count);
-        DisplayAsNew();
+        DisplayAsNew(entry);
         DisplayAsUsable(entry.Item is UsableItem usable && !usable.BattleOnly);
         m_inventoryEntry.OnAmountChanged += DisplayCount;
         m_inventoryEntry.OnMarkAsSeen += DisplayAsNew;
@@ -96,9 +96,9 @@ public class InventoryItem_MenuBasic : InventoryItem
         m_countText.text = Helper.StringFormatting.FormatIntForUI(amount, 2, true);
     }
 
-    private void DisplayAsNew()
+    private void DisplayAsNew(InventoryEntry entry)
     {
-        m_newFlag.SetActive(m_inventoryEntry.IsNew);
+        m_newFlag.SetActive(entry.IsNew);
     }
 
     private string ReplaceDescriptionTagWithColorTag(string raw)

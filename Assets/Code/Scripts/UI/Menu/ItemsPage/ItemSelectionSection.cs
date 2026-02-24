@@ -2,13 +2,13 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class ItemSelectionSection : UIObjectSelectionSection<InventoryItem, InventoryItemGenerator, InventoryEntry, InventoryData>
-    ,IHandleOnConfirm, IHandleOnBack
+    ,IHandleOnConfirm, IHandleOnBack, IHandlePageLeftLv1, IHandlePageRightLv1
 {
     [SerializeField]
     private ContentFramer m_framer;
-    
+
     [SerializeField]
-    private EItemCategories m_selectedCategory;
+    private InventoryCategoryCycler m_categoryCycler;
 
     [SerializeField]
     private Animator m_sectionAnim;
@@ -21,6 +21,18 @@ public class ItemSelectionSection : UIObjectSelectionSection<InventoryItem, Inve
     private void Awake()
     {
         m_parentPage = GetComponentInParent<IItemSelectable>();
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        m_categoryCycler.InitializeInventoryData(m_dataModel);
+        m_categoryCycler.OnCategoryChanged += HandleOnCategoryChanged;
+    }
+
+    private void OnDisable()
+    {
+        m_categoryCycler.OnCategoryChanged -= HandleOnCategoryChanged;
     }
 
     public override UniTask EnterSection()
@@ -37,14 +49,12 @@ public class ItemSelectionSection : UIObjectSelectionSection<InventoryItem, Inve
         return default;
     }
 
-    public void OnConfirm()
+    public override void ResetSection()
     {
-        m_parentPage.SelectItem(SelectedObject.InventoryEntry);
-    }
-
-    public void OnBack()
-    {
-        m_parentPage.SelectItem(null);
+        m_selecter.UnselectAll();
+        m_selectedIndex = 0;
+        m_generater.ClearGeneratedContent();
+        m_categoryCycler.ResetSelection();
     }
 
     public void RemoveSpentItem()
@@ -55,7 +65,7 @@ public class ItemSelectionSection : UIObjectSelectionSection<InventoryItem, Inve
 
     protected override void GenerateUIContent()
     {
-        InventoryEntry[] itemsTopGenerate = m_dataModel.GetAllItems(m_selectedCategory);
+        InventoryEntry[] itemsTopGenerate = m_dataModel.GetAllItems(m_categoryCycler.Category);
         var generatedItems = m_generater.GenerateContent(itemsTopGenerate);
         m_selectedIndex = m_selecter.UpdateObjectsAndReturnIndex(generatedItems, m_selectedIndex);
     }
@@ -65,4 +75,30 @@ public class ItemSelectionSection : UIObjectSelectionSection<InventoryItem, Inve
         base.UpdateSelectedItem();
         m_framer.EnsureVisible(m_selecter.SelectedObject.GetComponent<RectTransform>());
     }
+
+    private void HandleOnCategoryChanged(EItemCategories category)
+    {
+        GenerateUIContent();
+        UpdateSelectedItem();
+    }
+
+    public void OnConfirm()
+    {
+        m_parentPage.SelectItem(SelectedObject.InventoryEntry);
+    }
+
+    public void OnBack()
+    {
+        m_parentPage.SelectItem(null);
+    }
+
+    public void OnPageLeftLv1()
+    {
+        m_categoryCycler.CycleCategory(-1, true);
+    }
+
+    public void OnPageRightLv1()
+    {
+        m_categoryCycler.CycleCategory(1, true);
+    }    
 }

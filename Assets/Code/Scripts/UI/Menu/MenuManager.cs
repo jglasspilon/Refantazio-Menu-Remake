@@ -91,6 +91,9 @@ public class MenuManager : MonoBehaviour
 
     private void Teardown()
     {
+        if (m_activePage != null)
+            m_activePage.Close();
+
         foreach (MenuPage page in m_menuPages.Values)
         {
             page.ResetPage();
@@ -124,13 +127,45 @@ public class MenuManager : MonoBehaviour
         m_activePage.CycleDown();
     }
 
+    public void PageLeftLv1()
+    {
+        if (m_activePage == null)
+            return;
+
+        m_activePage.PageLeftLv1();
+    }
+
+    public void PageLeftLv2()
+    {
+        if (m_activePage == null)
+            return;
+
+        m_activePage.PageLeftLv2();
+    }
+
+    public void PageRightLv1()
+    {
+        if (m_activePage == null)
+            return;
+
+        m_activePage.PageRightLv1();
+    }
+
+    public void PageRightLv2()
+    {
+        if (m_activePage == null)
+            return;
+
+        m_activePage.PageRightLv2();
+    }
+
     public void Back()
     {
         if (m_activePage != null)
         {
             if(m_activePage.PageName != EMenuPages.Main)
             {
-                if (!m_activePage.TryGoBack())
+                if (!m_activePage.TryExitCurrentSection())
                 {
                     ChangePageAsync(EMenuPages.Main);
                     return;

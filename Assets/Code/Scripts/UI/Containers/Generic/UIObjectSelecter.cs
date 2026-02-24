@@ -15,7 +15,7 @@ public class UIObjectSelecter<T> where T: MonoBehaviour, ISelectable
     public int UpdateObjectsAndReturnIndex(T[] items, int selectedIndex)
     {
         m_objects = items;
-        return GetSafeIndex(selectedIndex, false);
+        return Helper.Arrays.GetSafeIndex(selectedIndex, m_objects.Length - 1, false);
     }
 
     public int Select(int index, bool loop = true)
@@ -26,7 +26,7 @@ public class UIObjectSelecter<T> where T: MonoBehaviour, ISelectable
         if (m_selectedObject != null)
             m_selectedObject.SetAsSelected(false);
 
-        index = GetSafeIndex(index, loop);
+        index = Helper.Arrays.GetSafeIndex(index, m_objects.Length - 1, loop);
         m_selectedObject = m_objects[index];
         m_selectedObject.SetAsSelected(true);
         return index;
@@ -38,19 +38,5 @@ public class UIObjectSelecter<T> where T: MonoBehaviour, ISelectable
         {
             obj.SetAsSelected(false);
         }
-    }
-
-    private int GetSafeIndex(int index, bool loop)
-    {
-        if (loop)
-        {
-            if (index < 0)
-                return index = m_objects.Length - 1;
-            else if (index >= m_objects.Length)
-                return index = 0;
-            return index;
-        }
-
-        return Mathf.Clamp(index, 0, m_objects.Length - 1);
     }
 }

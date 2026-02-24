@@ -1,5 +1,6 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class MenuInputHandler : InputHandler
 {
@@ -37,6 +38,11 @@ public class MenuInputHandler : InputHandler
         m_input.Menu.CycleUp.performed += OnCycleUp;
         m_input.Menu.CycleDown.performed += OnCycleDown;
         m_input.Menu.Back.performed += OnBack;
+        m_input.Menu.PageLeftLevel1.performed += OnPageLeftLv1;
+        m_input.Menu.PageLeftLevel2.performed += OnPageLeftLv2;
+        m_input.Menu.PageRightLevel1.performed += OnPageRightLv1;
+        m_input.Menu.PageRightLevel2.performed += OnPageRightLv2;
+        m_input.Menu.Exit.performed += OnExit;
         Logger.Log("Enabled Menu inputs", gameObject, m_logProfile);
     }
 
@@ -52,6 +58,11 @@ public class MenuInputHandler : InputHandler
         m_input.Menu.CycleUp.performed -= OnCycleUp;
         m_input.Menu.CycleDown.performed -= OnCycleDown;
         m_input.Menu.Back.performed -= OnBack;
+        m_input.Menu.PageLeftLevel1.performed -= OnPageLeftLv1;
+        m_input.Menu.PageLeftLevel2.performed -= OnPageLeftLv2;
+        m_input.Menu.PageRightLevel1.performed -= OnPageRightLv1;
+        m_input.Menu.PageRightLevel2.performed -= OnPageRightLv2;
+        m_input.Menu.Exit.performed -= OnExit;
         Logger.Log("Disabled Menu inputs", gameObject, m_logProfile);
     }
 
@@ -78,4 +89,40 @@ public class MenuInputHandler : InputHandler
         m_menu.Back();
         Logger.Log("Back", gameObject, m_logProfile);
     }
+
+    private void OnPageLeftLv1(InputAction.CallbackContext context)
+    {
+        m_menu.PageLeftLv1();
+        Logger.Log("Page Left Lv 1", gameObject, m_logProfile);
+    }
+
+    private void OnPageLeftLv2(InputAction.CallbackContext context)
+    {
+        m_menu.PageLeftLv2();
+        Logger.Log("Page Left Lv 2", gameObject, m_logProfile);
+    }
+
+    private void OnPageRightLv1(InputAction.CallbackContext context)
+    {
+        m_menu.PageRightLv1();
+        Logger.Log("Page Right Lv 1", gameObject, m_logProfile);
+    }
+
+    private void OnPageRightLv2(InputAction.CallbackContext context)
+    {
+        m_menu.PageRightLv2();
+        Logger.Log("Page Right Lv 2", gameObject, m_logProfile);
+    }
+
+    private void OnExit(InputAction.CallbackContext context)
+    {
+        if (!ObjectResolver.Instance.TryResolve(null, out IGameStateManagementService gameState))
+        {
+            Logger.LogError("Failed to open menu, no game state management service has been registered", gameObject, m_logProfile);
+            return;
+        }
+
+        gameState.ReturnToGameplaySate();
+        Logger.Log("Exit", gameObject, m_logProfile);
+    }    
 }
