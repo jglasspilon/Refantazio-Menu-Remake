@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IDisposable where T : PoolableObjectFromData<TData>
 {
+    public event Action OnGenerated;
+
     [SerializeField]
     protected Transform m_holder;
 
@@ -44,6 +46,7 @@ public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IDisp
             GeneratePoolableFromData(item);
         }
 
+        OnGenerated?.Invoke();
         return m_content.ToArray();
     }
 

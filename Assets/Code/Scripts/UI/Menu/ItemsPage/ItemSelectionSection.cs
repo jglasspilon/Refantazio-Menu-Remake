@@ -16,6 +16,9 @@ public class ItemSelectionSection : UIObjectSelectionSection<InventoryItem, Inve
     [SerializeField]
     private AnimatedMover m_bodyMover;
 
+    [SerializeField]
+    private Animation m_generationAnimation;
+
     private IItemSelectable m_parentPage;
 
     private void Awake()
@@ -28,11 +31,13 @@ public class ItemSelectionSection : UIObjectSelectionSection<InventoryItem, Inve
         base.OnEnable();
         m_categoryCycler.InitializeInventoryData(m_dataModel);
         m_categoryCycler.OnCategoryChanged += HandleOnCategoryChanged;
+        m_generater.OnGenerated += HandleOnGenerated;
     }
 
     private void OnDisable()
     {
         m_categoryCycler.OnCategoryChanged -= HandleOnCategoryChanged;
+        m_generater.OnGenerated -= HandleOnGenerated;
     }
 
     public override UniTask EnterSection()
@@ -82,6 +87,11 @@ public class ItemSelectionSection : UIObjectSelectionSection<InventoryItem, Inve
         UpdateSelectedObject();
     }
 
+    private void HandleOnGenerated()
+    {
+        m_generationAnimation.Play(PlayMode.StopAll);
+    }
+
     public void OnConfirm()
     {
         m_parentPage.SelectItem(SelectedObject.InventoryEntry);
@@ -95,10 +105,13 @@ public class ItemSelectionSection : UIObjectSelectionSection<InventoryItem, Inve
     public void OnPageLeftLv1()
     {
         m_categoryCycler.CycleCategory(-1, true);
+        m_selectedIndex = m_selecter.Select(0, false);
     }
 
     public void OnPageRightLv1()
     {
         m_categoryCycler.CycleCategory(1, true);
+        m_selecter.Select(0, false);
+        m_selectedIndex = m_selecter.Select(0, false);
     }    
 }

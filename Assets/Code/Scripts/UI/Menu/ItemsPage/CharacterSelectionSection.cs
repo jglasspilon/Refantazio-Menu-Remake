@@ -35,6 +35,7 @@ public class CharacterSelectionSection: UIObjectSelectionSection<PartyBanner, Pa
     {
         m_selectedIndex = 0;
         m_selectedAll = false;
+        UpdateSelectabilityOfContent(x => false);
         m_selecter.UnselectAll();
         m_allSelectionSplotch.SetActive(false);
         return default;
