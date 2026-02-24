@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class PartyBannerGenerator : UIObjectGeneraterFromPool<PartyBanner, Character>
 {
     [SerializeField]
@@ -17,6 +14,7 @@ public class PartyBannerGenerator : UIObjectGeneraterFromPool<PartyBanner, Chara
             return;
         PartyBanner newBanner = m_assetPool.PullFrom(m_bannerPrefab.GetType(), m_holder) as PartyBanner;
         newBanner.InitializeFromData(data);
+        newBanner.SetAsSelectable(false);
         m_content.Add(newBanner);
     }
 }

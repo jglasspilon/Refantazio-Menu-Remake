@@ -19,6 +19,7 @@ MonoBehaviour:
   m_price: 1000
   m_description: "Calls the mortally wounded back to the shores of the living. \n<m>Revives
     one ally from KO at 50% health."
-  m_battleOnly: 1
-  m_effects: []
+  m_battleOnly: 0
+  m_effects:
+  - {fileID: 11400000, guid: cc17bfddf5b6a0940837737fb5dccd11, type: 2}
   m_targetingType: 0

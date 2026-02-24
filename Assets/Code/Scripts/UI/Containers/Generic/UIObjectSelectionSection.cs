@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class UIObjectSelectionSection<T, TGenerater, TData, TModel>: PageSection, IHandleOnCycleDown, IHandleOnCycleUp 
@@ -8,7 +9,7 @@ public abstract class UIObjectSelectionSection<T, TGenerater, TData, TModel>: Pa
     protected TGenerater m_generater;
 
     [SerializeField]
-    protected UIObjectSelecter<T> m_selecter;
+    protected UIObjectSelecter<T> m_selecter = new UIObjectSelecter<T>();
 
     protected int m_selectedIndex;
     protected TModel m_dataModel;
@@ -53,22 +54,27 @@ public abstract class UIObjectSelectionSection<T, TGenerater, TData, TModel>: Pa
         m_generater.Initialize(assetPool, gameObject);
     }
 
-    protected abstract void GenerateUIContent();
+    public void UpdateSelectabilityOfContent(Func<T, bool> predicate)
+    {
+        m_selecter.SetApplicableToSelectable(predicate);
+    }
 
     public void OnCycleUp()
     {
         m_selectedIndex--;
-        UpdateSelectedItem();
+        UpdateSelectedObject();
     }
 
     public void OnCycleDown()
     {
         m_selectedIndex++;
-        UpdateSelectedItem();
+        UpdateSelectedObject();
     }
 
-    protected virtual void UpdateSelectedItem()
+    protected virtual void UpdateSelectedObject()
     {
         m_selectedIndex = m_selecter.Select(m_selectedIndex);
     }
+
+    protected abstract void GenerateUIContent();
 }

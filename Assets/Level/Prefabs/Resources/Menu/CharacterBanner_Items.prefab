@@ -438,6 +438,7 @@ MonoBehaviour:
   m_deathIcon: {fileID: 1579563736115664958}
   m_characterTypeContent: {fileID: 7569013372795583769}
   m_selectionSplotch: {fileID: 7980031012877592891}
+  m_bg: {fileID: 6671898107548629038}
   m_healEffect:
   - {fileID: 438816018319554197}
   - {fileID: 2006809642906468755}

@@ -65,47 +65,47 @@ public class PartyTester : MonoBehaviour
 
         
 
-        if (Input.GetKeyUp(KeyCode.Alpha0))
+        if (Input.GetKeyUp(KeyCode.Keypad0))
         {
             TestAllPartyMembers();
         }
 
-        if (Input.GetKeyUp(KeyCode.Alpha1))
+        if (Input.GetKeyUp(KeyCode.Keypad1))
         {
             TestPartyMember(0);
         }
 
-        if (Input.GetKeyUp(KeyCode.Alpha2))
+        if (Input.GetKeyUp(KeyCode.Keypad2))
         {
             TestPartyMember(1);
         }
 
-        if (Input.GetKeyUp(KeyCode.Alpha3))
+        if (Input.GetKeyUp(KeyCode.Keypad3))
         {
             TestPartyMember(2);
         }
 
-        if (Input.GetKeyUp(KeyCode.Alpha4))
+        if (Input.GetKeyUp(KeyCode.Keypad4))
         {
             TestPartyMember(3);
         }
 
-        if (Input.GetKeyUp(KeyCode.Alpha5))
+        if (Input.GetKeyUp(KeyCode.Keypad5))
         {
             TestPartyMember(4);
         }
 
-        if (Input.GetKeyUp(KeyCode.Alpha6))
+        if (Input.GetKeyUp(KeyCode.Keypad6))
         {
             TestPartyMember(5);
         }
 
-        if (Input.GetKeyUp(KeyCode.Alpha7))
+        if (Input.GetKeyUp(KeyCode.Keypad7))
         {
             TestPartyMember(6);
         }
 
-        if (Input.GetKeyUp(KeyCode.Alpha8))
+        if (Input.GetKeyUp(KeyCode.Keypad8))
         {
             TestPartyMember(7);
         }

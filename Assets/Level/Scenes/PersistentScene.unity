@@ -2609,6 +2609,7 @@ GameObject:
   - component: {fileID: 111305875}
   - component: {fileID: 111305876}
   - component: {fileID: 111305877}
+  - component: {fileID: 111305878}
   m_Layer: 5
   m_Name: CharactersList
   m_TagString: Untagged
@@ -2673,6 +2674,22 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &111305878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111305874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 655681320f69d574bbee812369bff2e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartyBannerGenerator
+  m_holder: {fileID: 111305875}
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_activePartyOnly: 0
+  m_bannerPrefab: {fileID: 278042529158443372, guid: cb45730e3d151d945a32418456703d67, type: 3}
 --- !u!1001 &115168223
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7089,6 +7106,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 278912068}
   m_CullTransparentMesh: 1
+--- !u!1 &285471547
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 285471549}
+  - component: {fileID: 285471548}
+  m_Layer: 0
+  m_Name: Tester
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &285471548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285471547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6cbf1f78287bbc49a66dd9f3039d6bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartyTester
+  m_testingMode: 1
+  m_characterToAdd: {fileID: 11400000, guid: 427d7cad6388e054fb4da7d22535d8bf, type: 2}
+  m_logProfile: {fileID: 11400000, guid: 3bac16dd2e7f1bb4283992977ff12df8, type: 2}
+--- !u!4 &285471549
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285471547}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 478.84048, y: 1863.5704, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &295587273
 GameObject:
   m_ObjectHideFlags: 0
@@ -12831,6 +12895,7 @@ GameObject:
   - component: {fileID: 396857449}
   - component: {fileID: 396857448}
   - component: {fileID: 396857447}
+  - component: {fileID: 396857450}
   m_Layer: 5
   m_Name: ItemsListMask
   m_TagString: Untagged
@@ -12909,6 +12974,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 396857445}
   m_CullTransparentMesh: 1
+--- !u!114 &396857450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396857445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc3c01e34c1b874ab942316db1daa0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentFramer
+  m_scrollRect: {fileID: 205252120}
+  m_viewport: {fileID: 396857446}
+  m_nudgeAmount: 1
+  m_horizontalFactor: 0.42
 --- !u!1 &397937377
 GameObject:
   m_ObjectHideFlags: 0
@@ -34913,6 +34994,7 @@ GameObject:
   - component: {fileID: 1098406046}
   - component: {fileID: 1098406047}
   - component: {fileID: 1098406048}
+  - component: {fileID: 1098406049}
   m_Layer: 5
   m_Name: ItemsList
   m_TagString: Untagged
@@ -34992,6 +35074,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &1098406049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098406044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21126097b8491dd4696a17b332225383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItemGenerator
+  m_holder: {fileID: 1098406045}
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_itemPrefab: {fileID: 2820542882396229756, guid: c8a9b1112a635b847955a48b36c9a349, type: 3}
+  m_weaponPrefab: {fileID: 2820542882396229756, guid: c8a9b1112a635b847955a48b36c9a349, type: 3}
+  m_armorPrefab: {fileID: 2820542882396229756, guid: c8a9b1112a635b847955a48b36c9a349, type: 3}
+  m_igniterPrefab: {fileID: 2820542882396229756, guid: c8a9b1112a635b847955a48b36c9a349, type: 3}
 --- !u!1 &1101470601
 GameObject:
   m_ObjectHideFlags: 0
@@ -48124,17 +48224,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daba893d6dbf6344f93ffeb7a9f00d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSelectionSection
-  m_generater:
-    m_holder: {fileID: 1098406045}
-    m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
-    m_itemPrefab: {fileID: 2820542882396229756, guid: c8a9b1112a635b847955a48b36c9a349, type: 3}
-    m_equipmentPrefab: {fileID: 2820542882396229756, guid: c8a9b1112a635b847955a48b36c9a349, type: 3}
-  m_selecter:
-    m_selectedObject: {fileID: 0}
-  m_framer:
-    m_scrollRect: {fileID: 205252120}
-    m_viewport: {fileID: 396857446}
-    m_nudgeAmount: 1
+  m_generater: {fileID: 1098406049}
+  m_framer: {fileID: 396857450}
   m_categoryCycler: {fileID: 1439618495}
   m_sectionAnim: {fileID: 2137399057}
   m_bodyMover: {fileID: 502560001}
@@ -52740,13 +52831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91af92c37ce8e53409bc3b4a32d891d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelectionSection
-  m_generater:
-    m_holder: {fileID: 111305875}
-    m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
-    m_activePartyOnly: 0
-    m_bannerPrefab: {fileID: 278042529158443372, guid: cb45730e3d151d945a32418456703d67, type: 3}
-  m_selecter:
-    m_selectedObject: {fileID: 0}
+  m_generater: {fileID: 111305878}
   m_allSelectionSplotch: {fileID: 1637919827}
   m_sectionAnim: {fileID: 2137399057}
   m_bodyMover: {fileID: 502560001}
@@ -69258,3 +69343,4 @@ SceneRoots:
   - {fileID: 152017714}
   - {fileID: 1315482833}
   - {fileID: 559840993}
+  - {fileID: 285471549}

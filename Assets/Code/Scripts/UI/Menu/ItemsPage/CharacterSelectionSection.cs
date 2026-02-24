@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System.Linq;
 using UnityEngine;
 
 public class CharacterSelectionSection: UIObjectSelectionSection<PartyBanner, PartyBannerGenerator, Character, PartyData>
@@ -25,17 +26,17 @@ public class CharacterSelectionSection: UIObjectSelectionSection<PartyBanner, Pa
     {
         m_sectionAnim.SetBool("CharSection", true);
         m_bodyMover.MoveIn();
-        UpdateSelectedItem();
+        UpdateSelectedObject();
         m_allSelectionSplotch.SetActive(m_selectedAll);
         return default;
     }
 
     public override UniTask ExitSection()
     {
-        m_selecter.UnselectAll();
-        m_allSelectionSplotch.SetActive(false);
         m_selectedIndex = 0;
         m_selectedAll = false;
+        m_selecter.UnselectAll();
+        m_allSelectionSplotch.SetActive(false);
         return default;
     }
 
@@ -43,6 +44,22 @@ public class CharacterSelectionSection: UIObjectSelectionSection<PartyBanner, Pa
     {
         m_generater.ClearGeneratedContent();
     }
+
+    protected override void GenerateUIContent()
+    {
+        Character[] charactersToGenerate = m_dataModel.GetAllPartyMembers();
+        var characterBanners = m_generater.GenerateContent(charactersToGenerate);
+        m_selectedIndex = m_selecter.UpdateObjectsAndReturnIndex(characterBanners, m_selectedIndex);
+    }
+
+    protected override void UpdateSelectedObject()
+    {
+        if (m_selectedAll)
+            return;
+
+        base.UpdateSelectedObject();
+    }
+
     public void SelectAll()
     {
         m_selectedAll = true;
@@ -56,20 +73,5 @@ public class CharacterSelectionSection: UIObjectSelectionSection<PartyBanner, Pa
     public void OnBack()
     {
         m_selectedIndex = 0;
-    }
-
-    protected override void GenerateUIContent()
-    {
-        Character[] charactersToGenerate = m_dataModel.GetAllPartyMembers();
-        var generatedCharacters = m_generater.GenerateContent(charactersToGenerate);
-        m_selectedIndex = m_selecter.UpdateObjectsAndReturnIndex(generatedCharacters, m_selectedIndex);
-    }
-
-    protected override void UpdateSelectedItem()
-    {
-        if (m_selectedAll)
-            return;
-
-        base.UpdateSelectedItem();
-    }
+    }  
 }

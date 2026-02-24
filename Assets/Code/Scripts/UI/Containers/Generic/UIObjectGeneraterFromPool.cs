@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UIObjectGeneraterFromPool<T, TData> : IDisposable where T : PoolableObjectFromData<TData>
+public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IDisposable where T : PoolableObjectFromData<TData>
 {
     [SerializeField]
     protected Transform m_holder;

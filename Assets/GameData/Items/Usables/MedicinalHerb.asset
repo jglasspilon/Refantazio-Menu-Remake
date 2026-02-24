@@ -20,5 +20,6 @@ MonoBehaviour:
   m_description: "A leaf plant with medicinal properties. \n<m>Restores 50 HP to
     one ally."
   m_battleOnly: 0
-  m_effects: []
+  m_effects:
+  - {fileID: 11400000, guid: 56d7fee7a78fb144d83213e802531efe, type: 2}
   m_targetingType: 0

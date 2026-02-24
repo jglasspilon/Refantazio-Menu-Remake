@@ -21,6 +21,7 @@ public abstract class PartyBanner : PoolableObjectFromData<Character>, ISelectab
     }
 
     public abstract void SetAsSelected(bool value);
+    public abstract void SetAsSelectable(bool selectable);
     public abstract void PauseSelection();
 }
 

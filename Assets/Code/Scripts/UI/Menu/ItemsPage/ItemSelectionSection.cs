@@ -65,21 +65,21 @@ public class ItemSelectionSection : UIObjectSelectionSection<InventoryItem, Inve
 
     protected override void GenerateUIContent()
     {
-        InventoryEntry[] itemsTopGenerate = m_dataModel.GetAllItems(m_categoryCycler.Category);
-        var generatedItems = m_generater.GenerateContent(itemsTopGenerate);
+        InventoryEntry[] itemsToGenerate = m_dataModel.GetAllItems(m_categoryCycler.Category);
+        var generatedItems = m_generater.GenerateContent(itemsToGenerate);
         m_selectedIndex = m_selecter.UpdateObjectsAndReturnIndex(generatedItems, m_selectedIndex);
     }
 
-    protected override void UpdateSelectedItem()
+    protected override void UpdateSelectedObject()
     {
-        base.UpdateSelectedItem();
+        base.UpdateSelectedObject();
         m_framer.EnsureVisible(m_selecter.SelectedObject.GetComponent<RectTransform>());
     }
 
     private void HandleOnCategoryChanged(EItemCategories category)
     {
         GenerateUIContent();
-        UpdateSelectedItem();
+        UpdateSelectedObject();
     }
 
     public void OnConfirm()

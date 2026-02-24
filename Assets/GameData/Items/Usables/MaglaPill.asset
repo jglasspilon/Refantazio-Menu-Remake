@@ -20,5 +20,6 @@ MonoBehaviour:
   m_description: "This pill can be taken to replenish one's magic power. \n<m>Restores
     20 MP to one ally."
   m_battleOnly: 0
-  m_effects: []
+  m_effects:
+  - {fileID: 11400000, guid: 6ec1c1fa54ac50541b7966af49f9f5f4, type: 2}
   m_targetingType: 0

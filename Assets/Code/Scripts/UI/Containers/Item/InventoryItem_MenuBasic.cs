@@ -46,7 +46,7 @@ public class InventoryItem_MenuBasic : InventoryItem
         DisplayItemData(entry.Item);
         DisplayCount(entry.Count);
         DisplayAsNew(entry);
-        DisplayAsUsable(entry.Item is UsableItem usable && !usable.BattleOnly);
+        SetAsSelectable(entry.Item is UsableItem usable && !usable.BattleOnly);
         m_inventoryEntry.OnAmountChanged += DisplayCount;
         m_inventoryEntry.OnMarkAsSeen += DisplayAsNew;
     }
@@ -78,7 +78,7 @@ public class InventoryItem_MenuBasic : InventoryItem
         m_inventoryEntry = null;
     }
 
-    private void DisplayAsUsable(bool usable)
+    public override void SetAsSelectable(bool usable)
     {
         m_alphaGroup.alpha = usable ? USABLE_ALPHA : UNUSABLE_ALPHA;
     }

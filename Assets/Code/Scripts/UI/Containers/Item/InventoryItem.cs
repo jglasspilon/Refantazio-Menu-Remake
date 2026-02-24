@@ -8,6 +8,7 @@ public abstract class InventoryItem : PoolableObjectFromData<InventoryEntry>, IS
         if (selected)
             InventoryEntry.MarkAsSeen();
     }
+    public abstract void SetAsSelectable(bool selectable);
     public abstract void PauseSelection();
     
 }

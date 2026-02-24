@@ -16,7 +16,7 @@ public class PartyBanner_Items : PartyBanner
     private ResourceBar m_characterHp, m_characterMp;
 
     [SerializeField]
-    private GameObject m_guideOverlay, m_deathIcon, m_characterTypeContent, m_selectionSplotch;
+    private GameObject m_guideOverlay, m_deathIcon, m_characterTypeContent, m_selectionSplotch, m_bg;
    
     [SerializeField]
     private PartyBannerEffect[] m_healEffect;
@@ -54,6 +54,11 @@ public class PartyBanner_Items : PartyBanner
     public override void SetAsSelected(bool value)
     {
         m_selectionSplotch.SetActive(value);
+    }
+
+    public override void SetAsSelectable(bool selectable)
+    {
+        m_bg.SetActive(!selectable);
     }
 
     public override void PauseSelection()

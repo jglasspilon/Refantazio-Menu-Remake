@@ -20,5 +20,6 @@ MonoBehaviour:
   m_description: The power of a great fairy's wings with the power to heal. <m>Restores
     100 HP to all allies.
   m_battleOnly: 0
-  m_effects: []
+  m_effects:
+  - {fileID: 11400000, guid: a7104993c4f00df4abf6b2c1b86adc9c, type: 2}
   m_targetingType: 1

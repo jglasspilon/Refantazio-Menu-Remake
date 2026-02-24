@@ -1,11 +1,12 @@
 using Cysharp.Threading.Tasks;
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
 {
-    public event Action<int> OnItemIndexChange, OnCharacterIndexChange;
-    public event Action<int> OnCategoryIndexChange;
+    public event Action<InventoryEntry> OnItemSelected;
+    public event Action<InventoryEntry> OnItemUsed;
 
     [SerializeField]
     private ItemSelectionSection m_itemSelectionSection;
@@ -34,13 +35,17 @@ public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
             m_characterSelectionSection.SelectAll();
         }
 
+        m_characterSelectionSection.UpdateSelectabilityOfContent(banner => usable.Effects.Any(effect => effect.CanApply(banner.Character)));
         EnterSection(m_characterSelectionSection);
     }
 
     public void SelectCharacter(Character character)
     {
+        if (!CanUseItem(m_selectedItem, character))
+            return;
+
         Logger.Log($"Using {m_selectedItem.Item.Name} on {character.Name}", m_logProfile);        
-        UseItem(m_selectedItem.Item as UsableItem, character);
+        UseItem(m_selectedItem, character);
 
         if (m_selectedItem.Count == 0)
         {
@@ -48,15 +53,35 @@ public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
             TryExitCurrentSection();
             return;
         }
-
-        //TODO: add if no more selectable characters from item condition, go back
     }
 
-
-    private void UseItem(UsableItem item, Character character)
+    private void UseItem(InventoryEntry item, Character character)
     {
-        m_selectedItem.ApplyAmount(-1);
+        if (item.Item is not UsableItem usable)
+            return;
 
-        //TODO: use item executer
+        if (usable.TargetingType == ETargetingTypes.SingleAlly)
+            m_itemExecutor.Use(item, character);
+        else
+            m_itemExecutor.Use(item, ObjectResolver.Instance.Resolve<PartyData>().GetAllPartyMembers());
+
+        m_characterSelectionSection.UpdateSelectabilityOfContent(banner => usable.Effects.Any(effect => effect.CanApply(banner.Character)));
+    }
+
+    private bool CanUseItem(InventoryEntry item, Character character)
+    {
+        if(item.Item is not UsableItem usable)
+        {
+            return false;
+        }
+
+        if (usable.TargetingType == ETargetingTypes.SingleAlly)
+        {
+            return usable.Effects.Any(x => x.CanApply(character));
+        }
+        else
+        {
+            return ObjectResolver.Instance.Resolve<PartyData>().GetAllPartyMembers().Any(c => usable.Effects.Any(x => x.CanApply(c)));
+        }
     }
 }

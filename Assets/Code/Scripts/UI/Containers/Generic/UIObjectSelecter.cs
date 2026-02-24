@@ -1,16 +1,19 @@
 using Cysharp.Threading.Tasks;
 using System;
+using System.Linq;
 using UnityEngine;
 
-[Serializable]
 public class UIObjectSelecter<T> where T: MonoBehaviour, ISelectable 
 {
-    [SerializeField][ReadOnly]
-    private T m_selectedObject;
-    
+    private T m_selectedObject;    
     private T[] m_objects;
 
     public T SelectedObject => m_selectedObject;
+
+    public T[] GetSelectableObjects()
+    {
+        return m_objects;
+    }
 
     public int UpdateObjectsAndReturnIndex(T[] items, int selectedIndex)
     {
@@ -37,6 +40,14 @@ public class UIObjectSelecter<T> where T: MonoBehaviour, ISelectable
         foreach(T obj in m_objects)
         {
             obj.SetAsSelected(false);
+        }
+    }
+
+    public void SetApplicableToSelectable(Func<T, bool> selectablePredicate)
+    {
+        foreach (T obj in m_objects)
+        {
+            obj.SetAsSelectable(selectablePredicate(obj));
         }
     }
 }

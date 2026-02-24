@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public class ContentFramer
+public class ContentFramer: MonoBehaviour
 {
     [SerializeField] 
     private StaggeredScrollRect m_scrollRect;
@@ -10,9 +9,11 @@ public class ContentFramer
     [SerializeField] 
     private RectTransform m_viewport;
 
-    [Tooltip("How much vertical delta to nudge per step when correcting visibility.")]
     [SerializeField] 
     private float m_nudgeAmount = 20f;
+
+    [SerializeField]
+    private float m_horizontalFactor;
 
     public void EnsureVisible(RectTransform target)
     {
@@ -38,13 +39,13 @@ public class ContentFramer
         // If above the top, nudge upward (negative vertical delta)
         if (aboveTop)
         {
-            m_scrollRect.ScrollByDelta(m_nudgeAmount);
+            ScrollByDelta(m_nudgeAmount);
             EnsureVisible(target);
         }
         // If below the bottom, nudge downward (positive vertical delta)
         else if (belowBottom)
         {
-            m_scrollRect.ScrollByDelta(-m_nudgeAmount);
+            ScrollByDelta(-m_nudgeAmount);
             EnsureVisible(target);
         }
     }
@@ -61,5 +62,15 @@ public class ContentFramer
         Vector3[] corners = new Vector3[4];
         rt.GetWorldCorners(corners);
         return corners[0]; // bottom-left
+    }
+
+    private void ScrollByDelta(float verticalDelta)
+    {
+        if (m_scrollRect.content == null)
+            return;
+
+        Vector2 dir = new Vector2(-m_horizontalFactor, 1f).normalized;
+        Vector2 staggerDelta = dir * verticalDelta;
+        m_scrollRect.content.anchoredPosition -= staggerDelta;
     }
 }
