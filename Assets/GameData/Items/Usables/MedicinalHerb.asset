@@ -21,5 +21,5 @@ MonoBehaviour:
     one ally."
   m_battleOnly: 0
   m_effects:
-  - {fileID: 11400000, guid: 56d7fee7a78fb144d83213e802531efe, type: 2}
+  - {fileID: 11400000, guid: 525ac70840530ea41a1bdfaf977fe03d, type: 2}
   m_targetingType: 0

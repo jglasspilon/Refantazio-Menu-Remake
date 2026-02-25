@@ -6,13 +6,10 @@ public class InventoryItemGenerator: UIObjectGeneraterFromPool<InventoryItem, In
     private InventoryItem m_itemPrefab;
 
     [SerializeField]
-    private InventoryItem m_weaponPrefab;
+    private InventoryItem m_equipmentPrefab;
 
     [SerializeField]
-    private InventoryItem m_armorPrefab;
-
-    [SerializeField]
-    private InventoryItem m_igniterPrefab;
+    private InventoryItem m_accessoryPrefab;
 
     protected override void GeneratePoolableFromData(InventoryEntry entry)
     {
@@ -26,9 +23,8 @@ public class InventoryItemGenerator: UIObjectGeneraterFromPool<InventoryItem, In
     {
         return item switch
         {
-            Weapon => m_weaponPrefab,
-            Armor => m_armorPrefab, 
-            Igniter => m_igniterPrefab,
+            Equipment => m_equipmentPrefab,
+            Accessory => (item as Accessory).Effect == null ? m_itemPrefab : m_accessoryPrefab,
             _ => m_itemPrefab
         };
     }

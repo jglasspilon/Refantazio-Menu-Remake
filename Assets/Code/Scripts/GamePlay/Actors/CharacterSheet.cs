@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game Data/Characters")]
@@ -41,25 +42,46 @@ public class CharacterStats
 {
     public event Action<Stat> OnStatChange;
 
-    public Stat Level = new Stat();
-    public Stat HP = new Stat();
-    public Stat MP = new Stat();
-    public Stat Strength = new Stat();
-    public Stat Magic = new Stat();
-    public Stat Endurance = new Stat();
-    public Stat Agility = new Stat();
-    public Stat Luck = new Stat();
+    public Stat Level = new Stat(StatType.Level, 0);
+    public Stat HP = new Stat(StatType.HP, 0);
+    public Stat MP = new Stat(StatType.MP, 0);
+    public Stat Strength = new Stat(StatType.Strength, 0);
+    public Stat Magic = new Stat(StatType.Magic, 0);
+    public Stat Endurance = new Stat(StatType.Endurance, 0);
+    public Stat Agility = new Stat(StatType.Agility, 0);
+    public Stat Luck = new Stat(StatType.Luck, 0);
+    public Stat Attack = new Stat(StatType.Attack, 0);
+    public Stat Hit = new Stat(StatType.Hit, 0);
+    public Stat Defence = new Stat(StatType.Defence, 0);
+    public Stat Evasion = new Stat(StatType.Evasion, 0);
+
+    private readonly Dictionary<StatType, Stat> m_typedStats;
 
     public CharacterStats()
     {
-        Level.OnValueChange += OnStatChange;
-        HP.OnValueChange += OnStatChange;
-        MP.OnValueChange += OnStatChange;
-        Strength.OnValueChange += OnStatChange;
-        Magic.OnValueChange += OnStatChange;
-        Endurance.OnValueChange += OnStatChange;
-        Agility.OnValueChange += OnStatChange;
-        Luck.OnValueChange += OnStatChange;
+        Level.OnValueChange += HandleOnStatChange;
+        HP.OnValueChange += HandleOnStatChange;
+        MP.OnValueChange += HandleOnStatChange;
+        Strength.OnValueChange += HandleOnStatChange;
+        Magic.OnValueChange += HandleOnStatChange;
+        Endurance.OnValueChange += HandleOnStatChange;
+        Agility.OnValueChange += HandleOnStatChange;
+        Luck.OnValueChange += HandleOnStatChange;
+
+        m_typedStats = new Dictionary<StatType, Stat>()
+        {
+            {StatType.HP, HP},
+            {StatType.MP, MP},
+            {StatType.Strength, Strength},
+            {StatType.Magic, Magic},
+            {StatType.Endurance, Endurance},
+            {StatType.Agility, Agility},
+            {StatType.Luck, Luck},
+            {StatType.Attack, Attack},
+            {StatType.Hit, Hit},
+            {StatType.Defence, Defence},
+            {StatType.Evasion, Evasion}
+        };
     }
 
     private void HandleOnStatChange(Stat statChange)

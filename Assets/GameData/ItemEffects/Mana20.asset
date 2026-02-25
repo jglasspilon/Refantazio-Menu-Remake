@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 08128c31b599b7b4c8b1086f6d85ff77, type: 3}
   m_Name: Mana20
   m_EditorClassIdentifier: Assembly-CSharp::ItemEffect_FillMana
   m_amount: 20

@@ -4,25 +4,28 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryItem_MenuBasic : InventoryItem
+public class InventoryItem_Equipment : InventoryItem
 {
     [SerializeField]
     private Image m_icon;
 
     [SerializeField]
-    private TextMeshProUGUI m_nameText, m_countText, m_descriptionText;
+    private TextMeshProUGUI m_nameText, m_countText, m_descriptionText, m_effectDescription;
+
+    [SerializeField]
+    private TextMeshProUGUI[] m_mainTexts, m_mainTextValues, m_secondaryTexts, m_secondaryTextValues; 
 
     [SerializeField]
     private CanvasGroup m_alphaGroup;
 
     [SerializeField]
-    private GameObject m_newFlag, m_selectionSplotch, m_selectionFrame, m_shadow;
+    private GameObject m_newFlag, m_selectionSplotch, m_selectionFrame, m_shadow, m_effectContent;
 
     [SerializeField]
     private Animator m_anim;
 
     [SerializeField]
-    private Color m_healDescriptionColor, m_damageDescriptionColor;
+    private Color m_markupDescriptionColor;
 
     [SerializeField]
     private LoggingProfile m_logProfile;
@@ -37,7 +40,13 @@ public class InventoryItem_MenuBasic : InventoryItem
     {
         if(entry == null || entry.Item == null)
         {
-            Logger.LogError("Generated an empty item. Initializing an empty item is not allowed.", m_logProfile);
+            Logger.LogError("Received an empty item. Initializing an empty item is not allowed.", m_logProfile);
+            return;
+        }
+
+        if(entry.Item is not Equipment weapon)
+        {
+            Logger.LogError("Type mismatch. Initializing a weapon from any other item type is not allowed.", m_logProfile);
             return;
         }
 
@@ -46,7 +55,9 @@ public class InventoryItem_MenuBasic : InventoryItem
         DisplayItemData(entry.Item);
         DisplayCount(entry.Count);
         DisplayAsNew(entry);
-        SetAsSelectable(entry.Item is UsableItem usable && !usable.BattleOnly);
+        DisplayStatsData(weapon);
+        DisplayEffectsData(weapon);
+        SetAsSelectable(entry.Item is not UsableItem usable || !usable.BattleOnly);
         m_inventoryEntry.OnAmountChanged += DisplayCount;
         m_inventoryEntry.OnMarkAsSeen += DisplayAsNew;
     }
@@ -91,6 +102,25 @@ public class InventoryItem_MenuBasic : InventoryItem
         m_icon.gameObject.SetActive(m_icon.sprite != null);
     }
 
+    private void DisplayStatsData(Equipment weapon)
+    {
+        m_mainTexts.ForEach(text => text.text = Helper.StringFormatting.PrettifyStat(weapon.MainModifier.Type));
+        m_mainTextValues.ForEach(text => text.text = Helper.StringFormatting.FormatIntForUI(weapon.MainModifier.Amount, 3, text.color.g > 0.5f));
+
+        m_secondaryTexts.ForEach(text => text.text = Helper.StringFormatting.PrettifyStat(weapon.SecondaryModifier.Type));
+        m_secondaryTextValues.ForEach(text => text.text = Helper.StringFormatting.FormatIntForUI(weapon.SecondaryModifier.Amount, 2, text.color.g > 0.5f));
+    }
+
+    private void DisplayEffectsData(Equipment weapon)
+    {
+        m_effectContent.SetActive(weapon.Effect != null);
+
+        if(weapon.Effect != null)
+        {
+            m_effectDescription.text = weapon.Effect.Description;
+        }
+    }
+
     private void DisplayCount(int amount)
     {
         m_countText.text = Helper.StringFormatting.FormatIntForUI(amount, 2, true);
@@ -103,10 +133,10 @@ public class InventoryItem_MenuBasic : InventoryItem
 
     private string ReplaceDescriptionTagWithColorTag(string raw)
     {
-        if (!raw.Contains("<m>") || m_inventoryEntry.Item is not UsableItem usable)
+        if (!raw.Contains("<m>"))
             return raw;
 
-        string colorTag = usable.TargetingType.ToString().ToLower().Contains("foe") ? ColorUtility.ToHtmlStringRGB(m_damageDescriptionColor) : ColorUtility.ToHtmlStringRGB(m_healDescriptionColor);
+        string colorTag = ColorUtility.ToHtmlStringRGB(m_markupDescriptionColor);
         return raw.Replace("<m>", $"<color=#{colorTag}>");
     }
 }

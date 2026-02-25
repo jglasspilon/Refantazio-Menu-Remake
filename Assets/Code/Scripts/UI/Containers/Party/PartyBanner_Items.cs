@@ -16,7 +16,10 @@ public class PartyBanner_Items : PartyBanner
     private ResourceBar m_characterHp, m_characterMp;
 
     [SerializeField]
-    private GameObject m_guideOverlay, m_deathIcon, m_characterTypeContent, m_selectionSplotch, m_bg;
+    private GameObject m_guideOverlay, m_deathIcon, m_characterTypeContent, m_bg;
+
+    [SerializeField]
+    private GameObject[] m_contentOnSelectedOnly;
    
     [SerializeField]
     private PartyBannerEffect[] m_healEffect;
@@ -39,6 +42,7 @@ public class PartyBanner_Items : PartyBanner
         DisplayCharacterName(character.Name);
         DisplayBannerSprite(character.Banner);
         DisplayDeathIcon(character.IsDead);
+        SetAsSelected(false);
     }
 
     public override void ResetForPool()
@@ -53,7 +57,7 @@ public class PartyBanner_Items : PartyBanner
     #region Selectable Logic
     public override void SetAsSelected(bool value)
     {
-        m_selectionSplotch.SetActive(value);
+        m_contentOnSelectedOnly.ForEach(x => x.SetActive(value));
     }
 
     public override void SetAsSelectable(bool selectable)

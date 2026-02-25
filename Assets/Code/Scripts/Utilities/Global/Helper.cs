@@ -77,6 +77,22 @@ public static class Helper
 
             return valueParse;
         }
+
+        public static string PrettifyStat(StatType stat)
+        {
+            switch(stat)
+            {
+                case StatType.Level: return "LV";
+                case StatType.Strength: return "STR";
+                case StatType.Magic: return "MAG";
+                case StatType.Endurance: return "END";
+                case StatType.Agility: return "AGI";
+                case StatType.Attack: return "ATK";
+                case StatType.Defence: return "DEF";
+                case StatType.Evasion: return "EVA";
+                default: return stat.ToString();
+            }
+        }
     }
 
     public static class Arrays

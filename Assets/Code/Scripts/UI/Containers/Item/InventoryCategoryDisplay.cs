@@ -42,6 +42,10 @@ public class InventoryCategoryDisplay : MonoBehaviour
     private void OnDisable()
     {
         m_categroyCycler.OnCategoryChanged -= DisplayAsSelected;
+
+        if (m_data == null)
+            return;
+
         m_data.OnLastMarkUnseen -= DisplayUnseenIcon;
     }
 

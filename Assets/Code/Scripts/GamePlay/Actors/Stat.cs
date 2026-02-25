@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -8,23 +9,24 @@ public class Stat
     public event Action<Stat> OnValueChange;
 
     [SerializeField]
+    private StatType m_type;
+    
+    [SerializeField]
     private int m_baseValue, m_levelValue;
 
     [SerializeField]
-    private List<GameObject> m_modifiers = new(); //TODO: Replace with modifiers once they are created
+    private List<StatModifier> m_modifiers = new List<StatModifier>();
 
     public int BaseValue => m_baseValue;
     public int LevelValue => m_levelValue;
 
-    public int Value => m_baseValue + m_levelValue; //TODO: Apply modifiers
+    public int Value => m_baseValue + m_levelValue + m_modifiers.Sum(x => x.Amount);
 
-    public Stat(int baseValue)
+    public Stat(StatType type, int baseValue)
     {
+        m_type = type;
         m_baseValue = baseValue;
     }
-
-    public Stat()
-    { }
 
     public void AddToBase(int amount)
     {
@@ -38,15 +40,32 @@ public class Stat
         OnValueChange?.Invoke(this);
     }
 
-    public void AddModifier(object modifier) //TODO: Replace with modifiers once they are created
+    public void AddModifier(StatModifier modifier) //TODO: Replace with modifiers once they are created
     {
-
+        m_modifiers.Add(modifier);
         OnValueChange?.Invoke(this);
     }
 
-    public void RemoveModifier(object modifier) //TODO: Replace with modifiers once they are created
+    public void RemoveModifier(StatModifier modifier) //TODO: Replace with modifiers once they are created
     {
-
+        m_modifiers.Remove(modifier);
         OnValueChange?.Invoke(this);
     }
+}
+
+public enum StatType
+{
+    Level,
+    HP,
+    MP,
+    Strength, 
+    Magic,
+    Endurance, 
+    Agility, 
+    Luck,
+
+    Attack,
+    Hit, 
+    Defence,
+    Evasion
 }
