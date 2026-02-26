@@ -1,31 +1,30 @@
 using Cysharp.Threading.Tasks;
+using System;
 using System.Linq;
 using UnityEngine;
 
-public class CharacterSelectionSection: UIObjectSelectionSection<PartyBanner, PartyBannerGenerator, Character, PartyData>
+public class CharacterSelectionSection: UIListSelectionSection<PartyBanner, PartyBannerGenerator, Character, PartyData>
     ,IHandleOnConfirm, IHandleOnBack
 {
+    public event Action<Character> OnCharacterSelected;
+    
     [SerializeField]
     private GameObject m_allSelectionSplotch;
 
-    [SerializeField]
+    [Header("Animation")][SerializeField]
     private Animator m_sectionAnim;
 
     [SerializeField]
     private AnimatedMover m_bodyMover;
 
-    private ICharacterSelectable m_parentPage;
     private bool m_selectedAll;
-
-    private void Awake()
-    {
-        m_parentPage = GetComponentInParent<ICharacterSelectable>();
-    }
 
     public override UniTask EnterSection()
     {
+        if(m_bodyMover != null)
+            m_bodyMover.MoveIn();
+
         m_sectionAnim.SetBool("CharSection", true);
-        m_bodyMover.MoveIn();
         UpdateSelectedObject();
         m_allSelectionSplotch.SetActive(m_selectedAll);
         return default;
@@ -68,7 +67,7 @@ public class CharacterSelectionSection: UIObjectSelectionSection<PartyBanner, Pa
 
     public void OnConfirm()
     {
-        m_parentPage.SelectCharacter(m_selecter.SelectedObject.Character);
+        OnCharacterSelected?.Invoke(SelectedObject.Character);
     }
 
     public void OnBack()

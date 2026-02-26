@@ -1,49 +1,53 @@
 using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
-public class ItemSelectionSection : UIObjectSelectionSection<InventoryItem, InventoryItemGenerator, InventoryEntry, InventoryData>
+public class ItemSelectionSection : UIListSelectionSection<InventoryItemUI, InventoryItemGenerator, InventoryEntry, InventoryData>
     ,IHandleOnConfirm, IHandleOnBack, IHandlePageLeftLv1, IHandlePageRightLv1
 {
+    public event Action<InventoryEntry> OnItemSelected;
+
     [SerializeField]
     private ContentFramer m_framer;
+
+    [Header("Category Management")]
+    [SerializeField]
+    private EItemCategories m_currentCategory;
 
     [SerializeField]
     private InventoryCategoryCycler m_categoryCycler;
 
-    [SerializeField]
+    [Header("Animations")][SerializeField]
     private Animator m_sectionAnim;
 
     [SerializeField]
-    private AnimatedMover m_bodyMover;
-
-    [SerializeField]
-    private Animation m_generationAnimation;
-
-    private IItemSelectable m_parentPage;
-
-    private void Awake()
-    {
-        m_parentPage = GetComponentInParent<IItemSelectable>();
-    }
+    private AnimatedMover m_bodyMover;   
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        m_categoryCycler.InitializeInventoryData(m_dataModel);
-        m_categoryCycler.OnCategoryChanged += HandleOnCategoryChanged;
-        m_generater.OnGenerated += HandleOnGenerated;
+
+        if (m_categoryCycler != null)
+        {
+            m_categoryCycler.InitializeInventoryData(m_dataModel);
+            m_categoryCycler.OnCategoryChanged += OnCategoryChanged;
+        }
     }
 
     private void OnDisable()
     {
-        m_categoryCycler.OnCategoryChanged -= HandleOnCategoryChanged;
-        m_generater.OnGenerated -= HandleOnGenerated;
+        if (m_categoryCycler != null)
+        {
+            m_categoryCycler.OnCategoryChanged -= OnCategoryChanged;
+        }
     }
 
     public override UniTask EnterSection()
     {
+        if(m_bodyMover != null)
+            m_bodyMover.MoveOut();
+
         m_sectionAnim.SetBool("CharSection", false);
-        m_bodyMover.MoveOut();
         m_selectedIndex = m_selecter.Select(m_selectedIndex);
         return default;
     }
@@ -62,15 +66,9 @@ public class ItemSelectionSection : UIObjectSelectionSection<InventoryItem, Inve
         m_categoryCycler.ResetSelection();
     }
 
-    public void RemoveSpentItem()
-    {
-        InventoryItem[] updatedList = m_generater.RemoveGeneratedObject(m_selecter.SelectedObject);
-        m_selecter.UpdateObjectsAndReturnIndex(updatedList, m_selectedIndex);
-    }
-
     protected override void GenerateUIContent()
     {
-        InventoryEntry[] itemsToGenerate = m_dataModel.GetAllItems(m_categoryCycler.Category);
+        InventoryEntry[] itemsToGenerate = m_dataModel.GetAllItems(m_currentCategory);
         var generatedItems = m_generater.GenerateContent(itemsToGenerate);
         m_selectedIndex = m_selecter.UpdateObjectsAndReturnIndex(generatedItems, m_selectedIndex);
     }
@@ -81,25 +79,21 @@ public class ItemSelectionSection : UIObjectSelectionSection<InventoryItem, Inve
         m_framer.EnsureVisible(m_selecter.SelectedObject.GetComponent<RectTransform>());
     }
 
-    private void HandleOnCategoryChanged(EItemCategories category)
+    private void OnCategoryChanged(EItemCategories category)
     {
+        m_currentCategory = category;
         GenerateUIContent();
         UpdateSelectedObject();
     }
 
-    private void HandleOnGenerated()
-    {
-        m_generationAnimation.Play(PlayMode.StopAll);
-    }
-
     public void OnConfirm()
     {
-        m_parentPage.SelectItem(SelectedObject.InventoryEntry);
+        OnItemSelected?.Invoke(SelectedObject.InventoryEntry);
     }
 
     public void OnBack()
     {
-        m_parentPage.SelectItem(null);
+        OnItemSelected?.Invoke(null);
     }
 
     public void OnPageLeftLv1()

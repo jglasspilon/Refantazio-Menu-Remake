@@ -10,6 +10,9 @@ public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IDisp
     protected Transform m_holder;
 
     [SerializeField]
+    protected Animation m_onGeneratedAnim;
+
+    [SerializeField]
     protected LoggingProfile m_logProfile;
 
     protected AssetPoolManager m_assetPool;
@@ -45,6 +48,9 @@ public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IDisp
         {
             GeneratePoolableFromData(item);
         }
+
+        if (m_onGeneratedAnim != null)
+            m_onGeneratedAnim.Play(PlayMode.StopAll);
 
         OnGenerated?.Invoke();
         return m_content.ToArray();

@@ -1,25 +1,25 @@
 using UnityEngine;
 
-public class InventoryItemGenerator: UIObjectGeneraterFromPool<InventoryItem, InventoryEntry>
+public class InventoryItemGenerator: UIObjectGeneraterFromPool<InventoryItemUI, InventoryEntry>
 {
     [SerializeField]
-    private InventoryItem m_itemPrefab;
+    private InventoryItemUI m_itemPrefab;
 
     [SerializeField]
-    private InventoryItem m_equipmentPrefab;
+    private InventoryItemUI m_equipmentPrefab;
 
     [SerializeField]
-    private InventoryItem m_accessoryPrefab;
+    private InventoryItemUI m_accessoryPrefab;
 
     protected override void GeneratePoolableFromData(InventoryEntry entry)
     {
-        InventoryItem chosenPrefab = GetPrefabFromItemType(entry.Item);
-        InventoryItem newItem = m_assetPool.PullFrom(chosenPrefab.GetType(), m_holder) as InventoryItem;
+        InventoryItemUI chosenPrefab = GetPrefabFromItemType(entry.Item);
+        InventoryItemUI newItem = m_assetPool.PullFrom(chosenPrefab.GetType(), m_holder) as InventoryItemUI;
         newItem.InitializeFromData(entry);
         m_content.Add(newItem);
     }   
 
-    private InventoryItem GetPrefabFromItemType(Item item)
+    private InventoryItemUI GetPrefabFromItemType(Item item)
     {
         return item switch
         {

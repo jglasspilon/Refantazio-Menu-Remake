@@ -12,6 +12,7 @@ public class InventoryCategoryCycler: MonoBehaviour
     private InventoryData m_data;
     private int m_selectedCategoryIndex;
     private readonly int CATEGORIES_COUNT = Enum.GetValues(typeof(EItemCategories)).Length;
+
     public EItemCategories Category => m_category;
 
     public void InitializeInventoryData(InventoryData data)

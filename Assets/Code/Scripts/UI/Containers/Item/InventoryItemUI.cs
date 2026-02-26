@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class InventoryItem : PoolableObjectFromData<InventoryEntry>, ISelectable
+public abstract class InventoryItemUI : PoolableObjectFromData<InventoryEntry>, ISelectable
 {
     public abstract InventoryEntry InventoryEntry { get; }
     public virtual void SetAsSelected(bool selected)

@@ -1,16 +1,14 @@
 using System;
 using UnityEngine;
 
-public abstract class UIObjectSelectionSection<T, TGenerater, TData, TModel>: PageSection, IHandleOnCycleDown, IHandleOnCycleUp 
+public abstract class UIListSelectionSection<T, TGenerater, TData, TModel>: PageSection, IHandleOnCycleDown, IHandleOnCycleUp 
     where TGenerater: UIObjectGeneraterFromPool<T, TData>, new()
     where T: PoolableObjectFromData<TData>, ISelectable
 {
-    [SerializeField]
+    [Header("List Creation & Display:")][SerializeField]
     protected TGenerater m_generater;
 
-    [SerializeField]
     protected UIObjectSelecter<T> m_selecter = new UIObjectSelecter<T>();
-
     protected int m_selectedIndex;
     protected TModel m_dataModel;
     private AssetPoolManager m_assetPool;
@@ -52,6 +50,12 @@ public abstract class UIObjectSelectionSection<T, TGenerater, TData, TModel>: Pa
         m_assetPool = assetPool;
         m_generater ??= new TGenerater();
         m_generater.Initialize(assetPool, gameObject);
+    }
+
+    public void RemoveCurrentSelection()
+    {
+        T[] updatedList = m_generater.RemoveGeneratedObject(m_selecter.SelectedObject);
+        m_selecter.UpdateObjectsAndReturnIndex(updatedList, m_selectedIndex);
     }
 
     public void UpdateSelectabilityOfContent(Func<T, bool> predicate)

@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
 {
-    public event Action<InventoryEntry> OnItemSelected;
-    public event Action<InventoryEntry> OnItemUsed;
-
     [SerializeField]
     private ItemSelectionSection m_itemSelectionSection;
 
@@ -16,6 +13,18 @@ public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
 
     private InventoryEntry m_selectedItem;
     private ItemExecutor m_itemExecutor = new ItemExecutor();
+
+    private void Awake()
+    {
+        m_itemSelectionSection.OnItemSelected += SelectItem;
+        m_characterSelectionSection.OnCharacterSelected += SelectCharacter;
+    }
+
+    private void OnDestroy()
+    {
+        m_itemSelectionSection.OnItemSelected -= SelectItem;
+        m_characterSelectionSection.OnCharacterSelected -= SelectCharacter;
+    }
 
     public override UniTask EnterDefaultSection()
     {
@@ -49,7 +58,7 @@ public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
 
         if (m_selectedItem.Count == 0)
         {
-            m_itemSelectionSection.RemoveSpentItem();
+            m_itemSelectionSection.RemoveCurrentSelection();
             TryExitCurrentSection();
             return;
         }

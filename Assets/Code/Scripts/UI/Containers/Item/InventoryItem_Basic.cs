@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryItem_Basic : InventoryItem
+public class InventoryItem_Basic : InventoryItemUI
 {
     [SerializeField]
     private Image m_icon;
