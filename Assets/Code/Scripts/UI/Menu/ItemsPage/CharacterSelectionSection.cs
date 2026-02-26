@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class CharacterSelectionSection: UIListSelectionSection<PartyBanner, PartyBannerGenerator, Character, PartyData>
+public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, CharacterBannerGenerator, Character, PartyData>
     ,IHandleOnConfirm, IHandleOnBack
 {
     public event Action<Character> OnCharacterSelected;
@@ -24,19 +24,25 @@ public class CharacterSelectionSection: UIListSelectionSection<PartyBanner, Part
         if(m_bodyMover != null)
             m_bodyMover.MoveIn();
 
-        m_sectionAnim.SetBool("CharSection", true);
-        UpdateSelectedObject();
-        m_allSelectionSplotch.SetActive(m_selectedAll);
+        if(m_sectionAnim != null)
+            m_sectionAnim.SetBool("CharSection", true);
+
+        if(m_allSelectionSplotch != null)
+            m_allSelectionSplotch.SetActive(m_selectedAll);
+
+        UpdateSelectedObject();     
         return default;
     }
 
     public override UniTask ExitSection()
     {
+        if(m_allSelectionSplotch != null)
+            m_allSelectionSplotch.SetActive(false);
+
         m_selectedIndex = 0;
         m_selectedAll = false;
         UpdateSelectabilityOfContent(x => false);
-        m_selecter.UnselectAll();
-        m_allSelectionSplotch.SetActive(false);
+        m_selecter.UnselectAll();       
         return default;
     }
 
@@ -65,12 +71,12 @@ public class CharacterSelectionSection: UIListSelectionSection<PartyBanner, Part
         m_selectedAll = true;
     }
 
-    public void OnConfirm()
+    public virtual void OnConfirm()
     {
         OnCharacterSelected?.Invoke(SelectedObject.Character);
     }
 
-    public void OnBack()
+    public virtual void OnBack()
     {
         m_selectedIndex = 0;
     }  

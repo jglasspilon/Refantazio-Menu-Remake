@@ -5,7 +5,7 @@ using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PartyBannerEffect_ColoredAlpha : PartyBannerEffect
+public class UIEffect_ColoredAlpha : UIEffect
 {
     [SerializeField]
     private GameObject m_owner;

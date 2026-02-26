@@ -39,9 +39,15 @@ public class PartyData: IDisposable
     }
 
     #region Party Member Management Functions
-    public Character[] GetAllPartyMembers()
+    public Character[] GetAllPartyMembers(bool includeGuide = true)
     {
-        return m_orderedParty.ToArray();
+        if(!includeGuide)
+            return m_orderedParty.ToArray();
+
+        List<Character> result = new List<Character>();
+        result.AddRange(m_orderedParty);
+        result.Add(m_guide);
+        return result.ToArray();
     }
 
     public Character[] GetAllActivePartyMembers()

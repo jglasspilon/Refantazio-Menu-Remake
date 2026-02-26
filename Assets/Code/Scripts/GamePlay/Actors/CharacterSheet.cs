@@ -15,6 +15,9 @@ public class CharacterSheet : UniqueScriptableObject
     private ArchetypeData m_startingArchetype;
 
     [SerializeField]
+    private AnimationCurveAsset m_expCurve;
+
+    [SerializeField]
     private CharacterStats m_stats;
 
     [SerializeField]
@@ -35,14 +38,27 @@ public class CharacterSheet : UniqueScriptableObject
     public Sprite BannerIcon => m_bannerIcon;
     public Sprite ArmIcon => m_armIcon;
     public Mesh Mesh => m_mesh;
+
+    protected override void OnValidate()
+    {
+        base.OnValidate();
+
+        if(m_expCurve != null && Stats.Level == null)
+        {
+            Stats.InitializeLevel(new Level(m_expCurve));
+        }
+
+        Stats.Level.InitializeExp();
+    }
 }
 
 [Serializable]
 public class CharacterStats
 {
     public event Action<Stat> OnStatChange;
+    public event Action<int> OnLevelChange;
 
-    public Stat Level = new Stat(StatType.Level, 0);
+    public Level Level;
     public Stat HP = new Stat(StatType.HP, 0);
     public Stat MP = new Stat(StatType.MP, 0);
     public Stat Strength = new Stat(StatType.Strength, 0);
@@ -59,7 +75,6 @@ public class CharacterStats
 
     public CharacterStats()
     {
-        Level.OnValueChange += HandleOnStatChange;
         HP.OnValueChange += HandleOnStatChange;
         MP.OnValueChange += HandleOnStatChange;
         Strength.OnValueChange += HandleOnStatChange;
@@ -84,9 +99,84 @@ public class CharacterStats
         };
     }
 
+    public void InitializeLevel(Level level)
+    {
+        Level = level;
+        Level.OnLevelChange += HandleOnLevelChange;
+    }
+
     private void HandleOnStatChange(Stat statChange)
     {
         OnStatChange?.Invoke(statChange);
+    }
+
+    private void HandleOnLevelChange(int levelChange)
+    {
+        OnLevelChange?.Invoke(levelChange);
+    }
+}
+
+[Serializable]
+public class Level
+{
+    public event Action<int> OnLevelChange;
+
+    [SerializeField]
+    private int m_value = 1;
+
+    [SerializeField]
+    private Resource m_exp;
+
+    public int Value => m_value;
+    public Resource Exp => m_exp;
+    private AnimationCurveAsset m_expCurve;
+
+    public Level(AnimationCurveAsset expCurve)
+    {
+        m_expCurve = expCurve;
+        InitializeExp();
+    }
+
+    public void InitializeExp()
+    {
+        SetLevel(m_value);
+    }
+
+    public void AddExp(int amount, int level = 0)
+    {
+        int overflow = (m_exp.Current + amount) - m_exp.Max;
+
+        if (overflow < 0 || m_value == 99)
+        {
+            m_exp.Apply(amount);
+
+            if (level > 0)
+            {
+                OnLevelChange?.Invoke(level);
+            }
+            return;
+        }
+
+        LevelUp();
+        AddExp(overflow, level++);
+    }
+
+    public void LevelUp()
+    {
+        SetLevel(m_value + 1);
+    }
+
+    private void SetLevel(int level)
+    {
+        level = Mathf.Clamp(level, 1, 99);
+        m_exp = new Resource((int)m_expCurve.Evaluate(level));
+        m_value = level;
+
+        if (m_value == 99)
+        {
+            m_exp.Apply(m_exp.Max);
+            return;
+        }
     }
 }
 

@@ -1,18 +1,18 @@
 using UnityEngine;
 
-public class PartyBannerGenerator : UIObjectGeneraterFromPool<PartyBanner, Character>
+public class CharacterBannerGenerator : UIObjectGeneraterFromPool<CharacterBanner, Character>
 {
     [SerializeField]
     private bool m_activePartyOnly;
 
     [SerializeField]
-    private PartyBanner m_bannerPrefab;
+    private CharacterBanner m_bannerPrefab;
 
     protected override void GeneratePoolableFromData(Character data)
     {
         if (m_activePartyOnly && data.CharacterType != ECharacterType.Party)
             return;
-        PartyBanner newBanner = m_assetPool.PullFrom(m_bannerPrefab.GetType(), m_holder) as PartyBanner;
+        CharacterBanner newBanner = m_assetPool.PullFrom(m_bannerPrefab.GetType(), m_holder) as CharacterBanner;
         newBanner.InitializeFromData(data);
         newBanner.SetAsSelectable(false);
         m_content.Add(newBanner);

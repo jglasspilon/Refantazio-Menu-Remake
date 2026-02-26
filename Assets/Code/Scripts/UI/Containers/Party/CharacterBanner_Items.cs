@@ -3,14 +3,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PartyBanner_Items : PartyBanner
+public class CharacterBanner_Items : CharacterBanner
 {
     [Header("Character Banner:")]
     [SerializeField]
     private Image m_characterBannerImage;
 
     [SerializeField]
-    private TextMeshProUGUI m_characterNameText, m_characterTypeText, m_characterMPText;
+    private TextMeshProUGUI m_characterNameText, m_characterTypeText;
 
     [SerializeField]
     private ResourceBar m_characterHp, m_characterMp;
@@ -22,13 +22,13 @@ public class PartyBanner_Items : PartyBanner
     private GameObject[] m_contentOnSelectedOnly;
    
     [SerializeField]
-    private PartyBannerEffect[] m_healEffect;
+    private UIEffect[] m_healEffect;
 
     [SerializeField]
-    private PartyBannerEffect[] m_damageEffect;
+    private UIEffect[] m_damageEffect;
 
     [SerializeField]
-    private PartyBannerEffect[] m_manaRestoreEffect;
+    private UIEffect[] m_manaRestoreEffect;
 
     public override void InitializeFromData(Character character)
     {

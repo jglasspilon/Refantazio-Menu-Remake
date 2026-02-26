@@ -6,6 +6,7 @@ using UnityEngine;
 public class Character
 {
     public event Action<ECharacterType> OnTypeChange;
+    public event Action<EBattlePosition> OnBattlePositionChange;
     public event Action<bool> OnDeath;
     public event Action OnCharacterUpdated;
 
@@ -30,6 +31,9 @@ public class Character
     [SerializeField]
     private List<Archetype> m_availableArchetypes = new List<Archetype>();
 
+    [SerializeField]
+    private EBattlePosition m_battlePosition = EBattlePosition.Front;
+
     private CharacterSheet m_characterBase;
 
     public string ID => m_characterBase.ID;
@@ -41,8 +45,10 @@ public class Character
     public Sprite Arm => m_characterBase.ArmIcon;
     public Resource HP => m_health;
     public Resource MP => m_mana;
+    public Resource Exp => m_stats.Level.Exp;
     public CharacterStats Stats => m_stats;
     public bool IsDead => m_health.Current == 0 && m_health.Max > 0;
+    public EBattlePosition BattlePosition => m_battlePosition;
 
     #region Life Cycle Functions
     public Character(CharacterSheet sheet)
@@ -57,6 +63,7 @@ public class Character
         HP.OnResourceChange += HandleOnHealthChanged;
         MP.OnResourceChange += HandleOnManaChanged;
         Stats.OnStatChange += HandleStatUpdate;
+        Stats.OnLevelChange += HandleLevelChange;
     }
 
     public void LoadCharacterData(Character data)
@@ -72,7 +79,7 @@ public class Character
     }
     #endregion
 
-    #region CharacterType Functions
+    #region CharacterType & Position Functions
     public void SetCharacterAsLeader()
     {
         m_characterType = ECharacterType.Leader;
@@ -89,6 +96,15 @@ public class Character
     {
         m_characterType = m_characterBase.CharacterType;
         OnTypeChange?.Invoke(m_characterType);
+    }
+
+    public void SetCharacterBattlePosition(EBattlePosition battlePosition)
+    {
+        if (battlePosition == m_battlePosition || m_characterType == ECharacterType.Guide)
+            return;
+
+        m_battlePosition = battlePosition;
+        OnBattlePositionChange?.Invoke(battlePosition);
     }
     #endregion
 
@@ -137,6 +153,11 @@ public class Character
     }
 
     private void HandleStatUpdate(Stat statChanged)
+    {
+        OnCharacterUpdated?.Invoke();
+    }
+
+    private void HandleLevelChange(int levelDelta)
     {
         OnCharacterUpdated?.Invoke();
     }

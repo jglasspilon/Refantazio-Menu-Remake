@@ -15,37 +15,66 @@ MonoBehaviour:
   m_characterType: 1
   m_name: Junah
   m_startingArchetype: {fileID: 0}
+  m_expCurve: {fileID: 11400000, guid: 4047c5867cc7e6244a3a06ea095cb97a, type: 2}
   m_stats:
     Level:
-      m_baseValue: 1
-      m_levelValue: 0
-      m_modifiers: []
+      m_value: 1
+      m_exp:
+        m_current: 0
+        m_max: 158
     HP:
+      m_type: 1
       m_baseValue: 90
       m_levelValue: 0
       m_modifiers: []
     MP:
+      m_type: 2
       m_baseValue: 110
       m_levelValue: 0
       m_modifiers: []
     Strength:
+      m_type: 3
       m_baseValue: 3
       m_levelValue: 0
       m_modifiers: []
     Magic:
+      m_type: 4
       m_baseValue: 3
       m_levelValue: 0
       m_modifiers: []
     Endurance:
+      m_type: 5
       m_baseValue: 2
       m_levelValue: 0
       m_modifiers: []
     Agility:
+      m_type: 6
       m_baseValue: 2
       m_levelValue: 0
       m_modifiers: []
     Luck:
+      m_type: 7
       m_baseValue: 5
+      m_levelValue: 0
+      m_modifiers: []
+    Attack:
+      m_type: 8
+      m_baseValue: 0
+      m_levelValue: 0
+      m_modifiers: []
+    Hit:
+      m_type: 9
+      m_baseValue: 0
+      m_levelValue: 0
+      m_modifiers: []
+    Defence:
+      m_type: 10
+      m_baseValue: 0
+      m_levelValue: 0
+      m_modifiers: []
+    Evasion:
+      m_type: 11
+      m_baseValue: 0
       m_levelValue: 0
       m_modifiers: []
   m_startingSkills: []

@@ -13,7 +13,7 @@ public abstract class UniqueScriptableObject : ScriptableObject
     public string ID => m_id;
 
 #if UNITY_EDITOR
-    protected void OnValidate()
+    protected virtual void OnValidate()
     {
         if (string.IsNullOrEmpty(m_id))
         {

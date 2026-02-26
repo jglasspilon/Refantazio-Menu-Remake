@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
-public abstract class PartyBanner : PoolableObjectFromData<Character>, ISelectable
+public abstract class CharacterBanner : PoolableObjectFromData<Character>, ISelectable
 {    
     protected Character m_character;
 

@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using TMPro;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,10 +15,10 @@ public class ResourceBar : MonoBehaviour
     private AnimationCurveAsset m_sliderAnimCurve;
 
     [SerializeField]
-    private PartyBannerEffect[] m_healEffect;
+    private UIEffect[] m_healEffect;
 
     [SerializeField]
-    private PartyBannerEffect[] m_damageEffect;
+    private UIEffect[] m_damageEffect;
 
     private Resource m_resource;
 
@@ -38,13 +37,17 @@ public class ResourceBar : MonoBehaviour
 
     private void DisplayInstant(int current, float proportion)
     {
-        m_valueText.text = Helper.StringFormatting.FormatIntForUI(current, 3, false);
+        if(m_valueText != null)
+            m_valueText.text = Helper.StringFormatting.FormatIntForUI(current, 3, false);
+
         m_valueSlider.value = proportion;
     }
 
     private void Display(int current, float proportion, int delta)
-    {       
-        m_valueText.text = Helper.StringFormatting.FormatIntForUI(current, 3, false);
+    {    
+        if(m_valueText != null)
+            m_valueText.text = Helper.StringFormatting.FormatIntForUI(current, 3, false);
+
         LerpSlider(proportion);      
 
         if (delta == 0)
@@ -77,19 +80,19 @@ public class ResourceBar : MonoBehaviour
 
     private void PlayHealingEffects()
     {
-        foreach (PartyBannerEffect effect in m_damageEffect)
+        foreach (UIEffect effect in m_damageEffect)
             effect.StopEffect();
 
-        foreach (PartyBannerEffect effect in m_healEffect)
+        foreach (UIEffect effect in m_healEffect)
             effect.PlayEffect();
     }
 
     private void PlayDamageEffects()
     {
-        foreach (PartyBannerEffect effect in m_healEffect)
+        foreach (UIEffect effect in m_healEffect)
             effect.StopEffect();
 
-        foreach (PartyBannerEffect effect in m_damageEffect)
+        foreach (UIEffect effect in m_damageEffect)
             effect.PlayEffect();
     }
 }

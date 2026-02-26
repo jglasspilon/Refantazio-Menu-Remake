@@ -2,15 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IDisposable where T : PoolableObjectFromData<TData>
+public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IGenerater, IDisposable where T : PoolableObjectFromData<TData>
 {
-    public event Action OnGenerated;
+    public event Action OnGenerate;
 
     [SerializeField]
     protected Transform m_holder;
-
-    [SerializeField]
-    protected Animation m_onGeneratedAnim;
 
     [SerializeField]
     protected LoggingProfile m_logProfile;
@@ -47,12 +44,9 @@ public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IDisp
         foreach (TData item in itemsToGenerate)
         {
             GeneratePoolableFromData(item);
-        }
+        }            
 
-        if (m_onGeneratedAnim != null)
-            m_onGeneratedAnim.Play(PlayMode.StopAll);
-
-        OnGenerated?.Invoke();
+        OnGenerate?.Invoke();
         return m_content.ToArray();
     }
 
