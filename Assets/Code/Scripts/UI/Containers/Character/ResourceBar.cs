@@ -24,6 +24,9 @@ public class ResourceBar : MonoBehaviour
 
     public void Initialize(Resource resource)
     {
+        if (m_resource != null)
+            m_resource.OnResourceChange -= Display;
+
         m_resource = resource;
         resource.OnResourceChange += Display;
         DisplayInstant(resource.Current, resource.CurrentProportion);

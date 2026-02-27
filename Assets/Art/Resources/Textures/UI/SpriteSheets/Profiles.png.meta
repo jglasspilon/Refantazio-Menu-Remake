@@ -95,12 +95,210 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: MC_Profile
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 5559
+        width: 1445
+        height: 2619
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c190c6a535186b46858388ae06626d6
+      internalID: 251317697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Strohl_Profile
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2769
+        width: 1775
+        height: 2693
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 849766b3340582540ae93efa5794bb11
+      internalID: -1811616138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grius_Profile
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 155
+        width: 1665
+        height: 2574
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f2d0d2ed34636e4f9a686a5232b1cbb
+      internalID: 1041054762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hulkenburg_Profile
+      rect:
+        serializedVersion: 2
+        x: 2721
+        y: 5628
+        width: 2042
+        height: 2564
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c01a399b83dc0b499bf65b085a68422
+      internalID: -1315575417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heismay_Profile
+      rect:
+        serializedVersion: 2
+        x: 3013
+        y: 2745
+        width: 1963
+        height: 2403
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e247d799069e2264d8f4670e0c410315
+      internalID: -1351197225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Junah_Profile
+      rect:
+        serializedVersion: 2
+        x: 2986
+        y: 119
+        width: 1940
+        height: 2472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c42db3516f4f564393d97a40cc6c79b
+      internalID: -613341533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eupha_Profile
+      rect:
+        serializedVersion: 2
+        x: 5878
+        y: 5486
+        width: 2314
+        height: 2567
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a068c1f0586aff43a90f930db18ae5e
+      internalID: 2016976379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basilio_Profile
+      rect:
+        serializedVersion: 2
+        x: 6052
+        y: 2770
+        width: 1587
+        height: 2597
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ace82715e8766c6498ef1a37f081b54a
+      internalID: 1500562526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gallica_Profile
+      rect:
+        serializedVersion: 2
+        x: 5867
+        y: 56
+        width: 1842
+        height: 2587
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4ca7f7d0bdf7a64f9431928282efe66
+      internalID: -312700720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: b53412bfc8d0a9b478aa518ccc3c9327
     internalID: 0
     vertices: []
     indices: 
@@ -109,7 +307,16 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Basilio_Profile: 1500562526
+      Eupha_Profile: 2016976379
+      Gallica_Profile: -312700720
+      Grius_Profile: 1041054762
+      Heismay_Profile: -1351197225
+      Hulkenburg_Profile: -1315575417
+      Junah_Profile: -613341533
+      MC_Profile: 251317697
+      Strohl_Profile: -1811616138
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

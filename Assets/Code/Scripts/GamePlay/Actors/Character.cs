@@ -7,7 +7,9 @@ public class Character
 {
     public event Action<ECharacterType> OnTypeChange;
     public event Action<EBattlePosition> OnBattlePositionChange;
+    public event Action<Archetype> OnArchetypeChange;
     public event Action<bool> OnDeath;
+    public event Action<int, int> OnLevelChange;
     public event Action OnCharacterUpdated;
 
     [SerializeField]
@@ -24,6 +26,9 @@ public class Character
 
     [SerializeField]
     private Resource m_mana = new Resource();
+
+    [SerializeField]
+    private Level m_level;
 
     [SerializeField]
     private Archetype m_equipedArchetype;
@@ -44,10 +49,12 @@ public class Character
     public Sprite Banner => m_characterBase.BannerIcon;
     public Sprite Profile => m_characterBase.ProfileIcon;
     public Sprite Arm => m_characterBase.ArmIcon;
+    public Level Level => m_level;
     public Resource HP => m_health;
     public Resource MP => m_mana;
-    public Resource Exp => m_stats.Level.Exp;
+    public Resource Exp => m_level.Exp;
     public CharacterStats Stats => m_stats;
+    public Archetype EquipedArchetype => m_equipedArchetype;
     public bool IsDead => m_health.Current == 0 && m_health.Max > 0;
     public EBattlePosition BattlePosition => m_battlePosition;
 
@@ -56,16 +63,18 @@ public class Character
     {
         m_characterBase = sheet;
         m_name = sheet.Name;
-        m_stats = sheet.Stats;
+        m_stats = new CharacterStats(sheet.Stats);
+        m_level = sheet.CreateLevel();
         m_characterType = sheet.CharacterType;
         m_battlePosition = m_characterType == ECharacterType.Guide ? EBattlePosition.Undetermined : EBattlePosition.Front;
+        m_equipedArchetype = new Archetype(m_characterBase.StartingArchetype);
         ApplyStats();
 
         HP.OnEmpty += HandleOnHealthEmpty;
         HP.OnResourceChange += HandleOnHealthChanged;
         MP.OnResourceChange += HandleOnManaChanged;
         Stats.OnStatChange += HandleStatUpdate;
-        Stats.OnLevelChange += HandleLevelChange;
+        Level.OnLevelChange += HandleLevelChange;
     }
 
     public void LoadCharacterData(Character data)
@@ -110,7 +119,7 @@ public class Character
     }
     #endregion
 
-    #region Health & Mana Functions
+    #region Resource Functions
     public bool HasEnoughHealth(int amount)
     {
         return m_health.Current >= amount;
@@ -129,6 +138,11 @@ public class Character
     public void ApplyMana(int amount)
     {
         m_mana.Apply(amount);
+    }
+
+    public void ApplyExp(int amount)
+    {
+        m_level.AddExp(amount);
     }
 
     private void HandleOnHealthChanged(int amount, float proportion, int delta)
@@ -159,9 +173,9 @@ public class Character
         OnCharacterUpdated?.Invoke();
     }
 
-    private void HandleLevelChange(int levelDelta)
+    private void HandleLevelChange(int level, int levelDelta)
     {
-        OnCharacterUpdated?.Invoke();
+        OnLevelChange?.Invoke(level, levelDelta);
     }
     #endregion
 }

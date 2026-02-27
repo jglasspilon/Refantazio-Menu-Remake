@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IGenerater, IDisposable where T : PoolableObjectFromData<TData>
+public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IGenerater where T : PoolableObjectFromData<TData>
 {
     public event Action OnGenerate;
 
@@ -19,11 +19,6 @@ public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IGene
     public UIObjectGeneraterFromPool()
     {
 
-    }
-
-    public void Dispose()
-    {
-        ClearGeneratedContent();
     }
 
     public void Initialize(AssetPoolManager assetPool, GameObject owner)

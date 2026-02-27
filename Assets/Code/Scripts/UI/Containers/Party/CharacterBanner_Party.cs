@@ -17,6 +17,9 @@ public class CharacterBanner_Party : CharacterBanner
     private GameObject m_deathIcon, m_characterTypeContent;
 
     [SerializeField]
+    private Image m_archetypeIcon;
+
+    [SerializeField]
     private LeftRightMover m_positionMover;
 
     [SerializeField]
@@ -40,13 +43,16 @@ public class CharacterBanner_Party : CharacterBanner
         m_character.OnTypeChange += DisplayCharacterType;
         m_character.OnDeath += DisplayDeathIcon;
         m_character.OnBattlePositionChange += DisplayPosition;
+        m_character.OnArchetypeChange += DisplayArchetype;
+        m_character.OnLevelChange += DisplayLevel;
 
         m_positionMover.SetEnable(character.CharacterType != ECharacterType.Guide);
         DisplayCharacterType(character.CharacterType);
         DisplayCharacterName(character.Name);
         DisplayDeathIcon(character.IsDead);
         DisplayPosition(character.BattlePosition);
-        DisplayLevel(character.Stats.Level.Value);
+        DisplayLevel(character.Level.Value, 0);
+        DisplayArchetype(character.EquipedArchetype);
         SetAsSelected(false);
     }
 
@@ -55,6 +61,8 @@ public class CharacterBanner_Party : CharacterBanner
         m_character.OnTypeChange -= DisplayCharacterType;
         m_character.OnDeath -= DisplayDeathIcon;
         m_character.OnBattlePositionChange -= DisplayPosition;
+        m_character.OnArchetypeChange -= DisplayArchetype;
+        m_character.OnLevelChange -= DisplayLevel;
         m_characterHp.Unbind();
         m_characterMp.Unbind();
         m_characterExp.Unbind();
@@ -64,14 +72,16 @@ public class CharacterBanner_Party : CharacterBanner
     #region Display Logic
     private void DisplayCharacterType(ECharacterType characterType)
     {
+        bool isGuide = characterType == ECharacterType.Guide;
         string typeString = characterType.ToString();
         string output = $"{typeString.Substring(0,1)}<size=50%>{typeString.Substring(1)}";
         m_characterTypeText.text = output;
 
         m_characterTypeContent.SetActive(characterType == ECharacterType.Leader || characterType == ECharacterType.Party);
-        m_characterHp.gameObject.SetActive(characterType != ECharacterType.Guide);
-        m_characterMp.gameObject.SetActive(characterType != ECharacterType.Guide);
-        m_characterExp.gameObject.SetActive(characterType != ECharacterType.Guide);
+        m_characterHp.gameObject.SetActive(!isGuide);
+        m_characterMp.gameObject.SetActive(!isGuide);
+        m_characterExp.gameObject.SetActive(!isGuide);
+        m_archetypeIcon.gameObject.SetActive(!isGuide);
     }
 
     private void DisplayCharacterName(string name)
@@ -91,9 +101,15 @@ public class CharacterBanner_Party : CharacterBanner
         m_backContent.SetActive(position == EBattlePosition.Back); 
     }
 
-    private void DisplayLevel(int level)
+    private void DisplayLevel(int level, int levelDelta)
     {
         m_levelText.text = level.ToString("00");
+        m_characterExp.Initialize(m_character.Exp);
+    }
+
+    private void DisplayArchetype(Archetype archetype)
+    {
+        m_archetypeIcon.sprite = archetype.Icon;
     }
     #endregion
 }

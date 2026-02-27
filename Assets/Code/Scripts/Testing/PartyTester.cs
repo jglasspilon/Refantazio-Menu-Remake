@@ -57,13 +57,17 @@ public class PartyTester : MonoBehaviour
             Logger.Log($"Changed to Remove from Active Party mode.", gameObject, m_logProfile);
         }
 
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            m_testingMode = EMode.Exp;
+            Logger.Log($"Changed to Exp mode.", gameObject, m_logProfile);
+        }
+
         if (Input.GetKeyUp(KeyCode.A))
         {
             m_partyData.AddPartyMember(new Character(m_characterToAdd));
             Logger.Log($"Adding {m_characterToAdd.Name} to party.", gameObject, m_logProfile);            
-        }
-
-        
+        }    
 
         if (Input.GetKeyUp(KeyCode.Keypad0))
         {
@@ -127,6 +131,12 @@ public class PartyTester : MonoBehaviour
                     characterToDamage.ApplyHealth(-TEST_AMOUNT);
                 }
                 break;
+            case EMode.Exp:
+                if (m_partyData.TryGetPartyMember(index, out Character characterToGiveExp))
+                {
+                    characterToGiveExp.ApplyExp(TEST_AMOUNT);
+                }
+                break;
             case EMode.RemoveFromParty:
                 if (m_partyData.TryGetPartyMember(index, out Character characterToRemove))
                 {
@@ -164,6 +174,12 @@ public class PartyTester : MonoBehaviour
                     character.ApplyHealth(-TEST_AMOUNT);
                 }
                 break;
+            case EMode.Exp:
+                foreach (Character character in m_partyData.GetAllPartyMembers())
+                {
+                    character.ApplyExp(TEST_AMOUNT);
+                }
+                break;
         }
     }
 
@@ -173,7 +189,8 @@ public class PartyTester : MonoBehaviour
         Damage,
         RemoveFromParty,
         RemoveFromActiveParty,
-        AddToActiveParty
+        AddToActiveParty,
+        Exp,
     }
 }
 

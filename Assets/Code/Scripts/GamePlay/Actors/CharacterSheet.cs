@@ -18,6 +18,9 @@ public class CharacterSheet : UniqueScriptableObject
     private AnimationCurveAsset m_expCurve;
 
     [SerializeField]
+    private int m_startingLevel;
+
+    [SerializeField]
     private CharacterStats m_stats;
 
     [SerializeField]
@@ -39,16 +42,9 @@ public class CharacterSheet : UniqueScriptableObject
     public Sprite ArmIcon => m_armIcon;
     public Mesh Mesh => m_mesh;
 
-    protected override void OnValidate()
+    public Level CreateLevel()
     {
-        base.OnValidate();
-
-        if(m_expCurve != null && Stats.Level == null)
-        {
-            Stats.InitializeLevel(new Level(m_expCurve));
-        }
-
-        Stats.Level.InitializeExp();
+        return new Level(m_startingLevel, m_expCurve);
     }
 }
 
@@ -56,24 +52,37 @@ public class CharacterSheet : UniqueScriptableObject
 public class CharacterStats
 {
     public event Action<Stat> OnStatChange;
-    public event Action<int> OnLevelChange;
 
-    public Level Level;
-    public Stat HP = new Stat(StatType.HP, 0);
-    public Stat MP = new Stat(StatType.MP, 0);
-    public Stat Strength = new Stat(StatType.Strength, 0);
-    public Stat Magic = new Stat(StatType.Magic, 0);
-    public Stat Endurance = new Stat(StatType.Endurance, 0);
-    public Stat Agility = new Stat(StatType.Agility, 0);
-    public Stat Luck = new Stat(StatType.Luck, 0);
-    public Stat Attack = new Stat(StatType.Attack, 0);
-    public Stat Hit = new Stat(StatType.Hit, 0);
-    public Stat Defence = new Stat(StatType.Defence, 0);
-    public Stat Evasion = new Stat(StatType.Evasion, 0);
+    public Stat HP;
+    public Stat MP;
+    public Stat Strength;
+    public Stat Magic;
+    public Stat Endurance;
+    public Stat Agility;
+    public Stat Luck;
+    public Stat Attack;
+    public Stat Hit;
+    public Stat Defence;
+    public Stat Evasion;
 
-    private readonly Dictionary<StatType, Stat> m_typedStats;
+    public CharacterStats(CharacterStats refStats)
+    {
+        HP = new Stat(refStats.HP.Type, refStats.HP.BaseValue);
+        MP = new Stat(refStats.MP.Type, refStats.MP.BaseValue);
+        Strength = new Stat(refStats.Strength.Type, refStats.Strength.BaseValue);
+        Magic = new Stat(refStats.Magic.Type, refStats.Magic.BaseValue);
+        Endurance = new Stat(refStats.Endurance.Type, refStats.Endurance.BaseValue);
+        Agility = new Stat(refStats.Agility.Type, refStats.Agility.BaseValue);
+        Luck = new Stat(refStats.Luck.Type, refStats.Luck.BaseValue);
+        Attack = new Stat(refStats.Attack.Type, refStats.Attack.BaseValue);
+        Hit = new Stat(refStats.Hit.Type, refStats.Hit.BaseValue);
+        Defence = new Stat(refStats.Defence.Type, refStats.Defence.BaseValue);
+        Evasion = new Stat(refStats.Evasion.Type, refStats.Evasion.BaseValue);
 
-    public CharacterStats()
+        InitializeStats();
+    }
+
+    private void InitializeStats()
     {
         HP.OnValueChange += HandleOnStatChange;
         MP.OnValueChange += HandleOnStatChange;
@@ -82,44 +91,18 @@ public class CharacterStats
         Endurance.OnValueChange += HandleOnStatChange;
         Agility.OnValueChange += HandleOnStatChange;
         Luck.OnValueChange += HandleOnStatChange;
-
-        m_typedStats = new Dictionary<StatType, Stat>()
-        {
-            {StatType.HP, HP},
-            {StatType.MP, MP},
-            {StatType.Strength, Strength},
-            {StatType.Magic, Magic},
-            {StatType.Endurance, Endurance},
-            {StatType.Agility, Agility},
-            {StatType.Luck, Luck},
-            {StatType.Attack, Attack},
-            {StatType.Hit, Hit},
-            {StatType.Defence, Defence},
-            {StatType.Evasion, Evasion}
-        };
-    }
-
-    public void InitializeLevel(Level level)
-    {
-        Level = level;
-        Level.OnLevelChange += HandleOnLevelChange;
     }
 
     private void HandleOnStatChange(Stat statChange)
     {
         OnStatChange?.Invoke(statChange);
     }
-
-    private void HandleOnLevelChange(int levelChange)
-    {
-        OnLevelChange?.Invoke(levelChange);
-    }
 }
 
 [Serializable]
 public class Level
 {
-    public event Action<int> OnLevelChange;
+    public event Action<int, int> OnLevelChange;
 
     [SerializeField]
     private int m_value = 1;
@@ -131,8 +114,9 @@ public class Level
     public Resource Exp => m_exp;
     private AnimationCurveAsset m_expCurve;
 
-    public Level(AnimationCurveAsset expCurve)
+    public Level(int value, AnimationCurveAsset expCurve)
     {
+        m_value = value;
         m_expCurve = expCurve;
         InitializeExp();
     }
@@ -142,7 +126,7 @@ public class Level
         SetLevel(m_value);
     }
 
-    public void AddExp(int amount, int level = 0)
+    public void AddExp(int amount, int levelDelta = 0)
     {
         int overflow = (m_exp.Current + amount) - m_exp.Max;
 
@@ -150,15 +134,15 @@ public class Level
         {
             m_exp.Apply(amount);
 
-            if (level > 0)
+            if (levelDelta > 0)
             {
-                OnLevelChange?.Invoke(level);
+                OnLevelChange?.Invoke(m_value, levelDelta);
             }
             return;
         }
 
         LevelUp();
-        AddExp(overflow, level++);
+        AddExp(overflow, levelDelta + 1);
     }
 
     public void LevelUp()

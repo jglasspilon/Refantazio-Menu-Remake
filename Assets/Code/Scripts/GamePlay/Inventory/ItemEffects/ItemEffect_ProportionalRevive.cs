@@ -4,6 +4,7 @@ using UnityEngine;
 public class ItemEffect_ProportionalRevive : ItemEffect
 {
     [SerializeField]
+    [Range(0f, 1f)]
     private float m_proportion;
 
     public override bool CanApply(Character target)

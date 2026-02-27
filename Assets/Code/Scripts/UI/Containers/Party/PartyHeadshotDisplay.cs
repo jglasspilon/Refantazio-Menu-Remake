@@ -38,12 +38,15 @@ public class PartyHeadshotDisplay : MonoBehaviour
 
     private void ShowCharacter()
     {
+        m_headshot.sprite = m_character.Profile;
         m_footerMover.gameObject.SetActive(true);
+        m_headshot.gameObject.SetActive(true);
     }
 
     private void HideCharacter()
     {
         m_footerMover.gameObject.SetActive(false);
+        m_headshot.gameObject.SetActive(false);
     }
 
     private void UpdateCharacterSlot()
@@ -70,7 +73,10 @@ public class PartyHeadshotDisplay : MonoBehaviour
     private void HandleOnPositionChange(EBattlePosition position)
     {
         bool isFront = position == EBattlePosition.Front;
-        m_footerMover.SetPosition(position == EBattlePosition.Front ? ECardinalPosition.Left : ECardinalPosition.Right);
+        ECardinalPosition targetPosition = position == EBattlePosition.Front ? ECardinalPosition.Left : ECardinalPosition.Right;
+
+        m_footerMover.SetPosition(targetPosition);
+        m_headshotMover.SetPosition(targetPosition);
         m_positionText.text = isFront ? FRONT_TEXT : BACK_TEXT;
         m_positionText.color = isFront ? m_frontTextColor : m_backTextColor;
     }

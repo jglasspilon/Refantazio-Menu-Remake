@@ -78,18 +78,17 @@ public static class Helper
             return valueParse;
         }
 
-        public static string PrettifyStat(StatType stat)
+        public static string PrettifyStat(EStatType stat)
         {
             switch(stat)
             {
-                case StatType.Level: return "LV";
-                case StatType.Strength: return "STR";
-                case StatType.Magic: return "MAG";
-                case StatType.Endurance: return "END";
-                case StatType.Agility: return "AGI";
-                case StatType.Attack: return "ATK";
-                case StatType.Defence: return "DEF";
-                case StatType.Evasion: return "EVA";
+                case EStatType.Strength: return "STR";
+                case EStatType.Magic: return "MAG";
+                case EStatType.Endurance: return "END";
+                case EStatType.Agility: return "AGI";
+                case EStatType.Attack: return "ATK";
+                case EStatType.Defence: return "DEF";
+                case EStatType.Evasion: return "EVA";
                 default: return stat.ToString();
             }
         }

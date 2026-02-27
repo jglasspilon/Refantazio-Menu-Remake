@@ -8,10 +8,15 @@ public class Archetype
     private ArchetypeData m_baseData;
 
     [SerializeField]
-    private int m_rank = 1;
+    private int m_rank;
+
+    public string Name => m_baseData.name;
+    public Sprite Icon => m_baseData.Icon;
+    public Mesh Mesh => m_baseData.Mesh;
 
     public Archetype(ArchetypeData baseData)
     { 
-        m_baseData = baseData; 
+        m_baseData = baseData;
+        m_rank = 1;
     }
 }

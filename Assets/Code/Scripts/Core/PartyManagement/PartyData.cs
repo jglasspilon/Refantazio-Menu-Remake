@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public class PartyData: IDisposable
+public class PartyData
 {
     public event Action OnPartyChanged, OnActivePartyChanged;
     public event Action OnAnyPartyMemberUpdated, OnAnyActivePartyMemberUpdated;
@@ -28,11 +28,6 @@ public class PartyData: IDisposable
         m_logProfile = logProfile;
         LateFrameTicker.OnLateTick += Flush;
         m_activeParty = new Character[] { null, null, null, null };
-    }
-
-    public void Dispose()
-    {
-        LateFrameTicker.OnLateTick -= Flush;
     }
 
     #region Party Member Management Functions

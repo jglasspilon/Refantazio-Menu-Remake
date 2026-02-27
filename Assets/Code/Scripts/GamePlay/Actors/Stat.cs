@@ -9,7 +9,7 @@ public class Stat
     public event Action<Stat> OnValueChange;
 
     [SerializeField]
-    private StatType m_type;
+    private EStatType m_type;
     
     [SerializeField]
     private int m_baseValue, m_levelValue;
@@ -20,9 +20,10 @@ public class Stat
     public int BaseValue => m_baseValue;
     public int LevelValue => m_levelValue;
 
+    public EStatType Type => m_type;
     public int Value => m_baseValue + m_levelValue + m_modifiers.Sum(x => x.Amount);
 
-    public Stat(StatType type, int baseValue)
+    public Stat(EStatType type, int baseValue)
     {
         m_type = type;
         m_baseValue = baseValue;
@@ -53,9 +54,8 @@ public class Stat
     }
 }
 
-public enum StatType
+public enum EStatType
 {
-    Level,
     HP,
     MP,
     Strength, 
