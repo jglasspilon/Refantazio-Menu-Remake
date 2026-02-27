@@ -14,7 +14,7 @@ public class PartyHeadshotDisplay : MonoBehaviour
     private TextMeshProUGUI m_positionText;
 
     [SerializeField]
-    private FrontBackMover m_headshotMover, m_footerMover;
+    private LeftRightMover m_headshotMover, m_footerMover;
 
     [SerializeField]
     private Color m_frontTextColor, m_backTextColor;
@@ -69,7 +69,7 @@ public class PartyHeadshotDisplay : MonoBehaviour
     private void HandleOnPositionChange(EBattlePosition position)
     {
         bool isFront = position == EBattlePosition.Front;
-        m_footerMover.SetPosition(position);
+        m_footerMover.SetPosition(position == EBattlePosition.Front ? ECardinalPosition.Left : ECardinalPosition.Right);
         m_positionText.text = isFront ? FRONT_TEXT : BACK_TEXT;
         m_positionText.color = isFront ? m_frontTextColor : m_backTextColor;
     }

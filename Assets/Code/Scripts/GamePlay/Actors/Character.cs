@@ -32,7 +32,7 @@ public class Character
     private List<Archetype> m_availableArchetypes = new List<Archetype>();
 
     [SerializeField]
-    private EBattlePosition m_battlePosition = EBattlePosition.Front;
+    private EBattlePosition m_battlePosition;
 
     private CharacterSheet m_characterBase;
 
@@ -57,6 +57,7 @@ public class Character
         m_name = sheet.Name;
         m_stats = sheet.Stats;
         m_characterType = sheet.CharacterType;
+        m_battlePosition = m_characterType == ECharacterType.Guide ? EBattlePosition.Undetermined : EBattlePosition.Front;
         ApplyStats();
 
         HP.OnEmpty += HandleOnHealthEmpty;

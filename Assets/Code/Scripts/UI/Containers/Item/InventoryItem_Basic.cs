@@ -81,6 +81,7 @@ public class InventoryItem_Basic : InventoryItemUI
     public override void SetAsSelectable(bool usable)
     {
         m_alphaGroup.alpha = usable ? USABLE_ALPHA : UNUSABLE_ALPHA;
+        base.SetAsSelectable(usable);
     }
 
     private void DisplayItemData(Item item)

@@ -16,10 +16,7 @@ public class CharacterBanner_Items : CharacterBanner
     private ResourceBar m_characterHp, m_characterMp;
 
     [SerializeField]
-    private GameObject m_guideOverlay, m_deathIcon, m_characterTypeContent, m_bg;
-
-    [SerializeField]
-    private GameObject[] m_contentOnSelectedOnly;
+    private GameObject m_guideOverlay, m_deathIcon, m_characterTypeContent;
    
     [SerializeField]
     private UIEffect[] m_healEffect;
@@ -55,16 +52,6 @@ public class CharacterBanner_Items : CharacterBanner
     }
 
     #region Selectable Logic
-    public override void SetAsSelected(bool value)
-    {
-        m_contentOnSelectedOnly.ForEach(x => x.SetActive(value));
-    }
-
-    public override void SetAsSelectable(bool selectable)
-    {
-        m_bg.SetActive(!selectable);
-    }
-
     public override void PauseSelection()
     {
         

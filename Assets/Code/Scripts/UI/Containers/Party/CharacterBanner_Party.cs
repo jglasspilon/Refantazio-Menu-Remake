@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class CharacterBanner_Party : CharacterBanner
@@ -13,13 +14,13 @@ public class CharacterBanner_Party : CharacterBanner
     private ResourceBar m_characterHp, m_characterMp, m_characterExp;
 
     [SerializeField]
-    private GameObject m_deathIcon, m_characterTypeContent, m_bg;
+    private GameObject m_deathIcon, m_characterTypeContent;
 
     [SerializeField]
-    private GameObject[] m_contentOnSelectedOnly;
+    private LeftRightMover m_positionMover;
 
     [SerializeField]
-    private FrontBackMover m_positionMover;
+    private GameObject m_frontContent, m_backContent;
    
     [SerializeField]
     private UIEffect[] m_healEffect;
@@ -38,13 +39,13 @@ public class CharacterBanner_Party : CharacterBanner
         m_characterExp.Initialize(character.Exp);
         m_character.OnTypeChange += DisplayCharacterType;
         m_character.OnDeath += DisplayDeathIcon;
-        m_character.OnBattlePositionChange += m_positionMover.SetPosition;
+        m_character.OnBattlePositionChange += DisplayPosition;
 
         m_positionMover.SetEnable(character.CharacterType != ECharacterType.Guide);
-        m_positionMover.SetPosition(character.BattlePosition);
         DisplayCharacterType(character.CharacterType);
         DisplayCharacterName(character.Name);
         DisplayDeathIcon(character.IsDead);
+        DisplayPosition(character.BattlePosition);
         DisplayLevel(character.Stats.Level.Value);
         SetAsSelected(false);
     }
@@ -53,31 +54,12 @@ public class CharacterBanner_Party : CharacterBanner
     {
         m_character.OnTypeChange -= DisplayCharacterType;
         m_character.OnDeath -= DisplayDeathIcon;
-        m_character.OnBattlePositionChange -= m_positionMover.SetPosition;
+        m_character.OnBattlePositionChange -= DisplayPosition;
         m_characterHp.Unbind();
         m_characterMp.Unbind();
         m_characterExp.Unbind();
         base.ResetForPool();
     }
-
-    #region Selectable Logic
-    public override void SetAsSelected(bool value)
-    {
-        m_positionMover.SetAsSelected(value);
-        m_contentOnSelectedOnly.ForEach(x => x.SetActive(value));
-        m_bg.SetActive(!value);
-    }
-
-    public override void SetAsSelectable(bool selectable)
-    {
-        
-    }
-
-    public override void PauseSelection()
-    {
-        
-    }
-    #endregion
 
     #region Display Logic
     private void DisplayCharacterType(ECharacterType characterType)
@@ -100,6 +82,13 @@ public class CharacterBanner_Party : CharacterBanner
     private void DisplayDeathIcon(bool isDead)
     {
         m_deathIcon.SetActive(isDead);
+    }
+
+    private void DisplayPosition(EBattlePosition position)
+    {
+        m_positionMover.SetPosition(position == EBattlePosition.Front ? ECardinalPosition.Left : ECardinalPosition.Right);
+        m_frontContent.SetActive(position == EBattlePosition.Front);
+        m_backContent.SetActive(position == EBattlePosition.Back); 
     }
 
     private void DisplayLevel(int level)

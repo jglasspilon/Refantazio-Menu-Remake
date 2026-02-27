@@ -2,19 +2,18 @@ using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
 
-public class FrontBackMover : MonoBehaviour
+public class LeftRightMover : MonoBehaviour
 {
     [SerializeField]
     private bool m_enabledByDefault;
 
     [SerializeField]
-    protected Vector2 m_frontPosition, m_backPosition;
+    protected Vector2 m_leftPosition, m_rightPosition;
 
     [SerializeField]
     protected AnimationCurveAsset m_curve;
 
     protected bool m_isEnabled;
-    protected EBattlePosition m_position = EBattlePosition.Undetermined;
     protected CancellationTokenSource cts;
 
     private void Awake()
@@ -27,20 +26,15 @@ public class FrontBackMover : MonoBehaviour
         m_isEnabled = enabled;
 
         if(!enabled)
-            transform.localPosition = m_frontPosition;
+            transform.localPosition = m_leftPosition;
     }
 
-    public virtual void SetAsSelected(bool isSelected)
-    {
-
-    }
-
-    public virtual void SetPosition(EBattlePosition position)
+    public virtual void SetPosition(ECardinalPosition position)
     {
         if (!m_isEnabled)
             return;
 
-        Vector2 targetPosition = position == EBattlePosition.Front ? m_frontPosition : m_backPosition;
+        Vector2 targetPosition = position == ECardinalPosition.Left ? m_leftPosition : m_rightPosition;
 
         cts?.Cancel();
         cts = new CancellationTokenSource();

@@ -1,10 +1,13 @@
+using System;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public abstract class CharacterBanner : PoolableObjectFromData<Character>, ISelectable
-{    
+{
+    public event Action<bool> OnSetAsSelected, OnSetAsSelectable;
     protected Character m_character;
 
     public Character Character {  get { return m_character; } }
@@ -20,8 +23,19 @@ public abstract class CharacterBanner : PoolableObjectFromData<Character>, ISele
         m_character = null;
     }
 
-    public abstract void SetAsSelected(bool value);
-    public abstract void SetAsSelectable(bool selectable);
-    public abstract void PauseSelection();
+    public virtual void SetAsSelectable(bool selectable)
+    {
+        OnSetAsSelectable?.Invoke(selectable);
+    }
+
+    public virtual void SetAsSelected(bool value)
+    {
+        OnSetAsSelected?.Invoke(value);
+    }
+    
+    public virtual void PauseSelection()
+    {
+
+    }
 }
 

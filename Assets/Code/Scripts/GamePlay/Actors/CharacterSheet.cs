@@ -168,6 +168,9 @@ public class Level
 
     private void SetLevel(int level)
     {
+        if (m_expCurve == null)
+            return;
+
         level = Mathf.Clamp(level, 1, 99);
         m_exp = new Resource((int)m_expCurve.Evaluate(level));
         m_value = level;

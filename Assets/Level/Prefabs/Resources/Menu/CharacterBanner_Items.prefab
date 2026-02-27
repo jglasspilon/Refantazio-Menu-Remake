@@ -436,11 +436,6 @@ MonoBehaviour:
   m_guideOverlay: {fileID: 5739466705824899935}
   m_deathIcon: {fileID: 1579563736115664958}
   m_characterTypeContent: {fileID: 7569013372795583769}
-  m_bg: {fileID: 6671898107548629038}
-  m_contentOnSelectedOnly:
-  - {fileID: 7980031012877592891}
-  - {fileID: 3227049567362980325}
-  - {fileID: 5274168504221626049}
   m_healEffect:
   - {fileID: 438816018319554197}
   - {fileID: 2006809642906468755}
@@ -639,6 +634,7 @@ GameObject:
   - component: {fileID: 2791493787366173319}
   - component: {fileID: 3335541666103262692}
   - component: {fileID: 4679204282351331976}
+  - component: {fileID: 2688815530503433891}
   m_Layer: 5
   m_Name: HP
   m_TagString: Untagged
@@ -765,6 +761,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2688815530503433891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3227049567362980325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a4def8486714c46b9db0aa6fce1035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShowOnSelected
+  m_invert: 0
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
 --- !u!1 &3604522987155345425
 GameObject:
   m_ObjectHideFlags: 0
@@ -1469,6 +1479,7 @@ GameObject:
   - component: {fileID: 827201510521330075}
   - component: {fileID: 7303829488756869301}
   - component: {fileID: 6646369747116534415}
+  - component: {fileID: 5452507538682037333}
   m_Layer: 5
   m_Name: MP
   m_TagString: Untagged
@@ -1595,6 +1606,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5452507538682037333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5274168504221626049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a4def8486714c46b9db0aa6fce1035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShowOnSelected
+  m_invert: 0
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
 --- !u!1 &5367669844774591301
 GameObject:
   m_ObjectHideFlags: 0
@@ -2216,6 +2241,7 @@ GameObject:
   - component: {fileID: 1411252882686421834}
   - component: {fileID: 7965606806666758360}
   - component: {fileID: 6799897003047315889}
+  - component: {fileID: 652884634635543614}
   m_Layer: 5
   m_Name: Bg
   m_TagString: Untagged
@@ -2280,6 +2306,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &652884634635543614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6671898107548629038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07c66daba85b6984495a8da36d400b67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShowOnSelectable
+  m_invert: 1
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
 --- !u!1 &6725673715600446470
 GameObject:
   m_ObjectHideFlags: 0
@@ -2664,13 +2704,14 @@ GameObject:
   - component: {fileID: 3861798727819003971}
   - component: {fileID: 7729557189926671021}
   - component: {fileID: 8667668337753861609}
+  - component: {fileID: 3184343696122090956}
   m_Layer: 5
   m_Name: SelectionSplotch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8006887989142540952
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2745,6 +2786,20 @@ MonoBehaviour:
   - {fileID: 207679703, guid: bf2f22a899de8e747b3e8b8f4b97a71f, type: 3}
   - {fileID: 357619065, guid: bf2f22a899de8e747b3e8b8f4b97a71f, type: 3}
   m_cycleDuration: 0.15
+--- !u!114 &3184343696122090956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7980031012877592891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a4def8486714c46b9db0aa6fce1035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShowOnSelected
+  m_invert: 0
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
 --- !u!1 &8828422873002030937
 GameObject:
   m_ObjectHideFlags: 0
