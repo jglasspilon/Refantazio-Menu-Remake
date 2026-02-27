@@ -54,6 +54,7 @@ public class PartyHeadshotDisplay : MonoBehaviour
         if (m_partyData.TryGetActivePartyMember(m_slotIndex, out m_character))
         {
             m_character.OnBattlePositionChange += HandleOnPositionChange;
+            HandleOnPositionChange(m_character.BattlePosition);
             ShowCharacter();
             return;
         }

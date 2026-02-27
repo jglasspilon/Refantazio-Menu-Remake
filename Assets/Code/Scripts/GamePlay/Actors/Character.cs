@@ -37,6 +37,7 @@ public class Character
     private CharacterSheet m_characterBase;
 
     public string ID => m_characterBase.ID;
+    public bool IsValid => m_characterBase != null;
     public ECharacterType CharacterType => m_characterType;
     public string Name => m_characterBase.Name;
     public Mesh Mesh => m_characterBase.Mesh;

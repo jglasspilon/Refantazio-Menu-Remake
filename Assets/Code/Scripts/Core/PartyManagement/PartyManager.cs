@@ -3,7 +3,7 @@ using UnityEngine;
 public class PartyManager : MonoBehaviour
 {
     [SerializeField]
-    private PartyData m_partyData = new PartyData();
+    private PartyData m_partyData;
 
     [SerializeField]
     private CharacterSheet[] m_starterCharacters;
@@ -11,8 +11,12 @@ public class PartyManager : MonoBehaviour
     [SerializeField]
     private CharacterSheet m_guideCharacter;
 
+    [SerializeField]
+    private LoggingProfile m_logProfile;
+
     private void Awake()
     {
+        m_partyData = new PartyData(m_logProfile);
         ObjectResolver.Instance.Register(m_partyData);      
     }
 

@@ -1,6 +1,6 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -10,27 +10,24 @@ public class PartyData: IDisposable
     public event Action OnAnyPartyMemberUpdated, OnAnyActivePartyMemberUpdated;
 
     [SerializeField]
-    private LoggingProfile m_logProfile;
-
-    [SerializeField]
     private List<Character> m_orderedParty = new List<Character>();
 
     [SerializeField]
-    private List<Character> m_orderedActiveParty = new List<Character>();
+    private Character[] m_activeParty;
 
     private Dictionary<string, Character> m_party = new Dictionary<string, Character>();
-    private Dictionary<string, Character> m_activeParty = new Dictionary<string, Character>();   
     private Character m_guide;
-
     private bool m_partyMemberUpdate, m_activePartyMemberUpdate, m_isDirty;
-    private const int ACTIVE_PARTY_LIMIT = 4;
+    private LoggingProfile m_logProfile;
 
-    public bool ActivePartyFull { get { return m_activeParty.Count >= 4; } }
+    public bool ActivePartyFull { get { return !m_activeParty.Any(x => x == null || !x.IsValid); } }
     public Character Guide { get { return m_guide; } }
 
-    public PartyData()
+    public PartyData(LoggingProfile logProfile)
     {
+        m_logProfile = logProfile;
         LateFrameTicker.OnLateTick += Flush;
+        m_activeParty = new Character[] { null, null, null, null };
     }
 
     public void Dispose()
@@ -48,11 +45,6 @@ public class PartyData: IDisposable
         result.AddRange(m_orderedParty);
         result.Add(m_guide);
         return result.ToArray();
-    }
-
-    public Character[] GetAllActivePartyMembers()
-    {
-        return m_orderedActiveParty.ToArray();
     }
 
     public bool TryGetPartyMember(string id, out Character character)
@@ -89,34 +81,41 @@ public class PartyData: IDisposable
 
     public bool TryGetActivePartyMember(string id, out Character character)
     {
+        character = null;
+
         if (id == null)
         {
             Logger.LogError($"Failed to return active party member, null id was provided.", m_logProfile);
-            character = null;
             return false;
         }
 
-        if (!m_activeParty.TryGetValue(id, out character))
+        for(int i = 0; i < m_activeParty.Length; i++)
         {
-            Logger.LogError($"Failed to return active party member, provided character id '{id}' was not recognized in active party.", m_logProfile);
-            character = null;
-            return false;
+            Character charInSlot = m_activeParty[i];
+            if (charInSlot == null || !charInSlot.IsValid)
+                continue;
+
+            if(charInSlot.ID == id)
+            {
+                character = charInSlot;
+                return true;
+            }
         }
 
-        return true;
+        return false;
     }
 
     public bool TryGetActivePartyMember(int index, out Character character)
     {
-        if (index >= m_activeParty.Count || index < 0)
+        if (index >= m_activeParty.Length || index < 0)
         {
             Logger.LogError($"Failed to return party member from active party at index '{index}'. Index is out of bounds.", m_logProfile);
             character = null;
             return false;
         }
 
-        character = GetAllActivePartyMembers()[index];
-        return true;
+        character = m_activeParty[index];
+        return character != null && character.IsValid;
     }
 
     public void AddPartyMember(Character newPartyMember)
@@ -167,7 +166,7 @@ public class PartyData: IDisposable
         Logger.Log($"removed {partyMember.Name} from party.", m_logProfile);
         OnPartyChanged?.Invoke();
 
-        if(m_activeParty.ContainsKey(partyMember.ID))
+        if(TryGetActivePartyMember(partyMember.ID, out Character character))
         {
             RemoveActivePartyMember(partyMember);
         }
@@ -181,25 +180,66 @@ public class PartyData: IDisposable
             return;
         }
 
-        if (m_activeParty.ContainsKey(newActivePartyMember.ID))
+        if (TryGetActivePartyMember(newActivePartyMember.ID, out Character character))
         {
             Logger.LogError($"Failed adding new active party member '{newActivePartyMember.Name}'. Adding duplicate party members is not allowed.", m_logProfile);
             return;
         }
 
-        if (m_activeParty.Count >= ACTIVE_PARTY_LIMIT)
+        if (ActivePartyFull)
         {
-            Logger.Log($"Didn't add {newActivePartyMember.Name} to active party. Party limit of {ACTIVE_PARTY_LIMIT} already reached.", m_logProfile);
+            Logger.Log($"Didn't add {newActivePartyMember.Name} to active party. Party limit of 4 already reached.", m_logProfile);
             return;
+        }
+
+        int slot = FindFirstEmptySlotInActiveParty();
+        newActivePartyMember.OnCharacterUpdated += HandleOnActivePartyMemberStatUpdate;
+        newActivePartyMember.SetCharacterToActiveParty();
+        m_activeParty[slot] = newActivePartyMember;
+        Logger.Log($"Added {newActivePartyMember.Name} to active party.", m_logProfile);
+        OnActivePartyChanged?.Invoke();
+    }
+
+    public void ReplaceActivePartyMemberAtSlot(Character newActivePartyMember, int slot)
+    {
+        if (newActivePartyMember == null)
+        {
+            Logger.LogError($"Replacing active party member with null is not allowed.", m_logProfile);
+            return;
+        }
+
+        if (TryGetActivePartyMember(newActivePartyMember.ID, out Character character))
+        {
+            Logger.LogError($"Failed replacing active party member with '{newActivePartyMember.Name}'. Adding duplicate party members is not allowed.", m_logProfile);
+            return;
+        }
+
+        slot = Mathf.Clamp(slot, 0, m_activeParty.Length - 1);
+        Character characterInSlot = m_activeParty[slot];
+
+        if(characterInSlot != null && characterInSlot.IsValid)
+        {
+            characterInSlot.OnCharacterUpdated -= HandleOnActivePartyMemberStatUpdate;
+            characterInSlot.RemoveCharacterFromActiveParty();
         }
 
         newActivePartyMember.OnCharacterUpdated += HandleOnActivePartyMemberStatUpdate;
         newActivePartyMember.SetCharacterToActiveParty();
-        m_activeParty.Add(newActivePartyMember.ID, newActivePartyMember);
-        m_orderedActiveParty.Add(newActivePartyMember);
+        m_activeParty[slot] = newActivePartyMember;
+    }
 
-        Logger.Log($"Added {newActivePartyMember.Name} to active party.", m_logProfile);
-        OnActivePartyChanged?.Invoke();
+    private int FindFirstEmptySlotInActiveParty()
+    {
+        for (int i = 0; i < m_activeParty.Length; i++)
+        {
+            Character charInSlot = m_activeParty[i];
+            if (charInSlot != null && charInSlot.IsValid)
+                continue;
+
+            return i;
+        }
+
+        return - 1;
     }
 
     public void RemoveActivePartyMember(Character activePartyMember)
@@ -210,19 +250,34 @@ public class PartyData: IDisposable
             return;
         }
 
-        if (!m_activeParty.ContainsKey(activePartyMember.ID))
+        if (!TryGetActivePartyMember(activePartyMember.ID, out Character character))
         {
             Logger.LogError($"Failed removing party member '{activePartyMember.Name}'. Party member not found.", m_logProfile);
             return;
         }
 
+        int slot = FindSlotForCharacterInActiveParty(activePartyMember);
         activePartyMember.OnCharacterUpdated -= HandleOnActivePartyMemberStatUpdate;
         activePartyMember.RemoveCharacterFromActiveParty();
-        m_activeParty.Remove(activePartyMember.ID);
-        m_orderedActiveParty.Remove(activePartyMember);
+        m_activeParty[slot] = null;
 
         Logger.Log($"removed {activePartyMember.Name} from active party.", m_logProfile);
         OnActivePartyChanged?.Invoke();
+    }
+
+    private int FindSlotForCharacterInActiveParty(Character character)
+    {
+        for (int i = 0; i < m_activeParty.Length; i++)
+        {
+            Character charInSlot = m_activeParty[i];
+            if (charInSlot == null || !charInSlot.IsValid)
+                continue;
+
+            if (charInSlot.ID == character.ID)
+                return i;
+        }
+
+        return -1;
     }
 
     public void InitializeGuide(CharacterSheet guide)
