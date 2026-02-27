@@ -58,6 +58,7 @@ public class InventoryItem_Equipment : InventoryItemUI
         DisplayStatsData(weapon);
         DisplayEffectsData(weapon);
         SetAsSelectable(entry.Item is not UsableItem usable || !usable.BattleOnly);
+        SetAsSelected(false);
         m_inventoryEntry.OnAmountChanged += DisplayCount;
         m_inventoryEntry.OnMarkAsSeen += DisplayAsNew;
     }

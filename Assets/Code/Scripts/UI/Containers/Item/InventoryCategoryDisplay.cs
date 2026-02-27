@@ -17,7 +17,7 @@ public class InventoryCategoryDisplay : MonoBehaviour
     private float m_activeScaleFactor, m_inactiveScaleFactor;
 
     [SerializeField]
-    private GameObject m_isSeenIcon, m_unavailableOverlay;
+    private GameObject m_isSeenIcon, m_unavailableOverlay, m_label;
 
     [SerializeField]
     private InventoryCategoryCycler m_categroyCycler;
@@ -55,6 +55,7 @@ public class InventoryCategoryDisplay : MonoBehaviour
         float scaleFactor = isSelected ? m_activeScaleFactor : m_inactiveScaleFactor;
         m_categoryIcon.sprite = isSelected ? m_activeSprite : m_inactiveSprite;
         m_categoryIcon.transform.localScale = Vector3.one * scaleFactor;
+        m_label.SetActive(isSelected);
     }
 
     private void DisplayUnseenIcon(EItemCategories isSeenCategory)

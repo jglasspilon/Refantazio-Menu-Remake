@@ -47,6 +47,7 @@ public class InventoryItem_Basic : InventoryItemUI
         DisplayCount(entry.Count);
         DisplayAsNew(entry);
         SetAsSelectable(entry.Item is not UsableItem usable || !usable.BattleOnly);
+        SetAsSelected(false);
         m_inventoryEntry.OnAmountChanged += DisplayCount;
         m_inventoryEntry.OnMarkAsSeen += DisplayAsNew;
     }
