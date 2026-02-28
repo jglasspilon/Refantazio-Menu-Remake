@@ -17,6 +17,7 @@ public abstract class MenuPage : MonoBehaviour
     protected LoggingProfile m_logProfile;
 
     protected Stack<PageSection> m_breadcrumb = new Stack<PageSection>(); 
+    protected List<PageSection> m_sectionsToReset = new List<PageSection>();
     public EMenuPages PageName => m_pageName;
     public int PageCount { get; private set; }
 
@@ -46,6 +47,7 @@ public abstract class MenuPage : MonoBehaviour
         m_anim.SetBool("IsActive", false);
         await Helper.Animation.WaitForCurrentPageAnimationToEnd(m_anim);
 
+        ResetSections();
         gameObject.SetActive(false);
         Logger.Log($"Menu page '{PageName}' closed successfully.", gameObject, m_logProfile);
         OnClosed?.Invoke();
@@ -56,6 +58,7 @@ public abstract class MenuPage : MonoBehaviour
         if (m_anim.isActiveAndEnabled)
             m_anim.SetBool("IsActive", false);
 
+        ResetSections();
         gameObject.SetActive(false);
         Logger.Log($"Menu page {PageName} closed successfully.", gameObject, m_logProfile);
     }
@@ -84,6 +87,11 @@ public abstract class MenuPage : MonoBehaviour
 
         m_breadcrumb.Push(section);
         section.EnterSection();
+
+        if (m_sectionsToReset.Contains(section))
+            return;
+
+        m_sectionsToReset.Add(section);
     }
 
     public virtual bool TryExitCurrentSection()
@@ -102,6 +110,16 @@ public abstract class MenuPage : MonoBehaviour
         }
        
         return false;
+    }
+
+    protected virtual void ResetSections()
+    {
+        foreach (PageSection section in m_sectionsToReset)
+        {
+            section.ResetSection();
+        }
+
+        m_sectionsToReset.Clear();
     }
     #endregion
 

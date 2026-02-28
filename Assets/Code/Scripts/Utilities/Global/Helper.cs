@@ -1,7 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public static class Helper
 {
@@ -38,7 +40,36 @@ public static class Helper
         {
             await UniTask.NextFrame();
             await Timing.DelaySeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-        }        
+        }
+
+        public static async UniTask ApplyAlphaToGraphicFromCurve(MaskableGraphic graphic, Color color, AnimationCurve curve, CancellationToken token)
+        {
+            float duration = curve.GetDuration();
+            float timer = 0f;
+
+            while (timer < duration)
+            {
+                Color alphaed = color;
+                alphaed.a = curve.Evaluate(timer);
+                graphic.color = alphaed;
+
+                await UniTask.Yield(PlayerLoopTiming.Update, token);
+                timer += Time.deltaTime;
+            }
+        }
+
+        public static async UniTask ApplyAlphaToCanvasGroupFromCurve(CanvasGroup group, AnimationCurve curve, CancellationToken token)
+        {
+            float duration = curve.GetDuration();
+            float timer = 0f;
+
+            while (timer < duration)
+            {
+                group.alpha = curve.Evaluate(timer);
+                await UniTask.Yield(PlayerLoopTiming.Update, token);
+                timer += Time.deltaTime;
+            }
+        }
     }
 
     public static class Timing

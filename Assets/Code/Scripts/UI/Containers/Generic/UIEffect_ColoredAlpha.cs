@@ -1,7 +1,5 @@
 using Cysharp.Threading.Tasks;
-using System.Collections;
 using System.Threading;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,19 +55,7 @@ public class UIEffect_ColoredAlpha : UIEffect
 
     private async UniTask ApplyAlphaFromCurve(CancellationToken token)
     {
-        float duration = m_alphaCurve.GetDuration();
-        float timer = 0f;
-
-        while(timer < duration)
-        {
-            Color alphaed = m_effectColor;
-            alphaed.a = m_alphaCurve.Evaluate(timer);
-            m_appliedTo.color = alphaed;
-
-            await UniTask.Yield(PlayerLoopTiming.Update, token);
-            timer += Time.deltaTime;
-        }
-
-        m_appliedTo.color = m_originalColor;
+        await Helper.Animation.ApplyAlphaToGraphicFromCurve(m_appliedTo, m_effectColor, m_alphaCurve.Curve, token);
+        m_appliedTo.color = m_originalColor; 
     }
 }

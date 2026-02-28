@@ -50,7 +50,5 @@ public class AnimatedMover : MonoBehaviour
             await UniTask.Yield(PlayerLoopTiming.Update, token);
             timer += Time.deltaTime;
         }
-
-        transform.localPosition = new Vector2(endX, endY);
     }
 }
