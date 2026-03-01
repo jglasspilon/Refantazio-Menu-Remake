@@ -30,20 +30,29 @@ public class CharacterBanner_Items : CharacterBanner
     public override void InitializeFromData(Character character)
     {
         base.InitializeFromData(character);
-        m_characterHp.Initialize(character.HP);
-        m_characterMp.Initialize(character.MP);
-        m_character.OnTypeChange += DisplayCharacterType;
-        m_character.OnDeath += DisplayDeathIcon;
-
         DisplayCharacterType(character.CharacterType);
         DisplayCharacterName(character.Name);
         DisplayBannerSprite(character.Banner);
         DisplayDeathIcon(character.IsDead);
         SetAsSelected(false);
+
+        if (character.CharacterType == ECharacterType.Guide)
+            return;
+
+        m_characterHp.Initialize(character.HP);
+        m_characterMp.Initialize(character.MP);
+        m_character.OnTypeChange += DisplayCharacterType;
+        m_character.OnDeath += DisplayDeathIcon;
     }
 
     public override void ResetForPool()
     {
+        if (Character.CharacterType == ECharacterType.Guide)
+        {
+            base.ResetForPool();
+            return;
+        }
+
         m_character.OnTypeChange -= DisplayCharacterType;
         m_character.OnDeath -= DisplayDeathIcon;
         m_characterHp.Unbind();
@@ -65,7 +74,7 @@ public class CharacterBanner_Items : CharacterBanner
         string output = $"{typeString.Substring(0,1)}<size=50%>{typeString.Substring(1)}";
         m_characterTypeText.text = output;
 
-        m_characterTypeContent.SetActive(characterType == ECharacterType.Leader || characterType == ECharacterType.Party);
+        m_characterTypeContent.SetActive(characterType == ECharacterType.Leader || characterType == ECharacterType.Party || characterType == ECharacterType.Guide);
         m_characterHp.gameObject.SetActive(characterType != ECharacterType.Guide);
         m_characterMp.gameObject.SetActive(characterType != ECharacterType.Guide);
         m_guideOverlay.SetActive(characterType == ECharacterType.Guide);

@@ -1,8 +1,5 @@
-using System.Linq;
-using System.Threading;
 using TMPro;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class CharacterBanner_Party : CharacterBanner
@@ -37,15 +34,6 @@ public class CharacterBanner_Party : CharacterBanner
     public override void InitializeFromData(Character character)
     {
         base.InitializeFromData(character);
-        m_characterHp.Initialize(character.HP);
-        m_characterMp.Initialize(character.MP);
-        m_characterExp.Initialize(character.Exp);
-        m_character.OnTypeChange += DisplayCharacterType;
-        m_character.OnDeath += DisplayDeathIcon;
-        m_character.OnBattlePositionChange += DisplayPosition;
-        m_character.OnArchetypeChange += DisplayArchetype;
-        m_character.OnLevelChange += DisplayLevel;
-
         m_positionMover.SetEnable(character.CharacterType != ECharacterType.Guide);
         DisplayCharacterType(character.CharacterType);
         DisplayCharacterName(character.Name);
@@ -54,10 +42,28 @@ public class CharacterBanner_Party : CharacterBanner
         DisplayLevel(character.Level.Value, 0);
         DisplayArchetype(character.EquipedArchetype);
         SetAsSelected(false);
+
+        if (character.CharacterType == ECharacterType.Guide)
+            return;
+
+        m_characterHp.Initialize(character.HP);
+        m_characterMp.Initialize(character.MP);
+        m_characterExp.Initialize(character.Exp);
+        m_character.OnTypeChange += DisplayCharacterType;
+        m_character.OnDeath += DisplayDeathIcon;
+        m_character.OnBattlePositionChange += DisplayPosition;
+        m_character.OnArchetypeChange += DisplayArchetype;
+        m_character.OnLevelChange += DisplayLevel;
     }
 
     public override void ResetForPool()
     {
+        if (Character.CharacterType == ECharacterType.Guide)
+        {
+            base.ResetForPool();
+            return;
+        }
+
         m_character.OnTypeChange -= DisplayCharacterType;
         m_character.OnDeath -= DisplayDeathIcon;
         m_character.OnBattlePositionChange -= DisplayPosition;

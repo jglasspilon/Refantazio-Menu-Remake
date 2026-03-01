@@ -10,6 +10,11 @@ public class CharacterSelectionSection_Party : CharacterSelectionSection, IHandl
         ECharacterType selectedType = selectedCharacter.CharacterType;
         ECharacterType targetType = selectedType == ECharacterType.Party ? ECharacterType.Reserve : ECharacterType.Party;
 
+        if(selectedType == ECharacterType.Guide)
+        {
+            return;
+        }
+
         if(selectedType == ECharacterType.Leader)
         {
             //TODO: play modal to display system message can't change leader
