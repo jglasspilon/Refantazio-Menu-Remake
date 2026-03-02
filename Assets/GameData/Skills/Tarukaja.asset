@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2fb54320a03d441bf5f167ce8248fe, type: 3}
+  m_Name: Tarukaja
+  m_EditorClassIdentifier: Assembly-CSharp::Skill
+  m_name: Tarukaja
+  m_skillType: 1
+  m_icon: {fileID: 2118336916, guid: 0b085ec75e4708147bfae16742860276, type: 3}
+  m_description: Increases one ally's Attack for 3 turns.
+  m_manaCost: 8
+  m_targetingType: 0
+  m_battleOnly: 1
+  m_effects: []

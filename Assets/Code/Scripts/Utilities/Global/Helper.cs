@@ -53,7 +53,7 @@ public static class Helper
                 alphaed.a = curve.Evaluate(timer);
                 graphic.color = alphaed;
 
-                await UniTask.Yield(PlayerLoopTiming.Update, token);
+                await UniTask.Yield(PlayerLoopTiming.Update, token).SuppressCancellationThrow();
                 timer += Time.deltaTime;
             }
         }
@@ -66,7 +66,7 @@ public static class Helper
             while (timer < duration)
             {
                 group.alpha = curve.Evaluate(timer);
-                await UniTask.Yield(PlayerLoopTiming.Update, token);
+                await UniTask.Yield(PlayerLoopTiming.Update, token).SuppressCancellationThrow();
                 timer += Time.deltaTime;
             }
         }
@@ -74,9 +74,9 @@ public static class Helper
 
     public static class Timing
     {
-        public static async UniTask DelaySeconds(float seconds)
+        public static UniTask DelaySeconds(float seconds, bool ignoreTimeScale = false)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(seconds), ignoreTimeScale: false);
+            return UniTask.Delay(TimeSpan.FromSeconds(seconds), ignoreTimeScale);
         }
     }
 

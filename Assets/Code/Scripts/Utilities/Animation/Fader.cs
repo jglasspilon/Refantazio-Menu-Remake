@@ -56,6 +56,23 @@ public class Fader : MonoBehaviour
         }
     }
 
+    public void ResetFader(bool visible)
+    {
+        if (m_graphic != null)
+        {
+            Color color = m_graphic.color;
+            color.a = visible ? 1 : 0;
+
+            m_graphic.color = color;
+            return;
+        }
+
+        if(m_canvasGroup != null)
+        {
+            m_canvasGroup.alpha = visible ? 1 : 0;
+        }
+    }
+
     private async UniTask FadeGraphic(AnimationCurve curve)
     {
         cts?.Cancel();

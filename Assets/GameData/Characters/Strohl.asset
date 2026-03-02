@@ -76,5 +76,5 @@ MonoBehaviour:
   m_startingSkills: []
   m_profileIcon: {fileID: -1811616138, guid: ad2202cadb0480543807b54952da6334, type: 3}
   m_bannerIcon: {fileID: -1267342777, guid: f895790a5f7cbc04a906e42db2c954aa, type: 3}
-  m_armIcon: {fileID: 0}
+  m_armIcon: {fileID: 1262154185, guid: f5b362e1af057e94988533c485eb38f8, type: 3}
   m_mesh: {fileID: 0}

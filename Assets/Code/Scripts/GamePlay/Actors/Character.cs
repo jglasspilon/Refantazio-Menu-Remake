@@ -57,6 +57,7 @@ public class Character
     public Archetype EquipedArchetype => m_equipedArchetype;
     public bool IsDead => m_health.Current == 0 && m_health.Max > 0;
     public EBattlePosition BattlePosition => m_battlePosition;
+    public Skill[] Skills => m_equipedArchetype?.GetAvailableSkills() ?? Array.Empty<Skill>();
 
     #region Life Cycle Functions
     public Character(CharacterSheet sheet)
@@ -69,8 +70,11 @@ public class Character
         m_battlePosition = m_characterType == ECharacterType.Guide ? EBattlePosition.Undetermined : EBattlePosition.Front;
         ApplyStats();
 
-        if(m_characterBase.StartingArchetype != null)
+        if (m_characterBase.StartingArchetype != null)
+        {
             m_equipedArchetype = new Archetype(m_characterBase.StartingArchetype);
+            m_availableArchetypes.Add(m_equipedArchetype);
+        }
 
         HP.OnEmpty += HandleOnHealthEmpty;
         HP.OnResourceChange += HandleOnHealthChanged;
@@ -145,6 +149,11 @@ public class Character
         OnCharacterUpdated?.Invoke();
     }
 
+    private void HandleLevelChange(int level, int levelDelta)
+    {
+        OnLevelChange?.Invoke(level, levelDelta);
+    }
+
     private void HandleOnHealthEmpty(bool isEmpty)
     {
         OnDeath?.Invoke(isEmpty);
@@ -161,11 +170,6 @@ public class Character
     private void HandleStatUpdate(Stat statChanged)
     {
         OnCharacterUpdated?.Invoke();
-    }
-
-    private void HandleLevelChange(int level, int levelDelta)
-    {
-        OnLevelChange?.Invoke(level, levelDelta);
-    }
+    }    
     #endregion
 }

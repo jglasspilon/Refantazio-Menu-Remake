@@ -14,7 +14,7 @@ public class AnimatedMover : MonoBehaviour
     private float m_startX, m_startY;
     private CancellationTokenSource cts;
 
-    private void Awake()
+    private void OnEnable()
     {
         m_startX = transform.localPosition.x;
         m_startY = transform.localPosition.y;
@@ -34,6 +34,12 @@ public class AnimatedMover : MonoBehaviour
         await LerpPosition(m_startX, m_startY, cts.Token);
     }
 
+    public void ResetMover()
+    {
+        cts?.Cancel();
+        transform.localPosition = new Vector2(m_startX, m_startY);
+    }
+
     private async UniTask LerpPosition(float endX, float endY, CancellationToken token)
     {
         float oldX = transform.localPosition.x;
@@ -47,7 +53,7 @@ public class AnimatedMover : MonoBehaviour
             newPosition.x = Mathf.Lerp(oldX, endX, m_normalizedHorizontalCurve.Evaluate(timer));
             newPosition.y = Mathf.Lerp(oldY, endY, m_normalizedVeritcalCurve.Evaluate(timer));
             transform.localPosition = newPosition;
-            await UniTask.Yield(PlayerLoopTiming.Update, token);
+            await UniTask.Yield(PlayerLoopTiming.Update, token).SuppressCancellationThrow();
             timer += Time.deltaTime;
         }
     }

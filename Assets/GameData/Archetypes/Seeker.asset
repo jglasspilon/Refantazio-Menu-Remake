@@ -15,3 +15,21 @@ MonoBehaviour:
   m_name: Seeker
   m_icon: {fileID: -931081303, guid: 757bc685569f551418ce514f927343c3, type: 3}
   m_mesh: {fileID: 0}
+  m_skillsByRank:
+  - Key: 1
+    Value:
+    - {fileID: 11400000, guid: 3738e2a623e3b4742842797d8acb5476, type: 2}
+    - {fileID: 11400000, guid: 2e4c2af07c4e5434cb24bb855a3fe193, type: 2}
+  - Key: 4
+    Value:
+    - {fileID: 11400000, guid: 29c2ec8ecbaf0c74fa62697d7f717917, type: 2}
+  - Key: 9
+    Value:
+    - {fileID: 11400000, guid: 1ca13063c1899d4429233f8915d2bedb, type: 2}
+  - Key: 15
+    Value:
+    - {fileID: 11400000, guid: 9325d85ba778f6545ba3acfc2f49b1bd, type: 2}
+  - Key: 20
+    Value:
+    - {fileID: 11400000, guid: 3810ef453e883914ba844e2b83a17687, type: 2}
+  m_rankExpCurve: {fileID: 11400000, guid: 43f72f303d3e3e14c89b64dbf9741270, type: 2}
