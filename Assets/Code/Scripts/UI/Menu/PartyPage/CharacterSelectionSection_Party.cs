@@ -5,7 +5,7 @@ public class CharacterSelectionSection_Party : CharacterSelectionSection, IHandl
     public override void OnConfirm()
     {
         base.OnConfirm();
-        PartyData data = ObjectResolver.Instance.Resolve<PartyData>();
+        PartyData data = ObjectResolver.Instance.Resolve((PartyData party) => data = party);
         Character selectedCharacter = SelectedObject.Character;
         ECharacterType selectedType = selectedCharacter.CharacterType;
         ECharacterType targetType = selectedType == ECharacterType.Party ? ECharacterType.Reserve : ECharacterType.Party;

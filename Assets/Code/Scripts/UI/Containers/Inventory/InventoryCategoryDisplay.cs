@@ -26,7 +26,7 @@ public class InventoryCategoryDisplay : MonoBehaviour
 
     private void OnEnable()
     {
-        m_data ??= ObjectResolver.Instance.Resolve<InventoryData>();
+        m_data ??= ObjectResolver.Instance.Resolve((InventoryData inventory) => m_data = inventory);
         m_categroyCycler.OnCategoryChanged += DisplayAsSelected;
         DisplayAsSelected(m_categroyCycler.Category);
 

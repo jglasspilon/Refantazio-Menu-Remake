@@ -34,7 +34,7 @@ public class PartyHeadshotDisplay : MonoBehaviour
 
     private void OnEnable()
     {
-        m_partyData ??= ObjectResolver.Instance.Resolve<PartyData>();
+        m_partyData ??= ObjectResolver.Instance.Resolve((PartyData party) => m_partyData = party);
 
         if (m_partyData == null)
             return;

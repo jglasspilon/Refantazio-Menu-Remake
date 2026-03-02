@@ -111,12 +111,17 @@ public sealed class ObjectResolver
         return false;
     }
 
-    public T Resolve<T>()
+    public T Resolve<T>(Action<T> callback = null)
     {
         Type type = typeof(T);
 
         lock (m_lock)
         {
+            if (callback != null)
+            {
+                RegisterCallback<T>(callback);
+            }
+
             if (m_registry.TryGetValue(type, out var instance))
             {
                 return (T)instance;

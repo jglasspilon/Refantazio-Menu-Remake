@@ -13,8 +13,8 @@ public class SceneLoader : MonoBehaviour
 
     protected virtual void Awake()
     {
-        m_gameStateManagementService = ObjectResolver.Instance.Resolve<IGameStateManagementService>();
-        m_sceneLoaderService = ObjectResolver.Instance.Resolve<ISceneLoaderService>();
+        m_gameStateManagementService = ObjectResolver.Instance.Resolve((IGameStateManagementService newGameStateService) => m_gameStateManagementService = newGameStateService);
+        m_sceneLoaderService = ObjectResolver.Instance.Resolve((ISceneLoaderService newSceneLoaderService) => m_sceneLoaderService = newSceneLoaderService);
         m_sceneLoaderService.RegisterSceneLoader(m_sceneData.Data.SceneName, this);
         Load();
     }

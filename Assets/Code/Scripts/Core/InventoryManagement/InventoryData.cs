@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ public class InventoryData
     public event Action<InventoryEntry> OnItemAdded;
     public event Action<InventoryEntry> OnItemRemoved;
     public event Action<EItemCategories> OnLastMarkUnseen;
+    public event Action<int, int> OnMoneyChanged, OnMaglaChanged;
     
     [SerializeField]
     private List<InventoryEntry> m_orderedEntries = new List<InventoryEntry>();
@@ -16,8 +18,32 @@ public class InventoryData
     [SerializeField]
     private LoggingProfile m_logProfile;
 
+    [SerializeField]
+    private Resource m_money = new Resource();
+
+    [SerializeField]
+    private Resource m_magla = new Resource();
+
     private Dictionary<string, InventoryEntry> m_entries = new Dictionary<string, InventoryEntry>();
+    public int Money => m_money.Current;
+    public int Magla => m_magla.Current;
     
+    public InventoryData()
+    {
+        m_money.OnResourceChange += HandleOnMoneyChanged;
+        m_magla.OnResourceChange += HandleOnMaglaChanged;
+    }
+
+    public void ApplyMoney(int amount)
+    {
+        m_money.Apply(amount);
+    }
+
+    public void ApplyMagla(int amount)
+    {
+        m_magla.Apply(amount);
+    }
+
     public InventoryEntry[] GetAllItems(EItemCategories category)
     {
         if (category == EItemCategories.All)
@@ -73,6 +99,16 @@ public class InventoryData
             OnLastMarkUnseen?.Invoke(category);
         }
     }
+
+    private void HandleOnMoneyChanged(int value, float proportion, int delta)
+    {
+        OnMoneyChanged?.Invoke(value, delta);
+    }
+
+    private void HandleOnMaglaChanged(int value, float proportion, int delta)
+    {
+        OnMaglaChanged?.Invoke(value, delta);
+    }
 }
 
 [Serializable]
@@ -112,5 +148,11 @@ public class InventoryEntry
         m_isNew = false;
         OnMarkAsSeen?.Invoke(this);
     }
+}
+
+public enum ECurrencyType
+{
+    Money, 
+    Magla
 }
 
