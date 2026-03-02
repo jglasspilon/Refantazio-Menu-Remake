@@ -9,17 +9,34 @@ public abstract class CharacterBanner : PoolableObjectFromData<Character>, ISele
 {
     public event Action<bool> OnSetAsSelected, OnSetAsSelectable;
     protected Character m_character;
+    protected IBindableToCharacter[] m_bindables;
 
     public Character Character {  get { return m_character; } }
 
-    public override void InitializeFromData(Character data)
+    private void Awake()
     {
-        m_character = data;
+        m_bindables = GetComponentsInChildren<IBindableToCharacter>(true);
+    }
+
+    public override void InitializeFromData(Character character)
+    {
+        m_character = character;
         transform.localScale = Vector3.one;
+        SetAsSelected(false);
+
+        foreach (IBindableToCharacter bindable in m_bindables)
+        {
+            bindable.BindToCharacter(character);
+        }
     }
 
     public override void ResetForPool()
     {
+        foreach (IBindableToCharacter bindable in m_bindables)
+        {
+            bindable.Unbind();
+        }
+
         m_character = null;
     }
 

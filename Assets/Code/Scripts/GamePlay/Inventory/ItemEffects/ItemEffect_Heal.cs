@@ -13,6 +13,9 @@ public class ItemEffect_Heal : ItemEffect
 
     public override void Apply(Character target)
     {
+        if (target.IsDead) 
+            return;
+
         target.HP.Apply(m_amount);
     }
 }

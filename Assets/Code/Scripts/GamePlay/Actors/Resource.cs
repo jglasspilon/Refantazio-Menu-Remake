@@ -24,15 +24,21 @@ public class Resource
         m_max = max;
     }
 
-    public void SetMax(int newMax, bool fill)
+    public void SetMax(int newMax, EResourceSetProcedure procedure)
     {
         m_current = m_current.Map(0, m_max, 0, newMax);
         m_max = newMax;
 
-        if (fill) 
+        if (procedure == EResourceSetProcedure.Fill) 
         {
             m_current = m_max;
-            OnResourceChange?.Invoke(m_current, CurrentProportion, 0);
+            return;
+        }
+
+        if(procedure == EResourceSetProcedure.Reset)
+        {
+            m_current = 0;
+            return;
         }
     }
 
@@ -54,4 +60,11 @@ public class Resource
             OnEmpty?.Invoke(true);
         }
     }
+}
+
+public enum EResourceSetProcedure
+{
+    Fill,
+    Reset,
+    Keep
 }

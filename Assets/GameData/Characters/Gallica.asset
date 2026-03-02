@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSheet
   m_characterType: 3
   m_name: Gallica
-  m_startingArchetype: {fileID: 11400000, guid: cf348cce9192a7c41815d7cfe5abeb12, type: 2}
+  m_startingArchetype: {fileID: 0}
   m_expCurve: {fileID: 11400000, guid: 4047c5867cc7e6244a3a06ea095cb97a, type: 2}
   m_startingLevel: 1
   m_stats:

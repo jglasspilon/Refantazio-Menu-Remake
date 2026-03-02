@@ -108,7 +108,7 @@ public class Level
     private int m_value = 1;
 
     [SerializeField]
-    private Resource m_exp;
+    private Resource m_exp = new Resource();
 
     public int Value => m_value;
     public Resource Exp => m_exp;
@@ -156,7 +156,8 @@ public class Level
             return;
 
         level = Mathf.Clamp(level, 1, 99);
-        m_exp = new Resource((int)m_expCurve.Evaluate(level));
+        m_exp.SetMax((int)m_expCurve.Evaluate(level), EResourceSetProcedure.Reset);
+        m_exp.Apply(-m_exp.Current);
         m_value = level;
 
         if (m_value == 99)

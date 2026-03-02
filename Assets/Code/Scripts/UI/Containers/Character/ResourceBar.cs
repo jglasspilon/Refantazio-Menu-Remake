@@ -1,10 +1,14 @@
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
-public class ResourceBar : MonoBehaviour
+public class ResourceBar : MonoBehaviour, IBindableToCharacter
 {
+    [SerializeField]
+    private EBindableResource m_resourceType;
+    
     [SerializeField]
     private TextMeshProUGUI m_valueText;
 
@@ -22,20 +26,30 @@ public class ResourceBar : MonoBehaviour
 
     private Resource m_resource;
 
-    public void Initialize(Resource resource)
+    private enum EBindableResource
     {
-        if (m_resource != null)
-            m_resource.OnResourceChange -= Display;
+        Hp,
+        Mp,
+        Exp,
+    }
 
-        m_resource = resource;
-        resource.OnResourceChange += Display;
-        DisplayInstant(resource.Current, resource.CurrentProportion);
+    public void BindToCharacter(Character character)
+    {
+        if (character == null)
+            return;
+
+        m_resource = GetResourceFromCharacter(m_resourceType, character);
+        m_resource.OnResourceChange += Display;
+        DisplayInstant(m_resource.Current, m_resource.CurrentProportion);
     }
 
     public void Unbind()
     {
-        m_resource.OnResourceChange -= Display;
-        m_resource = null;
+        if (m_resource != null)
+        {
+            m_resource.OnResourceChange -= Display;
+            m_resource = null;
+        }       
     }
 
     private void DisplayInstant(int current, float proportion)
@@ -97,5 +111,17 @@ public class ResourceBar : MonoBehaviour
 
         foreach (UIEffect effect in m_damageEffect)
             effect.PlayEffect();
+    }
+
+    private Resource GetResourceFromCharacter(EBindableResource resourceType, Character character)
+    {
+        switch (resourceType)
+        {
+            case EBindableResource.Hp: return character.HP;
+            case EBindableResource.Mp: return character.MP;
+            case EBindableResource.Exp: return character.Exp;
+        }
+
+        return null;
     }
 }

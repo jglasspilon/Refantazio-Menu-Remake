@@ -1,24 +1,14 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class SkillsMenuPage : MenuPage
 {
-    public override void Confirm()
-    {
-        
-    }
+    [SerializeField]
+    private CharacterSelectionSection_Skills m_characterSelectionSection;
 
-    public override void CycleDown()
+    public override UniTask EnterDefaultSection()
     {
-        
-    }
-
-    public override void CycleUp()
-    {
-        
-    }
-
-    public override void ResetPage()
-    {
-        
+        EnterSection(m_characterSelectionSection);
+        return default;
     }
 }

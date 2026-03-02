@@ -34,9 +34,9 @@ public class InventoryTester : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.KeypadPlus))
         {
             if(m_testingMode == EMode.Money)
-                m_inventoryData.ApplyMoney(TEST_AMOUNT);
+                m_inventoryData.Money.Apply(TEST_AMOUNT);
             else
-                m_inventoryData.ApplyMagla(TEST_AMOUNT);
+                m_inventoryData.Magla.Apply(TEST_AMOUNT);
 
             Logger.Log($"Added {TEST_AMOUNT} {m_testingMode}.", gameObject, m_logProfile);
         }
@@ -44,9 +44,9 @@ public class InventoryTester : MonoBehaviour
         if( Input.GetKeyUp(KeyCode.KeypadMinus))
         {
             if (m_testingMode == EMode.Money)
-                m_inventoryData.ApplyMoney(-TEST_AMOUNT);
+                m_inventoryData.Money.Apply(-TEST_AMOUNT);
             else
-                m_inventoryData.ApplyMagla(-TEST_AMOUNT);
+                m_inventoryData.Magla.Apply(-TEST_AMOUNT);
 
             Logger.Log($"Removed {TEST_AMOUNT} {m_testingMode}.", gameObject, m_logProfile);
         }        

@@ -27,13 +27,13 @@ public class CurrencyDisaply : MonoBehaviour
 
         if (m_currenyType == ECurrencyType.Money)
         {
-            m_inventory.OnMoneyChanged += HandleOnCurrencyChanged;
-            HandleOnCurrencyChanged(m_inventory.Money, 0);
+            m_inventory.Money.OnResourceChange += HandleOnCurrencyChanged;
+            HandleOnCurrencyChanged(m_inventory.Money.Current, 0,  0);
         }
         else 
         {
-            m_inventory.OnMaglaChanged += HandleOnCurrencyChanged;
-            HandleOnCurrencyChanged(m_inventory.Magla, 0);
+            m_inventory.Magla.OnResourceChange += HandleOnCurrencyChanged;
+            HandleOnCurrencyChanged(m_inventory.Magla.Current, 0, 0);
         }
     }
 
@@ -46,15 +46,15 @@ public class CurrencyDisaply : MonoBehaviour
 
         if(m_currenyType == ECurrencyType.Money)
         {
-            m_inventory.OnMoneyChanged -= HandleOnCurrencyChanged;
+            m_inventory.Money.OnResourceChange -= HandleOnCurrencyChanged;
         }
         else
         {
-            m_inventory.OnMaglaChanged -= HandleOnCurrencyChanged;
+            m_inventory.Magla.OnResourceChange -= HandleOnCurrencyChanged;
         }
     }
 
-    private void HandleOnCurrencyChanged(int value, int delta)
+    private void HandleOnCurrencyChanged(int value, float proportion, int delta)
     {
         m_text.text = value.ToString();
     }

@@ -67,26 +67,16 @@ public class Character
         m_level = sheet.CreateLevel();
         m_characterType = sheet.CharacterType;
         m_battlePosition = m_characterType == ECharacterType.Guide ? EBattlePosition.Undetermined : EBattlePosition.Front;
-        m_equipedArchetype = new Archetype(m_characterBase.StartingArchetype);
         ApplyStats();
+
+        if(m_characterBase.StartingArchetype != null)
+            m_equipedArchetype = new Archetype(m_characterBase.StartingArchetype);
 
         HP.OnEmpty += HandleOnHealthEmpty;
         HP.OnResourceChange += HandleOnHealthChanged;
         MP.OnResourceChange += HandleOnManaChanged;
         Stats.OnStatChange += HandleStatUpdate;
         Level.OnLevelChange += HandleLevelChange;
-    }
-
-    public void LoadCharacterData(Character data)
-    {
-        if(data == null)
-        {
-            Archetype defaultArchetype = new Archetype(m_characterBase.StartingArchetype);
-            m_availableArchetypes.Add(defaultArchetype);
-            m_equipedArchetype = defaultArchetype;
-        }
-
-        //TODO: load saved character data 
     }
     #endregion
 
@@ -164,8 +154,8 @@ public class Character
     #region Stats Functions
     private void ApplyStats()
     {
-        m_health.SetMax(Stats.HP.Value, true);
-        m_mana.SetMax(Stats.MP.Value, true);
+        m_health.SetMax(Stats.HP.Value, EResourceSetProcedure.Fill);
+        m_mana.SetMax(Stats.MP.Value, EResourceSetProcedure.Fill);
     }
 
     private void HandleStatUpdate(Stat statChanged)
