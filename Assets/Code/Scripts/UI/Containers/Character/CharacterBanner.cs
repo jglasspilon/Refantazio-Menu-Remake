@@ -23,20 +23,12 @@ public abstract class CharacterBanner : PoolableObjectFromData<Character>, ISele
         m_character = character;
         transform.localScale = Vector3.one;
         SetAsSelected(false);
-
-        foreach (IBindableToCharacter bindable in m_bindables)
-        {
-            bindable.BindToCharacter(character);
-        }
+        m_bindables.ForEach(x => x.BindToCharacter(character));
     }
 
     public override void ResetForPool()
     {
-        foreach (IBindableToCharacter bindable in m_bindables)
-        {
-            bindable.Unbind();
-        }
-
+        m_bindables.ForEach(x => x.Unbind());
         m_character = null;
     }
 

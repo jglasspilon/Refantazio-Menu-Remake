@@ -19,10 +19,10 @@ MonoBehaviour:
   m_price: 10000
   m_description: Asura's unleashed power courses through these gauntlets.
   m_mainModifier:
-    m_statType: 10
+    m_statType: 9
     m_amount: 135
   m_secondaryModifier:
-    m_statType: 11
+    m_statType: 10
     m_amount: 0
   m_modifiers: []
   m_effect: {fileID: 11400000, guid: 4275572dcf16d7542a5fc5ef19c76490, type: 2}

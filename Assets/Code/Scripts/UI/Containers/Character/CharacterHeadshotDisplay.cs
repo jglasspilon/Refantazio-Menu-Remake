@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PartyHeadshotDisplay : MonoBehaviour
+public class CharacterHeadshotDisplay : MonoBehaviour
 {
     [SerializeField]
     private int m_slotIndex;

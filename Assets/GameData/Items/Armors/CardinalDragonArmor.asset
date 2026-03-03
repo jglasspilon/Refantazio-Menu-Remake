@@ -20,10 +20,10 @@ MonoBehaviour:
   m_description: Armor hard-won in the trial of the Dragon. <m>Strength +5, Endurance
     +5.
   m_mainModifier:
-    m_statType: 10
+    m_statType: 9
     m_amount: 400
   m_secondaryModifier:
-    m_statType: 11
+    m_statType: 10
     m_amount: 0
   m_modifiers:
   - m_statType: 3
