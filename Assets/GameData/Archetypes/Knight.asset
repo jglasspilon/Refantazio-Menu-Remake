@@ -15,5 +15,11 @@ MonoBehaviour:
   m_name: Knight
   m_icon: {fileID: 1194125508, guid: 757bc685569f551418ce514f927343c3, type: 3}
   m_mesh: {fileID: 0}
-  m_skillsByRank: []
+  m_skillsByRank:
+  - Key: 1
+    Value:
+    - {fileID: 11400000, guid: 9f8324582d97e4c44886d02ad876e589, type: 2}
+  - Key: 2
+    Value:
+    - {fileID: 11400000, guid: 72e7486852dd2b744ac1e35f9e5ff7e6, type: 2}
   m_rankExpCurve: {fileID: 11400000, guid: 43f72f303d3e3e14c89b64dbf9741270, type: 2}

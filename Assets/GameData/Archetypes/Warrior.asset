@@ -15,5 +15,11 @@ MonoBehaviour:
   m_name: Warrior
   m_icon: {fileID: -522669220, guid: 757bc685569f551418ce514f927343c3, type: 3}
   m_mesh: {fileID: 0}
-  m_skillsByRank: []
+  m_skillsByRank:
+  - Key: 1
+    Value:
+    - {fileID: 11400000, guid: c86b0a0899769a0439b8d3b3d095d3b8, type: 2}
+  - Key: 3
+    Value:
+    - {fileID: 11400000, guid: d4ed061711916b3488a8100d8b2a3d1b, type: 2}
   m_rankExpCurve: {fileID: 11400000, guid: 43f72f303d3e3e14c89b64dbf9741270, type: 2}

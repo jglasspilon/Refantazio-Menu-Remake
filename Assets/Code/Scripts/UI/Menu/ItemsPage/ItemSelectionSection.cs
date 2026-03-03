@@ -26,6 +26,7 @@ public class ItemSelectionSection : UIListSelectionSection<InventoryItemUI, Inve
     protected override void OnEnable()
     {
         base.OnEnable();
+        GenerateUIContent();
 
         if (m_categoryCycler != null)
         {
@@ -68,6 +69,11 @@ public class ItemSelectionSection : UIListSelectionSection<InventoryItemUI, Inve
 
     protected override void GenerateUIContent()
     {
+        if(m_dataModel == null)
+        {
+            return;
+        }
+
         InventoryEntry[] itemsToGenerate = m_dataModel.GetAllItems(m_currentCategory);
         var generatedItems = m_generater.GenerateContent(itemsToGenerate);
         m_selectedIndex = m_selecter.UpdateObjectsAndReturnIndex(generatedItems, m_selectedIndex);

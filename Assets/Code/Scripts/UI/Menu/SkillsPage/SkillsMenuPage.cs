@@ -9,21 +9,44 @@ public class SkillsMenuPage : MenuPage
     [SerializeField]
     private CharacterSelectionSection_Skills m_characterSelectionSection;
 
+    [SerializeField]
+    private SkillsSelectionsSection m_skillSelectionSection;
+
     private Character m_selectedCaster;
     private Skill m_selectedSkill;
 
     public Character Caster => m_selectedCaster;
 
+    private void Awake()
+    {
+        m_skillSelectionSection.OnSkillSelected += SelectSkill;
+        m_characterSelectionSection.OnCharacterSelected += SelectCaster;
+    }
+
+    private void OnDestroy()
+    {
+        m_skillSelectionSection.OnSkillSelected += SelectSkill;
+        m_characterSelectionSection.OnCharacterSelected -= SelectCaster;
+    }
+
     public void ChangeCaster(Character character)
     {
-        if (character == null)
+        if (character == null || m_selectedCaster == character)
             return;
 
         m_selectedCaster = character;
         OnCasterChange?.Invoke(character);
     }
 
-    public void SelectSkill(Skill skill)
+    private void SelectCaster(Character character)
+    {
+        if (character.Skills.Length == 0)
+            return;
+
+        EnterSection(m_skillSelectionSection);
+    }
+
+    private void SelectSkill(Skill skill)
     {
         if (skill == null)
             return;
@@ -31,7 +54,7 @@ public class SkillsMenuPage : MenuPage
         m_selectedSkill = skill;
     }
 
-    public void SelectTarget(Character character)
+    private void SelectTarget(Character character)
     {
         if(character == null) 
             return;

@@ -11,24 +11,20 @@ public class CharacterSelectionSection_Skills: CharacterSelectionSection
     [SerializeField]
     private SkillsMenuPage m_parentPage;
 
-    private bool m_selectAll;
-
     public override UniTask EnterSection()
     {
-
         return base.EnterSection();
     }
 
     public override UniTask ExitSection()
     {
-        
-        return base.ExitSection();
+        SelectedObject.PauseSelection();
+        return default;
     }
 
     public override void OnConfirm()
     {
         base.OnConfirm();
-
     }
 
     protected override void UpdateSelectedObject()

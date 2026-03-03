@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad2fb54320a03d441bf5f167ce8248fe, type: 3}
-  m_Name: Tetrabreak
+  m_Name: Steal
   m_EditorClassIdentifier: Assembly-CSharp::Skill
-  m_name: Tetrabreak
-  m_skillType: 1
-  m_icon: {fileID: 2118336916, guid: 0b085ec75e4708147bfae16742860276, type: 3}
-  m_description: Negates one enemy's Repel Physical skill.
-  m_manaCost: 18
+  m_name: Steal
+  m_skillType: 13
+  m_icon: {fileID: 871179741, guid: 0b085ec75e4708147bfae16742860276, type: 3}
+  m_description: Steals a rare item from one enemy. (The higher your Agility, the
+    higher your success rate.)
+  m_manaCost: 4
   m_targetingType: 2
   m_usableInBattle: 1
   m_usableInMenu: 0

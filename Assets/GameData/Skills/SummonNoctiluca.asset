@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad2fb54320a03d441bf5f167ce8248fe, type: 3}
-  m_Name: Tetrabreak
+  m_Name: SummonNoctiluca
   m_EditorClassIdentifier: Assembly-CSharp::Skill
-  m_name: Tetrabreak
-  m_skillType: 1
-  m_icon: {fileID: 2118336916, guid: 0b085ec75e4708147bfae16742860276, type: 3}
-  m_description: Negates one enemy's Repel Physical skill.
-  m_manaCost: 18
-  m_targetingType: 2
+  m_name: Summon Noctiluca
+  m_skillType: 0
+  m_icon: {fileID: -817640822, guid: 0b085ec75e4708147bfae16742860276, type: 3}
+  m_description: Cures one ally's status ailment and grants 10% HP recovery for their
+    next 3 turns.
+  m_manaCost: 22
+  m_targetingType: 0
   m_usableInBattle: 1
   m_usableInMenu: 0
   m_effects: []

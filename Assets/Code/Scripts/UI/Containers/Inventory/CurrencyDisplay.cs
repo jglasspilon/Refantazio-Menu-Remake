@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class CurrencyDisaply : MonoBehaviour
+public class CurrencyDisplay : MonoBehaviour
 {
     [SerializeField]
     private ECurrencyType m_currenyType;

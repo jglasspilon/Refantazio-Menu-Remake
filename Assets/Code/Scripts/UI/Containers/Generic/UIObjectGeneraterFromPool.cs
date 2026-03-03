@@ -15,6 +15,9 @@ public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IGene
     protected AssetPoolManager m_assetPool;
     protected List<T> m_content = new List<T>();  
     protected GameObject m_owner;
+    protected bool m_isInitialized;
+
+    public bool IsInitialized => m_isInitialized;
 
     public UIObjectGeneraterFromPool()
     {
@@ -25,6 +28,7 @@ public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IGene
     {
         m_assetPool = assetPool;
         m_owner = owner;
+        m_isInitialized = true;
     }
 
     public T[] GenerateContent(TData[] itemsToGenerate)

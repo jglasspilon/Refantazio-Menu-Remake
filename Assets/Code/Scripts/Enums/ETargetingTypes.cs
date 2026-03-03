@@ -4,5 +4,7 @@ public enum ETargetingTypes
     AllAllies,
     SingleFoe,
     AllFoes,
-    All
+    All,
+    Self, 
+    None
 }

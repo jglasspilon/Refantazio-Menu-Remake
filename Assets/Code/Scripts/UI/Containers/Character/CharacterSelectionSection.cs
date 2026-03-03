@@ -7,6 +7,12 @@ public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, 
     ,IHandleOnConfirm, IHandleOnBack
 {
     public event Action<Character> OnCharacterSelected;
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        GenerateUIContent();
+    }
     
     public override UniTask EnterSection()
     {

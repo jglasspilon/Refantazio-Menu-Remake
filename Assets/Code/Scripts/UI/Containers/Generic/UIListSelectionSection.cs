@@ -11,7 +11,7 @@ public abstract class UIListSelectionSection<T, TGenerater, TData, TModel>: Page
     protected UIObjectSelecter<T> m_selecter = new UIObjectSelecter<T>();
     protected int m_selectedIndex;
     protected TModel m_dataModel;
-    private AssetPoolManager m_assetPool;
+    protected AssetPoolManager m_assetPool;
 
     public T SelectedObject => m_selecter.SelectedObject;
 
@@ -27,14 +27,12 @@ public abstract class UIListSelectionSection<T, TGenerater, TData, TModel>: Page
 
         if (m_dataModel == null)
         {
-            if (ObjectResolver.Instance.TryResolve(OnDataModelChanged, out TModel inventoryData))
+            if (ObjectResolver.Instance.TryResolve(OnDataModelChanged, out TModel modelData))
             {
-                OnDataModelChanged(inventoryData);
+                OnDataModelChanged(modelData);
                 return;
             }
         }
-
-        GenerateUIContent();
     }
 
     private void OnDataModelChanged(TModel inventoryData)

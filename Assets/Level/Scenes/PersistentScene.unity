@@ -16076,6 +16076,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 637803072}
+  - {fileID: 958214361}
   - {fileID: 2130971022}
   m_Father: {fileID: 1315482833}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16117,6 +16118,7 @@ MonoBehaviour:
   m_anim: {fileID: 495902889}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
   m_characterSelectionSection: {fileID: 637803073}
+  m_skillSelectionSection: {fileID: 958214362}
 --- !u!1 &499684302
 GameObject:
   m_ObjectHideFlags: 0
@@ -20497,7 +20499,7 @@ GameObject:
   - component: {fileID: 662219996}
   - component: {fileID: 662219995}
   - component: {fileID: 662219994}
-  - component: {fileID: 662219993}
+  - component: {fileID: 662219997}
   - component: {fileID: 662219992}
   m_Layer: 5
   m_Name: SkillsList
@@ -20538,23 +20540,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GeneraterAnimation
   m_anim: {fileID: 1086374843}
---- !u!114 &662219993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 662219990}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21126097b8491dd4696a17b332225383, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventoryItemGenerator
-  m_holder: {fileID: 662219991}
-  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
-  m_itemPrefab: {fileID: 2820542882396229756, guid: c8a9b1112a635b847955a48b36c9a349, type: 3}
-  m_equipmentPrefab: {fileID: 8098691613698145691, guid: 6194ca60c51cea14f945f1f36fbcf53b, type: 3}
-  m_accessoryPrefab: {fileID: 2820542882396229756, guid: c8a9b1112a635b847955a48b36c9a349, type: 3}
 --- !u!114 &662219994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20608,6 +20593,21 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &662219997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662219990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc35c6f9d08a55f4094a550b2c1da9de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuSkillGenerator
+  m_holder: {fileID: 662219991}
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_prefab: {fileID: 1123804529683438914, guid: 2fa7bbc01622f0e46904245eaf7f8d94, type: 3}
 --- !u!1 &663367496
 GameObject:
   m_ObjectHideFlags: 0
@@ -31132,6 +31132,52 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8880575316404190262, guid: 64c298a8c37d2e648b589e79742fe6e3, type: 3}
   m_PrefabInstance: {fileID: 956139705}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &958214360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 958214361}
+  - component: {fileID: 958214362}
+  m_Layer: 5
+  m_Name: SkillSelectionSection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &958214361
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958214360}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 495902888}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &958214362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958214360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1ecec0374241a74fbefaf27c02025c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillsSelectionsSection
+  m_generater: {fileID: 662219997}
+  m_parentPage: {fileID: 495902890}
 --- !u!1 &962229270
 GameObject:
   m_ObjectHideFlags: 0
