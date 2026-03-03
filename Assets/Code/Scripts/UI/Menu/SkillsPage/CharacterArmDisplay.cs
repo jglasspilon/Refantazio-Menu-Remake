@@ -2,7 +2,6 @@ using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 public class CharacterArmDisplay : MonoBehaviour
 {
@@ -25,6 +24,8 @@ public class CharacterArmDisplay : MonoBehaviour
 
     private void OnEnable()
     {
+        m_armImage.enabled = false;
+
         m_cts?.Cancel();
         m_cts = new CancellationTokenSource();
         DelayArmSelectionOnStart(m_startDelaySeconds, m_cts.Token);
@@ -34,16 +35,12 @@ public class CharacterArmDisplay : MonoBehaviour
     {
         m_cts?.Cancel();
         m_parentPage.OnCasterChange -= Display;
-        m_armImage.sprite = null;
         m_armImage.enabled = false;
     }
 
     private async void Display(Character character)
     {
-        if(m_armImage.sprite != null)
-        {
-            Hide();
-        }
+        Hide();
 
         if (character == null)
             return;      
@@ -52,9 +49,7 @@ public class CharacterArmDisplay : MonoBehaviour
         m_armImage.sprite = character.Arm;
 
         if (character.Arm != null)
-        {
             await Show();
-        }
     }
 
     private async UniTask Show()

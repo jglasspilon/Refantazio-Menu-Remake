@@ -13,11 +13,21 @@ public class AnimatedMover : MonoBehaviour
 
     private float m_startX, m_startY;
     private CancellationTokenSource cts;
+    private bool m_isInitialized;
 
     private void OnEnable()
     {
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+        if (m_isInitialized)
+            return;
+
         m_startX = transform.localPosition.x;
         m_startY = transform.localPosition.y;
+        m_isInitialized = true;
     }
 
     public async UniTask MoveIn()
