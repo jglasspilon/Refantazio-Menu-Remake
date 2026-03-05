@@ -5,6 +5,8 @@ public abstract class UIListSelectionSection<T, TGenerater, TData, TModel>: Page
     where TGenerater: UIObjectGeneraterFromPool<T, TData>, new()
     where T: PoolableObjectFromData<TData>, ISelectable
 {
+    public event Action<T> OnSelectedObjectChanged;
+
     [Header("List Creation & Display:")][SerializeField]
     protected TGenerater m_generater;
 
@@ -40,7 +42,6 @@ public abstract class UIListSelectionSection<T, TGenerater, TData, TModel>: Page
         m_dataModel = inventoryData;
         m_generater ??= new TGenerater();
         m_generater.Initialize(m_assetPool, gameObject);
-        GenerateUIContent();
     }
 
     private void OnAssetPoolChanged(AssetPoolManager assetPool)
@@ -76,6 +77,7 @@ public abstract class UIListSelectionSection<T, TGenerater, TData, TModel>: Page
     protected virtual void UpdateSelectedObject()
     {
         m_selectedIndex = m_selecter.Select(m_selectedIndex);
+        OnSelectedObjectChanged?.Invoke(SelectedObject);
     }
 
     protected abstract void GenerateUIContent();

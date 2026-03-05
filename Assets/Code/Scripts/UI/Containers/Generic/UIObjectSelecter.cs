@@ -23,7 +23,7 @@ public class UIObjectSelecter<T> where T: MonoBehaviour, ISelectable
 
     public int Select(int index, bool loop = true)
     {
-        if (m_objects.Length == 0)
+        if (m_objects == null || m_objects.Length == 0)
             return 0;
        
         if (m_selectedObject != null)
@@ -37,6 +37,9 @@ public class UIObjectSelecter<T> where T: MonoBehaviour, ISelectable
 
     public void UnselectAll()
     {
+        if (m_objects == null)
+            return;
+
         foreach(T obj in m_objects)
         {
             obj.SetAsSelected(false);
@@ -45,6 +48,9 @@ public class UIObjectSelecter<T> where T: MonoBehaviour, ISelectable
 
     public void SetApplicableToSelectable(Func<T, bool> selectablePredicate)
     {
+        if (m_objects == null)
+            return;
+
         foreach (T obj in m_objects)
         {
             obj.SetAsSelectable(selectablePredicate(obj));

@@ -34,7 +34,7 @@ public class CharacterArmDisplay : MonoBehaviour
     private void OnDisable()
     {
         m_cts?.Cancel();
-        m_parentPage.OnCasterChange -= Display;
+        m_parentPage.OnDisplayedCharacterChange -= Display;
         m_armImage.enabled = false;
     }
 
@@ -75,7 +75,7 @@ public class CharacterArmDisplay : MonoBehaviour
             await UniTask.Yield(PlayerLoopTiming.Update, token);
         }
 
-        m_parentPage.OnCasterChange += Display;
+        m_parentPage.OnDisplayedCharacterChange += Display;
         Display(m_parentPage.Caster);
     }
 }

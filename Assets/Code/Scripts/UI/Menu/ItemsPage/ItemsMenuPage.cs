@@ -9,7 +9,7 @@ public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
     private ItemSelectionSection m_itemSelectionSection;
 
     [SerializeField]
-    private CharacterSelectionSection_Items m_characterSelectionSection;
+    private CharacterSelectionSection_ItemsTarget m_characterSelectionSection;
 
     private InventoryEntry m_selectedItem;
     private ItemExecutor m_itemExecutor = new ItemExecutor();
@@ -50,16 +50,12 @@ public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
 
     public void SelectCharacter(Character character)
     {
-        if (!CanUseItem(m_selectedItem, character))
-            return;
-
         UseItem(m_selectedItem, character);
 
         if (m_selectedItem.Count == 0)
         {
             m_itemSelectionSection.RemoveCurrentSelection();
             TryExitCurrentSection();
-            return;
         }
     }
 
@@ -80,22 +76,5 @@ public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
         }
 
         m_characterSelectionSection.UpdateSelectabilityOfContent(banner => usable.Effects.Any(effect => effect.CanApply(banner.Character)));
-    }
-
-    private bool CanUseItem(InventoryEntry item, Character character)
-    {
-        if(item.Item is not UsableItem usable)
-        {
-            return false;
-        }
-
-        if (usable.TargetingType == ETargetingTypes.SingleAlly)
-        {            
-            return usable.Effects.Any(x => x.CanApply(character));
-        }
-        else
-        {          
-            return ObjectResolver.Instance.Resolve<PartyData>().GetAllPartyMembers().Any(c => usable.Effects.Any(x => x.CanApply(c)));
-        }
     }
 }

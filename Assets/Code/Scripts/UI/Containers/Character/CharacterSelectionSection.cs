@@ -6,12 +6,18 @@ using UnityEngine;
 public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, CharacterBannerGenerator, Character, PartyData>
     ,IHandleOnConfirm, IHandleOnBack
 {
+    [SerializeField]
+    private bool m_generateCharactersOnEnable;
     public event Action<Character> OnCharacterSelected;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        GenerateUIContent();
+
+        if (m_generateCharactersOnEnable)
+            GenerateUIContent();
+        else
+            m_selecter.UpdateObjectsAndReturnIndex(m_generater.GetGeneratedContent(), m_selectedIndex);
     }
     
     public override UniTask EnterSection()
@@ -31,6 +37,7 @@ public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, 
     public override void ResetSection()
     {
         m_generater.ClearGeneratedContent();
+        m_selectedIndex = 0;
     }
 
     protected override void GenerateUIContent()

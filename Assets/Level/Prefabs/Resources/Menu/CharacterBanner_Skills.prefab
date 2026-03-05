@@ -619,7 +619,7 @@ GameObject:
   - component: {fileID: 2253269159763584350}
   - component: {fileID: 8562577344121178177}
   - component: {fileID: 7536734401671078808}
-  - component: {fileID: 2271584232466333411}
+  - component: {fileID: 4764774618357826556}
   m_Layer: 5
   m_Name: Bg
   m_TagString: Untagged
@@ -684,7 +684,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2271584232466333411
+--- !u!114 &4764774618357826556
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -693,9 +693,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1726358874257020559}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3a4def8486714c46b9db0aa6fce1035, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c66daba85b6984495a8da36d400b67, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShowOnSelected
+  m_EditorClassIdentifier: Assembly-CSharp::ShowOnSelectable
   m_invert: 1
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
 --- !u!1 &2314321003947035140
@@ -2849,11 +2849,8 @@ MonoBehaviour:
   m_valueSlider: {fileID: 8724963184235877625}
   m_sliderAnimCurve: {fileID: 11400000, guid: 63069a320f118bb4abeaf322453e6a26, type: 2}
   m_healEffect:
-  - {fileID: 0}
   - {fileID: 8169648894031810283}
-  m_damageEffect:
-  - {fileID: 0}
-  - {fileID: 0}
+  m_damageEffect: []
 --- !u!114 &898220372279925025
 MonoBehaviour:
   m_ObjectHideFlags: 0

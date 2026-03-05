@@ -41,13 +41,13 @@ public class Stat
         OnValueChange?.Invoke(this);
     }
 
-    public void AddModifier(StatModifier modifier) //TODO: Replace with modifiers once they are created
+    public void AddModifier(StatModifier modifier)
     {
         m_modifiers.Add(modifier);
         OnValueChange?.Invoke(this);
     }
 
-    public void RemoveModifier(StatModifier modifier) //TODO: Replace with modifiers once they are created
+    public void RemoveModifier(StatModifier modifier)
     {
         m_modifiers.Remove(modifier);
         OnValueChange?.Invoke(this);

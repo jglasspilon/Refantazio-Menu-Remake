@@ -58,6 +58,11 @@ public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IGene
         }
     }
 
+    public T[] GetGeneratedContent()
+    {
+        return m_content.ToArray();
+    }
+
     public T[] RemoveGeneratedObject(T objectToRemove)
     {
         if(m_content.Contains(objectToRemove))

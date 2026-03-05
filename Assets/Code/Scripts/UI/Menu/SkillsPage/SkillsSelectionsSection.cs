@@ -9,29 +9,37 @@ public class SkillsSelectionsSection : UIListSelectionSection<MenuSkill, MenuSki
     [SerializeField]
     private SkillsMenuPage m_parentPage;
 
-    private Character m_caster;
+    [SerializeField]
+    private Animator m_sectionAnim;
+
+    private Character m_displayedCaster;
+    private Skill m_selectedSkill;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        m_parentPage.OnCasterChange += HandleOnCasterChanged;
+        m_parentPage.OnDisplayedCharacterChange += HandleOnDisplayedCasterChanged;
+        m_parentPage.OnCasterReleased += HandleOnCasterReleased;
     }
 
     private void OnDisable()
     {
-        m_parentPage.OnCasterChange -= HandleOnCasterChanged;
+        m_parentPage.OnDisplayedCharacterChange -= HandleOnDisplayedCasterChanged;
+        m_parentPage.OnCasterReleased -= HandleOnCasterReleased;
     }
 
     public override UniTask EnterSection()
     {
+        m_selectedSkill = null;
         m_selectedIndex = m_selecter.Select(m_selectedIndex);
+        m_sectionAnim.SetBool("CharSection", false);
         return default;
     }
 
     public override UniTask ExitSection()
     {
-        m_selectedIndex = 0;
-        m_selecter.UnselectAll();
+        SelectedObject.PauseSelection();
+        m_sectionAnim.SetBool("CharSection", true);
         return default;
     }
 
@@ -42,7 +50,8 @@ public class SkillsSelectionsSection : UIListSelectionSection<MenuSkill, MenuSki
 
     public void OnConfirm()
     {
-        OnSkillSelected?.Invoke(SelectedObject.Skill);
+        m_selectedSkill = SelectedObject.Skill;
+        OnSkillSelected?.Invoke(m_selectedSkill);
     }
 
     public void OnBack()
@@ -52,14 +61,24 @@ public class SkillsSelectionsSection : UIListSelectionSection<MenuSkill, MenuSki
 
     protected override void GenerateUIContent()
     {
-        Skill[] skillsToGenerate = m_caster == null ? Array.Empty<Skill>() : m_caster.Skills;
+        Skill[] skillsToGenerate = m_displayedCaster == null ? Array.Empty<Skill>() : m_displayedCaster.Skills;
         var generatedItems = m_generater.GenerateContent(skillsToGenerate);
+        generatedItems.ForEach(x => x.InjectCharacter(m_displayedCaster));
         m_selectedIndex = m_selecter.UpdateObjectsAndReturnIndex(generatedItems, m_selectedIndex);
     }
 
-    private void HandleOnCasterChanged(Character newCaster)
+    private void HandleOnDisplayedCasterChanged(Character newCaster)
     {
-        m_caster = newCaster;
+        if (m_selectedSkill != null)
+            return;
+
+        m_displayedCaster = newCaster;
         GenerateUIContent();
+    }
+
+    private void HandleOnCasterReleased()
+    {
+        m_selecter.UnselectAll();
+        m_selectedIndex = 0;
     }
 }

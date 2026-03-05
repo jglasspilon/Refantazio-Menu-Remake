@@ -156,7 +156,8 @@ public class Character
 
     private void HandleOnHealthEmpty(bool isEmpty)
     {
-        OnDeath?.Invoke(isEmpty);
+        if(HP.Max > 0)
+            OnDeath?.Invoke(isEmpty);
     }
     #endregion
 

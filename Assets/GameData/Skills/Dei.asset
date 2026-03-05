@@ -20,4 +20,5 @@ MonoBehaviour:
   m_targetingType: 0
   m_usableInBattle: 1
   m_usableInMenu: 1
-  m_effects: []
+  m_effects:
+  - {fileID: 11400000, guid: fafb9c08fa827d545b19f8d90d0f3598, type: 2}

@@ -25,7 +25,7 @@ MonoBehaviour:
       m_modifiers: []
     MP:
       m_type: 1
-      m_baseValue: 90
+      m_baseValue: 35
       m_levelValue: 0
       m_modifiers: []
     Strength:
