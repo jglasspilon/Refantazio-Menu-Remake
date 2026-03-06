@@ -4,7 +4,7 @@ public class SkillExecutor
 {
     public void Cast(Skill skill, Character target, Character caster)
     {
-        if (skill == null || caster.MP.Current < skill.ManaCost)
+        if (skill == null || !caster.HasEnoughMana(skill.ManaCost))
             return;
 
         if (!skill.Effects.Any(x => x.CanApply(target)))
@@ -16,7 +16,7 @@ public class SkillExecutor
 
     public void Cast(Skill skill, Character[] targets, Character caster)
     {
-        if (skill == null || caster.MP.Current < skill.ManaCost)
+        if (skill == null || !caster.HasEnoughMana(skill.ManaCost))
             return;
 
         if (!targets.Any(c => skill.Effects.Any(x => x.CanApply(c))))

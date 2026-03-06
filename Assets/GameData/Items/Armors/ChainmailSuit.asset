@@ -10,19 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14930da3c37e05f49b394c25140db055, type: 3}
-  m_Name: AsurasHands
+  m_Name: ChainmailSuit
   m_EditorClassIdentifier: Assembly-CSharp::Equipment
-  m_name: Asura's Hands
+  m_name: Chainmail Suit
   m_sortOrder: 0
-  m_category: 6
+  m_category: 5
   m_icon: {fileID: 0}
-  m_price: 10000
-  m_description: Asura's unleashed power courses through these gauntlets.
+  m_price: 0
+  m_description: Armour made of small, interlocking steel rings. <m>Endurance +1.
+  m_equipType: 14
   m_mainModifier:
     m_statType: 9
-    m_amount: 135
+    m_amount: 75
   m_secondaryModifier:
     m_statType: 10
     m_amount: 0
-  m_modifiers: []
-  m_effect: {fileID: 11400000, guid: 4275572dcf16d7542a5fc5ef19c76490, type: 2}
+  m_modifiers:
+  - m_statType: 4
+    m_amount: 1
+  m_effect: {fileID: 0}

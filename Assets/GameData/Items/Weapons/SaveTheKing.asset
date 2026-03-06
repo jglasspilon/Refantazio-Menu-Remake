@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14930da3c37e05f49b394c25140db055, type: 3}
+  m_Name: SaveTheKing
+  m_EditorClassIdentifier: Assembly-CSharp::Equipment
+  m_name: Save the King
+  m_sortOrder: 0
+  m_category: 4
+  m_icon: {fileID: 0}
+  m_price: 0
+  m_description: A lance used to protect a king who overcame his own weaknesses to
+    protect the people. <m>Endurance +10
+  m_equipType: 3
+  m_mainModifier:
+    m_statType: 7
+    m_amount: 500
+  m_secondaryModifier:
+    m_statType: 8
+    m_amount: 99
+  m_modifiers:
+  - m_statType: 4
+    m_amount: 10
+  m_effect: {fileID: 11400000, guid: c7caad554861de142bdc61ea60dbe902, type: 2}

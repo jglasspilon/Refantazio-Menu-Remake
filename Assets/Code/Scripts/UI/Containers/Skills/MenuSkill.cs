@@ -48,7 +48,7 @@ public class MenuSkill : PoolableObjectFromData<Skill>, ISelectable
     {
         m_character = character;
         m_character.MP.OnResourceChange += HandleOnMpChanged;
-        SetAsSelectable(m_skill.UsableInMenu && m_character.MP.Current >= m_skill.ManaCost);
+        SetAsSelectable(m_skill.UsableInMenu && m_character.HasEnoughMana(m_skill.ManaCost));
         m_characterBindables.ForEach(x => x.BindToCharacter(character));
     }
 

@@ -21,7 +21,7 @@ public class Stat
     public int LevelValue => m_levelValue;
 
     public EStatType Type => m_type;
-    public int Value => m_baseValue + m_levelValue + m_modifiers.Sum(x => x.Amount);
+    public int Value => Mathf.Clamp(m_baseValue + m_levelValue + m_modifiers.Sum(x => x.Amount), 0, 99);
 
     public Stat(EStatType type, int baseValue)
     {

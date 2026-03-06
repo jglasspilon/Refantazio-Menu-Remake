@@ -38,7 +38,7 @@ public enum EItemCategories
     QuestItem,
     Weapon,
     Armor,
-    Appendages,
+    Gear,
     Accessory,
     All
 }

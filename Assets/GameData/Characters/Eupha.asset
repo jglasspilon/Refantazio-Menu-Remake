@@ -73,7 +73,21 @@ MonoBehaviour:
       m_baseValue: 0
       m_levelValue: 0
       m_modifiers: []
-  m_startingSkills: []
+  m_startingEquipment:
+    m_archetypeSlot:
+      m_baseData: {fileID: 0}
+      m_rank:
+        m_value: 0
+        m_exp:
+          m_current: 0
+          m_max: 0
+      m_weaponType: 0
+      m_defaultWeapon: {fileID: 0}
+      m_availableSkills: []
+    m_weaponSlot: {fileID: 0}
+    m_armorSlot: {fileID: 11400000, guid: fbcec2e1655285c48a9f39f2bf0be0f5, type: 2}
+    m_gearSlot: {fileID: 0}
+    m_accessorySlot: {fileID: 0}
   m_profileIcon: {fileID: 2016976379, guid: ad2202cadb0480543807b54952da6334, type: 3}
   m_bannerIcon: {fileID: -511913250, guid: f895790a5f7cbc04a906e42db2c954aa, type: 3}
   m_armIcon: {fileID: -1586912129, guid: d202e2256f5ccd44dbac22544ffcee24, type: 3}

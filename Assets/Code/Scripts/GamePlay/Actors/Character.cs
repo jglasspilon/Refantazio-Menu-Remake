@@ -31,13 +31,13 @@ public class Character
     private Level m_level;
 
     [SerializeField]
-    private Archetype m_equipedArchetype;
-
-    [SerializeField]
-    private List<Archetype> m_availableArchetypes = new List<Archetype>();
+    private EquipmentExecutor m_equipment;
 
     [SerializeField]
     private EBattlePosition m_battlePosition;
+
+    [SerializeField]
+    private List<Archetype> m_availableArchetypes = new List<Archetype>();
 
     private CharacterSheet m_characterBase;
 
@@ -54,33 +54,41 @@ public class Character
     public Resource MP => m_mana;
     public Resource Exp => m_level.Exp;
     public CharacterStats Stats => m_stats;
-    public Archetype EquipedArchetype => m_equipedArchetype;
+    public EquipmentExecutor Equipment => m_equipment;
     public bool IsDead => m_health.Current == 0 && m_health.Max > 0;
     public EBattlePosition BattlePosition => m_battlePosition;
-    public Skill[] Skills => m_equipedArchetype?.GetAvailableSkills() ?? Array.Empty<Skill>();
+    public Skill[] Skills => m_equipment?.Archetype?.GetAvailableSkills() ?? Array.Empty<Skill>();
 
     #region Life Cycle Functions
     public Character(CharacterSheet sheet)
     {
+        Archetype startArchetype = null;
         m_characterBase = sheet;
         m_name = sheet.Name;
         m_stats = new CharacterStats(sheet.Stats);
         m_level = sheet.CreateLevel();
         m_characterType = sheet.CharacterType;
         m_battlePosition = m_characterType == ECharacterType.Guide ? EBattlePosition.Undetermined : EBattlePosition.Front;
-        ApplyStats();
 
         if (m_characterBase.StartingArchetype != null)
         {
-            m_equipedArchetype = new Archetype(m_characterBase.StartingArchetype);
-            m_availableArchetypes.Add(m_equipedArchetype);
+            startArchetype = new Archetype(m_characterBase.StartingArchetype);
+
+            if(!m_availableArchetypes.Contains(startArchetype)) 
+                m_availableArchetypes.Add(startArchetype);
         }
+
+        m_equipment = new EquipmentExecutor(sheet.StartingEquipment, startArchetype, this);
+        ApplyHp(Stats.Endurance);
+        ApplyMp(Stats.Magic);
 
         HP.OnEmpty += HandleOnHealthEmpty;
         HP.OnResourceChange += HandleOnHealthChanged;
         MP.OnResourceChange += HandleOnManaChanged;
         Stats.OnStatChange += HandleStatUpdate;
         Level.OnLevelChange += HandleLevelChange;
+        Stats.Endurance.OnValueChange += ApplyHp;
+        Stats.Magic.OnValueChange += ApplyMp;
     }
     #endregion
 
@@ -119,7 +127,7 @@ public class Character
         return m_health.Current >= amount;
     }
     
-    public void ApplyHealth(int amount)
+    public void ApplyToHealth(int amount)
     {
         m_health.Apply(amount);
     }
@@ -129,14 +137,9 @@ public class Character
         return m_mana.Current >= amount;
     }
 
-    public void ApplyMana(int amount)
+    public void ApplyToMana(int amount)
     {
         m_mana.Apply(amount);
-    }
-
-    public void ApplyExp(int amount)
-    {
-        m_level.AddExp(amount);
     }
 
     private void HandleOnHealthChanged(int amount, float proportion, int delta)
@@ -162,10 +165,16 @@ public class Character
     #endregion
 
     #region Stats Functions
-    private void ApplyStats()
+    private void ApplyHp(Stat endurance)
     {
-        m_health.SetMax(Stats.HP.Value, EResourceSetProcedure.Fill);
-        m_mana.SetMax(Stats.MP.Value, EResourceSetProcedure.Fill);
+        int value = Mathf.FloorToInt(Stats.HP.Value * m_level.Value * (1f + (endurance.Value / 100f)));
+        m_health.SetMax(value, EResourceSetProcedure.Fill);
+    }
+
+    private void ApplyMp(Stat magic)
+    {
+        int value = Mathf.FloorToInt(Stats.MP.Value * m_level.Value * (1f + (magic.Value / 100f)));
+        m_mana.SetMax(value, EResourceSetProcedure.Fill);
     }
 
     private void HandleStatUpdate(Stat statChanged)

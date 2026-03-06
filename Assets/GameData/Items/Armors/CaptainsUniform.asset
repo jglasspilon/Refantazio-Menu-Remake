@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14930da3c37e05f49b394c25140db055, type: 3}
+  m_Name: CaptainsUniform
+  m_EditorClassIdentifier: Assembly-CSharp::Equipment
+  m_name: Captain's Uniform
+  m_sortOrder: 0
+  m_category: 5
+  m_icon: {fileID: 0}
+  m_price: 0
+  m_description: An impressive uniform that designates its wearer as an army captain.
+  m_equipType: 16
+  m_mainModifier:
+    m_statType: 9
+    m_amount: 50
+  m_secondaryModifier:
+    m_statType: 10
+    m_amount: 2
+  m_modifiers:
+  - m_statType: 4
+    m_amount: 1
+  - m_statType: 5
+    m_amount: 1
+  m_effect: {fileID: 0}

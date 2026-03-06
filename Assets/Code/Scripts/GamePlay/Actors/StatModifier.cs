@@ -12,4 +12,10 @@ public class StatModifier
 
     public EStatType Type => m_statType;
     public int Amount => m_amount;
+
+    public StatModifier(EStatType statType, int amount)
+    {
+        m_statType = statType;
+        m_amount = amount;
+    }
 }

@@ -15,6 +15,8 @@ MonoBehaviour:
   m_name: Masked Dancer
   m_icon: {fileID: 935963957, guid: 757bc685569f551418ce514f927343c3, type: 3}
   m_mesh: {fileID: 0}
+  m_equipableWeaponType: 0
+  m_defaultWeapon: {fileID: 11400000, guid: 2ec3dbd5fea0f114fadf19d5cb172db6, type: 2}
   m_skillsByRank:
   - Key: 1
     Value:
@@ -23,3 +25,129 @@ MonoBehaviour:
     Value:
     - {fileID: 11400000, guid: 885dfc184649a2c4f8e8b0f3b1aa2324, type: 2}
   m_rankExpCurve: {fileID: 11400000, guid: 43f72f303d3e3e14c89b64dbf9741270, type: 2}
+  m_rankedStatCurves:
+  - Key: 2
+    Value:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0.1
+        outSlope: 0.1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 20
+        value: 2
+        inSlope: 0.1
+        outSlope: 0.1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - Key: 3
+    Value:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 4
+        inSlope: 0.35
+        outSlope: 0.35
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 20
+        value: 11
+        inSlope: 0.35
+        outSlope: 0.35
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - Key: 4
+    Value:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0.15
+        outSlope: 0.15
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 20
+        value: 3
+        inSlope: 0.15
+        outSlope: 0.15
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - Key: 5
+    Value:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 4
+        inSlope: 0.2
+        outSlope: 0.2
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 20
+        value: 8
+        inSlope: 0.2
+        outSlope: 0.2
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - Key: 6
+    Value:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 2
+        inSlope: 0.15
+        outSlope: 0.15
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 20
+        value: 5
+        inSlope: 0.15
+        outSlope: 0.15
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4

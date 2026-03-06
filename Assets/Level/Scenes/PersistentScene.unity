@@ -1906,7 +1906,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5710307119167785168, guid: 64c298a8c37d2e648b589e79742fe6e3, type: 3}
       propertyPath: m_text
-      value: Gloves
+      value: Gear
       objectReference: {fileID: 0}
     - target: {fileID: 8087892780966540918, guid: 64c298a8c37d2e648b589e79742fe6e3, type: 3}
       propertyPath: m_LocalScale.x
@@ -37155,6 +37155,36 @@ MonoBehaviour:
     m_isNew: 1
   - m_item: {fileID: 11400000, guid: 8a002ed3e03725b42b99b31129f772c1, type: 2}
     m_count: 1
+    m_isNew: 1
+  - m_item: {fileID: 11400000, guid: 3a9d53eeea3aa544099b6689e65b42e4, type: 2}
+    m_count: 1
+    m_isNew: 1
+  - m_item: {fileID: 11400000, guid: e65b1c3f87237924f95764aa0d07f7de, type: 2}
+    m_count: 1
+    m_isNew: 1
+  - m_item: {fileID: 11400000, guid: 2c399e5668f6f9440acb75aec698eac8, type: 2}
+    m_count: 1
+    m_isNew: 1
+  - m_item: {fileID: 11400000, guid: 1184432c96fb83946ae955ada9fffd8c, type: 2}
+    m_count: 1
+    m_isNew: 1
+  - m_item: {fileID: 11400000, guid: 8f06324239e13e043950f972333b48ca, type: 2}
+    m_count: 1
+    m_isNew: 1
+  - m_item: {fileID: 11400000, guid: 31ce3c169b2055b4da25665e54b172db, type: 2}
+    m_count: 1
+    m_isNew: 1
+  - m_item: {fileID: 11400000, guid: 8f06324239e13e043950f972333b48ca, type: 2}
+    m_count: 1
+    m_isNew: 1
+  - m_item: {fileID: 11400000, guid: 44c899c730d2dae41a89ed3bcda8d8f4, type: 2}
+    m_count: 1
+    m_isNew: 1
+  - m_item: {fileID: 11400000, guid: 75d897a6a65dc0c47ad01f7d278b590e, type: 2}
+    m_count: 1
+    m_isNew: 1
+  - m_item: {fileID: 11400000, guid: 52bcd221f7586b546b34e146a049f406, type: 2}
+    m_count: 3
     m_isNew: 1
 --- !u!1001 &1155849957
 PrefabInstance:

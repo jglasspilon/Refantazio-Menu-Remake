@@ -62,7 +62,7 @@ public class SkillsMenuPage : MenuPage
 
     private void SelectSkill(Skill skill)
     {
-        if (skill == null || !skill.UsableInMenu || m_selectedCaster.MP.Current < skill.ManaCost)
+        if (skill == null || !skill.UsableInMenu || m_selectedCaster.HasEnoughMana(skill.ManaCost))
             return;
 
         m_selectedSkill = skill;
@@ -78,7 +78,7 @@ public class SkillsMenuPage : MenuPage
         m_skillExecutor.Cast(m_selectedSkill, character, m_selectedCaster);
         m_targetSelectionSection.UpdateSelectabilityOfContent(banner => m_selectedSkill.Effects.Any(effect => effect.CanApply(banner.Character)));
 
-        if (m_selectedCaster.MP.Current < m_selectedSkill.ManaCost)
+        if (!m_selectedCaster.HasEnoughMana(m_selectedSkill.ManaCost))
         {
             TryExitCurrentSection();
         }

@@ -24,7 +24,7 @@ public class CharacterSheet : UniqueScriptableObject
     private CharacterStats m_stats;
 
     [SerializeField]
-    private Skill[] m_startingSkills;
+    private EquipmentExecutor m_startingEquipment;
 
     [SerializeField]
     private Sprite m_profileIcon, m_bannerIcon, m_armIcon;
@@ -36,7 +36,7 @@ public class CharacterSheet : UniqueScriptableObject
     public string Name => m_name;
     public ArchetypeData StartingArchetype => m_startingArchetype;
     public CharacterStats Stats => m_stats;
-    public Skill[] StartingSkills => m_startingSkills;
+    public EquipmentExecutor StartingEquipment => m_startingEquipment;
     public Sprite ProfileIcon => m_profileIcon;
     public Sprite BannerIcon => m_bannerIcon;
     public Sprite ArmIcon => m_armIcon;
@@ -44,7 +44,7 @@ public class CharacterSheet : UniqueScriptableObject
 
     public Level CreateLevel()
     {
-        return new Level(m_startingLevel, m_expCurve);
+        return new Level(m_startingLevel, 99, m_expCurve);
     }
 }
 
@@ -82,6 +82,27 @@ public class CharacterStats
         InitializeStats();
     }
 
+    public Stat GetStat(EStatType statType)
+    {
+        switch (statType)
+        {
+            case EStatType.Attack: return Attack;
+            case EStatType.Hit: return Hit;
+            case EStatType.Defence: return Defence;
+            case EStatType.Evasion: return Evasion;
+            case EStatType.HP: return HP;
+            case EStatType.MP: return MP;
+            case EStatType.Strength: return Strength;
+            case EStatType.Magic: return Magic;
+            case EStatType.Endurance: return Endurance;
+            case EStatType.Agility: return Agility;
+            case EStatType.Luck: return Luck;
+        }
+
+        Debug.LogError($"Failed to return stat {statType}");
+        return null;
+    }
+
     private void InitializeStats()
     {
         HP.OnValueChange += HandleOnStatChange;
@@ -113,10 +134,12 @@ public class Level
     public int Value => m_value;
     public Resource Exp => m_exp;
     private AnimationCurveAsset m_expCurve;
+    private int m_max;
 
-    public Level(int value, AnimationCurveAsset expCurve)
+    public Level(int value, int max, AnimationCurveAsset expCurve)
     {
         m_value = value;
+        m_max = max;
         m_expCurve = expCurve;
         InitializeExp();
     }
@@ -130,7 +153,7 @@ public class Level
     {
         int overflow = (m_exp.Current + amount) - m_exp.Max;
 
-        if (overflow < 0 || m_value == 99)
+        if (overflow < 0 || m_value == m_max)
         {
             m_exp.Apply(amount);
 
@@ -155,12 +178,12 @@ public class Level
         if (m_expCurve == null)
             return;
 
-        level = Mathf.Clamp(level, 1, 99);
+        level = Mathf.Clamp(level, 1, m_max);
         m_exp.SetMax((int)m_expCurve.Evaluate(level), EResourceSetProcedure.Reset);
         m_exp.Apply(-m_exp.Current);
         m_value = level;
 
-        if (m_value == 99)
+        if (m_value == m_max)
         {
             m_exp.Apply(m_exp.Max);
             return;

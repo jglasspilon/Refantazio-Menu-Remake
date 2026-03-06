@@ -14,7 +14,7 @@ public class PartyTester : MonoBehaviour
 
     private PartyData m_partyData;
 
-    private const int TEST_AMOUNT = 30;
+    private const int TEST_AMOUNT = 100000;
     
 
     private void Start()
@@ -65,8 +65,8 @@ public class PartyTester : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.A))
         {
-            m_partyData.AddPartyMember(new Character(m_characterToAdd));
-            Logger.Log($"Adding {m_characterToAdd.Name} to party.", gameObject, m_logProfile);            
+            m_testingMode = EMode.Archetype;
+            Logger.Log($"Changed to archetype testing mode.", gameObject, m_logProfile);            
         }    
 
         if (Input.GetKeyUp(KeyCode.Keypad0))
@@ -122,19 +122,25 @@ public class PartyTester : MonoBehaviour
             case EMode.Heal:
                 if(m_partyData.TryGetPartyMember(index, out Character characterToHeal))
                 {
-                    characterToHeal.ApplyHealth(TEST_AMOUNT);
+                    characterToHeal.ApplyToHealth(TEST_AMOUNT);
                 }
                 break;
             case EMode.Damage:
                 if (m_partyData.TryGetPartyMember(index, out Character characterToDamage))
                 {
-                    characterToDamage.ApplyHealth(-TEST_AMOUNT);
+                    characterToDamage.ApplyToHealth(-TEST_AMOUNT);
                 }
                 break;
             case EMode.Exp:
                 if (m_partyData.TryGetPartyMember(index, out Character characterToGiveExp))
                 {
-                    characterToGiveExp.ApplyExp(TEST_AMOUNT);
+                    characterToGiveExp.Level.AddExp(TEST_AMOUNT);
+                }
+                break;
+            case EMode.Archetype:
+                if (m_partyData.TryGetPartyMember(index, out Character characterToGiveRank))
+                {
+                    characterToGiveRank.Equipment.Archetype.Rank.AddExp(TEST_AMOUNT);
                 }
                 break;
             case EMode.RemoveFromParty:
@@ -165,19 +171,25 @@ public class PartyTester : MonoBehaviour
             case EMode.Heal:
                 foreach(Character character in m_partyData.GetAllPartyMembers())
                 {
-                    character.ApplyHealth(TEST_AMOUNT);
+                    character.ApplyToHealth(TEST_AMOUNT);
                 }
                 break;
             case EMode.Damage:
                 foreach (Character character in m_partyData.GetAllPartyMembers())
                 {
-                    character.ApplyHealth(-TEST_AMOUNT);
+                    character.ApplyToHealth(-TEST_AMOUNT);
                 }
                 break;
             case EMode.Exp:
                 foreach (Character character in m_partyData.GetAllPartyMembers())
                 {
-                    character.ApplyExp(TEST_AMOUNT);
+                    character.Level.AddExp(TEST_AMOUNT);
+                }
+                break;
+            case EMode.Archetype:
+                foreach (Character character in m_partyData.GetAllPartyMembers())
+                {
+                    character.Equipment.Archetype.Rank.AddExp(TEST_AMOUNT);
                 }
                 break;
         }
@@ -191,6 +203,7 @@ public class PartyTester : MonoBehaviour
         RemoveFromActiveParty,
         AddToActiveParty,
         Exp,
+        Archetype
     }
 }
 

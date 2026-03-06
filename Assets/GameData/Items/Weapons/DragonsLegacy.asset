@@ -18,7 +18,8 @@ MonoBehaviour:
   m_icon: {fileID: 0}
   m_price: 10000
   m_description: Your mother's sword. Enchanted with dragon's magla and the wisdom
-    of heroes. <m>[Almighty] All stats +5. Protagonist only.
+    of heroes.<m>[Almighty] All stats +5.
+  m_equipType: 0
   m_mainModifier:
     m_statType: 7
     m_amount: 427
