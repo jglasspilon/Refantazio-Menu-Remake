@@ -62,7 +62,7 @@ public class SkillsMenuPage : MenuPage
 
     private void SelectSkill(Skill skill)
     {
-        if (skill == null || !skill.UsableInMenu || m_selectedCaster.HasEnoughMana(skill.ManaCost))
+        if (skill == null || !skill.UsableInMenu || !m_selectedCaster.HasEnoughMana(skill.ManaCost))
             return;
 
         m_selectedSkill = skill;

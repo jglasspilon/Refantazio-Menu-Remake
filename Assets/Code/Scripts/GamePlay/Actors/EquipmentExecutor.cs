@@ -14,6 +14,7 @@ public class EquipmentExecutor
     [SerializeField]
     private Accessory m_accessorySlot;
 
+    [NonSerialized]
     private Character m_equiper;
 
     public Archetype Archetype => m_archetypeSlot;
@@ -22,14 +23,14 @@ public class EquipmentExecutor
     public Equipment Gear => m_gearSlot;
     public Accessory Accessory => m_accessorySlot;
 
-    public EquipmentExecutor(EquipmentExecutor storedEquipment, Archetype startingArchetype, Character equiper)
+    public EquipmentExecutor(Equipment weapon, Equipment armor, Equipment gear, Accessory accessory, Archetype startingArchetype, Character equiper)
     {
         m_equiper = equiper;
         EquipArchetype(startingArchetype);
-        EquipWeapon(storedEquipment.Weapon);
-        EquipArmor(storedEquipment.Armor);
-        EquipGear(storedEquipment.Gear);
-        EquipAccessory(storedEquipment.Accessory);
+        EquipWeapon(weapon);
+        EquipArmor(armor);
+        EquipGear(gear);
+        EquipAccessory(accessory);
     }
 
     public void EquipArchetype(Archetype archetype)

@@ -65,7 +65,7 @@ public class Character
         Archetype startArchetype = null;
         m_characterBase = sheet;
         m_name = sheet.Name;
-        m_stats = new CharacterStats(sheet.Stats);
+        m_stats = new CharacterStats(sheet.HP, sheet.MP, sheet.Str, sheet.Mag, sheet.End, sheet.Agi, sheet.Luck);
         m_level = sheet.CreateLevel();
         m_characterType = sheet.CharacterType;
         m_battlePosition = m_characterType == ECharacterType.Guide ? EBattlePosition.Undetermined : EBattlePosition.Front;
@@ -78,7 +78,7 @@ public class Character
                 m_availableArchetypes.Add(startArchetype);
         }
 
-        m_equipment = new EquipmentExecutor(sheet.StartingEquipment, startArchetype, this);
+        m_equipment = new EquipmentExecutor(sheet.StartingWeapon, sheet.StartingArmor, sheet.StartingGear, sheet.StartingAccessory, startArchetype, this);
         ApplyHp(Stats.Endurance);
         ApplyMp(Stats.Magic);
 

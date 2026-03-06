@@ -14,7 +14,7 @@ public class PartyTester : MonoBehaviour
 
     private PartyData m_partyData;
 
-    private const int TEST_AMOUNT = 100000;
+    private const int TEST_AMOUNT = 30;
     
 
     private void Start()

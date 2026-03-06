@@ -17,77 +17,17 @@ MonoBehaviour:
   m_startingArchetype: {fileID: 11400000, guid: 38f3efdd2d3a60249a0521c2c601251b, type: 2}
   m_expCurve: {fileID: 11400000, guid: 4047c5867cc7e6244a3a06ea095cb97a, type: 2}
   m_startingLevel: 1
-  m_stats:
-    HP:
-      m_type: 0
-      m_baseValue: 120
-      m_levelValue: 0
-      m_modifiers: []
-    MP:
-      m_type: 1
-      m_baseValue: 25
-      m_levelValue: 0
-      m_modifiers: []
-    Strength:
-      m_type: 2
-      m_baseValue: 5
-      m_levelValue: 0
-      m_modifiers: []
-    Magic:
-      m_type: 3
-      m_baseValue: 2
-      m_levelValue: 0
-      m_modifiers: []
-    Endurance:
-      m_type: 4
-      m_baseValue: 3
-      m_levelValue: 0
-      m_modifiers: []
-    Agility:
-      m_type: 5
-      m_baseValue: 2
-      m_levelValue: 0
-      m_modifiers: []
-    Luck:
-      m_type: 6
-      m_baseValue: 3
-      m_levelValue: 0
-      m_modifiers: []
-    Attack:
-      m_type: 7
-      m_baseValue: 0
-      m_levelValue: 0
-      m_modifiers: []
-    Hit:
-      m_type: 8
-      m_baseValue: 0
-      m_levelValue: 0
-      m_modifiers: []
-    Defence:
-      m_type: 9
-      m_baseValue: 0
-      m_levelValue: 0
-      m_modifiers: []
-    Evasion:
-      m_type: 10
-      m_baseValue: 0
-      m_levelValue: 0
-      m_modifiers: []
-  m_startingEquipment:
-    m_archetypeSlot:
-      m_baseData: {fileID: 0}
-      m_rank:
-        m_value: 0
-        m_exp:
-          m_current: 0
-          m_max: 0
-      m_weaponType: 0
-      m_defaultWeapon: {fileID: 0}
-      m_availableSkills: []
-    m_weaponSlot: {fileID: 0}
-    m_armorSlot: {fileID: 11400000, guid: 92f3500ac5b0ca449a0574c86fc0f445, type: 2}
-    m_gearSlot: {fileID: 0}
-    m_accessorySlot: {fileID: 0}
+  m_hp: 120
+  m_mp: 25
+  m_str: 5
+  m_mag: 2
+  m_end: 3
+  m_agi: 2
+  m_luck: 3
+  m_startingWeapon: {fileID: 11400000, guid: f4b161e7255f55e46ba8e87191a26e60, type: 2}
+  m_startingArmor: {fileID: 11400000, guid: 92f3500ac5b0ca449a0574c86fc0f445, type: 2}
+  m_startingGear: {fileID: 0}
+  m_startingAccesory: {fileID: 0}
   m_profileIcon: {fileID: 1500562526, guid: ad2202cadb0480543807b54952da6334, type: 3}
   m_bannerIcon: {fileID: -232967186, guid: f895790a5f7cbc04a906e42db2c954aa, type: 3}
   m_armIcon: {fileID: -1674922155, guid: d202e2256f5ccd44dbac22544ffcee24, type: 3}

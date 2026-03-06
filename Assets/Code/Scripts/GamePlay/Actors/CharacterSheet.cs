@@ -21,10 +21,13 @@ public class CharacterSheet : UniqueScriptableObject
     private int m_startingLevel;
 
     [SerializeField]
-    private CharacterStats m_stats;
+    private int m_hp, m_mp, m_str, m_mag, m_end, m_agi, m_luck;
 
     [SerializeField]
-    private EquipmentExecutor m_startingEquipment;
+    private Equipment m_startingWeapon, m_startingArmor, m_startingGear;
+
+    [SerializeField]
+    private Accessory m_startingAccesory;
 
     [SerializeField]
     private Sprite m_profileIcon, m_bannerIcon, m_armIcon;
@@ -35,8 +38,17 @@ public class CharacterSheet : UniqueScriptableObject
     public ECharacterType CharacterType => m_characterType;
     public string Name => m_name;
     public ArchetypeData StartingArchetype => m_startingArchetype;
-    public CharacterStats Stats => m_stats;
-    public EquipmentExecutor StartingEquipment => m_startingEquipment;
+    public Equipment StartingArmor => m_startingArmor;
+    public Equipment StartingWeapon => m_startingWeapon;
+    public Equipment StartingGear => m_startingGear;
+    public Accessory StartingAccessory => m_startingAccesory;
+    public int HP => m_hp;
+    public int MP => m_mp;
+    public int Str => m_str;
+    public int Mag => m_mag;
+    public int End => m_end;
+    public int Agi => m_agi;
+    public int Luck => m_luck;
     public Sprite ProfileIcon => m_profileIcon;
     public Sprite BannerIcon => m_bannerIcon;
     public Sprite ArmIcon => m_armIcon;
@@ -65,19 +77,19 @@ public class CharacterStats
     public Stat Defence;
     public Stat Evasion;
 
-    public CharacterStats(CharacterStats refStats)
+    public CharacterStats(int hp, int mp, int str, int mag, int end, int agi, int luck)
     {
-        HP = new Stat(refStats.HP.Type, refStats.HP.BaseValue);
-        MP = new Stat(refStats.MP.Type, refStats.MP.BaseValue);
-        Strength = new Stat(refStats.Strength.Type, refStats.Strength.BaseValue);
-        Magic = new Stat(refStats.Magic.Type, refStats.Magic.BaseValue);
-        Endurance = new Stat(refStats.Endurance.Type, refStats.Endurance.BaseValue);
-        Agility = new Stat(refStats.Agility.Type, refStats.Agility.BaseValue);
-        Luck = new Stat(refStats.Luck.Type, refStats.Luck.BaseValue);
-        Attack = new Stat(refStats.Attack.Type, refStats.Attack.BaseValue);
-        Hit = new Stat(refStats.Hit.Type, refStats.Hit.BaseValue);
-        Defence = new Stat(refStats.Defence.Type, refStats.Defence.BaseValue);
-        Evasion = new Stat(refStats.Evasion.Type, refStats.Evasion.BaseValue);
+        HP = new Stat(EStatType.HP, hp);
+        MP = new Stat(EStatType.MP, mp);
+        Strength = new Stat(EStatType.Strength, str);
+        Magic = new Stat(EStatType.Magic, mag);
+        Endurance = new Stat(EStatType.Endurance, end);
+        Agility = new Stat(EStatType.Agility, agi);
+        Luck = new Stat(EStatType.Luck, luck);
+        Attack = new Stat(EStatType.Attack, 0);
+        Hit = new Stat(EStatType.Hit, 0);
+        Defence = new Stat(EStatType.Defence, 0);
+        Evasion = new Stat(EStatType.Evasion, 0);
 
         InitializeStats();
     }
