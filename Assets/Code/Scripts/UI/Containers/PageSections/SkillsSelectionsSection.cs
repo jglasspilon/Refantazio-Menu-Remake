@@ -31,30 +31,30 @@ public class SkillsSelectionsSection : UIListSelectionSection<MenuSkill, MenuSki
     public override UniTask EnterSection()
     {
         m_selectedSkill = null;
-        m_selectedIndex = m_selecter.Select(m_selectedIndex);
+        m_selecter.SelectCurrent();
         m_sectionAnim.SetBool("CharSection", false);
         return default;
     }
 
     public override UniTask ExitSection()
     {
-        SelectedObject.PauseSelection();
+        m_selecter.SelectedObject.PauseSelection();
         m_sectionAnim.SetBool("CharSection", true);
         return default;
     }
 
     public override void ResetSection()
     {
-        m_selectedIndex = 0;
+        m_selecter.ResetSelecter();
     }
 
-    public void HandleOnConfirm()
+    public override void HandleOnConfirm()
     {
-        m_selectedSkill = SelectedObject.Skill;
+        m_selectedSkill = m_selecter.SelectedObject.Skill;
         OnSkillSelected?.Invoke(m_selectedSkill);
     }
 
-    public void HandleOnBack()
+    public override void HandleOnBack()
     {
         OnSkillSelected?.Invoke(null);
     }
@@ -64,7 +64,7 @@ public class SkillsSelectionsSection : UIListSelectionSection<MenuSkill, MenuSki
         Skill[] skillsToGenerate = m_displayedCaster == null ? Array.Empty<Skill>() : m_displayedCaster.Skills;
         var generatedItems = m_generater.GenerateContent(skillsToGenerate);
         generatedItems.ForEach(x => x.InjectCharacter(m_displayedCaster));
-        m_selectedIndex = m_selecter.UpdateObjectsAndReturnIndex(generatedItems, m_selectedIndex);
+        m_selecter.UpdateObjectsAndReturnIndex(generatedItems);
     }
 
     private void HandleOnDisplayedCasterChanged(Character newCaster)
@@ -79,6 +79,6 @@ public class SkillsSelectionsSection : UIListSelectionSection<MenuSkill, MenuSki
     private void HandleOnCasterReleased()
     {
         m_selecter.UnselectAll();
-        m_selectedIndex = 0;
+        m_selecter.ResetSelecter();
     }
 }

@@ -15936,6 +15936,9 @@ MonoBehaviour:
   m_casterSelectionSection: {fileID: 637803073}
   m_targetSelectionSection: {fileID: 607615940}
   m_skillSelectionSection: {fileID: 958214362}
+  m_casterSelecter: {fileID: 637803074}
+  m_targetSelecter: {fileID: 607615941}
+  m_skillSelecter: {fileID: 958214363}
 --- !u!1 &499684302
 GameObject:
   m_ObjectHideFlags: 0
@@ -18615,6 +18618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4e121967f300141aed3b84a2ba00c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelecter
+  m_reverseOrder: 0
 --- !u!1 &614710669
 GameObject:
   m_ObjectHideFlags: 0
@@ -19958,6 +19962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4e121967f300141aed3b84a2ba00c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelecter
+  m_reverseOrder: 0
 --- !u!1 &638284110
 GameObject:
   m_ObjectHideFlags: 0
@@ -28045,7 +28050,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &889038902
 Transform:
   m_ObjectHideFlags: 0
@@ -31086,6 +31091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9702b817e01946546a0ada9e11cbd8df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillSelecter
+  m_reverseOrder: 0
 --- !u!1 &962229270
 GameObject:
   m_ObjectHideFlags: 0
@@ -49225,6 +49231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedd036f26476b249ac13d46c795b643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartyFormationSelecter
+  m_reverseOrder: 0
 --- !u!114 &1425288052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49601,6 +49608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfed8ff00d521294784b2b18a710f17a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSelecter
+  m_reverseOrder: 0
 --- !u!1 &1440515131
 GameObject:
   m_ObjectHideFlags: 0
@@ -54210,6 +54218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4e121967f300141aed3b84a2ba00c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelecter
+  m_reverseOrder: 0
 --- !u!1 &1626679475
 GameObject:
   m_ObjectHideFlags: 0

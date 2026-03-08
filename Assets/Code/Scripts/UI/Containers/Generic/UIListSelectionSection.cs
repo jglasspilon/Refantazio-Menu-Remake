@@ -5,19 +5,14 @@ public abstract class UIListSelectionSection<T, TGenerater, TData, TModel>: Page
     where TGenerater: UIObjectGeneraterFromPool<T, TData>, new()
     where T: PoolableObjectFromData<TData>, ISelectable
 {
-    public event Action<T> OnSelectedObjectChanged;
-
     [Header("List Creation & Display:")][SerializeField]
     protected TGenerater m_generater;
 
     [SerializeField]
     protected UIObjectSelecter<T> m_selecter;
 
-    protected int m_selectedIndex; //TODO: remove
     protected TModel m_dataModel;
     protected AssetPoolManager m_assetPool;
-
-    public T SelectedObject => m_selecter.SelectedObject;
 
     protected virtual void OnEnable()
     {
@@ -56,30 +51,7 @@ public abstract class UIListSelectionSection<T, TGenerater, TData, TModel>: Page
     public void RemoveCurrentSelection()
     {
         T[] updatedList = m_generater.RemoveGeneratedObject(m_selecter.SelectedObject);
-        m_selecter.UpdateObjectsAndReturnIndex(updatedList, m_selectedIndex);
-    }
-
-    public void UpdateSelectabilityOfContent(Func<T, bool> predicate)
-    {
-        m_selecter.SetApplicableToSelectable(predicate);
-    }
-
-    public void HandleOnCycleUp()
-    {
-        m_selectedIndex--;
-        UpdateSelectedObject();
-    }
-
-    public void HandleOnCycleDown()
-    {
-        m_selectedIndex++;
-        UpdateSelectedObject();
-    }
-
-    protected virtual void UpdateSelectedObject()
-    {
-        m_selectedIndex = m_selecter.Select(m_selectedIndex);
-        OnSelectedObjectChanged?.Invoke(SelectedObject);
+        m_selecter.UpdateObjectsAndReturnIndex(updatedList);
     }
 
     protected abstract void GenerateUIContent();

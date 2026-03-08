@@ -38,7 +38,8 @@ public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
             m_characterSelectionSection.SelectAll();
         }
 
-        m_characterSelectionSection.UpdateSelectabilityOfContent(banner => usable.Effects.Any(effect => effect.CanApply(banner.Character)));
+        //TODO: event
+        //m_characterSelectionSection.UpdateSelectabilityOfContent(banner => usable.Effects.Any(effect => effect.CanApply(banner.Character)));
         EnterSection(m_characterSelectionSection);
     }
 
@@ -69,6 +70,7 @@ public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
             m_itemExecutor.Use(item, ObjectResolver.Instance.Resolve<PartyData>().GetAllPartyMembers());
         }
 
-        m_characterSelectionSection.UpdateSelectabilityOfContent(banner => usable.Effects.Any(effect => effect.CanApply(banner.Character)));
+        //TODO: event
+        //m_characterSelectionSection.UpdateSelectabilityOfContent(banner => usable.Effects.Any(effect => effect.CanApply(banner.Character)));
     }
 }

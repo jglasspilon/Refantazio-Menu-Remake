@@ -9,42 +9,42 @@ public abstract class PageSection: MonoBehaviour, IHandleOnConfirm, IHandleOnBac
     public abstract UniTask EnterSection();
     public abstract UniTask ExitSection();
 
-    public void HandleOnBack()
+    public virtual void HandleOnBack()
     {
         OnBack?.Invoke();
     }
 
-    public void HandleOnConfirm()
+    public virtual void HandleOnConfirm()
     {
         OnConfirm?.Invoke();
     }
 
-    public void HandleOnCycleDown()
+    public virtual void HandleOnCycleDown()
     {
         OnCycleDown?.Invoke();
     }
 
-    public void HandleOnCycleUp()
+    public virtual void HandleOnCycleUp()
     {
         OnCycleUp?.Invoke();
     }
 
-    public void HandleOnPageLeftLv1()
+    public virtual void HandleOnPageLeftLv1()
     {
         OnPageLeftLv1?.Invoke();
     }
 
-    public void HandleOnPageLeftLv2()
+    public virtual void HandleOnPageLeftLv2()
     {
         OnPageLeftLv2?.Invoke();
     }
 
-    public void HandleOnPageRightLv1()
+    public virtual void HandleOnPageRightLv1()
     {
         OnPageRightLv1?.Invoke();
     }
 
-    public void HandleOnPageRightLv2()
+    public virtual void HandleOnPageRightLv2()
     {
         OnPageRightLv2?.Invoke();
     }

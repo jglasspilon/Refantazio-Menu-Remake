@@ -14,6 +14,12 @@ public class SkillsMenuPage : MenuPage
     [SerializeField]
     private SkillsSelectionsSection m_skillSelectionSection;
 
+    [SerializeField]
+    private CharacterSelecter m_casterSelecter, m_targetSelecter;
+
+    [SerializeField]
+    private SkillSelecter m_skillSelecter;
+
     private Character m_selectedCaster;
     private Skill m_selectedSkill;
     private SkillExecutor m_skillExecutor = new SkillExecutor();
@@ -22,8 +28,8 @@ public class SkillsMenuPage : MenuPage
 
     private void Awake()
     {
-        m_casterSelectionSection.OnSelectedObjectChanged += HandleOnCharacterToDisplayChanged;
-        m_targetSelectionSection.OnSelectedObjectChanged += HandleOnCharacterToDisplayChanged;
+        m_casterSelecter.OnSelectedObjectChanged += HandleOnCharacterToDisplayChanged;
+        m_targetSelecter.OnSelectedObjectChanged += HandleOnCharacterToDisplayChanged;
         m_skillSelectionSection.OnSkillSelected += SelectSkill;
         m_casterSelectionSection.OnCharacterSelected += SelectCaster;
         m_targetSelectionSection.OnCharacterSelected += SelectTarget;
@@ -31,8 +37,8 @@ public class SkillsMenuPage : MenuPage
 
     private void OnDestroy()
     {
-        m_casterSelectionSection.OnSelectedObjectChanged -= HandleOnCharacterToDisplayChanged;
-        m_targetSelectionSection.OnSelectedObjectChanged -= HandleOnCharacterToDisplayChanged;
+        m_casterSelecter.OnSelectedObjectChanged -= HandleOnCharacterToDisplayChanged;
+        m_targetSelecter.OnSelectedObjectChanged -= HandleOnCharacterToDisplayChanged;
         m_skillSelectionSection.OnSkillSelected -= SelectSkill;
         m_casterSelectionSection.OnCharacterSelected -= SelectCaster;
         m_targetSelectionSection.OnCharacterSelected -= SelectTarget;
@@ -66,7 +72,9 @@ public class SkillsMenuPage : MenuPage
             return;
 
         m_selectedSkill = skill;
-        m_targetSelectionSection.UpdateSelectabilityOfContent(banner => skill.Effects.Any(effect => effect.CanApply(banner.Character)));
+        
+        //TODO: event
+        //m_targetSelectionSection.UpdateSelectabilityOfContent(banner => skill.Effects.Any(effect => effect.CanApply(banner.Character)));
         EnterSection(m_targetSelectionSection);
     }
 
@@ -76,7 +84,9 @@ public class SkillsMenuPage : MenuPage
             return;
 
         m_skillExecutor.Cast(m_selectedSkill, character, m_selectedCaster);
-        m_targetSelectionSection.UpdateSelectabilityOfContent(banner => m_selectedSkill.Effects.Any(effect => effect.CanApply(banner.Character)));
+        
+        //TODO: event
+        //m_targetSelectionSection.UpdateSelectabilityOfContent(banner => m_selectedSkill.Effects.Any(effect => effect.CanApply(banner.Character)));
 
         if (!m_selectedCaster.HasEnoughMana(m_selectedSkill.ManaCost))
         {

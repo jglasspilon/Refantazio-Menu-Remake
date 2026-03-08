@@ -1,14 +1,10 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PageSection))]
-[DisallowMultipleComponent]
 public class PartyFormationSelecter : UIObjectSelecter<CharacterBanner>
 {
-    private PageSection m_parentSection;
-
-    private void Awake()
+    protected override void Awake()
     {
-        m_parentSection = GetComponent<PageSection>();
+        base.Awake();
         m_parentSection.OnConfirm += SelectCharacter;
         m_parentSection.OnPageRightLv1 += MoveToBack;
         m_parentSection.OnPageLeftLv1 += MoveToFront;

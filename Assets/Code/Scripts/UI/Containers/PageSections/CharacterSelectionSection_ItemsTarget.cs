@@ -36,14 +36,6 @@ public class CharacterSelectionSection_ItemsTarget: CharacterSelectionSection
         return base.ExitSection();
     }
 
-    protected override void UpdateSelectedObject()
-    {
-        if (m_selectedAll)
-            return;
-
-        base.UpdateSelectedObject();
-    }
-
     public void SelectAll()
     {
         m_selectedAll = true;

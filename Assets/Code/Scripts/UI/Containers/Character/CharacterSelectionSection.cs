@@ -17,27 +17,28 @@ public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, 
         if (m_generateCharactersOnEnable)
             GenerateUIContent();
         else
-            m_selecter.UpdateObjectsAndReturnIndex(m_generater.GetGeneratedContent(), m_selectedIndex);
+            m_selecter.UpdateObjectsAndReturnIndex(m_generater.GetGeneratedContent());
     }
     
     public override UniTask EnterSection()
     {
-        UpdateSelectedObject();     
+        m_selecter.SelectCurrent();
         return default;
     }
 
     public override UniTask ExitSection()
     {
-        m_selectedIndex = 0;
-        UpdateSelectabilityOfContent(x => false);
-        m_selecter.UnselectAll();       
+        m_selecter.SetApplicableToSelectable(x => false);
+        m_selecter.UnselectAll();
+        m_selecter.ResetSelecter();
         return default;
     }
 
     public override void ResetSection()
     {
         m_generater.ClearGeneratedContent();
-        m_selectedIndex = 0;
+        m_selecter.UnselectAll();
+        m_selecter.ResetSelecter();
     }
 
     protected override void GenerateUIContent()
@@ -49,6 +50,13 @@ public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, 
 
         Character[] charactersToGenerate = m_dataModel.GetAllPartyMembers();
         var characterBanners = m_generater.GenerateContent(charactersToGenerate);
-        m_selectedIndex = m_selecter.UpdateObjectsAndReturnIndex(characterBanners, m_selectedIndex);
-    } 
+        m_selecter.UpdateObjectsAndReturnIndex(characterBanners);
+    }
+
+    //TODO: apply to selecter
+    public override void HandleOnConfirm()
+    {
+        base.HandleOnConfirm();
+        OnCharacterSelected?.Invoke(m_selecter.SelectedObject.Character);
+    }
 }

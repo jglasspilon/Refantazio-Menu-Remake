@@ -11,7 +11,8 @@ public class CharacterSelectionSection_CasterSelect: CharacterSelectionSection
     public override UniTask EnterSection()
     {
         m_parentPage.ReleaseCaster();
-        UpdateSelectabilityOfContent(x => false);
+        m_selecter.SetApplicableToSelectable(x => false);
+        m_selecter.SelectCurrent();
         return base.EnterSection();       
     }
 
