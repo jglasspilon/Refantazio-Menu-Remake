@@ -21,7 +21,7 @@ public class DisplayCharacterPosition : MonoBehaviour, IBindableToCharacter
 
         m_character = character;
         m_character.OnBattlePositionChange += Display;
-        m_positionMover.SetEnable(character.CharacterType != ECharacterType.Guide);
+        m_positionMover.SetEnable(!m_character.IsGuide);
         Display(m_character.BattlePosition);
     }
 

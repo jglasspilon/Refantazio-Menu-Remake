@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class Character
 {
-    public event Action<ECharacterType> OnTypeChange;
+    public event Action<Character> OnTypeChange;
     public event Action<EBattlePosition> OnBattlePositionChange;
     public event Action<Archetype> OnArchetypeChange;
     public event Action<bool> OnDeath;
@@ -43,7 +43,6 @@ public class Character
 
     public string ID => m_characterBase.ID;
     public bool IsValid => m_characterBase != null;
-    public ECharacterType CharacterType => m_characterType;
     public string Name => m_characterBase.Name;
     public Mesh Mesh => m_characterBase.Mesh;
     public Sprite Banner => m_characterBase.BannerIcon;
@@ -58,6 +57,10 @@ public class Character
     public bool IsDead => m_health.Current == 0 && m_health.Max > 0;
     public EBattlePosition BattlePosition => m_battlePosition;
     public Skill[] Skills => m_equipment?.Archetype?.GetAvailableSkills() ?? Array.Empty<Skill>();
+    public string CharacterType => m_characterType.ToString();
+    public bool IsLeader => m_characterType == ECharacterType.Leader;
+    public bool IsGuide => m_characterType == ECharacterType.Guide;
+    public bool IsInActiveParty => m_characterType == ECharacterType.Party || IsLeader;
 
     #region Life Cycle Functions
     public Character(CharacterSheet sheet)
@@ -96,19 +99,19 @@ public class Character
     public void SetCharacterAsLeader()
     {
         m_characterType = ECharacterType.Leader;
-        OnTypeChange?.Invoke(m_characterType);
+        OnTypeChange?.Invoke(this);
     }
 
     public void SetCharacterToActiveParty()
     {
         m_characterType = ECharacterType.Party;
-        OnTypeChange?.Invoke(m_characterType);
+        OnTypeChange?.Invoke(this);
     }
 
     public void RemoveCharacterFromActiveParty()
     {
         m_characterType = m_characterBase.CharacterType;
-        OnTypeChange?.Invoke(m_characterType);
+        OnTypeChange?.Invoke(this);
     }
 
     public void SetCharacterBattlePosition(EBattlePosition battlePosition)

@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class PartyData
 {
-    public event Action OnPartyChanged, OnActivePartyChanged;
+    public event Action OnPartyChanged, OnActivePartyChanged, OnLeaderRemoveAttempt, OnActivePartyOverloadAttempt;
     public event Action OnAnyPartyMemberUpdated, OnAnyActivePartyMemberUpdated;
 
     [SerializeField]
@@ -154,6 +154,12 @@ public class PartyData
             return;
         }
 
+        if(partyMember.IsLeader)
+        {
+            OnLeaderRemoveAttempt?.Invoke();
+            Logger.Log("Cannot remove leader from party", m_logProfile);
+        }
+
         partyMember.OnCharacterUpdated -= HandleOnPartyMemberStatUpdate;
         m_party.Remove(partyMember.ID);
         m_orderedParty.Remove(partyMember);
@@ -183,6 +189,7 @@ public class PartyData
 
         if (ActivePartyFull)
         {
+            OnActivePartyOverloadAttempt?.Invoke();
             Logger.Log($"Didn't add {newActivePartyMember.Name} to active party. Party limit of 4 already reached.", m_logProfile);
             return;
         }
@@ -193,34 +200,6 @@ public class PartyData
         m_activeParty[slot] = newActivePartyMember;
         Logger.Log($"Added {newActivePartyMember.Name} to active party.", m_logProfile);
         OnActivePartyChanged?.Invoke();
-    }
-
-    public void ReplaceActivePartyMemberAtSlot(Character newActivePartyMember, int slot)
-    {
-        if (newActivePartyMember == null)
-        {
-            Logger.LogError($"Replacing active party member with null is not allowed.", m_logProfile);
-            return;
-        }
-
-        if (TryGetActivePartyMember(newActivePartyMember.ID, out Character character))
-        {
-            Logger.LogError($"Failed replacing active party member with '{newActivePartyMember.Name}'. Adding duplicate party members is not allowed.", m_logProfile);
-            return;
-        }
-
-        slot = Mathf.Clamp(slot, 0, m_activeParty.Length - 1);
-        Character characterInSlot = m_activeParty[slot];
-
-        if(characterInSlot != null && characterInSlot.IsValid)
-        {
-            characterInSlot.OnCharacterUpdated -= HandleOnActivePartyMemberStatUpdate;
-            characterInSlot.RemoveCharacterFromActiveParty();
-        }
-
-        newActivePartyMember.OnCharacterUpdated += HandleOnActivePartyMemberStatUpdate;
-        newActivePartyMember.SetCharacterToActiveParty();
-        m_activeParty[slot] = newActivePartyMember;
     }
 
     private int FindFirstEmptySlotInActiveParty()
@@ -249,6 +228,12 @@ public class PartyData
         {
             Logger.LogError($"Failed removing party member '{activePartyMember.Name}'. Party member not found.", m_logProfile);
             return;
+        }
+
+        if(activePartyMember.IsLeader)
+        {
+            OnLeaderRemoveAttempt?.Invoke();
+            Logger.Log("Cannot remove leader from active party", m_logProfile);
         }
 
         int slot = FindSlotForCharacterInActiveParty(activePartyMember);

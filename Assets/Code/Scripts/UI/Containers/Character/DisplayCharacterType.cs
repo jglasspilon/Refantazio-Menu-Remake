@@ -16,7 +16,7 @@ public class DisplayCharacterType : MonoBehaviour, IBindableToCharacter
 
         m_character = character;
         m_character.OnTypeChange += Display;
-        Display(m_character.CharacterType);
+        Display(m_character);
     }
 
     public void Unbind()
@@ -28,12 +28,12 @@ public class DisplayCharacterType : MonoBehaviour, IBindableToCharacter
         m_character = null;
     }
 
-    private void Display(ECharacterType characterType)
+    private void Display(Character character)
     {
-        string typeString = characterType.ToString();
+        string typeString = character.CharacterType;
         string output = $"{typeString.Substring(0, 1)}<size=50%>{typeString.Substring(1)}";
         m_text.text = output;
 
-        gameObject.SetActive(characterType == ECharacterType.Leader || characterType == ECharacterType.Party || characterType == ECharacterType.Guide);
+        gameObject.SetActive(character.IsInActiveParty || character.IsGuide);
     }
 }

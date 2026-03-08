@@ -14,7 +14,7 @@ public class DisplayOnGuideCharacter : MonoBehaviour, IBindableToCharacter
 
         m_character = character;
         m_character.OnTypeChange += Display;
-        Display(m_character.CharacterType);
+        Display(m_character);
     }
 
     public void Unbind()
@@ -26,13 +26,13 @@ public class DisplayOnGuideCharacter : MonoBehaviour, IBindableToCharacter
         m_character = null;
     }
 
-    private void Display(ECharacterType characterType)
+    private void Display(Character character)
     {
-        bool isGuide = characterType == ECharacterType.Guide;
+        bool show = character.IsGuide;
 
         if (m_invert)
-            isGuide = !isGuide;
+            show = !show;
 
-        gameObject.SetActive(isGuide);
+        gameObject.SetActive(show);
     }
 }

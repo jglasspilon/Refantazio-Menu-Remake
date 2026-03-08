@@ -130,7 +130,7 @@ public class MenuPage : MonoBehaviour
         if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandleOnConfirm handler)
             return;
 
-        handler.OnConfirm();
+        handler.HandleOnConfirm();
     }
 
     public virtual void CycleUp()
@@ -138,7 +138,7 @@ public class MenuPage : MonoBehaviour
         if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandleOnCycleUp handler)
             return;
 
-        handler.OnCycleUp();
+        handler.HandleOnCycleUp();
     }
 
     public virtual void CycleDown()
@@ -146,7 +146,7 @@ public class MenuPage : MonoBehaviour
         if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandleOnCycleDown handler)
             return;
 
-        handler.OnCycleDown();
+        handler.HandleOnCycleDown();
     }
 
     public virtual void PageLeftLv1()
@@ -154,7 +154,7 @@ public class MenuPage : MonoBehaviour
         if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandlePageLeftLv1 handler)
             return;
 
-        handler.OnPageLeftLv1();
+        handler.HandleOnPageLeftLv1();
     }
 
     public virtual void PageLeftLv2()
@@ -162,7 +162,7 @@ public class MenuPage : MonoBehaviour
         if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandlePageLeftLv2 handler)
             return;
 
-        handler.OnPageLeftLv2();
+        handler.HandleOnPageLeftLv2();
     }
 
     public virtual void PageRightLv1()
@@ -170,7 +170,7 @@ public class MenuPage : MonoBehaviour
         if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandlePageRightLv1 handler)
             return;
 
-        handler.OnPageRightLv1();
+        handler.HandleOnPageRightLv1();
     }
 
     public virtual void PageRightLv2()
@@ -178,7 +178,7 @@ public class MenuPage : MonoBehaviour
         if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandlePageRightLv2 handler)
             return;
 
-        handler.OnPageRightLv2();
+        handler.HandleOnPageRightLv2();
     }
 
     #endregion

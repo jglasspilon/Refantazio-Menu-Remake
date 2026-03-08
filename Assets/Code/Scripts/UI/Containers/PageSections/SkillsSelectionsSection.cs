@@ -48,13 +48,13 @@ public class SkillsSelectionsSection : UIListSelectionSection<MenuSkill, MenuSki
         m_selectedIndex = 0;
     }
 
-    public void OnConfirm()
+    public void HandleOnConfirm()
     {
         m_selectedSkill = SelectedObject.Skill;
         OnSkillSelected?.Invoke(m_selectedSkill);
     }
 
-    public void OnBack()
+    public void HandleOnBack()
     {
         OnSkillSelected?.Invoke(null);
     }

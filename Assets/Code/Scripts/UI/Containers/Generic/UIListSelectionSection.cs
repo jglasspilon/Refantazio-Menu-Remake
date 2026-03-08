@@ -64,13 +64,13 @@ public abstract class UIListSelectionSection<T, TGenerater, TData, TModel>: Page
         m_selecter.SetApplicableToSelectable(predicate);
     }
 
-    public void OnCycleUp()
+    public void HandleOnCycleUp()
     {
         m_selectedIndex--;
         UpdateSelectedObject();
     }
 
-    public void OnCycleDown()
+    public void HandleOnCycleDown()
     {
         m_selectedIndex++;
         UpdateSelectedObject();

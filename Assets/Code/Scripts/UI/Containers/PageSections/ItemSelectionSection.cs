@@ -92,23 +92,23 @@ public class ItemSelectionSection : UIListSelectionSection<InventoryItemUI, Inve
         UpdateSelectedObject();
     }
 
-    public void OnConfirm()
+    public void HandleOnConfirm()
     {
         OnItemSelected?.Invoke(SelectedObject.InventoryEntry);
     }
 
-    public void OnBack()
+    public void HandleOnBack()
     {
         OnItemSelected?.Invoke(null);
     }
 
-    public void OnPageLeftLv1()
+    public void HandleOnPageLeftLv1()
     {
         m_categoryCycler.CycleCategory(-1, true);
         m_selectedIndex = m_selecter.Select(0, false);
     }
 
-    public void OnPageRightLv1()
+    public void HandleOnPageRightLv1()
     {
         m_categoryCycler.CycleCategory(1, true);
         m_selecter.Select(0, false);

@@ -50,15 +50,5 @@ public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, 
         Character[] charactersToGenerate = m_dataModel.GetAllPartyMembers();
         var characterBanners = m_generater.GenerateContent(charactersToGenerate);
         m_selectedIndex = m_selecter.UpdateObjectsAndReturnIndex(characterBanners, m_selectedIndex);
-    }
-
-    public virtual void OnConfirm()
-    {
-        OnCharacterSelected?.Invoke(SelectedObject == null ? null : SelectedObject.Character);
-    }
-
-    public virtual void OnBack()
-    {
-        m_selectedIndex = 0;
-    }  
+    } 
 }

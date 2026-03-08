@@ -28098,7 +28098,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuPage
   m_pageName: 4
-  m_defaultSection: {fileID: 1425288050}
+  m_defaultSection: {fileID: 1425288052}
   m_anim: {fileID: 889038903}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
 --- !u!1 &897804609
@@ -49189,7 +49189,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1425288049}
-  - component: {fileID: 1425288050}
+  - component: {fileID: 1425288052}
   - component: {fileID: 1425288051}
   m_Layer: 5
   m_Name: CharacterSelectionSection
@@ -49213,21 +49213,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 889038902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1425288050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1425288048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a549ae1fc305c0040a5b98d8bdac78a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterSelectionSection_Party
-  m_generater: {fileID: 499684304}
-  m_selecter: {fileID: 1425288051}
-  m_generateCharactersOnEnable: 1
 --- !u!114 &1425288051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49240,6 +49225,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedd036f26476b249ac13d46c795b643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartyFormationSelecter
+--- !u!114 &1425288052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425288048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0855baa9905cc2468ab569d230ee4c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterSelectionSection
+  m_generater: {fileID: 499684304}
+  m_selecter: {fileID: 1425288051}
+  m_generateCharactersOnEnable: 1
 --- !u!1 &1427514621
 GameObject:
   m_ObjectHideFlags: 0

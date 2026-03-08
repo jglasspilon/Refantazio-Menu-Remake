@@ -1,39 +1,39 @@
 public interface IHandleOnConfirm
 {
-    void OnConfirm();
+    void HandleOnConfirm();
 }
 
 public interface IHandleOnBack
 {
-    void OnBack();
+    void HandleOnBack();
 }
 
 public interface IHandleOnCycleUp
 {
-    void OnCycleUp();
+    void HandleOnCycleUp();
 }
 
 public interface IHandleOnCycleDown
 {
-    void OnCycleDown();
+    void HandleOnCycleDown();
 }
 
 public interface IHandlePageLeftLv1
 {
-    void OnPageLeftLv1();
+    void HandleOnPageLeftLv1();
 }
 
 public interface IHandlePageLeftLv2
 {
-    void OnPageLeftLv2();
+    void HandleOnPageLeftLv2();
 }
 
 public interface IHandlePageRightLv1
 {
-    void OnPageRightLv1();
+    void HandleOnPageRightLv1();
 }
 
 public interface IHandlePageRightLv2
 {
-    void OnPageRightLv2();
+    void HandleOnPageRightLv2();
 }
