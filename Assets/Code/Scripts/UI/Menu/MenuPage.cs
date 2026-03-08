@@ -11,6 +11,9 @@ public abstract class MenuPage : MonoBehaviour
     private EMenuPages m_pageName;
 
     [SerializeField]
+    private PageSection m_defaultSection;
+
+    [SerializeField]
     private Animator m_anim;
 
     [SerializeField]
@@ -30,7 +33,7 @@ public abstract class MenuPage : MonoBehaviour
         gameObject.SetActive(true);
         PageCount = pageCount;
 
-        await EnterDefaultSection();
+        EnterSection(m_defaultSection);
         m_anim.SetInteger("PageCount", pageCount);
         m_anim.SetBool("IsActive", true);
 
@@ -75,13 +78,11 @@ public abstract class MenuPage : MonoBehaviour
     #endregion
 
     #region Section Navigation
-    public virtual UniTask EnterDefaultSection()
-    {
-        return default;
-    }
-
     public virtual void EnterSection(PageSection section)
     {
+        if (section == null)
+            return;
+
         if (m_breadcrumb.Count > 0)
             m_breadcrumb.Peek().ExitSection();
 

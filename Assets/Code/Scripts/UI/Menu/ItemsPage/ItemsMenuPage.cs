@@ -26,12 +26,6 @@ public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
         m_characterSelectionSection.OnCharacterSelected -= SelectCharacter;
     }
 
-    public override UniTask EnterDefaultSection()
-    {
-        EnterSection(m_itemSelectionSection);
-        return default;
-    }
-
     public void SelectItem(InventoryEntry item)
     {
         if (item.Item is not UsableItem usable || usable.BattleOnly)

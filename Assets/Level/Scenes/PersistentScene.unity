@@ -15875,7 +15875,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &495902888
 Transform:
   m_ObjectHideFlags: 0
@@ -15930,6 +15930,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillsMenuPage
   m_pageName: 1
+  m_defaultSection: {fileID: 637803073}
   m_anim: {fileID: 495902889}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
   m_casterSelectionSection: {fileID: 637803073}
@@ -20347,6 +20348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentMenuPage
   m_pageName: 3
+  m_defaultSection: {fileID: 0}
   m_anim: {fileID: 661125387}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
 --- !u!1 &662219990
@@ -28015,7 +28017,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &889038902
 Transform:
   m_ObjectHideFlags: 0
@@ -28068,6 +28070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartyMenuPage
   m_pageName: 4
+  m_defaultSection: {fileID: 1425288050}
   m_anim: {fileID: 889038903}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
   m_characterSelectionSection: {fileID: 1425288050}
@@ -31111,6 +31114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CalendarMenuPage
   m_pageName: 7
+  m_defaultSection: {fileID: 0}
   m_anim: {fileID: 962229272}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
 --- !u!1 &965889026
@@ -34403,6 +34407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuPage
   m_pageName: 0
+  m_defaultSection: {fileID: 0}
   m_anim: {fileID: 1060373020}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
   m_startPageIndex: 3
@@ -47495,6 +47500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemsMenuPage
   m_pageName: 2
+  m_defaultSection: {fileID: 1439618494}
   m_anim: {fileID: 1408110047}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
   m_itemSelectionSection: {fileID: 1439618494}
@@ -58763,6 +58769,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MemorandumMenuPage
   m_pageName: 8
+  m_defaultSection: {fileID: 0}
   m_anim: {fileID: 1686852830}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
 --- !u!1 &1687945437
@@ -63952,6 +63959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SystemMenuPage
   m_pageName: 9
+  m_defaultSection: {fileID: 0}
   m_anim: {fileID: 1887951319}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
 --- !u!1 &1890465596
@@ -68421,6 +68429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestMenuPage
   m_pageName: 6
+  m_defaultSection: {fileID: 0}
   m_anim: {fileID: 1990766531}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
 --- !u!1 &1991185702
@@ -70744,6 +70753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FollowerMenuPage
   m_pageName: 5
+  m_defaultSection: {fileID: 0}
   m_anim: {fileID: 2123017465}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
 --- !u!1 &2123468365

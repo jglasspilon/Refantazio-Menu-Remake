@@ -83,10 +83,4 @@ public class SkillsMenuPage : MenuPage
             TryExitCurrentSection();
         }
     }
-
-    public override UniTask EnterDefaultSection()
-    {
-        EnterSection(m_casterSelectionSection);
-        return default;
-    }
 }
