@@ -15875,7 +15875,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &495902888
 Transform:
   m_ObjectHideFlags: 0
@@ -15934,7 +15934,7 @@ MonoBehaviour:
   m_anim: {fileID: 495902889}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
   m_casterSelectionSection: {fileID: 637803073}
-  m_targetSelectionSection: {fileID: 607615940}
+  m_targetSelectionSection: {fileID: 607615942}
   m_skillSelectionSection: {fileID: 958214362}
   m_casterSelecter: {fileID: 637803074}
   m_targetSelecter: {fileID: 607615941}
@@ -18567,7 +18567,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 607615939}
-  - component: {fileID: 607615940}
+  - component: {fileID: 607615942}
   - component: {fileID: 607615941}
   m_Layer: 5
   m_Name: TargetSelectionSection
@@ -18591,21 +18591,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 495902888}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &607615940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 607615938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0855baa9905cc2468ab569d230ee4c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterSelectionSection
-  m_generater: {fileID: 2064096886}
-  m_selecter: {fileID: 607615941}
-  m_generateCharactersOnEnable: 0
 --- !u!114 &607615941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18620,6 +18605,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelecter
   m_reverseOrder: 0
   m_onSelectedObjectChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &607615942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607615938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba9b0051b51764946a2f257947489c58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterSelectionSection_Target
+  m_generater: {fileID: 2064096886}
+  m_selecter: {fileID: 607615941}
+  m_generateCharactersOnEnable: 0
+  m_allSelectionSplotch: {fileID: 949948077}
+  m_sectionAnim: {fileID: 2130971031}
+  OnEnter:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &614710669
@@ -21945,6 +21950,7 @@ RectTransform:
   - {fileID: 1042569368}
   - {fileID: 1684038738}
   - {fileID: 723307176}
+  - {fileID: 949948078}
   - {fileID: 2064096884}
   - {fileID: 26208808}
   - {fileID: 1086374842}
@@ -30753,6 +30759,99 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948345861}
   m_CullTransparentMesh: 1
+--- !u!1 &949948077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 949948078}
+  - component: {fileID: 949948081}
+  - component: {fileID: 949948080}
+  - component: {fileID: 949948079}
+  m_Layer: 5
+  m_Name: AllSelectionSplotch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &949948078
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949948077}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 731690513}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -317, y: -111}
+  m_SizeDelta: {x: 557.1062, y: 204.7514}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &949948079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949948077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96675d734b291044f91783acfa12255f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImageSpriteCycler
+  m_spritesToCycle:
+  - {fileID: 483305189, guid: bf2f22a899de8e747b3e8b8f4b97a71f, type: 3}
+  - {fileID: 207679703, guid: bf2f22a899de8e747b3e8b8f4b97a71f, type: 3}
+  - {fileID: 357619065, guid: bf2f22a899de8e747b3e8b8f4b97a71f, type: 3}
+  m_cycleDuration: 0.15
+--- !u!114 &949948080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949948077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.77254903, g: 0.2901961, b: 0.54509807, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 483305189, guid: bf2f22a899de8e747b3e8b8f4b97a71f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &949948081
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949948077}
+  m_CullTransparentMesh: 1
 --- !u!1 &952272740
 GameObject:
   m_ObjectHideFlags: 0
@@ -31084,6 +31183,7 @@ MonoBehaviour:
   m_generater: {fileID: 662219997}
   m_selecter: {fileID: 958214363}
   m_parentPage: {fileID: 495902890}
+  m_casterSelecter: {fileID: 637803074}
   m_sectionAnim: {fileID: 2130971031}
 --- !u!114 &958214363
 MonoBehaviour:
@@ -47560,7 +47660,9 @@ MonoBehaviour:
   m_anim: {fileID: 1408110047}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
   m_itemSelectionSection: {fileID: 1439618494}
+  m_itemSelecter: {fileID: 1439618496}
   m_characterSelectionSection: {fileID: 1621017954}
+  m_characterSelecter: {fileID: 1621017955}
 --- !u!1 &1410733478
 GameObject:
   m_ObjectHideFlags: 0
@@ -49592,7 +49694,21 @@ MonoBehaviour:
   m_selecter: {fileID: 1439618496}
   m_categoryCycler: {fileID: 1439618495}
   m_sectionAnim: {fileID: 2137399057}
-  m_bodyMover: {fileID: 502560001}
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 502560001}
+        m_TargetAssemblyTypeName: AnimatedMover, Assembly-CSharp
+        m_MethodName: MoveOut
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1439618495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54229,7 +54345,21 @@ MonoBehaviour:
   m_generateCharactersOnEnable: 1
   m_allSelectionSplotch: {fileID: 1637919827}
   m_sectionAnim: {fileID: 2137399057}
-  m_bodyMover: {fileID: 502560001}
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 502560001}
+        m_TargetAssemblyTypeName: AnimatedMover, Assembly-CSharp
+        m_MethodName: MoveIn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1621017955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61057,7 +61187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90cc39aeb0e221c48bdc77b4ad11753a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterArmDisplay
-  m_parentPage: {fileID: 495902890}
+  m_casterSelecter: {fileID: 637803074}
   m_armImage: {fileID: 1741515978}
   m_mover: {fileID: 1741515982}
   m_fader: {fileID: 1741515981}

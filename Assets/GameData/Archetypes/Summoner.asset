@@ -20,6 +20,7 @@ MonoBehaviour:
   m_skillsByRank:
   - Key: 1
     Value:
+    - {fileID: 11400000, guid: ff6d9e91c99a7154cb886ad3dae57530, type: 2}
     - {fileID: 11400000, guid: 55f7345bd773f544fb1fc7ac94a20190, type: 2}
   - Key: 2
     Value:

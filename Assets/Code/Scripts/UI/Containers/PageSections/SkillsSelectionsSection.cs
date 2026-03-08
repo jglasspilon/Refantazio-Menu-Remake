@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class SkillsSelectionsSection : UIListSelectionSection<MenuSkill, MenuSkillGenerator, Skill, PartyData>, IHandleOnConfirm, IHandleOnBack
 {
-    public event Action<Skill> OnSkillSelected;
-
     [SerializeField]
     private SkillsMenuPage m_parentPage;
+
+    [SerializeField]
+    private CharacterSelecter m_casterSelecter;
 
     [SerializeField]
     private Animator m_sectionAnim;
@@ -18,14 +19,20 @@ public class SkillsSelectionsSection : UIListSelectionSection<MenuSkill, MenuSki
     protected override void OnEnable()
     {
         base.OnEnable();
-        m_parentPage.OnDisplayedCharacterChange += HandleOnDisplayedCasterChanged;
+        m_casterSelecter.OnSelectedObjectChanged += HandleOnDisplayedCasterChanged;
         m_parentPage.OnCasterReleased += HandleOnCasterReleased;
+
+        if (m_selecter is SkillSelecter skillSelecter)
+            skillSelecter.OnSkillSelected += HandleOnSkillSelected;
     }
 
     private void OnDisable()
     {
-        m_parentPage.OnDisplayedCharacterChange -= HandleOnDisplayedCasterChanged;
+        m_casterSelecter.OnSelectedObjectChanged -= HandleOnDisplayedCasterChanged;
         m_parentPage.OnCasterReleased -= HandleOnCasterReleased;
+
+        if (m_selecter is SkillSelecter skillSelecter)
+            skillSelecter.OnSkillSelected -= HandleOnSkillSelected;
     }
 
     public override UniTask EnterSection()
@@ -45,18 +52,9 @@ public class SkillsSelectionsSection : UIListSelectionSection<MenuSkill, MenuSki
 
     public override void ResetSection()
     {
+        m_selecter.UnselectAll();
         m_selecter.ResetSelecter();
-    }
-
-    public override void HandleOnConfirm()
-    {
-        m_selectedSkill = m_selecter.SelectedObject.Skill;
-        OnSkillSelected?.Invoke(m_selectedSkill);
-    }
-
-    public override void HandleOnBack()
-    {
-        OnSkillSelected?.Invoke(null);
+        m_generater.ClearGeneratedContent();
     }
 
     protected override void GenerateUIContent()
@@ -67,12 +65,17 @@ public class SkillsSelectionsSection : UIListSelectionSection<MenuSkill, MenuSki
         m_selecter.UpdateObjects(generatedItems);
     }
 
-    private void HandleOnDisplayedCasterChanged(Character newCaster)
+    private void HandleOnSkillSelected(Skill skill)
+    {
+        m_selectedSkill = skill;
+    }
+
+    private void HandleOnDisplayedCasterChanged(CharacterBanner newCasterBanner)
     {
         if (m_selectedSkill != null)
             return;
 
-        m_displayedCaster = newCaster;
+        m_displayedCaster = newCasterBanner.Character;
         GenerateUIContent();
     }
 

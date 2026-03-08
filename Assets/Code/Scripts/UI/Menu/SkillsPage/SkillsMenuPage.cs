@@ -2,10 +2,11 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
+using static UnityEngine.Rendering.DebugUI;
 
 public class SkillsMenuPage : MenuPage
 {
-    public event Action<Character> OnDisplayedCharacterChange;
     public event Action OnCasterReleased;
 
     [SerializeField]
@@ -28,34 +29,16 @@ public class SkillsMenuPage : MenuPage
 
     private void Awake()
     {
-        m_casterSelecter.OnSelectedObjectChanged += HandleOnCharacterToDisplayChanged;
-        m_targetSelecter.OnSelectedObjectChanged += HandleOnCharacterToDisplayChanged;
-        m_skillSelectionSection.OnSkillSelected += SelectSkill;
+        m_skillSelecter.OnSkillSelected += SelectSkill;
         m_casterSelecter.OnCharacterSelected += SelectCaster;
         m_targetSelecter.OnCharacterSelected += SelectTarget;
     }
 
     private void OnDestroy()
     {
-        m_casterSelecter.OnSelectedObjectChanged -= HandleOnCharacterToDisplayChanged;
-        m_targetSelecter.OnSelectedObjectChanged -= HandleOnCharacterToDisplayChanged;
-        m_skillSelectionSection.OnSkillSelected -= SelectSkill;
+        m_skillSelecter.OnSkillSelected -= SelectSkill;
         m_casterSelecter.OnCharacterSelected -= SelectCaster;
         m_targetSelecter.OnCharacterSelected -= SelectTarget;
-    }
-
-    public void HandleOnCharacterToDisplayChanged(CharacterBanner characterBanner)
-    { 
-        if (characterBanner == null || characterBanner.Character == null || m_selectedCaster == characterBanner.Character)
-            return;
-
-        m_selectedCaster = characterBanner.Character;
-        OnDisplayedCharacterChange?.Invoke(characterBanner.Character);
-    }
-
-    public void ReleaseCaster()
-    {
-        OnCasterReleased?.Invoke();
     }
 
     private void SelectCaster(Character character)
@@ -63,7 +46,13 @@ public class SkillsMenuPage : MenuPage
         if (character.Skills.Length == 0)
             return;
 
+        m_selectedCaster = character;
         EnterSection(m_skillSelectionSection);
+    }
+
+    public void ReleaseCaster()
+    {
+        OnCasterReleased?.Invoke();
     }
 
     private void SelectSkill(Skill skill)
@@ -71,26 +60,37 @@ public class SkillsMenuPage : MenuPage
         if (skill == null || !skill.UsableInMenu || !m_selectedCaster.HasEnoughMana(skill.ManaCost))
             return;
 
-        m_selectedSkill = skill;
+        m_selectedSkill = skill;     
+        m_targetSelecter.SetApplicableToSelectable(banner => skill.Effects.Any(effect => effect.CanApply(banner.Character)));
         
-        //TODO: event
-        //m_targetSelectionSection.UpdateSelectabilityOfContent(banner => skill.Effects.Any(effect => effect.CanApply(banner.Character)));
+        if(m_selectedSkill.TargetingType == ETargetingTypes.AllAllies)
+            m_targetSelecter.SelectAll();
+
         EnterSection(m_targetSelectionSection);
     }
 
     private void SelectTarget(Character character)
     {
-        if(character == null) 
-            return;
-
-        m_skillExecutor.Cast(m_selectedSkill, character, m_selectedCaster);
-        
-        //TODO: event
-        //m_targetSelectionSection.UpdateSelectabilityOfContent(banner => m_selectedSkill.Effects.Any(effect => effect.CanApply(banner.Character)));
+        CastSkill(character, m_selectedSkill, m_selectedCaster);    
+        m_targetSelecter.SetApplicableToSelectable(banner => m_selectedSkill.Effects.Any(effect => effect.CanApply(banner.Character)));
 
         if (!m_selectedCaster.HasEnoughMana(m_selectedSkill.ManaCost))
         {
             TryExitCurrentSection();
+        }
+    }
+
+    private void CastSkill(Character character, Skill skill, Character caster)
+    {
+        if (skill.TargetingType == ETargetingTypes.SingleAlly)
+        {
+            Logger.Log($"Using {skill.Name} on {character.Name}", m_logProfile);
+            m_skillExecutor.Cast(skill, character, caster);
+        }
+        else
+        {
+            Logger.Log($"Using {skill.Name} on all party members", m_logProfile);
+            m_skillExecutor.Cast(skill, ObjectResolver.Instance.Resolve<PartyData>().GetAllPartyMembers(), caster);
         }
     }
 }

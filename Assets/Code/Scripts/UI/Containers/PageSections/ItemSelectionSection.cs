@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ItemSelectionSection : UIListSelectionSection<InventoryItemUI, InventoryItemGenerator, InventoryEntry, InventoryData>
     ,IHandleOnConfirm, IHandleOnBack, IHandlePageLeftLv1, IHandlePageRightLv1
@@ -11,8 +12,8 @@ public class ItemSelectionSection : UIListSelectionSection<InventoryItemUI, Inve
     [Header("Animations")][SerializeField]
     private Animator m_sectionAnim;
 
-    [SerializeField]
-    private AnimatedMover m_bodyMover;
+    [Space][SerializeField]
+    private UnityEvent OnEnter;
 
     protected override void OnEnable()
     {
@@ -35,9 +36,7 @@ public class ItemSelectionSection : UIListSelectionSection<InventoryItemUI, Inve
 
     public override UniTask EnterSection()
     {
-        if(m_bodyMover != null)
-            m_bodyMover.MoveOut();
-
+        OnEnter?.Invoke();
         m_sectionAnim.SetBool("CharSection", false);
         m_selecter.SelectCurrent();
         return default;

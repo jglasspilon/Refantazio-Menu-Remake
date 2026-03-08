@@ -51,7 +51,7 @@ public class CharacterHeadshotDisplay : MonoBehaviour
         m_visible = true;
         m_headshot.sprite = m_character.Profile;
         m_footerMover.gameObject.SetActive(true);
-        m_anim.MoveIn();
+        m_anim.MoveInAsync();
         m_fader.FadeIn();
     }
 
@@ -62,7 +62,7 @@ public class CharacterHeadshotDisplay : MonoBehaviour
 
         m_visible = false;
         m_footerMover.gameObject.SetActive(false);
-        m_anim.MoveOut();
+        m_anim.MoveOutAsync();
         m_fader.FadeOut();
     }
 

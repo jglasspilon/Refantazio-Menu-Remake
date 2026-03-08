@@ -30,14 +30,28 @@ public class AnimatedMover : MonoBehaviour
         m_isInitialized = true;
     }
 
-    public async UniTask MoveIn()
+    public void MoveIn()
+    {
+        cts?.Cancel();
+        cts = new CancellationTokenSource();
+        LerpPosition(m_targetX, m_targetY, cts.Token);
+    }
+
+    public async UniTask MoveInAsync()
     {
         cts?.Cancel();
         cts = new CancellationTokenSource();
         await LerpPosition(m_targetX, m_targetY, cts.Token);
     }
 
-    public async UniTask MoveOut()
+    public void MoveOut()
+    {
+        cts?.Cancel();
+        cts = new CancellationTokenSource();
+        LerpPosition(m_startX, m_startY, cts.Token);
+    }
+
+    public async UniTask MoveOutAsync()
     {
         cts?.Cancel();
         cts = new CancellationTokenSource();

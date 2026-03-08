@@ -7,10 +7,10 @@ public class ItemSelecter : UIObjectSelecter<InventoryItemUI>
     protected override void Awake()
     {
         base.Awake();
-        m_parentSection.OnConfirm += HandleOnConfirm;
+        m_parentSection.OnConfirm += SelectItem;
     }
 
-    public void HandleOnConfirm()
+    public void SelectItem()
     {
         OnItemSelected?.Invoke(SelectedObject.InventoryEntry);
     }
