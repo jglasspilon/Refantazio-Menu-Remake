@@ -10,8 +10,10 @@ public abstract class UIListSelectionSection<T, TGenerater, TData, TModel>: Page
     [Header("List Creation & Display:")][SerializeField]
     protected TGenerater m_generater;
 
-    protected UIObjectSelecter<T> m_selecter = new UIObjectSelecter<T>();
-    protected int m_selectedIndex;
+    [SerializeField]
+    protected UIObjectSelecter<T> m_selecter;
+
+    protected int m_selectedIndex; //TODO: remove
     protected TModel m_dataModel;
     protected AssetPoolManager m_assetPool;
 

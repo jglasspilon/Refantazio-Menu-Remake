@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MenuPage : MonoBehaviour
+public class MenuPage : MonoBehaviour
 {
     public event Action OnOpening, OnOpened, OnClosing, OnClosed;
 

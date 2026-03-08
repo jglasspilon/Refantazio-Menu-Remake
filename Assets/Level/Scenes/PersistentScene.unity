@@ -18565,6 +18565,7 @@ GameObject:
   m_Component:
   - component: {fileID: 607615939}
   - component: {fileID: 607615940}
+  - component: {fileID: 607615941}
   m_Layer: 5
   m_Name: TargetSelectionSection
   m_TagString: Untagged
@@ -18600,7 +18601,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelectionSection
   m_generater: {fileID: 2064096886}
+  m_selecter: {fileID: 607615941}
   m_generateCharactersOnEnable: 0
+--- !u!114 &607615941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607615938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b4e121967f300141aed3b84a2ba00c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterSelecter
 --- !u!1 &614710669
 GameObject:
   m_ObjectHideFlags: 0
@@ -19893,6 +19907,7 @@ GameObject:
   m_Component:
   - component: {fileID: 637803072}
   - component: {fileID: 637803073}
+  - component: {fileID: 637803074}
   m_Layer: 5
   m_Name: CasterSelectionSection
   m_TagString: Untagged
@@ -19928,8 +19943,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelectionSection_Skills
   m_generater: {fileID: 2064096886}
+  m_selecter: {fileID: 637803074}
   m_generateCharactersOnEnable: 1
   m_parentPage: {fileID: 495902890}
+--- !u!114 &637803074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637803071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b4e121967f300141aed3b84a2ba00c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterSelecter
 --- !u!1 &638284110
 GameObject:
   m_ObjectHideFlags: 0
@@ -28066,14 +28094,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 889038901}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29940b1f3ab4fea49821e13047e8d6a3, type: 3}
+  m_Script: {fileID: 11500000, guid: f78bc25814380504cb47ffd64b655adc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PartyMenuPage
+  m_EditorClassIdentifier: Assembly-CSharp::MenuPage
   m_pageName: 4
   m_defaultSection: {fileID: 1425288050}
   m_anim: {fileID: 889038903}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
-  m_characterSelectionSection: {fileID: 1425288050}
 --- !u!1 &897804609
 GameObject:
   m_ObjectHideFlags: 0
@@ -31008,6 +31035,7 @@ GameObject:
   m_Component:
   - component: {fileID: 958214361}
   - component: {fileID: 958214362}
+  - component: {fileID: 958214363}
   m_Layer: 5
   m_Name: SkillSelectionSection
   m_TagString: Untagged
@@ -31043,8 +31071,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillsSelectionsSection
   m_generater: {fileID: 662219997}
+  m_selecter: {fileID: 958214363}
   m_parentPage: {fileID: 495902890}
   m_sectionAnim: {fileID: 2130971031}
+--- !u!114 &958214363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958214360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9702b817e01946546a0ada9e11cbd8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillSelecter
 --- !u!1 &962229270
 GameObject:
   m_ObjectHideFlags: 0
@@ -49149,6 +49190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1425288049}
   - component: {fileID: 1425288050}
+  - component: {fileID: 1425288051}
   m_Layer: 5
   m_Name: CharacterSelectionSection
   m_TagString: Untagged
@@ -49184,7 +49226,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelectionSection_Party
   m_generater: {fileID: 499684304}
+  m_selecter: {fileID: 1425288051}
   m_generateCharactersOnEnable: 1
+--- !u!114 &1425288051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425288048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedd036f26476b249ac13d46c795b643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartyFormationSelecter
 --- !u!1 &1427514621
 GameObject:
   m_ObjectHideFlags: 0
@@ -49479,6 +49534,7 @@ GameObject:
   - component: {fileID: 1439618493}
   - component: {fileID: 1439618494}
   - component: {fileID: 1439618495}
+  - component: {fileID: 1439618496}
   m_Layer: 5
   m_Name: ItemSection
   m_TagString: Untagged
@@ -49514,6 +49570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSelectionSection
   m_generater: {fileID: 1098406049}
+  m_selecter: {fileID: 1439618496}
   m_framer: {fileID: 396857450}
   m_currentCategory: 0
   m_categoryCycler: {fileID: 1439618495}
@@ -49532,6 +49589,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryCategoryCycler
   m_category: 0
+--- !u!114 &1439618496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439618492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfed8ff00d521294784b2b18a710f17a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemSelecter
 --- !u!1 &1440515131
 GameObject:
   m_ObjectHideFlags: 0
@@ -54088,6 +54157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1621017953}
   - component: {fileID: 1621017954}
+  - component: {fileID: 1621017955}
   m_Layer: 5
   m_Name: CharacterSection
   m_TagString: Untagged
@@ -54123,10 +54193,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelectionSection_ItemsTarget
   m_generater: {fileID: 111305878}
+  m_selecter: {fileID: 1621017955}
   m_generateCharactersOnEnable: 1
   m_allSelectionSplotch: {fileID: 1637919827}
   m_sectionAnim: {fileID: 2137399057}
   m_bodyMover: {fileID: 502560001}
+--- !u!114 &1621017955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621017952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b4e121967f300141aed3b84a2ba00c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterSelecter
 --- !u!1 &1626679475
 GameObject:
   m_ObjectHideFlags: 0

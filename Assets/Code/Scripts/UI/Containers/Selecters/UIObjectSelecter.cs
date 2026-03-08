@@ -1,9 +1,7 @@
-using Cysharp.Threading.Tasks;
 using System;
-using System.Linq;
 using UnityEngine;
 
-public class UIObjectSelecter<T> where T: MonoBehaviour, ISelectable 
+public class UIObjectSelecter<T>: MonoBehaviour where T: MonoBehaviour, ISelectable 
 {
     private T m_selectedObject;    
     private T[] m_objects;
