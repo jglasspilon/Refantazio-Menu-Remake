@@ -14,6 +14,8 @@ public abstract class UIListSelectionSection<T, TGenerater, TData, TModel>: Page
     protected TModel m_dataModel;
     protected AssetPoolManager m_assetPool;
 
+    public UIObjectSelecter<T> Selecter => m_selecter;
+
     protected virtual void OnEnable()
     {
         if (m_assetPool == null)
@@ -51,7 +53,7 @@ public abstract class UIListSelectionSection<T, TGenerater, TData, TModel>: Page
     public void RemoveCurrentSelection()
     {
         T[] updatedList = m_generater.RemoveGeneratedObject(m_selecter.SelectedObject);
-        m_selecter.UpdateObjectsAndReturnIndex(updatedList);
+        m_selecter.UpdateObjects(updatedList);
     }
 
     protected abstract void GenerateUIContent();

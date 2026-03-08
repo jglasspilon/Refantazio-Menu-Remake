@@ -8,7 +8,6 @@ public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, 
 {
     [SerializeField]
     private bool m_generateCharactersOnEnable;
-    public event Action<Character> OnCharacterSelected;
 
     protected override void OnEnable()
     {
@@ -17,7 +16,7 @@ public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, 
         if (m_generateCharactersOnEnable)
             GenerateUIContent();
         else
-            m_selecter.UpdateObjectsAndReturnIndex(m_generater.GetGeneratedContent());
+            m_selecter.UpdateObjects(m_generater.GetGeneratedContent());
     }
     
     public override UniTask EnterSection()
@@ -50,13 +49,6 @@ public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, 
 
         Character[] charactersToGenerate = m_dataModel.GetAllPartyMembers();
         var characterBanners = m_generater.GenerateContent(charactersToGenerate);
-        m_selecter.UpdateObjectsAndReturnIndex(characterBanners);
-    }
-
-    //TODO: apply to selecter
-    public override void HandleOnConfirm()
-    {
-        base.HandleOnConfirm();
-        OnCharacterSelected?.Invoke(m_selecter.SelectedObject.Character);
+        m_selecter.UpdateObjects(characterBanners);
     }
 }

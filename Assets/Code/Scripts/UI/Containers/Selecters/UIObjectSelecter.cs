@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(PageSection))]
 [DisallowMultipleComponent]
@@ -7,6 +8,9 @@ public class UIObjectSelecter<T>: MonoBehaviour where T: MonoBehaviour, ISelecta
 {
     [SerializeField]
     private bool m_reverseOrder;
+
+    [Space][SerializeField]
+    private UnityEvent<GameObject> m_onSelectedObjectChanged;
 
     private T m_selectedObject;    
     private T[] m_objects;
@@ -16,6 +20,7 @@ public class UIObjectSelecter<T>: MonoBehaviour where T: MonoBehaviour, ISelecta
 
     public event Action<T> OnSelectedObjectChanged;
     public T SelectedObject => m_selectedObject;
+    public bool AllSelected => m_allSelected;
 
     protected virtual void Awake()
     {
@@ -61,7 +66,7 @@ public class UIObjectSelecter<T>: MonoBehaviour where T: MonoBehaviour, ISelecta
         Select(m_selectedIndex + 1);
     }
 
-    public void UpdateObjectsAndReturnIndex(T[] items)
+    public void UpdateObjects(T[] items)
     {
         if (items == null || items.Length == 0)
             return;
@@ -82,19 +87,12 @@ public class UIObjectSelecter<T>: MonoBehaviour where T: MonoBehaviour, ISelecta
         m_selectedObject = m_objects[m_selectedIndex];
         m_selectedObject.SetAsSelected(true);
         OnSelectedObjectChanged?.Invoke(m_selectedObject);
+        m_onSelectedObjectChanged?.Invoke(m_selectedObject.gameObject);
     }
 
     public void SelectAll()
     {
         m_allSelected = true;
-
-        if (m_objects == null)
-            return;
-
-        foreach (T obj in m_objects)
-        {
-            obj.SetAsSelected(true);
-        }
     }
 
     public void UnselectAll()

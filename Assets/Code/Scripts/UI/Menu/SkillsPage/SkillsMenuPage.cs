@@ -31,8 +31,8 @@ public class SkillsMenuPage : MenuPage
         m_casterSelecter.OnSelectedObjectChanged += HandleOnCharacterToDisplayChanged;
         m_targetSelecter.OnSelectedObjectChanged += HandleOnCharacterToDisplayChanged;
         m_skillSelectionSection.OnSkillSelected += SelectSkill;
-        m_casterSelectionSection.OnCharacterSelected += SelectCaster;
-        m_targetSelectionSection.OnCharacterSelected += SelectTarget;
+        m_casterSelecter.OnCharacterSelected += SelectCaster;
+        m_targetSelecter.OnCharacterSelected += SelectTarget;
     }
 
     private void OnDestroy()
@@ -40,8 +40,8 @@ public class SkillsMenuPage : MenuPage
         m_casterSelecter.OnSelectedObjectChanged -= HandleOnCharacterToDisplayChanged;
         m_targetSelecter.OnSelectedObjectChanged -= HandleOnCharacterToDisplayChanged;
         m_skillSelectionSection.OnSkillSelected -= SelectSkill;
-        m_casterSelectionSection.OnCharacterSelected -= SelectCaster;
-        m_targetSelectionSection.OnCharacterSelected -= SelectTarget;
+        m_casterSelecter.OnCharacterSelected -= SelectCaster;
+        m_targetSelecter.OnCharacterSelected -= SelectTarget;
     }
 
     public void HandleOnCharacterToDisplayChanged(CharacterBanner characterBanner)

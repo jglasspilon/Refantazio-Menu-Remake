@@ -13178,8 +13178,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -9.1446}
-  m_SizeDelta: {x: -7.5973, y: -18.28915}
+  m_AnchoredPosition: {x: 0, y: -4.7061}
+  m_SizeDelta: {x: -7.5973, y: -9.4122}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &396857449
 CanvasRenderer:
@@ -18619,6 +18619,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelecter
   m_reverseOrder: 0
+  m_onSelectedObjectChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &614710669
 GameObject:
   m_ObjectHideFlags: 0
@@ -19963,6 +19966,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelecter
   m_reverseOrder: 0
+  m_onSelectedObjectChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &638284110
 GameObject:
   m_ObjectHideFlags: 0
@@ -31092,6 +31098,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillSelecter
   m_reverseOrder: 0
+  m_onSelectedObjectChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &962229270
 GameObject:
   m_ObjectHideFlags: 0
@@ -37229,14 +37238,14 @@ MonoBehaviour:
   - m_item: {fileID: 11400000, guid: 8f06324239e13e043950f972333b48ca, type: 2}
     m_count: 1
     m_isNew: 1
-  - m_item: {fileID: 11400000, guid: 44c899c730d2dae41a89ed3bcda8d8f4, type: 2}
-    m_count: 1
-    m_isNew: 1
   - m_item: {fileID: 11400000, guid: 75d897a6a65dc0c47ad01f7d278b590e, type: 2}
     m_count: 1
     m_isNew: 1
   - m_item: {fileID: 11400000, guid: 52bcd221f7586b546b34e146a049f406, type: 2}
     m_count: 3
+    m_isNew: 1
+  - m_item: {fileID: 11400000, guid: 44c899c730d2dae41a89ed3bcda8d8f4, type: 2}
+    m_count: 1
     m_isNew: 1
 --- !u!1001 &1155849957
 PrefabInstance:
@@ -49232,6 +49241,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartyFormationSelecter
   m_reverseOrder: 0
+  m_onSelectedObjectChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1425288052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49578,8 +49590,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSelectionSection
   m_generater: {fileID: 1098406049}
   m_selecter: {fileID: 1439618496}
-  m_framer: {fileID: 396857450}
-  m_currentCategory: 0
   m_categoryCycler: {fileID: 1439618495}
   m_sectionAnim: {fileID: 2137399057}
   m_bodyMover: {fileID: 502560001}
@@ -49595,7 +49605,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940d5a1ce46998e429ac8dd179ff6aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryCategoryCycler
-  m_category: 0
 --- !u!114 &1439618496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49609,6 +49618,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSelecter
   m_reverseOrder: 0
+  m_onSelectedObjectChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 396857450}
+        m_TargetAssemblyTypeName: ContentFramer, Assembly-CSharp
+        m_MethodName: EnsureVisible
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1440515131
 GameObject:
   m_ObjectHideFlags: 0
@@ -54219,6 +54243,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelecter
   m_reverseOrder: 0
+  m_onSelectedObjectChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1626679475
 GameObject:
   m_ObjectHideFlags: 0
@@ -61194,8 +61221,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 2.8475952}
-  m_SizeDelta: {x: 0, y: 18.883}
+  m_AnchoredPosition: {x: 0, y: -3.296997}
+  m_SizeDelta: {x: 0, y: 6.5939}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1754565529
 MonoBehaviour:

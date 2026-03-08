@@ -64,7 +64,7 @@ public class SkillsSelectionsSection : UIListSelectionSection<MenuSkill, MenuSki
         Skill[] skillsToGenerate = m_displayedCaster == null ? Array.Empty<Skill>() : m_displayedCaster.Skills;
         var generatedItems = m_generater.GenerateContent(skillsToGenerate);
         generatedItems.ForEach(x => x.InjectCharacter(m_displayedCaster));
-        m_selecter.UpdateObjectsAndReturnIndex(generatedItems);
+        m_selecter.UpdateObjects(generatedItems);
     }
 
     private void HandleOnDisplayedCasterChanged(Character newCaster)

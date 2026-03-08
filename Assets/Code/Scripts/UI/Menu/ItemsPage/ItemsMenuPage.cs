@@ -1,29 +1,33 @@
-using Cysharp.Threading.Tasks;
-using System;
 using System.Linq;
 using UnityEngine;
 
 public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
 {
-    [SerializeField]
+    [Header("Item Section:")][SerializeField]
     private ItemSelectionSection m_itemSelectionSection;
 
     [SerializeField]
-    private CharacterSelectionSection_ItemsTarget m_characterSelectionSection;
+    private ItemSelecter m_itemSelecter;
+
+    [Header("Character Section:")][SerializeField]
+    private CharacterSelectionSection m_characterSelectionSection;
+
+    [SerializeField]
+    private CharacterSelecter m_characterSelecter;
 
     private InventoryEntry m_selectedItem;
-    private ItemExecutor m_itemExecutor = new ItemExecutor();
+    private readonly ItemExecutor m_itemExecutor = new ItemExecutor();
 
     private void Awake()
     {
-        m_itemSelectionSection.OnItemSelected += SelectItem;
-        m_characterSelectionSection.OnCharacterSelected += SelectCharacter;
+        m_itemSelecter.OnItemSelected += SelectItem;
+        m_characterSelecter.OnCharacterSelected += SelectCharacter;
     }
 
     private void OnDestroy()
     {
-        m_itemSelectionSection.OnItemSelected -= SelectItem;
-        m_characterSelectionSection.OnCharacterSelected -= SelectCharacter;
+        m_itemSelecter.OnItemSelected -= SelectItem;
+        m_characterSelecter.OnCharacterSelected -= SelectCharacter;
     }
 
     public void SelectItem(InventoryEntry item)
@@ -35,11 +39,10 @@ public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
 
         if(usable.TargetingType == ETargetingTypes.AllAllies || usable.TargetingType == ETargetingTypes.All)
         {
-            m_characterSelectionSection.SelectAll();
+            m_characterSelecter.SelectAll();
         }
 
-        //TODO: event
-        //m_characterSelectionSection.UpdateSelectabilityOfContent(banner => usable.Effects.Any(effect => effect.CanApply(banner.Character)));
+        m_characterSelecter.SetApplicableToSelectable(banner => usable.Effects.Any(effect => effect.CanApply(banner.Character)));
         EnterSection(m_characterSelectionSection);
     }
 
@@ -70,7 +73,6 @@ public class ItemsMenuPage : MenuPage, IItemSelectable, ICharacterSelectable
             m_itemExecutor.Use(item, ObjectResolver.Instance.Resolve<PartyData>().GetAllPartyMembers());
         }
 
-        //TODO: event
-        //m_characterSelectionSection.UpdateSelectabilityOfContent(banner => usable.Effects.Any(effect => effect.CanApply(banner.Character)));
+        m_characterSelecter.SetApplicableToSelectable(banner => usable.Effects.Any(effect => effect.CanApply(banner.Character)));
     }
 }

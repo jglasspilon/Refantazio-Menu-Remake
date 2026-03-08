@@ -14,30 +14,18 @@ public class CharacterSelectionSection_ItemsTarget: CharacterSelectionSection
     [SerializeField]
     private AnimatedMover m_bodyMover;
 
-    private bool m_selectedAll;
-
     public override UniTask EnterSection()
     {
-        if(m_bodyMover != null)
-            m_bodyMover.MoveIn();
-
-        if(m_sectionAnim != null)
-            m_sectionAnim.SetBool("CharSection", true);
-
-        if (m_allSelectionSplotch != null)
-            m_allSelectionSplotch.SetActive(m_selectedAll);
-
+        m_bodyMover.MoveIn();
+        m_sectionAnim.SetBool("CharSection", true);
+        m_allSelectionSplotch.SetActive(m_selecter.AllSelected);
         return base.EnterSection();
     }
 
     public override UniTask ExitSection()
     {
-        m_selectedAll = false;
+        m_allSelectionSplotch.SetActive(false);
+        m_selecter.UnselectAll();
         return base.ExitSection();
-    }
-
-    public void SelectAll()
-    {
-        m_selectedAll = true;
     }
 }

@@ -2,22 +2,30 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(PageSection))]
+[DisallowMultipleComponent]
 public class InventoryCategoryCycler: MonoBehaviour
 {
-    public event Action<EItemCategories> OnCategoryChanged;
-
-    [SerializeField][ReadOnly]
+    private PageSection m_parentSection;
     private EItemCategories m_category = EItemCategories.Usable;
-
     private InventoryData m_data;
     private int m_selectedCategoryIndex;
     private readonly int CATEGORIES_COUNT = Enum.GetValues(typeof(EItemCategories)).Length;
 
+    public event Action<EItemCategories> OnCategoryChanged;
+
     public EItemCategories Category => m_category;
 
-    public void InitializeInventoryData(InventoryData data)
+    private void Awake()
     {
-        m_data = data;
+        m_parentSection = GetComponent<PageSection>();
+        m_parentSection.OnPageLeftLv1 += CycleCategoryLeft;
+        m_parentSection.OnPageRightLv1 += CycleCategoryRight;
+    }
+
+    private void OnEnable()
+    {
+        m_data = ObjectResolver.Instance.Resolve<InventoryData>();
     }
 
     public void ResetSelection()
@@ -26,7 +34,17 @@ public class InventoryCategoryCycler: MonoBehaviour
         m_category = EItemCategories.Usable;
     }
 
-    public void CycleCategory(int amount, bool cycle)
+    private void CycleCategoryLeft()
+    {
+        CycleCategory(-1, true);
+    }
+
+    private void CycleCategoryRight()
+    {
+        CycleCategory(1, true);
+    }
+
+    private void CycleCategory(int amount, bool cycle)
     {
         if(m_data.GetAllItems(EItemCategories.All).Where(x => x.Count > 0).Count() == 0)
         {
@@ -36,18 +54,18 @@ public class InventoryCategoryCycler: MonoBehaviour
         m_selectedCategoryIndex = Helper.Arrays.GetSafeIndex(m_selectedCategoryIndex + amount, CATEGORIES_COUNT, cycle);
         m_category = (EItemCategories)m_selectedCategoryIndex;
 
-        if(m_category == EItemCategories.All)
+        if(m_category == EItemCategories.All) //Skip all category
         {
             CycleCategory(amount, cycle);
             return;
         }
 
-        if (m_data.GetAllItems(m_category).Where(x => x.Count > 0).Count() > 0)
+        if (m_data.GetAllItems(m_category).Where(x => x.Count > 0).Count() == 0) //Skip empty category
         {
-            OnCategoryChanged?.Invoke(m_category);
+            CycleCategory(amount, cycle);            
             return;
         }
 
-        CycleCategory(amount, cycle);
+        OnCategoryChanged?.Invoke(m_category);
     }
 }

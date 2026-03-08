@@ -5,15 +5,6 @@ using UnityEngine;
 public class ItemSelectionSection : UIListSelectionSection<InventoryItemUI, InventoryItemGenerator, InventoryEntry, InventoryData>
     ,IHandleOnConfirm, IHandleOnBack, IHandlePageLeftLv1, IHandlePageRightLv1
 {
-    public event Action<InventoryEntry> OnItemSelected;
-
-    [SerializeField]
-    private ContentFramer m_framer;
-
-    [Header("Category Management")]
-    [SerializeField]
-    private EItemCategories m_currentCategory;
-
     [SerializeField]
     private InventoryCategoryCycler m_categoryCycler;
 
@@ -21,7 +12,7 @@ public class ItemSelectionSection : UIListSelectionSection<InventoryItemUI, Inve
     private Animator m_sectionAnim;
 
     [SerializeField]
-    private AnimatedMover m_bodyMover;   
+    private AnimatedMover m_bodyMover;
 
     protected override void OnEnable()
     {
@@ -30,11 +21,8 @@ public class ItemSelectionSection : UIListSelectionSection<InventoryItemUI, Inve
 
         if (m_categoryCycler != null)
         {
-            m_categoryCycler.InitializeInventoryData(m_dataModel);
             m_categoryCycler.OnCategoryChanged += OnCategoryChanged;
         }
-
-        m_selecter.OnSelectedObjectChanged += FrameSelectedItem;
     }
 
     private void OnDisable()
@@ -43,8 +31,6 @@ public class ItemSelectionSection : UIListSelectionSection<InventoryItemUI, Inve
         {
             m_categoryCycler.OnCategoryChanged -= OnCategoryChanged;
         }
-
-        m_selecter.OnSelectedObjectChanged -= FrameSelectedItem;
     }
 
     public override UniTask EnterSection()
@@ -78,44 +64,15 @@ public class ItemSelectionSection : UIListSelectionSection<InventoryItemUI, Inve
             return;
         }
 
-        InventoryEntry[] itemsToGenerate = m_dataModel.GetAllItems(m_currentCategory);
+        InventoryEntry[] itemsToGenerate = m_dataModel.GetAllItems(m_categoryCycler.Category);
         var generatedItems = m_generater.GenerateContent(itemsToGenerate);
-        m_selecter.UpdateObjectsAndReturnIndex(generatedItems);
-    }
-
-    private void FrameSelectedItem(InventoryItemUI selectedItem)
-    {
-        m_framer.EnsureVisible(selectedItem.GetComponent<RectTransform>());
+        m_selecter.UpdateObjects(generatedItems);
+        m_selecter.SelectCurrent();
     }
 
     private void OnCategoryChanged(EItemCategories category)
     {
-        m_currentCategory = category;
+        m_selecter.ResetSelecter();
         GenerateUIContent();
     }
-
-    //TODO: apply in item selecter ---
-    public override void HandleOnConfirm()
-    {
-        base.HandleOnConfirm();
-        OnItemSelected?.Invoke(m_selecter.SelectedObject.InventoryEntry);
-    }
-
-    public override void HandleOnBack()
-    {
-        base.HandleOnBack();
-        OnItemSelected?.Invoke(null);
-    }
-
-    public override void HandleOnPageLeftLv1()
-    {
-        m_categoryCycler.CycleCategory(-1, true);
-        m_selecter.ResetSelecter();
-    }
-
-    public override void HandleOnPageRightLv1()
-    {
-        m_categoryCycler.CycleCategory(1, true);
-        m_selecter.ResetSelecter();
-    }    
 }

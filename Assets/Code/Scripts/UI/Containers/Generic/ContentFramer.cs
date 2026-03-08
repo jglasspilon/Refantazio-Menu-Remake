@@ -15,8 +15,10 @@ public class ContentFramer: MonoBehaviour
     [SerializeField]
     private float m_horizontalFactor;
 
-    public void EnsureVisible(RectTransform target)
+    public void EnsureVisible(GameObject targetGO)
     {
+        RectTransform target = targetGO.GetComponent<RectTransform>();
+
         if (m_scrollRect == null || m_viewport == null || target == null)
             return;
 
@@ -40,13 +42,13 @@ public class ContentFramer: MonoBehaviour
         if (aboveTop)
         {
             ScrollByDelta(m_nudgeAmount);
-            EnsureVisible(target);
+            EnsureVisible(targetGO);
         }
         // If below the bottom, nudge downward (positive vertical delta)
         else if (belowBottom)
         {
             ScrollByDelta(-m_nudgeAmount);
-            EnsureVisible(target);
+            EnsureVisible(targetGO);
         }
     }
 
