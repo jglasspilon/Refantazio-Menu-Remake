@@ -4,10 +4,8 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public class Stat
+public class Stat: ObservableProperty<int>
 {
-    public event Action<Stat> OnValueChange;
-
     [SerializeField]
     private EStatType m_type;
     
@@ -21,36 +19,41 @@ public class Stat
     public int LevelValue => m_levelValue;
 
     public EStatType Type => m_type;
-    public int Value => Mathf.Clamp(m_baseValue + m_levelValue + m_modifiers.Sum(x => x.Amount), 0, 99);
 
     public Stat(EStatType type, int baseValue)
     {
         m_type = type;
         m_baseValue = baseValue;
+        Recalculate();
     }
 
     public void AddToBase(int amount)
     {
         m_baseValue += amount;
-        OnValueChange?.Invoke(this);
+        Recalculate();
     }
 
     public void ApplyLevel(int amount)
     {
         m_levelValue += amount;
-        OnValueChange?.Invoke(this);
+        Recalculate();
     }
 
     public void AddModifier(StatModifier modifier)
     {
         m_modifiers.Add(modifier);
-        OnValueChange?.Invoke(this);
+        Recalculate();
     }
 
     public void RemoveModifier(StatModifier modifier)
     {
         m_modifiers.Remove(modifier);
-        OnValueChange?.Invoke(this);
+        Recalculate();
+    }
+
+    private void Recalculate()
+    {
+        Value = Mathf.Clamp(m_baseValue + m_levelValue + m_modifiers.Sum(x => x.Amount), 0, 99);
     }
 }
 

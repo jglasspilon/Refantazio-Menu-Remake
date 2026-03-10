@@ -9,7 +9,7 @@ public class ObservableProperty<T>: IObservableProperty
 
     public event Action<T> OnChanged;
 
-    public T Value
+    public virtual T Value
     {
         get => m_value;
         set
@@ -20,6 +20,11 @@ public class ObservableProperty<T>: IObservableProperty
                 OnChanged?.Invoke(m_value);
             }
         }
+    }
+
+    protected void Notify()
+    {
+        OnChanged?.Invoke(Value);
     }
 
     public Type ValueType => typeof(T);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Resource: IObservableProperty, ISubPropertyProvider
+public class Resource: ISubPropertyProvider
 {
     public event Action<Resource, int> OnResourceChange;
     public event Action<bool> OnEmpty;

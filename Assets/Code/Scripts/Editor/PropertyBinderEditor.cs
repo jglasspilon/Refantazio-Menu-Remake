@@ -3,7 +3,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-[CustomEditor(typeof(PropertyBinder<>), true)]
+[CustomEditor(typeof(PropertyBinder), true)]
 public class PropertyBinderEditor : Editor
 {
     private Type[] _providerTypes;
@@ -11,63 +11,105 @@ public class PropertyBinderEditor : Editor
 
     private int _providerIndex = 0;
     private int _propertyIndex = 0;
+    private int _selectedTypeIndex = 0;
 
-    private string[] _propertyKeys;
+    private string[] _filteredPropertyKeys = Array.Empty<string>();
+    private string[] _availableTypes = Array.Empty<string>();
 
     private SerializedProperty _propertyKeyProp;
+    private SerializedProperty _providerTypeProp;
+    private SerializedProperty _sourceTypeProp;
 
-    private Type _binderValueType;
+    private Type _selectedSourceType;
 
     private void OnEnable()
     {
         _propertyKeyProp = serializedObject.FindProperty("m_propertyKey");
-
-        _binderValueType = GetBinderValueType();
+        _providerTypeProp = serializedObject.FindProperty("m_selectedProviderType");
+        _sourceTypeProp = serializedObject.FindProperty("m_selectedSourceType");
 
         LoadProviderTypes();
+        LoadAvailableTypesForProvider();
         LoadPropertyKeysForSelectedProvider();
     }
 
-    private Type GetBinderValueType()
-    {
-        var type = target.GetType();
-
-        while (type != null)
-        {
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(PropertyBinder<>))
-                return type.GetGenericArguments()[0];
-
-            type = type.BaseType;
-        }
-
-        return null;
-    }
-
+    // ---------------------------------------------------------
+    // Provider Type Discovery
+    // ---------------------------------------------------------
     private void LoadProviderTypes()
     {
-        _providerTypes = TypeCache.GetTypesDerivedFrom<IPropertyProvider>()
-            .Where(t => !t.IsAbstract && !t.IsInterface)
-            .ToArray();
+        _providerTypes = TypeCache.GetTypesDerivedFrom<IPropertyProvider>().Where(t => !t.IsAbstract && !t.IsInterface).ToArray();
+        _providerTypeNames = _providerTypes.Select(t => t.Name).ToArray();
 
-        _providerTypeNames = _providerTypes.Length > 0
-            ? _providerTypes.Select(t => t.Name).ToArray()
-            : new[] { "No providers found" };
+        // Restore saved provider selection
+        if (!string.IsNullOrEmpty(_providerTypeProp.stringValue))
+        {
+            int idx = Array.IndexOf(_providerTypeNames, _providerTypeProp.stringValue);
+            _providerIndex = Mathf.Clamp(idx, 0, _providerTypeNames.Length - 1);
+        }
+
     }
 
+    // ---------------------------------------------------------
+    // Type Dropdown (unique ObservableProperty<T> types)
+    // ---------------------------------------------------------
+    private void LoadAvailableTypesForProvider()
+    {
+        var providerType = _providerTypes[_providerIndex];
+
+        _availableTypes = Helper.DataHandling.GetObservablePropertyTypesFromProviderType(providerType, null).Distinct().Select(MakeFriendlyTypeName).ToArray();
+
+        // Restore saved source type
+        if (!string.IsNullOrEmpty(_sourceTypeProp.stringValue))
+        {
+            int idx = Array.IndexOf(_availableTypes, _sourceTypeProp.stringValue);
+            _selectedTypeIndex = Mathf.Clamp(idx, 0, _availableTypes.Length - 1);
+        }
+
+        _selectedSourceType = ResolveType(_availableTypes[_selectedTypeIndex]);
+    }
+
+    private Type ResolveType(string typeName)
+    {
+        switch (typeName)
+        {
+            case "Int32":
+            case "int": return typeof(int);
+            case "Single":
+            case "float": return typeof(float);
+            case "Boolean":
+            case "bool": return typeof(bool);
+        }
+
+        return AppDomain.CurrentDomain
+            .GetAssemblies()
+            .SelectMany(a => a.GetTypes())
+            .FirstOrDefault(t => t.Name == typeName);
+    }
+
+    // ---------------------------------------------------------
+    // Property Key Filtering
+    // ---------------------------------------------------------
     private void LoadPropertyKeysForSelectedProvider()
     {
         if (_providerTypes.Length == 0)
         {
-            _propertyKeys = Array.Empty<string>();
+            _filteredPropertyKeys = Array.Empty<string>();
             return;
         }
 
         var providerType = _providerTypes[_providerIndex];
 
-        _propertyKeys = Helper.DataHandling.GetObservablePropertyNamesFromType(providerType, _binderValueType).ToArray();
-        _propertyIndex = Mathf.Max(0, Array.IndexOf(_propertyKeys, _propertyKeyProp.stringValue));
+        _filteredPropertyKeys = Helper.DataHandling
+            .GetObservablePropertyNamesFromType(providerType, _selectedSourceType)
+            .ToArray();
+
+        _propertyIndex = Mathf.Max(0, Array.IndexOf(_filteredPropertyKeys, _propertyKeyProp.stringValue));
     }
 
+    // ---------------------------------------------------------
+    // Inspector GUI
+    // ---------------------------------------------------------
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
@@ -75,38 +117,64 @@ public class PropertyBinderEditor : Editor
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Binding", EditorStyles.boldLabel);
 
-        // Provider type dropdown
+        // Provider dropdown
         int newProviderIndex = EditorGUILayout.Popup("Provider Type", _providerIndex, _providerTypeNames);
+        _providerIndex = newProviderIndex;
+        _providerTypeProp.stringValue = _providerTypeNames[_providerIndex];
+        LoadAvailableTypesForProvider();
 
-        if (newProviderIndex != _providerIndex)
-        {
-            _providerIndex = newProviderIndex;
-            LoadPropertyKeysForSelectedProvider();
-        }
+
+        // Type dropdown
+        string[] friendlyTypes = _availableTypes.Select(MakeFriendlyTypeName).ToArray();
+        int newTypeIndex = EditorGUILayout.Popup("Property Type", _selectedTypeIndex, friendlyTypes);       
+        _selectedTypeIndex = newTypeIndex;
+        _sourceTypeProp.stringValue = _availableTypes[_selectedTypeIndex];
+        _selectedSourceType = ResolveType(_availableTypes[_selectedTypeIndex]);
+        LoadPropertyKeysForSelectedProvider();
 
         // Property key dropdown
-        EditorGUI.BeginDisabledGroup(_propertyKeys == null || _propertyKeys.Length == 0);
-
-        string[] friendlyNames = _propertyKeys.Select(k => MakeFriendly(k)).ToArray();
+        EditorGUI.BeginDisabledGroup(_filteredPropertyKeys.Length == 0);
+        string[] friendlyNames = _filteredPropertyKeys.Select(MakeFriendlyProperty).ToArray();
         int newPropertyIndex = EditorGUILayout.Popup("Property", _propertyIndex, friendlyNames);
         EditorGUI.EndDisabledGroup();
 
-        if (newPropertyIndex != _propertyIndex)
-        {
-            _propertyIndex = newPropertyIndex;
-            if (_propertyKeys.Length > 0)
-                _propertyKeyProp.stringValue = _propertyKeys[_propertyIndex];
-        }
+        _propertyIndex = newPropertyIndex;
 
-        EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Binder Settings", EditorStyles.boldLabel);
+        if (_filteredPropertyKeys.Length > 0)
+            _propertyKeyProp.stringValue = _filteredPropertyKeys[_propertyIndex];
 
-        DrawPropertiesExcluding(serializedObject, "m_propertyKey", "m_Script");
+        DrawPropertiesExcluding(serializedObject, "m_propertyKey", "m_Script", "m_selectedProviderType", "m_selectedSourceType");
         serializedObject.ApplyModifiedProperties();
     }
 
-    private string MakeFriendly(string key)
+    // ---------------------------------------------------------
+    // Friendly Name Formatter
+    // ---------------------------------------------------------
+    private string MakeFriendlyProperty(string key)
     {
-        return string.Join(" - ", key.Replace("m_", "").Split('.').Select(segment => char.ToUpper(segment[0]) + segment.Substring(1)));
+        return string.Join(" - ",
+            key.Replace("m_", "")
+               .Split('.')
+               .Select(segment => char.ToUpper(segment[0]) + segment.Substring(1)));
     }
+
+    public static string MakeFriendlyTypeName(string typeName)
+    {
+        switch (typeName)
+        {
+            case "Int32": return "int";
+            case "Single": return "float";
+            case "Boolean": return "bool";
+            case "String": return "string";
+            case "Int64": return "long";
+            case "Double": return "double";
+            case "Char": return "char";
+            case "Byte": return "byte";
+            case "Decimal": return "decimal";
+            case "Void": return "void";
+            default:
+                return typeName; 
+        }
+    }
+
 }

@@ -149,27 +149,35 @@ public static class Helper
         public static Dictionary<string, IObservableProperty> BuildPropertyMap(object root)
         {
             var map = new Dictionary<string, IObservableProperty>();
+            BuildRecursive(root, "", map);
+            return map;
+        }
 
-            if (root == null)
-                return map;
+        private static void BuildRecursive(object obj, string parentKey, Dictionary<string, IObservableProperty> map)
+        {
+            if (obj == null)
+                return;
 
             var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 
-            foreach (var field in root.GetType().GetFields(flags))
+            foreach (var field in obj.GetType().GetFields(flags))
             {
-                var value = field.GetValue(root);
+                var value = field.GetValue(obj);
+                var key = parentKey + field.Name;
 
+                // Direct observable property
                 if (value is IObservableProperty observable)
-                    map[field.Name] = observable;
+                {
+                    map[key] = observable;
+                }
 
+                // Sub-property provider (recurse)
                 if (value is ISubPropertyProvider provider)
                 {
-                    foreach (var sub in provider.GetSubProperties(field.Name))
+                    foreach (var sub in provider.GetSubProperties(key))
                         map[sub.Key] = sub.Value;
                 }
             }
-
-            return map;
         }
 
         public static IEnumerable<KeyValuePair<string, IObservableProperty>> GetObservableFields(object instance, string parentKey)
@@ -199,15 +207,25 @@ public static class Helper
 
             foreach (var field in type.GetFields(flags))
             {
-                if (field.FieldType.IsGenericType &&
-                    field.FieldType.GetGenericTypeDefinition() == typeof(ObservableProperty<>))
+                //Check for explicit Observable Property
+                if (field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(ObservableProperty<>))
                 {
                     var valueType = field.FieldType.GetGenericArguments()[0];
 
-                    if (valueType == valueTypeFilter)
+                    if (valueTypeFilter == null || valueType == valueTypeFilter)
                         yield return field.Name;
                 }
 
+                //Check for derived Observable Property
+                var baseType = field.FieldType.BaseType;
+                if (baseType != null && baseType.IsGenericType && baseType.GetGenericTypeDefinition() == typeof(ObservableProperty<>))
+                {
+                    var valueType = baseType.GetGenericArguments()[0];
+                    if (valueTypeFilter == null || valueType == valueTypeFilter)
+                        yield return field.Name;
+                }
+
+                //Check for sub properties provider recursively
                 if (typeof(ISubPropertyProvider).IsAssignableFrom(field.FieldType))
                 {
                     foreach (var sub in GetObservablePropertyNamesFromType(field.FieldType, valueTypeFilter))
@@ -215,5 +233,42 @@ public static class Helper
                 }
             }
         }
+
+        public static IEnumerable<string> GetObservablePropertyTypesFromProviderType(Type type, Type valueTypeFilter)
+        {
+            var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+            foreach (var field in type.GetFields(flags))
+            {
+                var fieldType = field.FieldType;
+
+                //Check for explicit Observable Property
+                if (fieldType.IsGenericType && fieldType.GetGenericTypeDefinition() == typeof(ObservableProperty<>))
+                {
+                    var valueType = fieldType.GetGenericArguments()[0];
+
+                    if (valueTypeFilter == null || valueType == valueTypeFilter)
+                        yield return valueType.Name;
+                }
+
+                //Check for derived Observable Property
+                var baseType = fieldType.BaseType;
+                if (baseType != null && baseType.IsGenericType && baseType.GetGenericTypeDefinition() == typeof(ObservableProperty<>))
+                {
+                    var valueType = baseType.GetGenericArguments()[0];
+
+                    if (valueTypeFilter == null || valueType == valueTypeFilter)
+                        yield return valueType.Name;
+                }
+
+                //Check for sub properties provider recursively
+                if (typeof(ISubPropertyProvider).IsAssignableFrom(fieldType))
+                {
+                    foreach (var sub in GetObservablePropertyTypesFromProviderType(fieldType, valueTypeFilter))
+                        yield return sub;
+                }
+            }
+        }
+
     }
 }

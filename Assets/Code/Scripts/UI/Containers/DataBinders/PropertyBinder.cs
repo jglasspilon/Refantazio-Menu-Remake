@@ -1,47 +1,148 @@
+using Mono.Cecil;
+using System;
+using System.Reflection;
 using UnityEngine;
 
-public abstract class PropertyBinder<T> : MonoBehaviour, IBindableToProperty
+public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
 {
+    [SerializeField] 
+    private string m_selectedProviderType;
+
+    [SerializeField] 
+    private string m_selectedSourceType;
+
     [SerializeField] 
     private string m_propertyKey;
 
     private IPropertyProvider m_source;
-    private ObservableProperty<T> m_property;
+    private object m_property;
+    private Type m_sourceType;
+    private Delegate m_handler;
 
-    public virtual void BindToProperty(IPropertyProvider provier)
+    // Cached generic methods
+    private static readonly MethodInfo s_onSourceChangedGenericMethod = typeof(PropertyBinder).GetMethod(nameof(OnSourceChangedGeneric), BindingFlags.NonPublic | BindingFlags.Instance);
+    private static readonly MethodInfo s_applyGenericMethod = typeof(PropertyBinder).GetMethod(nameof(ApplyGeneric), BindingFlags.NonPublic | BindingFlags.Instance);
+    private MethodInfo _closedApplyMethod;
+
+    public string SelectedProviderType
     {
-        if (provier == null)
+        get => m_selectedProviderType;
+
+        set 
+        {
+            #if UNITY_EDITOR
+                m_selectedProviderType = value;
+            #else
+                Debug.LogWarning("SelectedProviderType should not be modified at runtime.");
+            #endif
+        }
+
+    }
+
+    public string SelectedSourceType
+    {
+        get => m_selectedSourceType;
+
+        set 
+        {
+            #if UNITY_EDITOR
+                m_selectedSourceType = value;
+            #else
+                Debug.LogWarning("SelectedSourceType should not be modified at runtime.");
+            #endif
+        }
+    }
+
+    public virtual void BindToProperty(IPropertyProvider provider)
+    {
+        if (provider == null)
         {
             Debug.LogError($"{name}: No source assigned for binder.");
             return;
         }
 
-        m_source = provier;
+        m_source = provider;
 
-        if (!m_source.TryGetProperty(m_propertyKey, out m_property))
+        if (!m_source.TryGetRawProperty(m_propertyKey, out var raw))
         {
-            Debug.LogError($"{name}: Could not bind property '{m_propertyKey}' from {m_source.Name} of type {m_source.GetType()}.");
+            Debug.LogError($"{name}: Could not bind property '{m_propertyKey}' from {m_source.Name}.");
             return;
         }
 
-        m_property.OnChanged += HandleValueChanged;
-        HandleValueChanged(m_property.Value);
+        m_property = raw;
+
+        var propType = raw.GetType();                    
+        var genericArgs = propType.GetGenericArguments();
+        if (genericArgs == null || genericArgs.Length != 1)
+        {
+            Debug.LogError($"{name}: Property '{m_propertyKey}' is not an ObservableProperty<T>.");
+            return;
+        }
+
+        // Prepare Apply<TSource>
+        m_sourceType = genericArgs[0];
+        _closedApplyMethod = s_applyGenericMethod.MakeGenericMethod(m_sourceType);
+
+        // Subscribe to OnChanged (Action<TSource>)
+        var eventInfo = propType.GetEvent("OnChanged");
+        if (eventInfo == null)
+        {
+            Debug.LogError($"{name}: Property '{m_propertyKey}' has no OnChanged event.");
+            return;
+        }
+
+        var closedChangedMethod = s_onSourceChangedGenericMethod.MakeGenericMethod(m_sourceType);
+        m_handler = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, closedChangedMethod);
+        eventInfo.AddEventHandler(raw, m_handler);
+
+        // Apply Initial value
+        var valueProp = propType.GetProperty("Value");
+        var initialValue = valueProp.GetValue(raw);
+        OnSourceChangedGenericDynamic(initialValue);
     }
 
     public virtual void UnBind()
     {
         if (m_property == null)
             return;
-        
-        m_property.OnChanged -= HandleValueChanged;
+
+        var eventInfo = m_property.GetType().GetEvent("OnChanged");
+        if (eventInfo != null && m_handler != null)
+            eventInfo.RemoveEventHandler(m_property, m_handler);
+
         m_property = null;
+        m_handler = null;
         m_source = null;
+        m_sourceType = null;
+        _closedApplyMethod = null;
     }
 
-    private void HandleValueChanged(T newValue)
+    // Called by Action<TSource>
+    private void OnSourceChangedGeneric<TSource>(TSource newValue)
     {
-        Apply(newValue);
+        // Call Apply<TSource>(TSource)
+        _closedApplyMethod.Invoke(this, new object[] { newValue });
     }
 
-    protected abstract void Apply(T value);
+    // Used for initial value forwarding
+    private void OnSourceChangedGenericDynamic(object newValue)
+    {
+        _closedApplyMethod.Invoke(this, new object[] { newValue });
+    }
+
+    // This is the generic Apply<TSource> that concrete binders override
+    private void ApplyGeneric<TSource>(TSource value)
+    {
+        Apply(value); // Calls the correct overload in the concrete binder
+    }
+
+    /// <summary>
+    /// Concrete binders implement strongly-typed Apply(TSource) overloads.
+    /// Example:
+    ///     protected void Apply(int value) { ... }
+    ///     protected void Apply(float value) { ... }
+    ///     protected void Apply(MyEnum value) { ... }
+    /// </summary>
+    protected abstract void Apply(object value);
+
 }

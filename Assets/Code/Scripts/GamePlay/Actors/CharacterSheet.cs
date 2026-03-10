@@ -61,10 +61,8 @@ public class CharacterSheet : UniqueScriptableObject
 }
 
 [Serializable]
-public class CharacterStats
+public class CharacterStats: ISubPropertyProvider
 {
-    public event Action<Stat> OnStatChange;
-
     public Stat HP;
     public Stat MP;
     public Stat Strength;
@@ -90,8 +88,6 @@ public class CharacterStats
         Hit = new Stat(EStatType.Hit, 0);
         Defence = new Stat(EStatType.Defence, 0);
         Evasion = new Stat(EStatType.Evasion, 0);
-
-        InitializeStats();
     }
 
     public Stat GetStat(EStatType statType)
@@ -115,63 +111,53 @@ public class CharacterStats
         return null;
     }
 
-    private void InitializeStats()
+    public IEnumerable<KeyValuePair<string, IObservableProperty>> GetSubProperties(string parentKey)
     {
-        HP.OnValueChange += HandleOnStatChange;
-        MP.OnValueChange += HandleOnStatChange;
-        Strength.OnValueChange += HandleOnStatChange;
-        Magic.OnValueChange += HandleOnStatChange;
-        Endurance.OnValueChange += HandleOnStatChange;
-        Agility.OnValueChange += HandleOnStatChange;
-        Luck.OnValueChange += HandleOnStatChange;
-    }
-
-    private void HandleOnStatChange(Stat statChange)
-    {
-        OnStatChange?.Invoke(statChange);
+        return Helper.DataHandling.GetObservableFields(this, parentKey);
     }
 }
 
 [Serializable]
-public class Level
+public class Level: ObservableProperty<int>, ISubPropertyProvider
 {
     public event Action<int, int> OnLevelChange;
 
     [SerializeField]
-    private int m_value = 1;
-
-    [SerializeField]
     private Resource m_exp = new Resource(0);
 
-    public int Value => m_value;
     public Resource Exp => m_exp;
     private AnimationCurveAsset m_expCurve;
     private int m_max;
 
     public Level(int value, int max, AnimationCurveAsset expCurve)
     {
-        m_value = value;
+        Value = value;
         m_max = max;
         m_expCurve = expCurve;
         InitializeExp();
     }
 
+    public IEnumerable<KeyValuePair<string, IObservableProperty>> GetSubProperties(string parentKey)
+    {
+        return Helper.DataHandling.GetObservableFields(this, parentKey);
+    }
+
     public void InitializeExp()
     {
-        SetLevel(m_value);
+        SetLevel(Value);
     }
 
     public void AddExp(int amount, int levelDelta = 0)
     {
         int overflow = (m_exp.Current + amount) - m_exp.Max;
 
-        if (overflow < 0 || m_value == m_max)
+        if (overflow < 0 || Value == m_max)
         {
             m_exp.Apply(amount);
 
             if (levelDelta > 0)
             {
-                OnLevelChange?.Invoke(m_value, levelDelta);
+                OnLevelChange?.Invoke(Value, levelDelta);
             }
             return;
         }
@@ -182,7 +168,7 @@ public class Level
 
     public void LevelUp()
     {
-        SetLevel(m_value + 1);
+        SetLevel(Value + 1);
     }
 
     private void SetLevel(int level)
@@ -193,9 +179,9 @@ public class Level
         level = Mathf.Clamp(level, 1, m_max);
         m_exp.SetMax((int)m_expCurve.Evaluate(level), EResourceSetProcedure.Reset);
         m_exp.Apply(-m_exp.Current);
-        m_value = level;
+        Value = level;
 
-        if (m_value == m_max)
+        if (Value == m_max)
         {
             m_exp.Apply(m_exp.Max);
             return;

@@ -13,7 +13,6 @@ public class DisplayOnGuideCharacter : MonoBehaviour, IBindableToCharacter
             return;
 
         m_character = character;
-        m_character.OnTypeChange += Display;
         Display(m_character);
     }
 
@@ -22,7 +21,6 @@ public class DisplayOnGuideCharacter : MonoBehaviour, IBindableToCharacter
         if (m_character != null)
             return;
 
-        m_character.OnTypeChange -= Display;
         m_character = null;
     }
 

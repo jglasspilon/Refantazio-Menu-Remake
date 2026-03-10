@@ -1060,8 +1060,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e13e1d2ef14a7741b2e869673095789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: int
   m_propertyKey: m_mana.m_current
-  m_minDigits: 0
+  m_minDigits: 3
   m_lowStrengthForLeadingZeros: 0
 --- !u!1 &4195175310207876192
 GameObject:
@@ -1807,6 +1809,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e13e1d2ef14a7741b2e869673095789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: int
   m_propertyKey: m_health.m_current
   m_minDigits: 3
   m_lowStrengthForLeadingZeros: 0

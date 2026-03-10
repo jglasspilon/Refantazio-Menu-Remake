@@ -6,7 +6,6 @@ using UnityEngine;
 [Serializable]
 public class Character: IPropertyProvider
 {
-    public event Action<Character> OnTypeChange;
     public event Action<EBattlePosition> OnBattlePositionChange;
     public event Action<Archetype> OnArchetypeChange;
     public event Action<bool> OnDeath;
@@ -14,7 +13,7 @@ public class Character: IPropertyProvider
     public event Action OnCharacterUpdated;
 
     [SerializeField]
-    private ECharacterType m_characterType;
+    private ObservableProperty<ECharacterType> m_characterType = new ObservableProperty<ECharacterType>();
 
     [SerializeField]
     private CharacterStats m_stats; 
@@ -56,10 +55,10 @@ public class Character: IPropertyProvider
     public bool IsDead => m_health.Current == 0 && m_health.Max > 0;
     public EBattlePosition BattlePosition => m_battlePosition;
     public Skill[] Skills => m_equipment?.Archetype?.GetAvailableSkills() ?? Array.Empty<Skill>();
-    public string CharacterType => m_characterType.ToString();
-    public bool IsLeader => m_characterType == ECharacterType.Leader;
-    public bool IsGuide => m_characterType == ECharacterType.Guide;
-    public bool IsInActiveParty => m_characterType == ECharacterType.Party || IsLeader;
+    public ECharacterType CharacterType => m_characterType.Value;
+    public bool IsLeader => m_characterType.Value == ECharacterType.Leader;
+    public bool IsGuide => m_characterType.Value == ECharacterType.Guide;
+    public bool IsInActiveParty => m_characterType.Value == ECharacterType.Party || IsLeader;
 
     #region Life Cycle Functions
     public Character(CharacterSheet sheet)
@@ -68,8 +67,8 @@ public class Character: IPropertyProvider
         m_characterBase = sheet;
         m_stats = new CharacterStats(sheet.HP, sheet.MP, sheet.Str, sheet.Mag, sheet.End, sheet.Agi, sheet.Luck);
         m_level = sheet.CreateLevel();
-        m_characterType = sheet.CharacterType;
-        m_battlePosition = m_characterType == ECharacterType.Guide ? EBattlePosition.Undetermined : EBattlePosition.Front;
+        m_characterType.Value = sheet.CharacterType;
+        m_battlePosition = m_characterType.Value == ECharacterType.Guide ? EBattlePosition.Undetermined : EBattlePosition.Front;
 
         if (m_characterBase.StartingArchetype != null)
         {
@@ -80,14 +79,13 @@ public class Character: IPropertyProvider
         }
 
         m_equipment = new EquipmentExecutor(sheet.StartingWeapon, sheet.StartingArmor, sheet.StartingGear, sheet.StartingAccessory, startArchetype, this);
-        ApplyHp(Stats.Endurance);
-        ApplyMp(Stats.Magic);
+        ApplyHp(Stats.Endurance.Value);
+        ApplyMp(Stats.Magic.Value);
 
         m_health.OnEmpty += HandleOnHealthEmpty;
-        Stats.OnStatChange += HandleStatUpdate;
         Level.OnLevelChange += HandleLevelChange;
-        Stats.Endurance.OnValueChange += ApplyHp;
-        Stats.Magic.OnValueChange += ApplyMp;
+        Stats.Endurance.OnChanged += ApplyHp;
+        Stats.Magic.OnChanged += ApplyMp;
 
         InitializeProperties();
     }
@@ -99,9 +97,20 @@ public class Character: IPropertyProvider
         m_properties = Helper.DataHandling.BuildPropertyMap(this);
     }
 
+    public bool TryGetRawProperty(string key, out object value)
+    {
+        if (m_properties.TryGetValue(key, out IObservableProperty raw))
+        {
+            value = raw;
+            return true;
+        }
+
+        value = null;
+        return false;
+    }
+
     public bool TryGetProperty<T>(string key, out ObservableProperty<T> value)
     {
-        Type type = typeof(T);
         if (m_properties.TryGetValue(key, out IObservableProperty raw) && raw is ObservableProperty<T> typed)
         {
             value = typed;
@@ -116,25 +125,22 @@ public class Character: IPropertyProvider
     #region CharacterType & Position Functions
     public void SetCharacterAsLeader()
     {
-        m_characterType = ECharacterType.Leader;
-        OnTypeChange?.Invoke(this);
+        m_characterType.Value = ECharacterType.Leader;
     }
 
     public void SetCharacterToActiveParty()
     {
-        m_characterType = ECharacterType.Party;
-        OnTypeChange?.Invoke(this);
+        m_characterType.Value = ECharacterType.Party;
     }
 
     public void RemoveCharacterFromActiveParty()
     {
-        m_characterType = m_characterBase.CharacterType;
-        OnTypeChange?.Invoke(this);
+        m_characterType.Value = m_characterBase.CharacterType;
     }
 
     public void SetCharacterBattlePosition(EBattlePosition battlePosition)
     {
-        if (battlePosition == m_battlePosition || m_characterType == ECharacterType.Guide)
+        if (battlePosition == m_battlePosition || m_characterType.Value == ECharacterType.Guide)
             return;
 
         m_battlePosition = battlePosition;
@@ -176,21 +182,16 @@ public class Character: IPropertyProvider
     #endregion
 
     #region Stats Functions
-    private void ApplyHp(Stat endurance)
+    private void ApplyHp(int enduranceValue)
     {
-        int value = Mathf.FloorToInt(Stats.HP.Value * m_level.Value * (1f + (endurance.Value / 100f)));
+        int value = Mathf.FloorToInt(Stats.HP.Value * m_level.Value * (1f + (enduranceValue / 100f)));
         m_health.SetMax(value, EResourceSetProcedure.Fill);
     }
 
-    private void ApplyMp(Stat magic)
+    private void ApplyMp(int magicValue)
     {
-        int value = Mathf.FloorToInt(Stats.MP.Value * m_level.Value * (1f + (magic.Value / 100f)));
+        int value = Mathf.FloorToInt(Stats.MP.Value * m_level.Value * (1f + (magicValue / 100f)));
         m_mana.SetMax(value, EResourceSetProcedure.Fill);
-    }
-
-    private void HandleStatUpdate(Stat statChanged)
-    {
-        OnCharacterUpdated?.Invoke();
     }
     #endregion
 }
