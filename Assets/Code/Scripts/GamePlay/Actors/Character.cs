@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 [Serializable]
-public class Character
+public class Character: IPropertyProvider
 {
     public event Action<Character> OnTypeChange;
     public event Action<EBattlePosition> OnBattlePositionChange;
@@ -13,19 +14,16 @@ public class Character
     public event Action OnCharacterUpdated;
 
     [SerializeField]
-    private string m_name;
-
-    [SerializeField]
     private ECharacterType m_characterType;
 
     [SerializeField]
     private CharacterStats m_stats; 
 
     [SerializeField]
-    private Resource m_health = new Resource();
+    private Resource m_health = new Resource(0);
 
     [SerializeField]
-    private Resource m_mana = new Resource();
+    private Resource m_mana = new Resource(0);
 
     [SerializeField]
     private Level m_level;
@@ -40,6 +38,7 @@ public class Character
     private List<Archetype> m_availableArchetypes = new List<Archetype>();
 
     private CharacterSheet m_characterBase;
+    private Dictionary<string, IObservableProperty> m_properties;
 
     public string ID => m_characterBase.ID;
     public bool IsValid => m_characterBase != null;
@@ -67,7 +66,6 @@ public class Character
     {
         Archetype startArchetype = null;
         m_characterBase = sheet;
-        m_name = sheet.Name;
         m_stats = new CharacterStats(sheet.HP, sheet.MP, sheet.Str, sheet.Mag, sheet.End, sheet.Agi, sheet.Luck);
         m_level = sheet.CreateLevel();
         m_characterType = sheet.CharacterType;
@@ -85,13 +83,33 @@ public class Character
         ApplyHp(Stats.Endurance);
         ApplyMp(Stats.Magic);
 
-        HP.OnEmpty += HandleOnHealthEmpty;
-        HP.OnResourceChange += HandleOnHealthChanged;
-        MP.OnResourceChange += HandleOnManaChanged;
+        m_health.OnEmpty += HandleOnHealthEmpty;
         Stats.OnStatChange += HandleStatUpdate;
         Level.OnLevelChange += HandleLevelChange;
         Stats.Endurance.OnValueChange += ApplyHp;
         Stats.Magic.OnValueChange += ApplyMp;
+
+        InitializeProperties();
+    }
+    #endregion
+
+    #region Property Provision Functions
+    private void InitializeProperties()
+    {
+        m_properties = Helper.DataHandling.BuildPropertyMap(this);
+    }
+
+    public bool TryGetProperty<T>(string key, out ObservableProperty<T> value)
+    {
+        Type type = typeof(T);
+        if (m_properties.TryGetValue(key, out IObservableProperty raw) && raw is ObservableProperty<T> typed)
+        {
+            value = typed;
+            return true;
+        }
+
+        value = null;
+        return false;
     }
     #endregion
 
@@ -145,16 +163,6 @@ public class Character
         m_mana.Apply(amount);
     }
 
-    private void HandleOnHealthChanged(int amount, float proportion, int delta)
-    {
-        OnCharacterUpdated?.Invoke();
-    }
-
-    private void HandleOnManaChanged(int amount, float proportion, int delta)
-    {
-        OnCharacterUpdated?.Invoke();
-    }
-
     private void HandleLevelChange(int level, int levelDelta)
     {
         OnLevelChange?.Invoke(level, levelDelta);
@@ -162,7 +170,7 @@ public class Character
 
     private void HandleOnHealthEmpty(bool isEmpty)
     {
-        if(HP.Max > 0)
+        if(m_health.Max > 0)
             OnDeath?.Invoke(isEmpty);
     }
     #endregion
@@ -183,6 +191,6 @@ public class Character
     private void HandleStatUpdate(Stat statChanged)
     {
         OnCharacterUpdated?.Invoke();
-    }    
+    }
     #endregion
 }

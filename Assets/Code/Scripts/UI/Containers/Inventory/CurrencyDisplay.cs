@@ -28,12 +28,12 @@ public class CurrencyDisplay : MonoBehaviour
         if (m_currenyType == ECurrencyType.Money)
         {
             m_inventory.Money.OnResourceChange += HandleOnCurrencyChanged;
-            HandleOnCurrencyChanged(m_inventory.Money.Current, 0,  0);
+            HandleOnCurrencyChanged(m_inventory.Money, 0);
         }
         else 
         {
             m_inventory.Magla.OnResourceChange += HandleOnCurrencyChanged;
-            HandleOnCurrencyChanged(m_inventory.Magla.Current, 0, 0);
+            HandleOnCurrencyChanged(m_inventory.Magla, 0);
         }
     }
 
@@ -54,9 +54,9 @@ public class CurrencyDisplay : MonoBehaviour
         }
     }
 
-    private void HandleOnCurrencyChanged(int value, float proportion, int delta)
+    private void HandleOnCurrencyChanged(Resource resource, int delta)
     {
-        m_text.text = value.ToString();
+        m_text.text = resource.Current.ToString();
     }
 }
 

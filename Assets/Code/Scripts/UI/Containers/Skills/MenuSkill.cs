@@ -83,8 +83,8 @@ public class MenuSkill : PoolableObjectFromData<Skill>, ISelectable
         m_selectionSplotch.SetActive(false);
     }
 
-    private void HandleOnMpChanged(int current, float proportion, int delta)
+    private void HandleOnMpChanged(Resource resource, int delta)
     {
-        SetAsSelectable(m_skill.UsableInMenu && current >= m_skill.ManaCost);
+        SetAsSelectable(m_skill.UsableInMenu && resource.Current >= m_skill.ManaCost);
     }
 }

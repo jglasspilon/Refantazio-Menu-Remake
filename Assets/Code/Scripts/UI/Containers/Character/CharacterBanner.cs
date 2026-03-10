@@ -1,21 +1,19 @@
 using System;
-using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using UnityEngine.UI;
 
 public abstract class CharacterBanner : PoolableObjectFromData<Character>, ISelectable
 {
     public event Action<bool> OnSetAsSelected, OnSetAsSelectable;
     protected Character m_character;
-    protected IBindableToCharacter[] m_bindables;
+    protected IBindableToCharacter[] m_bindablesToCharacter;
+    protected IBindableToProperty[] m_bindables;
 
     public Character Character {  get { return m_character; } }
 
     private void Awake()
     {
-        m_bindables = GetComponentsInChildren<IBindableToCharacter>(true);
+        m_bindablesToCharacter = GetComponentsInChildren<IBindableToCharacter>(true);
+        m_bindables = GetComponentsInChildren<IBindableToProperty>(true);
     }
 
     public override void InitializeFromData(Character character)
@@ -23,12 +21,14 @@ public abstract class CharacterBanner : PoolableObjectFromData<Character>, ISele
         m_character = character;
         transform.localScale = Vector3.one;
         SetAsSelected(false);
-        m_bindables.ForEach(x => x.BindToCharacter(character));
+        m_bindablesToCharacter.ForEach(x => x.BindToCharacter(character));
+        m_bindables.ForEach(x => x.BindToProperty(character));
     }
 
     public override void ResetForPool()
     {
-        m_bindables.ForEach(x => x.Unbind());
+        m_bindablesToCharacter.ForEach(x => x.Unbind());
+        m_bindables.ForEach(x => x.UnBind());
         m_character = null;
     }
 

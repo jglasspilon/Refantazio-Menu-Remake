@@ -18,10 +18,10 @@ public class InventoryData
     private LoggingProfile m_logProfile;
 
     [SerializeField]
-    private Resource m_money = new Resource();
+    private Resource m_money = new Resource(9999999);
 
     [SerializeField]
-    private Resource m_magla = new Resource();
+    private Resource m_magla = new Resource(9999999);
 
     private Dictionary<string, InventoryEntry> m_entries = new Dictionary<string, InventoryEntry>();
     public Resource Money => m_money;

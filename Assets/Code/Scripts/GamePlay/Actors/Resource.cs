@@ -1,61 +1,67 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Resource
+public class Resource: IObservableProperty, ISubPropertyProvider
 {
-    public event Action<int, float, int> OnResourceChange;
+    public event Action<Resource, int> OnResourceChange;
     public event Action<bool> OnEmpty;
 
     [SerializeField]
-    private int m_current;
+    private ObservableProperty<int> m_current, m_max;
 
-    [SerializeField]
-    private int m_max;
+    public Type ValueType => typeof(Resource);
+    public object UntypedValue => this;
+    public int Current => m_current.Value;
+    public int Max => m_max.Value;
+    public float CurrentProportion => Mathf.InverseLerp(0, Max, Current);
 
-    public int Current => m_current;
-    public float CurrentProportion => Mathf.InverseLerp(0, m_max, m_current);
-    public int Max => m_max;
-
-    public Resource() { }
-
-    public Resource(int max)
+    public Resource(int initialMax)
     {
-        m_max = max;
+        m_current = new ObservableProperty<int>();
+        m_max = new ObservableProperty<int>
+        {
+            Value = initialMax
+        };
+    }
+
+    public IEnumerable<KeyValuePair<string, IObservableProperty>> GetSubProperties(string parentKey)
+    {
+        return Helper.DataHandling.GetObservableFields(this, parentKey);
     }
 
     public void SetMax(int newMax, EResourceSetProcedure procedure)
     {
-        m_current = m_current.Map(0, m_max, 0, newMax);
-        m_max = newMax;
+        m_max.Value = newMax;
 
         if (procedure == EResourceSetProcedure.Fill) 
         {
-            m_current = m_max;
+            m_current.Value = m_max.Value;
             return;
         }
 
         if(procedure == EResourceSetProcedure.Reset)
         {
-            m_current = 0;
+            m_current.Value = 0;
             return;
         }
     }
 
     public void Apply(int amount)
     {
-        int previous = m_current;
-        m_current = Mathf.Clamp(m_current + amount, 0, m_max);
-        int delta = m_current - previous;
-        OnResourceChange?.Invoke(m_current, CurrentProportion, delta);
+        int previous = m_current.Value;
+        m_current.Value = Mathf.Clamp(m_current.Value + amount, 0, m_max.Value);
+        int delta = m_current.Value - previous;
+        OnResourceChange?.Invoke(this, delta);
 
-        if(previous == 0 && m_current > 0)
+        if(previous == 0 && m_current.Value > 0)
         {
             OnEmpty?.Invoke(false);
             return;
         }
 
-        if(m_current == 0)
+        if(m_current.Value == 0)
         {
             OnEmpty?.Invoke(true);
         }

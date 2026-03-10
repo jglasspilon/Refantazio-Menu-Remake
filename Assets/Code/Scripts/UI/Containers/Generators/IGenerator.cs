@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public interface IGenerater
+public interface IGenerator
 {
     public event Action OnGenerate;
 }

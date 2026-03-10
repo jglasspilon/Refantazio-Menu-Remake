@@ -26,7 +26,7 @@ public class SetColorBasedOnSkillAffordability : MonoBehaviour, IBindableToSkill
 
         m_character = character;
         m_character.MP.OnResourceChange += DisplayMpAffordability;
-        DisplayMpAffordability(m_character.MP.Current, 0, 0);
+        DisplayMpAffordability(m_character.MP, 0);
     }
 
     public void BindToSkill(Skill skill)
@@ -48,7 +48,7 @@ public class SetColorBasedOnSkillAffordability : MonoBehaviour, IBindableToSkill
         m_character = null;
     }
 
-    private void DisplayMpAffordability(int current, float proportion, int delta)
+    private void DisplayMpAffordability(Resource resource, int delta)
     {
         if(m_skill == null)
         {
@@ -59,7 +59,7 @@ public class SetColorBasedOnSkillAffordability : MonoBehaviour, IBindableToSkill
         if (!m_skill.UsableInMenu)
             return;
 
-        bool canAfford = current >= m_skill.ManaCost;
+        bool canAfford = resource.Current >= m_skill.ManaCost;
         m_graphic.color = canAfford ? m_canAffordColor : m_cannotAffordColor;
     }
 }

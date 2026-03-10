@@ -8,9 +8,6 @@ public class ResourceBar : MonoBehaviour, IBindableToCharacter
 {
     [SerializeField]
     private EBindableResource m_resourceType;
-    
-    [SerializeField]
-    private TextMeshProUGUI m_valueText;
 
     [SerializeField]
     private Slider m_valueSlider;
@@ -54,18 +51,12 @@ public class ResourceBar : MonoBehaviour, IBindableToCharacter
 
     private void DisplayInstant(int current, float proportion)
     {
-        if(m_valueText != null)
-            m_valueText.text = Helper.StringFormatting.FormatIntForUI(current, 3, false);
-
         m_valueSlider.value = proportion;
     }
 
-    private void Display(int current, float proportion, int delta)
+    private void Display(Resource resource, int delta)
     {    
-        if(m_valueText != null)
-            m_valueText.text = Helper.StringFormatting.FormatIntForUI(current, 3, false);
-
-        LerpSlider(proportion);      
+        LerpSlider(resource.CurrentProportion);      
 
         if (delta == 0)
             return;

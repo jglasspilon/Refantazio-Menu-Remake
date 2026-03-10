@@ -141,7 +141,7 @@ public class Level
     private int m_value = 1;
 
     [SerializeField]
-    private Resource m_exp = new Resource();
+    private Resource m_exp = new Resource(0);
 
     public int Value => m_value;
     public Resource Exp => m_exp;

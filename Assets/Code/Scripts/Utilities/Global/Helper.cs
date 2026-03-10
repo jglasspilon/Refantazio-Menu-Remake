@@ -1,5 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -89,7 +91,7 @@ public static class Helper
             string normalOpacity = "<alpha=#FF>";
             string format = "";
 
-            for(int i = 0; i < minSize; i++)
+            for (int i = 0; i < minSize; i++)
             {
                 format += "0";
             }
@@ -111,7 +113,7 @@ public static class Helper
 
         public static string PrettifyStat(EStatType stat)
         {
-            switch(stat)
+            switch (stat)
             {
                 case EStatType.Strength: return "STR";
                 case EStatType.Magic: return "MAG";
@@ -139,6 +141,79 @@ public static class Helper
             }
 
             return Mathf.Clamp(index, 0, max);
+        }
+    }
+
+    public static class DataHandling
+    {
+        public static Dictionary<string, IObservableProperty> BuildPropertyMap(object root)
+        {
+            var map = new Dictionary<string, IObservableProperty>();
+
+            if (root == null)
+                return map;
+
+            var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+            foreach (var field in root.GetType().GetFields(flags))
+            {
+                var value = field.GetValue(root);
+
+                if (value is IObservableProperty observable)
+                    map[field.Name] = observable;
+
+                if (value is ISubPropertyProvider provider)
+                {
+                    foreach (var sub in provider.GetSubProperties(field.Name))
+                        map[sub.Key] = sub.Value;
+                }
+            }
+
+            return map;
+        }
+
+        public static IEnumerable<KeyValuePair<string, IObservableProperty>> GetObservableFields(object instance, string parentKey)
+        {
+            if (instance == null)
+                yield break;
+
+            var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+            foreach (var field in instance.GetType().GetFields(flags))
+            {
+                if (typeof(IObservableProperty).IsAssignableFrom(field.FieldType))
+                {
+                    var value = field.GetValue(instance) as IObservableProperty;
+                    if (value != null)
+                    {
+                        string key = $"{parentKey}.{field.Name}";
+                        yield return new KeyValuePair<string, IObservableProperty>(key, value);
+                    }
+                }
+            }
+        }
+
+        public static IEnumerable<string> GetObservablePropertyNamesFromType(Type type, Type valueTypeFilter)
+        {
+            var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+            foreach (var field in type.GetFields(flags))
+            {
+                if (field.FieldType.IsGenericType &&
+                    field.FieldType.GetGenericTypeDefinition() == typeof(ObservableProperty<>))
+                {
+                    var valueType = field.FieldType.GetGenericArguments()[0];
+
+                    if (valueType == valueTypeFilter)
+                        yield return field.Name;
+                }
+
+                if (typeof(ISubPropertyProvider).IsAssignableFrom(field.FieldType))
+                {
+                    foreach (var sub in GetObservablePropertyNamesFromType(field.FieldType, valueTypeFilter))
+                        yield return $"{field.Name}.{sub}";
+                }
+            }
         }
     }
 }

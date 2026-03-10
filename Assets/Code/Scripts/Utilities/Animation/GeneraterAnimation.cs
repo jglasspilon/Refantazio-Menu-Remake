@@ -1,16 +1,16 @@
 using UnityEngine;
 
-[RequireComponent(typeof(IGenerater))]
+[RequireComponent(typeof(IGenerator))]
 public class GeneraterAnimation: MonoBehaviour
 {
     [SerializeField]
     private Animation m_anim;
 
-    private IGenerater m_generater;
+    private IGenerator m_generater;
 
     private void Awake()
     {
-        m_generater = GetComponent<IGenerater>();
+        m_generater = GetComponent<IGenerator>();
     }
 
     private void OnEnable()

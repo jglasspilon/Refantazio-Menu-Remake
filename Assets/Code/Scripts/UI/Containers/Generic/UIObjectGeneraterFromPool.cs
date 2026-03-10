@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IGenerater where T : PoolableObjectFromData<TData>
+public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IGenerator where T : PoolableObjectFromData<TData>
 {
     public event Action OnGenerate;
 
