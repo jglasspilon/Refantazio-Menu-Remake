@@ -14,7 +14,6 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
     [SerializeField] 
     private string m_propertyKey;
 
-    private IPropertyProvider m_source;
     private object m_property;
     private Type m_sourceType;
     private Delegate m_handler;
@@ -61,11 +60,23 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
             return;
         }
 
-        m_source = provider;
+        Type expectedType = ResolveProviderType();
 
-        if (!m_source.TryGetRawProperty(m_propertyKey, out var raw))
+        if (expectedType == null)
         {
-            Debug.LogError($"{name}: Could not bind property '{m_propertyKey}' from {m_source.Name}.");
+            Debug.LogError($"{name}: Selected provider type '{m_selectedProviderType}' could not be resolved.");
+            return;
+        }
+
+        if (!expectedType.IsInstanceOfType(provider))
+        {
+            Debug.LogError($"{name}: Provider type mismatch. Expected '{expectedType.FullName}', but received '{provider.GetType().FullName}'.");
+            return;
+        }
+
+        if (!provider.TryGetRawProperty(m_propertyKey, out var raw))
+        {
+            Debug.LogError($"{name}: Could not bind property '{m_propertyKey}' from {provider.Name}.");
             return;
         }
 
@@ -112,9 +123,16 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
 
         m_property = null;
         m_handler = null;
-        m_source = null;
         m_sourceType = null;
         _closedApplyMethod = null;
+    }
+
+    private Type ResolveProviderType()
+    {
+        if (string.IsNullOrEmpty(m_selectedProviderType))
+            return null;
+
+        return Type.GetType(m_selectedProviderType);
     }
 
     // Called by Action<TSource>
