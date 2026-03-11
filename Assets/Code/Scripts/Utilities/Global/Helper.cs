@@ -233,7 +233,6 @@ public static class Helper
             }
         }
 
-
         public static IEnumerable<string> GetObservablePropertyNamesFromType(Type type, Type valueTypeFilter)
         {
             var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;

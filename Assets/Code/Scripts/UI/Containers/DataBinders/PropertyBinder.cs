@@ -69,41 +69,42 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
             return;
         }
 
-        if (!provider.TryGetRawProperty(m_propertyKey, out var raw))
+        if (!provider.TryGetRawProperty(m_propertyKey, out object raw))
         {
             Logger.LogError($"{name}: Could not bind property '{m_propertyKey}' from {provider.Name}.", m_logProfile);
             return;
         }
 
-        m_property = raw;
+        Type propType = raw.GetType();                    
+        Type valueType = GetObservablePropertyValueType(propType);
 
-        var propType = raw.GetType();                    
-        var genericArgs = propType.GetGenericArguments();
-        if (genericArgs == null || genericArgs.Length != 1)
+        if (valueType == null )
         {
             Logger.LogError($"{name}: Property '{m_propertyKey}' is not an ObservableProperty<T>.", m_logProfile);
             return;
         }
 
         // Prepare Apply<TSource>
-        m_sourceType = genericArgs[0];
+        m_property = raw;     
+        m_sourceType = valueType;
         _closedApplyMethod = s_applyGenericMethod.MakeGenericMethod(m_sourceType);
 
         // Subscribe to OnChanged (Action<TSource>)
-        var eventInfo = propType.GetEvent("OnChanged");
+        EventInfo eventInfo = propType.GetEvent("OnChanged");
         if (eventInfo == null)
         {
             Logger.LogError($"{name}: Property '{m_propertyKey}' has no OnChanged event.", m_logProfile);
             return;
         }
 
-        var closedChangedMethod = s_onSourceChangedGenericMethod.MakeGenericMethod(m_sourceType);
+        // Bind the property's OnChanged<T> event to this binder's typed Apply<T> method.
+        MethodInfo closedChangedMethod = s_onSourceChangedGenericMethod.MakeGenericMethod(m_sourceType);
         m_handler = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, closedChangedMethod);
         eventInfo.AddEventHandler(raw, m_handler);
 
         // Apply Initial value
-        var valueProp = propType.GetProperty("Value");
-        var initialValue = valueProp.GetValue(raw);
+        PropertyInfo valueProp = propType.GetProperty("Value");
+        object initialValue = valueProp.GetValue(raw);
         OnSourceChangedGenericDynamic(initialValue);
     }
 
@@ -128,6 +129,21 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
             return null;
 
         return Type.GetType(m_selectedProviderType);
+    }
+
+    // Recursively walk through inheritance chain to find Observable Property type
+    private Type GetObservablePropertyValueType(Type type)
+    {
+        while (type != null)
+        {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ObservableProperty<>))
+            {
+                return type.GetGenericArguments()[0];
+            }
+
+            type = type.BaseType;
+        }
+        return null;
     }
 
     // Called by Action<TSource>

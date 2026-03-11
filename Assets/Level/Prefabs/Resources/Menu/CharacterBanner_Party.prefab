@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 116548246551918074}
   - component: {fileID: 20127506767194699}
   - component: {fileID: 3097833478438568866}
-  - component: {fileID: 3036196270650030407}
+  - component: {fileID: 8122415666228834921}
   m_Layer: 5
   m_Name: LVText
   m_TagString: Untagged
@@ -803,7 +803,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &3036196270650030407
+--- !u!114 &8122415666228834921
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -812,9 +812,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 880975897541473722}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02870c3eb336cb045bece26445d6647f, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e13e1d2ef14a7741b2e869673095789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplayCharacterLevel
+  m_EditorClassIdentifier: Assembly-CSharp::TextBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: int
+  m_propertyKey: m_level
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_formatters:
+  - {fileID: 11400000, guid: 873db71cbc7ff4b4ca63aacbfb5650dc, type: 2}
 --- !u!1 &974057705247486945
 GameObject:
   m_ObjectHideFlags: 0
