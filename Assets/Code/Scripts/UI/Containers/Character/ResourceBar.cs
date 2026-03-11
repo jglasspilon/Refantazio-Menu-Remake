@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
@@ -14,6 +15,8 @@ public class ResourceBar : MonoBehaviour, IBindableToProperty
     [SerializeField] private LoggingProfile m_logProfile;
 
     private Resource m_resource;
+
+    public Type ProviderType => typeof(Character); 
 
     private enum EBindableResource
     {

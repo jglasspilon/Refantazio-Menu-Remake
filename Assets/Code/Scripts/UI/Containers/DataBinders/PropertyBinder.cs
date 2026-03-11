@@ -33,6 +33,8 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
 
     }
 
+    public Type ProviderType => Type.GetType(m_selectedProviderType);
+
     public string SelectedSourceType
     {
         get => m_selectedSourceType;
