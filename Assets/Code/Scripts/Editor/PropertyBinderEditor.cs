@@ -38,7 +38,7 @@ public class PropertyBinderEditor : Editor
     // ---------------------------------------------------------
     private void LoadProviderTypes()
     {
-        _providerTypes = TypeCache.GetTypesDerivedFrom<IPropertyProvider>().Where(t => !t.IsAbstract && !t.IsInterface).ToArray();
+        _providerTypes = TypeCache.GetTypesDerivedFrom<IPropertyProvider>().Where(t => !t.IsAbstract && !t.IsInterface).OrderBy(t => t.Name).ToArray();
         _providerTypeNames = _providerTypes.Select(t => t.Name).ToArray();
 
         // Restore saved provider selection
@@ -47,7 +47,6 @@ public class PropertyBinderEditor : Editor
             int idx = Array.IndexOf(_providerTypeNames, _providerTypeProp.stringValue);
             _providerIndex = Mathf.Clamp(idx, 0, _providerTypeNames.Length - 1);
         }
-
     }
 
     // ---------------------------------------------------------
@@ -57,7 +56,7 @@ public class PropertyBinderEditor : Editor
     {
         var providerType = _providerTypes[_providerIndex];
 
-        _availableTypes = Helper.DataHandling.GetObservablePropertyTypesFromProviderType(providerType, null).Distinct().Select(MakeFriendlyTypeName).ToArray();
+        _availableTypes = Helper.DataHandling.GetObservablePropertyTypesFromProviderType(providerType, null).Distinct().Select(MakeFriendlyTypeName).OrderBy(x => x).ToArray();
 
         // Restore saved source type
         if (!string.IsNullOrEmpty(_sourceTypeProp.stringValue))
@@ -138,7 +137,7 @@ public class PropertyBinderEditor : Editor
 
         var providerType = _providerTypes[_providerIndex];
 
-        _filteredPropertyKeys = Helper.DataHandling.GetObservablePropertyNamesFromType(providerType, _selectedSourceType).ToArray();
+        _filteredPropertyKeys = Helper.DataHandling.GetObservablePropertyNamesFromType(providerType, _selectedSourceType).OrderBy(x => x).ToArray();
         _propertyIndex = Mathf.Max(0, Array.IndexOf(_filteredPropertyKeys, _propertyKeyProp.stringValue));
     }
 
