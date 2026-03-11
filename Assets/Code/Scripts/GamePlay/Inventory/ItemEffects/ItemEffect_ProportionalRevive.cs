@@ -9,7 +9,7 @@ public class ItemEffect_ProportionalRevive : ItemEffect
 
     public override bool CanApply(Character target)
     {
-        return target.IsDead;
+        return target.IsDead.Value;
     }
 
     public override void Apply(Character target)

@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 4656286126304038630}
   - component: {fileID: 9140971238158876487}
   - component: {fileID: 3689775012430710765}
+  - component: {fileID: 3404311565507382271}
   m_Layer: 5
   m_Name: CharacterType
   m_TagString: Untagged
@@ -304,6 +305,24 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3404311565507382271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411293902048454709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e13e1d2ef14a7741b2e869673095789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: ECharacterType
+  m_propertyKey: m_characterType
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_formatters:
+  - {fileID: 11400000, guid: 3bb57ff1e7c7d154cb99e21c4d8c6ce4, type: 2}
 --- !u!1 &439887853405510278
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,7 +333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5613002169087706014}
   - component: {fileID: 264942461758353056}
-  - component: {fileID: 70140732218860119}
+  - component: {fileID: 6885879522317328024}
   m_Layer: 5
   m_Name: FontBackMover
   m_TagString: Untagged
@@ -370,11 +389,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34189e433c1466f488525cea1a22a26f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FrontBackMover
-  m_enabledByDefault: 0
+  m_enabledByDefault: 1
   m_leftPosition: {x: -10, y: 0}
   m_rightPosition: {x: 8, y: 0}
   m_curve: {fileID: 11400000, guid: dd2d2826e3be61d47aa5a778943c9363, type: 2}
---- !u!114 &70140732218860119
+--- !u!114 &6885879522317328024
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -383,11 +402,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 439887853405510278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04030367edc865d449e6df86ac8a7d36, type: 3}
+  m_Script: {fileID: 11500000, guid: fb88f38e1494da0418cd1460efd548d8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplayCharacterPosition
-  m_frontContent: {fileID: 5656053317094526965}
-  m_backContent: {fileID: 9184212676482230385}
+  m_EditorClassIdentifier: Assembly-CSharp::LeftRightMoverBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: EBattlePosition
+  m_propertyKey: m_battlePosition
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_rightConditions:
+  - {fileID: 11400000, guid: acf2ecf0fe018ac499207c2c63a9a2bb, type: 2}
+  m_leftConditions:
+  - {fileID: 11400000, guid: 6fe7d87931f843747a28450e8d90e3f4, type: 2}
 --- !u!1 &625246422076003223
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,7 +423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4649037134797349256}
   - component: {fileID: 1544508183892945683}
-  - component: {fileID: 8175818728918430104}
+  - component: {fileID: 4750318706207919951}
   m_Layer: 5
   m_Name: MpBar
   m_TagString: Untagged
@@ -442,13 +467,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HPBar
   m_resourceType: 1
-  m_valueText: {fileID: 6923124705882519014}
   m_valueSlider: {fileID: 470568874374563089}
   m_sliderAnimCurve: {fileID: 11400000, guid: 63069a320f118bb4abeaf322453e6a26, type: 2}
   m_healEffect:
   - {fileID: 677569810872851}
   m_damageEffect: []
---- !u!114 &8175818728918430104
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+--- !u!114 &4750318706207919951
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -457,10 +482,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 625246422076003223}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42660258baf29d7469ccd4d257e5ac2e, type: 3}
+  m_Script: {fileID: 11500000, guid: e8274faedb987a84b894a42abd60fa65, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplayOnGuideCharacter
-  m_invert: 1
+  m_EditorClassIdentifier: Assembly-CSharp::SetActiveBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: ECharacterType
+  m_propertyKey: m_characterType
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_conditionsToMeet:
+  - {fileID: 11400000, guid: 7e82c618e438be049a5f81456062fa45, type: 2}
 --- !u!1 &749115905904411513
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,7 +1422,7 @@ GameObject:
   - component: {fileID: 5789363242604555074}
   - component: {fileID: 6991957252176121694}
   - component: {fileID: 219884296142498626}
-  - component: {fileID: 7941698984512436101}
+  - component: {fileID: 5329072409875698174}
   m_Layer: 5
   m_Name: CharacterName
   m_TagString: Untagged
@@ -1519,7 +1549,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7941698984512436101
+--- !u!114 &5329072409875698174
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1528,9 +1558,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2084119765384431290}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89b400370cd18944ebcf1561cd9c6cc2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e13e1d2ef14a7741b2e869673095789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplayCharacterName
+  m_EditorClassIdentifier: Assembly-CSharp::TextBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: string
+  m_propertyKey: m_name
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_formatters: []
 --- !u!1 &3188037224655133638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1816,7 +1851,7 @@ GameObject:
   - component: {fileID: 735494364381895294}
   - component: {fileID: 7538345745344586996}
   - component: {fileID: 6611740775227008280}
-  - component: {fileID: 3280941547702940443}
+  - component: {fileID: 3934290627648980623}
   m_Layer: 5
   m_Name: DeathIcon
   m_TagString: Untagged
@@ -1881,7 +1916,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3280941547702940443
+--- !u!114 &3934290627648980623
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1890,9 +1925,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3599310331150708563}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 899c6a4316443cb42a30b41b3db8ba0d, type: 3}
+  m_Script: {fileID: 11500000, guid: e8274faedb987a84b894a42abd60fa65, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplayOnCharacterDeath
+  m_EditorClassIdentifier: Assembly-CSharp::SetActiveBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: bool
+  m_propertyKey: m_isDead
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_conditionsToMeet:
+  - {fileID: 11400000, guid: 9ef0fa13674203c4abaca74f332be7bd, type: 2}
 --- !u!1 &4154976645608851810
 GameObject:
   m_ObjectHideFlags: 0
@@ -2424,6 +2465,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1874138776634026455}
+  - component: {fileID: 4322984173225535389}
   m_Layer: 5
   m_Name: FrontContent
   m_TagString: Untagged
@@ -2452,6 +2494,24 @@ RectTransform:
   m_AnchoredPosition: {x: -139.498, y: 0}
   m_SizeDelta: {x: -253.5438, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4322984173225535389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5656053317094526965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8274faedb987a84b894a42abd60fa65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetActiveBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: EBattlePosition
+  m_propertyKey: m_battlePosition
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_conditionsToMeet:
+  - {fileID: 11400000, guid: 9f89b722ae87224479b0caae8615098a, type: 2}
 --- !u!1 &5714083091047525281
 GameObject:
   m_ObjectHideFlags: 0
@@ -2652,7 +2712,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1820915859744611681}
   - component: {fileID: 310025993707160441}
-  - component: {fileID: 1315218501853244513}
+  - component: {fileID: 4963653083384731772}
   m_Layer: 5
   m_Name: HPBar
   m_TagString: Untagged
@@ -2696,7 +2756,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HPBar
   m_resourceType: 0
-  m_valueText: {fileID: 4588613250361940384}
   m_valueSlider: {fileID: 4091213791465678033}
   m_sliderAnimCurve: {fileID: 11400000, guid: 63069a320f118bb4abeaf322453e6a26, type: 2}
   m_healEffect:
@@ -2705,7 +2764,8 @@ MonoBehaviour:
   m_damageEffect:
   - {fileID: 2617954918006514150}
   - {fileID: 3459479055027681974}
---- !u!114 &1315218501853244513
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+--- !u!114 &4963653083384731772
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2714,10 +2774,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5872585705576887196}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42660258baf29d7469ccd4d257e5ac2e, type: 3}
+  m_Script: {fileID: 11500000, guid: e8274faedb987a84b894a42abd60fa65, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplayOnGuideCharacter
-  m_invert: 1
+  m_EditorClassIdentifier: Assembly-CSharp::SetActiveBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: ECharacterType
+  m_propertyKey: m_characterType
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_conditionsToMeet:
+  - {fileID: 11400000, guid: 7e82c618e438be049a5f81456062fa45, type: 2}
 --- !u!1 &6034840498641158935
 GameObject:
   m_ObjectHideFlags: 0
@@ -2804,7 +2869,7 @@ GameObject:
   - component: {fileID: 7231504996812126784}
   - component: {fileID: 2737961936859653617}
   - component: {fileID: 3517350673846468461}
-  - component: {fileID: 7047288042660972640}
+  - component: {fileID: 6392807897686023569}
   m_Layer: 5
   m_Name: CharacterTypePanel
   m_TagString: Untagged
@@ -2870,7 +2935,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7047288042660972640
+--- !u!114 &6392807897686023569
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2879,10 +2944,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6071383277917940260}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4793c04d0dbe0844a240d73e81e7bb9, type: 3}
+  m_Script: {fileID: 11500000, guid: e8274faedb987a84b894a42abd60fa65, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplayCharacterType
-  m_text: {fileID: 3689775012430710765}
+  m_EditorClassIdentifier: Assembly-CSharp::SetActiveBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: ECharacterType
+  m_propertyKey: m_characterType
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_conditionsToMeet:
+  - {fileID: 11400000, guid: 4a8c34059b36dfc49bb354c6b05911e2, type: 2}
 --- !u!1 &6240212959094587565
 GameObject:
   m_ObjectHideFlags: 0
@@ -3106,7 +3176,8 @@ GameObject:
   - component: {fileID: 810774398588048190}
   - component: {fileID: 8856791537170493448}
   - component: {fileID: 5074213734120348369}
-  - component: {fileID: 3890058475918510077}
+  - component: {fileID: 5295578393145208932}
+  - component: {fileID: 5368324863694128491}
   m_Layer: 5
   m_Name: ArchetypeIcon
   m_TagString: Untagged
@@ -3171,7 +3242,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3890058475918510077
+--- !u!114 &5295578393145208932
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3180,9 +3251,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 6365504366460075330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df593434765a2ea428a21e78da8ae954, type: 3}
+  m_Script: {fileID: 11500000, guid: d1f2ecca0451d5a44ad23a9c4d623db6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplayArchetypeIcon
+  m_EditorClassIdentifier: Assembly-CSharp::ImageBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: Sprite
+  m_propertyKey: m_equipment.m_archetype.m_icon
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+--- !u!114 &5368324863694128491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6365504366460075330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8274faedb987a84b894a42abd60fa65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetActiveBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: ECharacterType
+  m_propertyKey: m_characterType
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_conditionsToMeet:
+  - {fileID: 11400000, guid: 7e82c618e438be049a5f81456062fa45, type: 2}
 --- !u!1 &6515181289238703520
 GameObject:
   m_ObjectHideFlags: 0
@@ -3451,6 +3544,7 @@ GameObject:
   - component: {fileID: 7423982655090714139}
   - component: {fileID: 7316781610654970810}
   - component: {fileID: 4588613250361940384}
+  - component: {fileID: 1696164962444492257}
   m_Layer: 5
   m_Name: HpText
   m_TagString: Untagged
@@ -3577,6 +3671,24 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1696164962444492257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7368345101602756479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e13e1d2ef14a7741b2e869673095789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: int
+  m_propertyKey: m_health.m_current
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_formatters:
+  - {fileID: 11400000, guid: e210fd6e1cb8ba64686ebbf457124365, type: 2}
 --- !u!1 &7381332189620344327
 GameObject:
   m_ObjectHideFlags: 0
@@ -3752,7 +3864,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5177859296261351120}
   - component: {fileID: 3465495006419304662}
-  - component: {fileID: 3531125585511052517}
+  - component: {fileID: 5571018476930586491}
   m_Layer: 5
   m_Name: ExpBar
   m_TagString: Untagged
@@ -3796,12 +3908,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HPBar
   m_resourceType: 2
-  m_valueText: {fileID: 0}
   m_valueSlider: {fileID: 5765393021842545351}
   m_sliderAnimCurve: {fileID: 11400000, guid: 63069a320f118bb4abeaf322453e6a26, type: 2}
   m_healEffect: []
   m_damageEffect: []
---- !u!114 &3531125585511052517
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+--- !u!114 &5571018476930586491
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3810,10 +3922,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7659787935422857067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42660258baf29d7469ccd4d257e5ac2e, type: 3}
+  m_Script: {fileID: 11500000, guid: e8274faedb987a84b894a42abd60fa65, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplayOnGuideCharacter
-  m_invert: 1
+  m_EditorClassIdentifier: Assembly-CSharp::SetActiveBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: ECharacterType
+  m_propertyKey: m_characterType
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_conditionsToMeet:
+  - {fileID: 11400000, guid: 7e82c618e438be049a5f81456062fa45, type: 2}
 --- !u!1 &8071073900453387440
 GameObject:
   m_ObjectHideFlags: 0
@@ -4701,6 +4818,7 @@ GameObject:
   - component: {fileID: 7628119632068349300}
   - component: {fileID: 2638396625070955902}
   - component: {fileID: 6923124705882519014}
+  - component: {fileID: 1564002377306815111}
   m_Layer: 5
   m_Name: MpText
   m_TagString: Untagged
@@ -4827,6 +4945,24 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1564002377306815111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8836758520947731318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e13e1d2ef14a7741b2e869673095789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: int
+  m_propertyKey: m_mana.m_current
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_formatters:
+  - {fileID: 11400000, guid: e210fd6e1cb8ba64686ebbf457124365, type: 2}
 --- !u!1 &9184212676482230385
 GameObject:
   m_ObjectHideFlags: 0
@@ -4836,6 +4972,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 512497971592875134}
+  - component: {fileID: 5957859959166245346}
   m_Layer: 5
   m_Name: BackContent
   m_TagString: Untagged
@@ -4863,3 +5000,21 @@ RectTransform:
   m_AnchoredPosition: {x: 139.635, y: 0}
   m_SizeDelta: {x: -253.26999, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5957859959166245346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9184212676482230385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8274faedb987a84b894a42abd60fa65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetActiveBinder
+  m_selectedProviderType: Character
+  m_selectedSourceType: EBattlePosition
+  m_propertyKey: m_battlePosition
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_conditionsToMeet:
+  - {fileID: 11400000, guid: acf2ecf0fe018ac499207c2c63a9a2bb, type: 2}

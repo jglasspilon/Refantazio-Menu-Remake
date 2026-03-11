@@ -18,7 +18,7 @@ public class DisplayArchetypeIcon : MonoBehaviour, IBindableToCharacter
             return;
 
         m_character = character;
-        Display(m_character.Equipment.Archetype?.Icon);
+        
     }
 
     public void Unbind()

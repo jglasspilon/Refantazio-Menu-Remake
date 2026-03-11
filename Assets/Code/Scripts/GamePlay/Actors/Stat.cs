@@ -6,14 +6,9 @@ using UnityEngine;
 [Serializable]
 public class Stat: ObservableProperty<int>
 {
-    [SerializeField]
-    private EStatType m_type;
-    
-    [SerializeField]
-    private int m_baseValue, m_levelValue;
-
-    [SerializeField]
-    private List<StatModifier> m_modifiers = new List<StatModifier>();
+    [SerializeField] private EStatType m_type;
+    [SerializeField] private int m_baseValue, m_levelValue;
+    [SerializeField] private List<StatModifier> m_modifiers = new List<StatModifier>();
 
     public int BaseValue => m_baseValue;
     public int LevelValue => m_levelValue;

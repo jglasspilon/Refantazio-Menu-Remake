@@ -7,7 +7,7 @@ public class ItemEffect_Revive : ItemEffect
     private int m_amount;
     public override bool CanApply(Character target)
     {
-        return target.IsDead;
+        return target.IsDead.Value;
     }
 
     public override void Apply(Character target)

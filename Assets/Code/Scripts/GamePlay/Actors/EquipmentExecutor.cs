@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class EquipmentExecutor
+public class EquipmentExecutor: ISubPropertyProvider
 {
     [SerializeField]
-    private Archetype m_archetypeSlot;
+    private Archetype m_archetype;
 
     [SerializeField]
-    private Equipment m_weaponSlot, m_armorSlot, m_gearSlot;
+    private Equipment m_weapon, m_armor, m_gear;
 
     [SerializeField]
     private Accessory m_accessorySlot;
@@ -17,10 +17,10 @@ public class EquipmentExecutor
     [NonSerialized]
     private Character m_equiper;
 
-    public Archetype Archetype => m_archetypeSlot;
-    public Equipment Weapon => m_weaponSlot;
-    public Equipment Armor => m_armorSlot;
-    public Equipment Gear => m_gearSlot;
+    public Archetype Archetype => m_archetype;
+    public Equipment Weapon => m_weapon;
+    public Equipment Armor => m_armor;
+    public Equipment Gear => m_gear;
     public Accessory Accessory => m_accessorySlot;
 
     public EquipmentExecutor(Equipment weapon, Equipment armor, Equipment gear, Accessory accessory, Archetype startingArchetype, Character equiper)
@@ -33,20 +33,25 @@ public class EquipmentExecutor
         EquipAccessory(accessory);
     }
 
+    public IEnumerable<KeyValuePair<string, IObservableProperty>> GetSubProperties(string parentKey)
+    {
+        return Helper.DataHandling.GetObservableFields(this, parentKey);
+    }
+
     public void EquipArchetype(Archetype archetype)
     {
         if (archetype == null)
             return;
-        if (m_archetypeSlot != null)
+        if (m_archetype != null)
         {
-            m_archetypeSlot.StatModifiers.ForEach(x => m_equiper.Stats.GetStat(x.Type).RemoveModifier(x));
-            m_archetypeSlot.OnStatModifiersChanged -= HandleArchetypeStatModifierChange;
+            m_archetype.StatModifiers.ForEach(x => m_equiper.Stats.GetStat(x.Type).RemoveModifier(x));
+            m_archetype.OnStatModifiersChanged -= HandleArchetypeStatModifierChange;
         }
 
-        m_archetypeSlot = archetype;
-        m_archetypeSlot.StatModifiers.ForEach(x => m_equiper.Stats.GetStat(x.Type).AddModifier(x));
-        m_archetypeSlot.OnStatModifiersChanged += HandleArchetypeStatModifierChange;
-        EquipWeapon(m_archetypeSlot.DefaultWeapon);
+        m_archetype = archetype;
+        m_archetype.StatModifiers.ForEach(x => m_equiper.Stats.GetStat(x.Type).AddModifier(x));
+        m_archetype.OnStatModifiersChanged += HandleArchetypeStatModifierChange;
+        EquipWeapon(m_archetype.DefaultWeapon);
     }
 
     public void EquipWeapon(Equipment weapon)
@@ -54,11 +59,11 @@ public class EquipmentExecutor
         if (weapon == null)
             return;
 
-        if (m_archetypeSlot != null && m_archetypeSlot.EquipableWeaponType != weapon.EquipType)
+        if (m_archetype != null && m_archetype.EquipableWeaponType != weapon.EquipType)
             return;
 
-        ChangeEquipment(weapon, m_weaponSlot);
-        m_weaponSlot = weapon;
+        ChangeEquipment(weapon, m_weapon);
+        m_weapon = weapon;
     }
 
     public void EquipArmor(Equipment armor)
@@ -66,8 +71,8 @@ public class EquipmentExecutor
         if (armor == null)
             return;
 
-        ChangeEquipment(armor, m_armorSlot);
-        m_armorSlot = armor;
+        ChangeEquipment(armor, m_armor);
+        m_armor = armor;
     }
 
     public void EquipGear(Equipment gear)
@@ -75,8 +80,8 @@ public class EquipmentExecutor
         if (gear == null)
             return;
 
-        ChangeEquipment(gear, m_gearSlot);
-        m_gearSlot = gear;
+        ChangeEquipment(gear, m_gear);
+        m_gear = gear;
     }
 
     public void EquipAccessory(Accessory accessory)

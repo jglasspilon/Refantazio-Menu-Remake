@@ -1,18 +1,13 @@
-using Mono.Cecil;
 using System;
 using System.Reflection;
 using UnityEngine;
 
 public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
 {
-    [SerializeField] 
-    private string m_selectedProviderType;
-
-    [SerializeField] 
-    private string m_selectedSourceType;
-
-    [SerializeField] 
-    private string m_propertyKey;
+    [SerializeField] private string m_selectedProviderType;
+    [SerializeField] private string m_selectedSourceType;
+    [SerializeField] private string m_propertyKey;
+    [SerializeField] protected LoggingProfile m_logProfile;
 
     private object m_property;
     private Type m_sourceType;
@@ -56,7 +51,7 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
     {
         if (provider == null)
         {
-            Debug.LogError($"{name}: No source assigned for binder.");
+            Logger.LogError($"{name}: No source assigned for binder.", m_logProfile);
             return;
         }
 
@@ -64,19 +59,19 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
 
         if (expectedType == null)
         {
-            Debug.LogError($"{name}: Selected provider type '{m_selectedProviderType}' could not be resolved.");
+            Logger.LogError($"{name}: Selected provider type '{m_selectedProviderType}' could not be resolved.", m_logProfile);
             return;
         }
 
         if (!expectedType.IsInstanceOfType(provider))
         {
-            Debug.LogError($"{name}: Provider type mismatch. Expected '{expectedType.FullName}', but received '{provider.GetType().FullName}'.");
+            Logger.LogError($"{name}: Provider type mismatch. Expected '{expectedType.FullName}', but received '{provider.GetType().FullName}'.", m_logProfile);
             return;
         }
 
         if (!provider.TryGetRawProperty(m_propertyKey, out var raw))
         {
-            Debug.LogError($"{name}: Could not bind property '{m_propertyKey}' from {provider.Name}.");
+            Logger.LogError($"{name}: Could not bind property '{m_propertyKey}' from {provider.Name}.", m_logProfile);
             return;
         }
 
@@ -86,7 +81,7 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
         var genericArgs = propType.GetGenericArguments();
         if (genericArgs == null || genericArgs.Length != 1)
         {
-            Debug.LogError($"{name}: Property '{m_propertyKey}' is not an ObservableProperty<T>.");
+            Logger.LogError($"{name}: Property '{m_propertyKey}' is not an ObservableProperty<T>.", m_logProfile);
             return;
         }
 
@@ -98,7 +93,7 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
         var eventInfo = propType.GetEvent("OnChanged");
         if (eventInfo == null)
         {
-            Debug.LogError($"{name}: Property '{m_propertyKey}' has no OnChanged event.");
+            Logger.LogError($"{name}: Property '{m_propertyKey}' has no OnChanged event.", m_logProfile);
             return;
         }
 
@@ -151,7 +146,31 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
     // This is the generic Apply<TSource> that concrete binders override
     private void ApplyGeneric<TSource>(TSource value)
     {
-        Apply(value); // Calls the correct overload in the concrete binder
+        InvokeBestApplyOverload(value); 
+    }
+
+    // Calls the correct overload in the concrete binder
+    private void InvokeBestApplyOverload(object value)
+    {
+        var valueType = value?.GetType() ?? typeof(object);
+
+        // Find Apply(T) where T == valueType
+        var method = GetType().GetMethod(
+            "Apply",
+            BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public,
+            null,
+            new[] { valueType },
+            null
+        );
+
+        if (method != null)
+        {
+            method.Invoke(this, new[] { value });
+            return;
+        }
+
+        // Fallback to Apply(object)
+        Apply(value);
     }
 
     /// <summary>
@@ -162,5 +181,4 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
     ///     protected void Apply(MyEnum value) { ... }
     /// </summary>
     protected abstract void Apply(object value);
-
 }

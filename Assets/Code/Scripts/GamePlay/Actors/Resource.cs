@@ -5,11 +5,10 @@ using UnityEngine;
 [Serializable]
 public class Resource: ISubPropertyProvider
 {
+    [SerializeField] private ObservableProperty<int> m_current, m_max;
+
     public event Action<Resource, int> OnResourceChange;
     public event Action<bool> OnEmpty;
-
-    [SerializeField]
-    private ObservableProperty<int> m_current, m_max;
 
     public Type ValueType => typeof(Resource);
     public object UntypedValue => this;

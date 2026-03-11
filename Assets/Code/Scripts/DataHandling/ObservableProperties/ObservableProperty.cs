@@ -4,8 +4,7 @@ using UnityEngine;
 [Serializable]
 public class ObservableProperty<T>: IObservableProperty
 {
-    [SerializeField]
-    private T m_value;
+    [SerializeField] private T m_value;
 
     public event Action<T> OnChanged;
 

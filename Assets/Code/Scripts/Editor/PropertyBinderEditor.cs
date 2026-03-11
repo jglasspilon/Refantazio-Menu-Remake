@@ -71,20 +71,58 @@ public class PropertyBinderEditor : Editor
 
     private Type ResolveType(string typeName)
     {
+        // Manual handling for common primitive aliases
         switch (typeName)
         {
             case "Int32":
             case "int": return typeof(int);
+
             case "Single":
             case "float": return typeof(float);
+
             case "Boolean":
             case "bool": return typeof(bool);
+
+            case "String":
+            case "string": return typeof(string);
+
+            case "Double":
+            case "double": return typeof(double);
+
+            case "Int64":
+            case "long": return typeof(long);
+
+            case "Int16":
+            case "short": return typeof(short);
+
+            case "Byte":
+            case "byte": return typeof(byte);
+
+            case "Char":
+            case "char": return typeof(char);
+
+            case "Decimal":
+            case "decimal": return typeof(decimal);
         }
 
-        return AppDomain.CurrentDomain
+        // Fallback: resolve ANY type by simple name
+        var type = AppDomain.CurrentDomain
             .GetAssemblies()
-            .SelectMany(a => a.GetTypes())
+            .SelectMany(a =>
+            {
+                Type[] types = null;
+                try { types = a.GetTypes(); }
+                catch { /* ignore reflection errors */ }
+                return types ?? Array.Empty<Type>();
+            })
             .FirstOrDefault(t => t.Name == typeName);
+
+        if (type != null)
+            return type;
+
+        // Final fallback: try full name or assembly-qualified name
+        return Type.GetType(typeName);
+
     }
 
     // ---------------------------------------------------------
@@ -100,10 +138,7 @@ public class PropertyBinderEditor : Editor
 
         var providerType = _providerTypes[_providerIndex];
 
-        _filteredPropertyKeys = Helper.DataHandling
-            .GetObservablePropertyNamesFromType(providerType, _selectedSourceType)
-            .ToArray();
-
+        _filteredPropertyKeys = Helper.DataHandling.GetObservablePropertyNamesFromType(providerType, _selectedSourceType).ToArray();
         _propertyIndex = Mathf.Max(0, Array.IndexOf(_filteredPropertyKeys, _propertyKeyProp.stringValue));
     }
 
@@ -119,18 +154,24 @@ public class PropertyBinderEditor : Editor
 
         // Provider dropdown
         int newProviderIndex = EditorGUILayout.Popup("Provider Type", _providerIndex, _providerTypeNames);
-        _providerIndex = newProviderIndex;
-        _providerTypeProp.stringValue = _providerTypeNames[_providerIndex];
-        LoadAvailableTypesForProvider();
-
+        if (_providerTypeProp.stringValue != _providerTypeNames[newProviderIndex])
+        {
+            _providerIndex = newProviderIndex;
+            _providerTypeProp.stringValue = _providerTypeNames[_providerIndex];
+            LoadAvailableTypesForProvider();
+        }
 
         // Type dropdown
         string[] friendlyTypes = _availableTypes.Select(MakeFriendlyTypeName).ToArray();
-        int newTypeIndex = EditorGUILayout.Popup("Property Type", _selectedTypeIndex, friendlyTypes);       
-        _selectedTypeIndex = newTypeIndex;
-        _sourceTypeProp.stringValue = _availableTypes[_selectedTypeIndex];
-        _selectedSourceType = ResolveType(_availableTypes[_selectedTypeIndex]);
-        LoadPropertyKeysForSelectedProvider();
+        int newTypeIndex = EditorGUILayout.Popup("Property Type", _selectedTypeIndex, friendlyTypes);
+
+        if (_sourceTypeProp.stringValue != _availableTypes[newTypeIndex])
+        {
+            _selectedTypeIndex = newTypeIndex;
+            _sourceTypeProp.stringValue = _availableTypes[_selectedTypeIndex];
+            _selectedSourceType = ResolveType(_availableTypes[_selectedTypeIndex]);
+            LoadPropertyKeysForSelectedProvider();
+        }
 
         // Property key dropdown
         EditorGUI.BeginDisabledGroup(_filteredPropertyKeys.Length == 0);

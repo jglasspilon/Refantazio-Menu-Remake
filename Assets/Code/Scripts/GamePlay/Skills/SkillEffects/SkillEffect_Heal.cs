@@ -11,12 +11,12 @@ public class SkillEffect_Heal : SkillEffect
 
     public override bool CanApply(Character target)
     {
-        return target.HP.Current < target.HP.Max && !target.IsDead;
+        return target.HP.Current < target.HP.Max && !target.IsDead.Value;
     }
 
     public override void Apply(Character target, Character caster)
     {
-        if (target.IsDead) 
+        if (target.IsDead.Value) 
             return;
 
         int amount = Mathf.FloorToInt(m_baseAmount * (1f + (caster.Stats.Magic.Value * m_magicFactor / 100f)));

@@ -4,22 +4,14 @@ using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
-public class ResourceBar : MonoBehaviour, IBindableToCharacter
+public class ResourceBar : MonoBehaviour, IBindableToProperty
 {
-    [SerializeField]
-    private EBindableResource m_resourceType;
-
-    [SerializeField]
-    private Slider m_valueSlider;
-
-    [SerializeField]
-    private AnimationCurveAsset m_sliderAnimCurve;
-
-    [SerializeField]
-    private UIEffect[] m_healEffect;
-
-    [SerializeField]
-    private UIEffect[] m_damageEffect;
+    [SerializeField] private EBindableResource m_resourceType;
+    [SerializeField] private Slider m_valueSlider;
+    [SerializeField] private AnimationCurveAsset m_sliderAnimCurve;
+    [SerializeField] private UIEffect[] m_healEffect;
+    [SerializeField] private UIEffect[] m_damageEffect;
+    [SerializeField] private LoggingProfile m_logProfile;
 
     private Resource m_resource;
 
@@ -30,17 +22,20 @@ public class ResourceBar : MonoBehaviour, IBindableToCharacter
         Exp,
     }
 
-    public void BindToCharacter(Character character)
+    public void BindToProperty(IPropertyProvider provider)
     {
-        if (character == null)
+        if(provider is not Character character)
+        {
+            Logger.LogError($"Received unrecognized provider. ResourceBar only accepts Character as provider.", m_logProfile);
             return;
+        }
 
         m_resource = GetResourceFromCharacter(m_resourceType, character);
         m_resource.OnResourceChange += Display;
         DisplayInstant(m_resource.Current, m_resource.CurrentProportion);
     }
 
-    public void Unbind()
+    public void UnBind()
     {
         if (m_resource != null)
         {

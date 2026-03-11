@@ -7,7 +7,6 @@ using UnityEngine;
 public class PartyData
 {
     public event Action OnPartyChanged, OnActivePartyChanged, OnLeaderRemoveAttempt, OnActivePartyOverloadAttempt;
-    public event Action OnAnyPartyMemberUpdated, OnAnyActivePartyMemberUpdated;
 
     [SerializeField]
     private List<Character> m_orderedParty = new List<Character>();
@@ -17,7 +16,6 @@ public class PartyData
 
     private Dictionary<string, Character> m_party = new Dictionary<string, Character>();
     private Character m_guide;
-    private bool m_partyMemberUpdate, m_activePartyMemberUpdate, m_isDirty;
     private LoggingProfile m_logProfile;
 
     public bool ActivePartyFull { get { return !m_activeParty.Any(x => x == null || !x.IsValid); } }
@@ -26,7 +24,6 @@ public class PartyData
     public PartyData(LoggingProfile logProfile)
     {
         m_logProfile = logProfile;
-        LateFrameTicker.OnLateTick += Flush;
         m_activeParty = new Character[] { null, null, null, null };
     }
 
@@ -127,7 +124,6 @@ public class PartyData
             return;
         }
 
-        newPartyMember.OnCharacterUpdated += HandleOnPartyMemberStatUpdate;
         m_party.Add(newPartyMember.ID, newPartyMember);
         m_orderedParty.Add(newPartyMember);
 
@@ -160,7 +156,6 @@ public class PartyData
             Logger.Log("Cannot remove leader from party", m_logProfile);
         }
 
-        partyMember.OnCharacterUpdated -= HandleOnPartyMemberStatUpdate;
         m_party.Remove(partyMember.ID);
         m_orderedParty.Remove(partyMember);
 
@@ -195,7 +190,6 @@ public class PartyData
         }
 
         int slot = FindFirstEmptySlotInActiveParty();
-        newActivePartyMember.OnCharacterUpdated += HandleOnActivePartyMemberStatUpdate;
         newActivePartyMember.SetCharacterToActiveParty();
         m_activeParty[slot] = newActivePartyMember;
         Logger.Log($"Added {newActivePartyMember.Name} to active party.", m_logProfile);
@@ -237,7 +231,6 @@ public class PartyData
         }
 
         int slot = FindSlotForCharacterInActiveParty(activePartyMember);
-        activePartyMember.OnCharacterUpdated -= HandleOnActivePartyMemberStatUpdate;
         activePartyMember.RemoveCharacterFromActiveParty();
         m_activeParty[slot] = null;
 
@@ -264,43 +257,6 @@ public class PartyData
     {
         m_guide = new Character(guide);
         Logger.Log($"Set {m_guide.Name} as party guide.", m_logProfile);
-    }
-    #endregion
-
-
-    #region Event Handling Functions
-    private void Flush()
-    {
-        if (m_isDirty)
-        {
-            m_isDirty = false;
-
-            if (m_partyMemberUpdate)
-            {
-                m_partyMemberUpdate = false;
-                OnAnyPartyMemberUpdated?.Invoke();
-                Logger.Log("Party member stat update", m_logProfile);
-            }
-
-            if(m_activePartyMemberUpdate)
-            {
-                m_activePartyMemberUpdate = false;
-                OnActivePartyChanged?.Invoke();
-                Logger.Log("Active party member stat update", m_logProfile);
-            }
-        }
-    }
-
-    private void HandleOnPartyMemberStatUpdate()
-    {        
-        m_partyMemberUpdate = true;
-        m_isDirty = true;
-    }
-
-    private void HandleOnActivePartyMemberStatUpdate()
-    {    
-        m_activePartyMemberUpdate = true;
-        m_isDirty = true;
     }
     #endregion
 }

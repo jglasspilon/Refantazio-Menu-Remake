@@ -8,12 +8,12 @@ public class ItemEffect_ProportionalHeal : ItemEffect
 
     public override bool CanApply(Character target)
     {
-        return target.HP.Current < target.HP.Max && !target.IsDead;
+        return target.HP.Current < target.HP.Max && !target.IsDead.Value;
     }
 
     public override void Apply(Character target)
     {
-        if (target.IsDead)
+        if (target.IsDead.Value)
             return;
 
         int amount = Mathf.CeilToInt(target.HP.Max * m_proportion);

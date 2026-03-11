@@ -28,6 +28,6 @@ public class DisplaySkillCost : MonoBehaviour, IBindableToSkill
 
     private void Display(int cost)
     {
-        m_text.text = Helper.StringFormatting.FormatIntForUI(cost, 3, true);
+        m_text.text = Helper.StringFormatting.FormatIntForUI(cost, 3, 0.06f);
     }
 }

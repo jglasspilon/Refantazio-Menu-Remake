@@ -8,7 +8,7 @@ public class ItemEffect_ProportionalFillMana : ItemEffect
 
     public override bool CanApply(Character target)
     {
-        return target.MP.Current < target.MP.Max && !target.IsDead;
+        return target.MP.Current < target.MP.Max && !target.IsDead.Value;
     }
 
     public override void Apply(Character target)

@@ -4,30 +4,21 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public class Archetype
+public class Archetype: ISubPropertyProvider
 {
     public event Action<StatModifier[], StatModifier[]> OnStatModifiersChanged;
 
-    [SerializeField]
-    private ArchetypeData m_baseData;
-
-    [SerializeField]
-    private Level m_rank;
-
-    [SerializeField]
-    private EEquipmentType m_weaponType;
-
-    [SerializeField]
-    private Equipment m_defaultWeapon;
-
-    [SerializeField]
-    private Skill[] m_availableSkills;
+    [SerializeField] private ArchetypeData m_baseData;
+    [SerializeField] private Level m_rank;
+    [SerializeField] private EEquipmentType m_weaponType;
+    [SerializeField] private Equipment m_defaultWeapon;
+    [SerializeField] private Skill[] m_availableSkills;
+    [SerializeField] private ObservableProperty<Sprite> m_icon = new ObservableProperty<Sprite>();
 
     private Dictionary<EStatType, StatModifier> m_statModifiers;
     private Dictionary<int, Skill[]> m_skillsByRank;
 
     public string Name => m_baseData.name;
-    public Sprite Icon => m_baseData.Icon;
     public Mesh Mesh => m_baseData.Mesh;
     public Level Rank => m_rank;
     public EEquipmentType EquipableWeaponType => m_weaponType;
@@ -42,8 +33,14 @@ public class Archetype
         m_skillsByRank = baseData.SkillsByRank.ToDictionary(x => x.Key, x => x.Value);
         m_weaponType = baseData.EquipableWeaponType;
         m_defaultWeapon = baseData.DefaultWeapon;
+        m_icon.Value = baseData.Icon;
         m_availableSkills = GetAvailableSkills();
         m_rank.OnLevelChange += HandleRankUp;
+    }
+
+    public IEnumerable<KeyValuePair<string, IObservableProperty>> GetSubProperties(string parentKey)
+    {
+        return Helper.DataHandling.GetObservableFields(this, parentKey);
     }
 
     public Skill[] GetAvailableSkills()

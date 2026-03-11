@@ -82,12 +82,22 @@ public static class Helper
         }
     }
 
+    public static class Math
+    {
+        public static string PercentToHex(float percent)
+        {
+            percent = Mathf.Clamp01(percent);
+            int alpha = Mathf.RoundToInt(percent * 255f);
+            return alpha.ToString("X2");
+        }
+    }
+
     public static class StringFormatting
     {
-        public static string FormatIntForUI(int value, int minSize, bool lowStrength)
+        public static string FormatIntForUI(int value, int minSize, float opacityPercent)
         {
             int insertAlphaAt = 0;
-            string lowOpacity = lowStrength ? "<alpha=#11>" : "<alpha=#66>";
+            string lowOpacity = $"<alpha=#{Math.PercentToHex(opacityPercent)}>";
             string normalOpacity = "<alpha=#FF>";
             string format = "";
 
@@ -180,7 +190,7 @@ public static class Helper
             }
         }
 
-        public static IEnumerable<KeyValuePair<string, IObservableProperty>> GetObservableFields(object instance, string parentKey)
+        public static IEnumerable<KeyValuePair<string, IObservableProperty>>GetObservableFields(object instance, string parentKey)
         {
             if (instance == null)
                 yield break;
@@ -189,17 +199,40 @@ public static class Helper
 
             foreach (var field in instance.GetType().GetFields(flags))
             {
-                if (typeof(IObservableProperty).IsAssignableFrom(field.FieldType))
+                var fieldValue = field.GetValue(instance);
+                if (fieldValue == null)
+                    continue;
+
+                string key = string.IsNullOrEmpty(parentKey) ? field.Name : $"{parentKey}.{field.Name}";
+
+                // Case 1: Direct observable property
+                if (fieldValue is IObservableProperty observable)
                 {
-                    var value = field.GetValue(instance) as IObservableProperty;
-                    if (value != null)
-                    {
-                        string key = $"{parentKey}.{field.Name}";
-                        yield return new KeyValuePair<string, IObservableProperty>(key, value);
-                    }
+                    yield return new KeyValuePair<string, IObservableProperty>(key, observable);
+                    continue;
+                }
+
+                // Case 2: Derived ObservableProperty<T> 
+                var baseType = field.FieldType.BaseType;
+                if (baseType != null &&
+                    baseType.IsGenericType &&
+                    baseType.GetGenericTypeDefinition() == typeof(ObservableProperty<>))
+                {
+                    if (fieldValue is IObservableProperty derivedObservable)
+                        yield return new KeyValuePair<string, IObservableProperty>(key, derivedObservable);
+
+                    continue;
+                }
+
+                // Case 3: Nested provider → recurse
+                if (fieldValue is ISubPropertyProvider)
+                {
+                    foreach (var sub in GetObservableFields(fieldValue, key))
+                        yield return sub;
                 }
             }
         }
+
 
         public static IEnumerable<string> GetObservablePropertyNamesFromType(Type type, Type valueTypeFilter)
         {

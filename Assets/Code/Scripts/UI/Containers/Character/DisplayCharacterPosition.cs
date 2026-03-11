@@ -20,9 +20,8 @@ public class DisplayCharacterPosition : MonoBehaviour, IBindableToCharacter
             return;
 
         m_character = character;
-        m_character.OnBattlePositionChange += Display;
         m_positionMover.SetEnable(!m_character.IsGuide);
-        Display(m_character.BattlePosition);
+        Display(m_character.BattlePosition.Value);
     }
 
     public void Unbind()
@@ -30,7 +29,6 @@ public class DisplayCharacterPosition : MonoBehaviour, IBindableToCharacter
         if (m_character == null)
             return;
 
-        m_character.OnBattlePositionChange -= Display;
         m_character = null;
     }
 

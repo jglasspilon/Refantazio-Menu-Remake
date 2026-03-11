@@ -18,7 +18,6 @@ public class DisplayCharacterBanner : MonoBehaviour, IBindableToCharacter
             return;
 
         m_character = character;
-        Display(m_character.Banner);
     }
 
     public void Unbind()

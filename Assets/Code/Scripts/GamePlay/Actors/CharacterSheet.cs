@@ -5,35 +5,16 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game Data/Characters")]
 public class CharacterSheet : UniqueScriptableObject
 {
-    [SerializeField]
-    private ECharacterType m_characterType;
-
-    [SerializeField]
-    private string m_name;
-
-    [SerializeField]
-    private ArchetypeData m_startingArchetype;
-
-    [SerializeField]
-    private AnimationCurveAsset m_expCurve;
-
-    [SerializeField]
-    private int m_startingLevel;
-
-    [SerializeField]
-    private int m_hp, m_mp, m_str, m_mag, m_end, m_agi, m_luck;
-
-    [SerializeField]
-    private Equipment m_startingWeapon, m_startingArmor, m_startingGear;
-
-    [SerializeField]
-    private Accessory m_startingAccesory;
-
-    [SerializeField]
-    private Sprite m_profileIcon, m_bannerIcon, m_armIcon;
-
-    [SerializeField]
-    private Mesh m_mesh;
+    [SerializeField] private ECharacterType m_characterType;
+    [SerializeField] private string m_name;
+    [SerializeField] private ArchetypeData m_startingArchetype;
+    [SerializeField] private AnimationCurveAsset m_expCurve;
+    [SerializeField] private int m_startingLevel;
+    [SerializeField] private int m_hp, m_mp, m_str, m_mag, m_end, m_agi, m_luck;
+    [SerializeField] private Equipment m_startingWeapon, m_startingArmor, m_startingGear;
+    [SerializeField] private Accessory m_startingAccesory;
+    [SerializeField] private Sprite m_profileIcon, m_bannerIcon, m_armIcon;
+    [SerializeField] private Mesh m_mesh;
 
     public ECharacterType CharacterType => m_characterType;
     public string Name => m_name;
@@ -120,10 +101,9 @@ public class CharacterStats: ISubPropertyProvider
 [Serializable]
 public class Level: ObservableProperty<int>, ISubPropertyProvider
 {
-    public event Action<int, int> OnLevelChange;
+    [SerializeField] private Resource m_exp = new Resource(0);
 
-    [SerializeField]
-    private Resource m_exp = new Resource(0);
+    public event Action<int, int> OnLevelChange;
 
     public Resource Exp => m_exp;
     private AnimationCurveAsset m_expCurve;

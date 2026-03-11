@@ -8,12 +8,12 @@ public class ItemEffect_Heal : ItemEffect
 
     public override bool CanApply(Character target)
     {
-        return target.HP.Current < target.HP.Max && !target.IsDead;
+        return target.HP.Current < target.HP.Max && !target.IsDead.Value;
     }
 
     public override void Apply(Character target)
     {
-        if (target.IsDead) 
+        if (target.IsDead.Value) 
             return;
 
         target.HP.Apply(m_amount);

@@ -6,44 +6,27 @@ using UnityEngine;
 [Serializable]
 public class Character: IPropertyProvider
 {
-    public event Action<EBattlePosition> OnBattlePositionChange;
     public event Action<Archetype> OnArchetypeChange;
-    public event Action<bool> OnDeath;
     public event Action<int, int> OnLevelChange;
-    public event Action OnCharacterUpdated;
 
-    [SerializeField]
-    private ObservableProperty<ECharacterType> m_characterType = new ObservableProperty<ECharacterType>();
-
-    [SerializeField]
-    private CharacterStats m_stats; 
-
-    [SerializeField]
-    private Resource m_health = new Resource(0);
-
-    [SerializeField]
-    private Resource m_mana = new Resource(0);
-
-    [SerializeField]
-    private Level m_level;
-
-    [SerializeField]
-    private EquipmentExecutor m_equipment;
-
-    [SerializeField]
-    private EBattlePosition m_battlePosition;
-
-    [SerializeField]
-    private List<Archetype> m_availableArchetypes = new List<Archetype>();
+    [SerializeField] private CharacterStats m_stats;
+    [SerializeField] private Level m_level;
+    [SerializeField] private Resource m_health = new Resource(0);
+    [SerializeField] private Resource m_mana = new Resource(0);
+    [SerializeField] private ObservableProperty<string> m_name = new ObservableProperty<string>();
+    [SerializeField] private ObservableProperty<ECharacterType> m_characterType = new ObservableProperty<ECharacterType>();
+    [SerializeField] private ObservableProperty<EBattlePosition> m_battlePosition = new ObservableProperty<EBattlePosition>();
+    [SerializeField] private ObservableProperty<bool> m_isDead = new ObservableProperty<bool>();
+    [SerializeField] private ObservableProperty<Sprite> m_banner = new ObservableProperty<Sprite>();
+    [SerializeField] private EquipmentExecutor m_equipment;   
+    [SerializeField] private List<Archetype> m_availableArchetypes = new List<Archetype>();
 
     private CharacterSheet m_characterBase;
     private Dictionary<string, IObservableProperty> m_properties;
-
     public string ID => m_characterBase.ID;
     public bool IsValid => m_characterBase != null;
-    public string Name => m_characterBase.Name;
+    public string Name => m_name.Value;
     public Mesh Mesh => m_characterBase.Mesh;
-    public Sprite Banner => m_characterBase.BannerIcon;
     public Sprite Profile => m_characterBase.ProfileIcon;
     public Sprite Arm => m_characterBase.ArmIcon;
     public Level Level => m_level;
@@ -52,10 +35,10 @@ public class Character: IPropertyProvider
     public Resource Exp => m_level.Exp;
     public CharacterStats Stats => m_stats;
     public EquipmentExecutor Equipment => m_equipment;
-    public bool IsDead => m_health.Current == 0 && m_health.Max > 0;
-    public EBattlePosition BattlePosition => m_battlePosition;
-    public Skill[] Skills => m_equipment?.Archetype?.GetAvailableSkills() ?? Array.Empty<Skill>();
-    public ECharacterType CharacterType => m_characterType.Value;
+    public ObservableProperty<bool> IsDead => m_isDead;
+    public ObservableProperty<EBattlePosition> BattlePosition => m_battlePosition;
+    public ObservableProperty<ECharacterType> CharacterType => m_characterType;
+    public Skill[] Skills => m_equipment?.Archetype?.GetAvailableSkills() ?? Array.Empty<Skill>();   
     public bool IsLeader => m_characterType.Value == ECharacterType.Leader;
     public bool IsGuide => m_characterType.Value == ECharacterType.Guide;
     public bool IsInActiveParty => m_characterType.Value == ECharacterType.Party || IsLeader;
@@ -65,10 +48,13 @@ public class Character: IPropertyProvider
     {
         Archetype startArchetype = null;
         m_characterBase = sheet;
+        m_name.Value = sheet.Name;
         m_stats = new CharacterStats(sheet.HP, sheet.MP, sheet.Str, sheet.Mag, sheet.End, sheet.Agi, sheet.Luck);
         m_level = sheet.CreateLevel();
         m_characterType.Value = sheet.CharacterType;
-        m_battlePosition = m_characterType.Value == ECharacterType.Guide ? EBattlePosition.Undetermined : EBattlePosition.Front;
+        m_banner.Value = sheet.BannerIcon;
+
+        m_battlePosition.Value = m_characterType.Value == ECharacterType.Guide ? EBattlePosition.Undetermined : EBattlePosition.Front;
 
         if (m_characterBase.StartingArchetype != null)
         {
@@ -140,11 +126,10 @@ public class Character: IPropertyProvider
 
     public void SetCharacterBattlePosition(EBattlePosition battlePosition)
     {
-        if (battlePosition == m_battlePosition || m_characterType.Value == ECharacterType.Guide)
+        if (battlePosition == m_battlePosition.Value || m_characterType.Value == ECharacterType.Guide)
             return;
 
-        m_battlePosition = battlePosition;
-        OnBattlePositionChange?.Invoke(battlePosition);
+        m_battlePosition.Value = battlePosition;
     }
     #endregion
 
@@ -176,8 +161,10 @@ public class Character: IPropertyProvider
 
     private void HandleOnHealthEmpty(bool isEmpty)
     {
-        if(m_health.Max > 0)
-            OnDeath?.Invoke(isEmpty);
+        if (m_health.Max > 0)
+        {
+            m_isDead.Value = isEmpty;
+        }
     }
     #endregion
 

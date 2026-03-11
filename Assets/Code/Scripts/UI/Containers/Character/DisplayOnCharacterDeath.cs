@@ -14,8 +14,7 @@ public class DisplayOnCharacterDeath : MonoBehaviour, IBindableToCharacter
         }
 
         m_character = character;
-        m_character.OnDeath += Display;
-        Display(m_character.IsDead);
+        Display(m_character.IsDead.Value);
     }
 
     public void Unbind()
@@ -23,7 +22,6 @@ public class DisplayOnCharacterDeath : MonoBehaviour, IBindableToCharacter
         if (m_character != null)
             return;
 
-        m_character.OnDeath -= Display;
         m_character = null;
     }
 

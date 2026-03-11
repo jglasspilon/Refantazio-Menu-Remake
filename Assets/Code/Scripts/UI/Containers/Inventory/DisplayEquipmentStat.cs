@@ -44,7 +44,7 @@ public class DisplayEquipmentStat : MonoBehaviour, IBindableToInventoryEntry
     private void Display(EStatType statType, int value)
     {
         m_statText.text = Helper.StringFormatting.PrettifyStat(statType);
-        m_statValueText.text = Helper.StringFormatting.FormatIntForUI(value, m_textSizes[m_targetEquipmentStat], m_statValueText.color.g > 0.5f);
+        m_statValueText.text = Helper.StringFormatting.FormatIntForUI(value, m_textSizes[m_targetEquipmentStat], m_statValueText.color.g > 0.5f ? 0.06f : 0.4f);
     }    
 
     private void Clear()

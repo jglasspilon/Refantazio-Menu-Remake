@@ -69,12 +69,12 @@ public class CharacterHeadshotDisplay : MonoBehaviour
     private void UpdateCharacterSlot()
     {
         if(m_character != null)
-            m_character.OnBattlePositionChange -= HandleOnPositionChange;
+            m_character.BattlePosition.OnChanged -= HandleOnPositionChange;
 
         if (m_partyData.TryGetActivePartyMember(m_slotIndex, out m_character))
         {
-            m_character.OnBattlePositionChange += HandleOnPositionChange;
-            HandleOnPositionChange(m_character.BattlePosition);
+            m_character.BattlePosition.OnChanged += HandleOnPositionChange;
+            HandleOnPositionChange(m_character.BattlePosition.Value);
             ShowCharacter();
             return;
         }

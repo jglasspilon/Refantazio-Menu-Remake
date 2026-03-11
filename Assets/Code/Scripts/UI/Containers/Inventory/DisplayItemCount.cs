@@ -33,6 +33,6 @@ public class DisplayItemCount : MonoBehaviour, IBindableToInventoryEntry
 
     private void Display(int amount)
     {
-        m_text.text = Helper.StringFormatting.FormatIntForUI(amount, 2, true);
+        m_text.text = Helper.StringFormatting.FormatIntForUI(amount, 2, 0.06f);
     }
 }
