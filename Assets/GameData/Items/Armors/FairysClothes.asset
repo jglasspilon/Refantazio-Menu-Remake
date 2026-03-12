@@ -21,10 +21,14 @@ MonoBehaviour:
     Gallica only.
   m_equipType: 16
   m_mainModifier:
-    m_statType: 9
-    m_amount: 10
+    m_statType:
+      m_value: 9
+    m_amount:
+      m_value: 12
   m_secondaryModifier:
-    m_statType: 10
-    m_amount: 20
+    m_statType:
+      m_value: 10
+    m_amount:
+      m_value: 0
   m_modifiers: []
   m_effect: {fileID: 0}

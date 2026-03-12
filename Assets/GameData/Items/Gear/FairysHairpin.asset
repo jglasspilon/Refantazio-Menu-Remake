@@ -21,10 +21,14 @@ MonoBehaviour:
     wear. Gallica only.
   m_equipType: 17
   m_mainModifier:
-    m_statType: 9
-    m_amount: 2
+    m_statType:
+      m_value: 9
+    m_amount:
+      m_value: 6
   m_secondaryModifier:
-    m_statType: 0
-    m_amount: 0
+    m_statType:
+      m_value: 10
+    m_amount:
+      m_value: 0
   m_modifiers: []
   m_effect: {fileID: 0}

@@ -20,10 +20,14 @@ MonoBehaviour:
   m_description: Axe of a being who sought to destroy all in order to create anew
   m_equipType: 13
   m_mainModifier:
-    m_statType: 7
-    m_amount: 500
+    m_statType:
+      m_value: 7
+    m_amount:
+      m_value: 500
   m_secondaryModifier:
-    m_statType: 8
-    m_amount: 99
+    m_statType:
+      m_value: 8
+    m_amount:
+      m_value: 99
   m_modifiers: []
   m_effect: {fileID: 11400000, guid: 5f9e3c8b3c5055e43b18b313f60ec573, type: 2}

@@ -12,7 +12,7 @@ public class EquipmentExecutor: ISubPropertyProvider
     private Equipment m_weapon, m_armor, m_gear;
 
     [SerializeField]
-    private Accessory m_accessorySlot;
+    private Equipment m_accessorySlot;
 
     [NonSerialized]
     private Character m_equiper;
@@ -21,9 +21,9 @@ public class EquipmentExecutor: ISubPropertyProvider
     public Equipment Weapon => m_weapon;
     public Equipment Armor => m_armor;
     public Equipment Gear => m_gear;
-    public Accessory Accessory => m_accessorySlot;
+    public Equipment Accessory => m_accessorySlot;
 
-    public EquipmentExecutor(Equipment weapon, Equipment armor, Equipment gear, Accessory accessory, Archetype startingArchetype, Character equiper)
+    public EquipmentExecutor(Equipment weapon, Equipment armor, Equipment gear, Equipment accessory, Archetype startingArchetype, Character equiper)
     {
         m_equiper = equiper;
         EquipArchetype(startingArchetype);
@@ -84,12 +84,12 @@ public class EquipmentExecutor: ISubPropertyProvider
         m_gear = gear;
     }
 
-    public void EquipAccessory(Accessory accessory)
+    public void EquipAccessory(Equipment accessory)
     {
         if (accessory == null)
             return;
 
-        ChangeAccessory(accessory, m_accessorySlot);
+        ChangeEquipment(accessory, m_accessorySlot);
         m_accessorySlot = accessory;
     }
 
@@ -97,24 +97,22 @@ public class EquipmentExecutor: ISubPropertyProvider
     {
         if (oldEquip != null)
         {
-            m_equiper.Stats.GetStat(oldEquip.MainModifier.Type).RemoveModifier(oldEquip.MainModifier);
-            m_equiper.Stats.GetStat(oldEquip.SecondaryModifier.Type).RemoveModifier(oldEquip.SecondaryModifier);
+            if(oldEquip.MainModifier != null)
+                m_equiper.Stats.GetStat(oldEquip.MainModifier.Type).RemoveModifier(oldEquip.MainModifier);
+
+            if(oldEquip.SecondaryModifier != null)
+                m_equiper.Stats.GetStat(oldEquip.SecondaryModifier.Type).RemoveModifier(oldEquip.SecondaryModifier);
+
             oldEquip.Modifiers.ForEach(x => m_equiper.Stats.GetStat(x.Type).RemoveModifier(x));
         }
 
-        m_equiper.Stats.GetStat(newEquip.MainModifier.Type).AddModifier(newEquip.MainModifier);
-        m_equiper.Stats.GetStat(newEquip.SecondaryModifier.Type).AddModifier(newEquip.SecondaryModifier);
+        if(newEquip.MainModifier != null)
+            m_equiper.Stats.GetStat(newEquip.MainModifier.Type).AddModifier(newEquip.MainModifier);
+
+        if(newEquip.SecondaryModifier != null)
+            m_equiper.Stats.GetStat(newEquip.SecondaryModifier.Type).AddModifier(newEquip.SecondaryModifier);
+
         newEquip.Modifiers.ForEach(x => m_equiper.Stats.GetStat(x.Type).AddModifier(x));
-    }
-
-    private void ChangeAccessory(Accessory newAccessory, Accessory oldAccessory)
-    {
-        if (oldAccessory != null)
-        {
-            oldAccessory.Modifiers.ForEach(x => m_equiper.Stats.GetStat(x.Type).RemoveModifier(x));
-        }
-
-        newAccessory.Modifiers.ForEach(x => m_equiper.Stats.GetStat(x.Type).AddModifier(x));
     }
 
     private void HandleArchetypeStatModifierChange(StatModifier[] oldModifiers, StatModifier[] newModifiers)

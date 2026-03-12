@@ -21,12 +21,18 @@ MonoBehaviour:
     protect the people. <m>Endurance +10
   m_equipType: 3
   m_mainModifier:
-    m_statType: 7
-    m_amount: 500
+    m_statType:
+      m_value: 7
+    m_amount:
+      m_value: 491
   m_secondaryModifier:
-    m_statType: 8
-    m_amount: 99
+    m_statType:
+      m_value: 8
+    m_amount:
+      m_value: 99
   m_modifiers:
-  - m_statType: 4
-    m_amount: 10
+  - m_statType:
+      m_value: 4
+    m_amount:
+      m_value: 10
   m_effect: {fileID: 11400000, guid: c7caad554861de142bdc61ea60dbe902, type: 2}

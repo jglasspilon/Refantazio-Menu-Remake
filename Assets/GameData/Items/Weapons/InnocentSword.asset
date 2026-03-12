@@ -20,10 +20,14 @@ MonoBehaviour:
   m_description: An unremarkable sword given by More.
   m_equipType: 0
   m_mainModifier:
-    m_statType: 7
-    m_amount: 45
+    m_statType:
+      m_value: 7
+    m_amount:
+      m_value: 38
   m_secondaryModifier:
-    m_statType: 8
-    m_amount: 96
+    m_statType:
+      m_value: 8
+    m_amount:
+      m_value: 91
   m_modifiers: []
   m_effect: {fileID: 0}

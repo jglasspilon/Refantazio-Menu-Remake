@@ -38,7 +38,24 @@ public class PropertyBinderEditor : Editor
     // ---------------------------------------------------------
     private void LoadProviderTypes()
     {
-        _providerTypes = TypeCache.GetTypesDerivedFrom<IPropertyProvider>().Where(t => !t.IsAbstract && !t.IsInterface).OrderBy(t => t.Name).ToArray();
+        _providerTypes = TypeCache.GetTypesDerivedFrom<IPropertyProvider>()
+            .Where(t => !t.IsAbstract && !t.IsInterface)
+            .Where(t =>
+            {
+                var baseType = t.BaseType;
+
+                // Always include root providers (no base or base not a provider)
+                if (baseType == null || !typeof(IPropertyProvider).IsAssignableFrom(baseType))
+                    return true;
+
+                int ownCount = CountObservableProperties(t);
+                int baseCount = CountObservableProperties(baseType);
+
+                return ownCount > baseCount; // include only if it adds new properties
+            })
+            .OrderBy(t => t.Name)
+            .ToArray();      
+        
         _providerTypeNames = _providerTypes.Select(t => t.Name).ToArray();
 
         // Restore saved provider selection
@@ -187,8 +204,14 @@ public class PropertyBinderEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 
+    private int CountObservableProperties(Type type)
+    {
+        return Helper.DataHandling.GetObservablePropertyNamesFromType(type, null).Count();
+    }
+
+
     // ---------------------------------------------------------
-    // Friendly Name Formatter
+    // Friendly Name Formatters
     // ---------------------------------------------------------
     private string MakeFriendlyProperty(string key)
     {
@@ -198,7 +221,7 @@ public class PropertyBinderEditor : Editor
                .Select(segment => char.ToUpper(segment[0]) + segment.Substring(1)));
     }
 
-    public static string MakeFriendlyTypeName(string typeName)
+    private static string MakeFriendlyTypeName(string typeName)
     {
         switch (typeName)
         {
@@ -216,5 +239,4 @@ public class PropertyBinderEditor : Editor
                 return typeName; 
         }
     }
-
 }

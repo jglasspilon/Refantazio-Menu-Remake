@@ -53,7 +53,6 @@ public class Character: IPropertyProvider
         m_level = sheet.CreateLevel();
         m_characterType.Value = sheet.CharacterType;
         m_banner.Value = sheet.BannerIcon;
-
         m_battlePosition.Value = m_characterType.Value == ECharacterType.Guide ? EBattlePosition.Undetermined : EBattlePosition.Front;
 
         if (m_characterBase.StartingArchetype != null)
@@ -64,7 +63,12 @@ public class Character: IPropertyProvider
                 m_availableArchetypes.Add(startArchetype);
         }
 
-        m_equipment = new EquipmentExecutor(sheet.StartingWeapon, sheet.StartingArmor, sheet.StartingGear, sheet.StartingAccessory, startArchetype, this);
+        Equipment startingWeapon = sheet.StartingWeapon == null ? null : sheet.StartingWeapon.CreateItemFromData() as Equipment;
+        Equipment startingArmor = sheet.StartingArmor == null ? null : sheet.StartingArmor.CreateItemFromData() as Equipment;
+        Equipment startingGear = sheet.StartingGear == null ? null : sheet.StartingGear.CreateItemFromData() as Equipment;
+        Equipment startingAccessory = sheet.StartingAccessory == null ? null : sheet.StartingAccessory.CreateItemFromData() as Equipment;
+        m_equipment = new EquipmentExecutor(startingWeapon, startingArmor, startingGear, startingAccessory, startArchetype, this);
+
         ApplyHp(Stats.Endurance.Value);
         ApplyMp(Stats.Magic.Value);
 

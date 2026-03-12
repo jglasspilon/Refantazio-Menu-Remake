@@ -16,36 +16,31 @@ public class EquipmentData : ItemData
     private StatModifier[] m_modifiers;
 
     [SerializeField]
-    private EquipEffect m_effect;
+    private EquipEffectData m_effect;
 
     public EEquipmentType EquipType => m_equipType;
     public StatModifier MainModifier => m_mainModifier;
     public StatModifier SecondaryModifier => m_secondaryModifier;
     public StatModifier[] Modifiers => m_modifiers;
-    public EquipEffect Effect => m_effect;
+    public EquipEffectData Effect => m_effect;
 
     public override Item CreateItemFromData()
     {
-        return new Equipment(ID, Name, SortOrder, Category, Icon, Price, Description, m_equipType, m_mainModifier, m_secondaryModifier, m_modifiers, m_effect);
+        EquipEffect effect = m_effect == null ? null : m_effect.CreateEquipEffectFromData();
+        Item item = new Equipment(ID, Name, SortOrder, Category, Icon, Price, Description, m_equipType, m_mainModifier, m_secondaryModifier, m_modifiers, effect);
+        item.InitializeProperties();
+        return item;
     }
 }
 
 public class Equipment : Item
 {
-    [SerializeField]
-    private EEquipmentType m_equipType;
-
-    [SerializeField]
-    private StatModifier m_mainModifier;
-
-    [SerializeField]
-    private StatModifier m_secondaryModifier;
-
-    [SerializeField]
-    private StatModifier[] m_modifiers;
-
-    [SerializeField]
-    private EquipEffect m_effect;
+    [SerializeField] private EEquipmentType m_equipType;
+    [SerializeField] private StatModifier m_mainModifier;
+    [SerializeField] private StatModifier m_secondaryModifier;
+    [SerializeField] private StatModifier[] m_modifiers;
+    [SerializeField] private EquipEffect m_effect;
+    [SerializeField] private ObservableProperty<bool> m_hasEffect = new ObservableProperty<bool>();
 
     public EEquipmentType EquipType => m_equipType;
     public StatModifier MainModifier => m_mainModifier;
@@ -59,9 +54,9 @@ public class Equipment : Item
         m_mainModifier = mainModifier;
         m_secondaryModifier = secondaryModifier;
         m_modifiers = modifiers;
-        m_effect = effect;
+        m_hasEffect.Value = effect != null;
+        m_effect = effect == null ? new EquipEffect("") : effect;
     }
-
 }
 
 public enum EEquipmentType

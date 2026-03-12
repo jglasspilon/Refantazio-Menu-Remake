@@ -20,10 +20,14 @@ MonoBehaviour:
   m_description: An unremarkable staff given by More.
   m_equipType: 1
   m_mainModifier:
-    m_statType: 7
-    m_amount: 50
+    m_statType:
+      m_value: 7
+    m_amount:
+      m_value: 25
   m_secondaryModifier:
-    m_statType: 8
-    m_amount: 96
+    m_statType:
+      m_value: 8
+    m_amount:
+      m_value: 89
   m_modifiers: []
   m_effect: {fileID: 0}

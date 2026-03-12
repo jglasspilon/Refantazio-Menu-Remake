@@ -21,14 +21,22 @@ MonoBehaviour:
     +5.
   m_equipType: 15
   m_mainModifier:
-    m_statType: 9
-    m_amount: 380
+    m_statType:
+      m_value: 9
+    m_amount:
+      m_value: 312
   m_secondaryModifier:
-    m_statType: 10
-    m_amount: 0
+    m_statType:
+      m_value: 10
+    m_amount:
+      m_value: 12
   m_modifiers:
-  - m_statType: 3
-    m_amount: 5
-  - m_statType: 4
-    m_amount: 5
+  - m_statType:
+      m_value: 3
+    m_amount:
+      m_value: 5
+  - m_statType:
+      m_value: 4
+    m_amount:
+      m_value: 5
   m_effect: {fileID: 11400000, guid: a5312f1caab00ed4e9b37ef8454ecb78, type: 2}

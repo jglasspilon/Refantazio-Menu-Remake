@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 [CreateAssetMenu(menuName = "Data/String Formatter/Larger Leading Text Formatter")]
 public class LargerLeadingText : StringFormatter

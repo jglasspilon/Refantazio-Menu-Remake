@@ -20,10 +20,14 @@ MonoBehaviour:
   m_description: An unremarkable axe given by More.
   m_equipType: 13
   m_mainModifier:
-    m_statType: 7
-    m_amount: 80
+    m_statType:
+      m_value: 7
+    m_amount:
+      m_value: 42
   m_secondaryModifier:
-    m_statType: 8
-    m_amount: 96
+    m_statType:
+      m_value: 8
+    m_amount:
+      m_value: 89
   m_modifiers: []
   m_effect: {fileID: 0}

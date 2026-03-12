@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e89adf51a66a7b84397120d7b11efb2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 14930da3c37e05f49b394c25140db055, type: 3}
   m_Name: FairyCharm
   m_EditorClassIdentifier: Assembly-CSharp::Accessory
   m_name: Fairy Charm
@@ -18,5 +18,16 @@ MonoBehaviour:
   m_icon: {fileID: 0}
   m_price: 0
   m_description: A tiny charm that fairies carry. Gallica only.
+  m_equipType: 23
+  m_mainModifier:
+    m_statType:
+      m_value: 9
+    m_amount:
+      m_value: 0
+  m_secondaryModifier:
+    m_statType:
+      m_value: 0
+    m_amount:
+      m_value: 0
   m_modifiers: []
   m_effect: {fileID: 0}

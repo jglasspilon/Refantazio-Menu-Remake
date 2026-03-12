@@ -17,17 +17,26 @@ MonoBehaviour:
   m_category: 5
   m_icon: {fileID: 0}
   m_price: 0
-  m_description: An impressive uniform that designates its wearer as an army captain.
+  m_description: An impressive uniform that designates its wearer as an army captain.<m>
+    Endurance +1, Agility +1
   m_equipType: 16
   m_mainModifier:
-    m_statType: 9
-    m_amount: 50
+    m_statType:
+      m_value: 9
+    m_amount:
+      m_value: 24
   m_secondaryModifier:
-    m_statType: 10
-    m_amount: 2
+    m_statType:
+      m_value: 10
+    m_amount:
+      m_value: 0
   m_modifiers:
-  - m_statType: 4
-    m_amount: 1
-  - m_statType: 5
-    m_amount: 1
+  - m_statType:
+      m_value: 4
+    m_amount:
+      m_value: 1
+  - m_statType:
+      m_value: 5
+    m_amount:
+      m_value: 1
   m_effect: {fileID: 0}

@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using UnityEngine;
@@ -173,7 +174,7 @@ public static class Helper
             foreach (var field in obj.GetType().GetFields(flags))
             {
                 var value = field.GetValue(obj);
-                var key = parentKey + field.Name;
+                var key = string.IsNullOrEmpty(parentKey) ? field.Name : parentKey + "." + field.Name;
 
                 // Direct observable property
                 if (value is IObservableProperty observable)
@@ -214,9 +215,7 @@ public static class Helper
 
                 // Case 2: Derived ObservableProperty<T> 
                 var baseType = field.FieldType.BaseType;
-                if (baseType != null &&
-                    baseType.IsGenericType &&
-                    baseType.GetGenericTypeDefinition() == typeof(ObservableProperty<>))
+                if (baseType != null && baseType.IsGenericType && baseType.GetGenericTypeDefinition() == typeof(ObservableProperty<>))
                 {
                     if (fieldValue is IObservableProperty derivedObservable)
                         yield return new KeyValuePair<string, IObservableProperty>(key, derivedObservable);
@@ -301,6 +300,5 @@ public static class Helper
                 }
             }
         }
-
     }
 }

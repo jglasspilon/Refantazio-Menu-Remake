@@ -24,7 +24,6 @@ public class InventoryItemGenerator: UIObjectGeneraterFromPool<InventoryItemUI, 
         return item switch
         {
             Equipment => m_equipmentPrefab,
-            Accessory => (item as Accessory).Effect == null ? m_itemPrefab : m_accessoryPrefab,
             _ => m_itemPrefab
         };
     }

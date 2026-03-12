@@ -81,24 +81,23 @@ public class InventoryData
 public class InventoryEntry: IPropertyProvider
 {
     [SerializeField] private Item m_item;
-    [SerializeField] private int m_count;
-    [SerializeField] private bool m_isNew = true;
+    [SerializeField] private ObservableProperty<int> m_count = new ObservableProperty<int>();
+    [SerializeField] private ObservableProperty<bool> m_isNew = new ObservableProperty<bool>();
 
     private Dictionary<string, IObservableProperty> m_properties;
 
-    public event Action<int> OnAmountChanged;
     public event Action<InventoryEntry> OnMarkAsSeen;
 
     public string Name => m_item.Name;
     public string ID => m_item.ID;
     public Item Item => m_item; 
-    public int Count => m_count;
-    public bool IsNew => m_isNew;
+    public int Count => m_count.Value;
+    public bool IsNew => m_isNew.Value;
 
     public InventoryEntry(ItemData itemData)
     {
         m_item = itemData.CreateItemFromData();
-        m_isNew = true;
+        m_isNew.Value = true;
         InitializeProperties();
     }
 
@@ -133,13 +132,12 @@ public class InventoryEntry: IPropertyProvider
 
     public void ApplyAmount(int amount)
     {
-        m_count = Mathf.Clamp(m_count + amount, 0, 99);
-        OnAmountChanged?.Invoke(m_count);
+        m_count.Value = Mathf.Clamp(m_count.Value + amount, 0, 99);
     }
 
     public void MarkAsSeen()
     {
-        m_isNew = false;
+        m_isNew.Value = false;
         OnMarkAsSeen?.Invoke(this);
     }
 }

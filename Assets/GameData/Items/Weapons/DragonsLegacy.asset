@@ -21,20 +21,34 @@ MonoBehaviour:
     of heroes.<m>[Almighty] All stats +5.
   m_equipType: 0
   m_mainModifier:
-    m_statType: 7
-    m_amount: 427
+    m_statType:
+      m_value: 7
+    m_amount:
+      m_value: 430
   m_secondaryModifier:
-    m_statType: 8
-    m_amount: 99
+    m_statType:
+      m_value: 8
+    m_amount:
+      m_value: 99
   m_modifiers:
-  - m_statType: 3
-    m_amount: 5
-  - m_statType: 4
-    m_amount: 5
-  - m_statType: 5
-    m_amount: 5
-  - m_statType: 6
-    m_amount: 5
-  - m_statType: 7
-    m_amount: 5
+  - m_statType:
+      m_value: 2
+    m_amount:
+      m_value: 5
+  - m_statType:
+      m_value: 3
+    m_amount:
+      m_value: 5
+  - m_statType:
+      m_value: 4
+    m_amount:
+      m_value: 5
+  - m_statType:
+      m_value: 5
+    m_amount:
+      m_value: 5
+  - m_statType:
+      m_value: 6
+    m_amount:
+      m_value: 5
   m_effect: {fileID: 11400000, guid: 36e0b44c6fd8171469bb4d46e8c314cd, type: 2}

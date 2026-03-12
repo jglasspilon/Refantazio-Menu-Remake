@@ -20,10 +20,14 @@ MonoBehaviour:
   m_description: An unremarkable lance given by More.
   m_equipType: 3
   m_mainModifier:
-    m_statType: 7
-    m_amount: 75
+    m_statType:
+      m_value: 7
+    m_amount:
+      m_value: 39
   m_secondaryModifier:
-    m_statType: 8
-    m_amount: 97
+    m_statType:
+      m_value: 8
+    m_amount:
+      m_value: 90
   m_modifiers: []
   m_effect: {fileID: 0}

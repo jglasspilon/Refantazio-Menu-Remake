@@ -20,10 +20,14 @@ MonoBehaviour:
   m_description: The greatsword of a peerless king who led in troubled times.
   m_equipType: 2
   m_mainModifier:
-    m_statType: 7
-    m_amount: 500
+    m_statType:
+      m_value: 7
+    m_amount:
+      m_value: 489
   m_secondaryModifier:
-    m_statType: 8
-    m_amount: 99
+    m_statType:
+      m_value: 8
+    m_amount:
+      m_value: 99
   m_modifiers: []
   m_effect: {fileID: 11400000, guid: 4275572dcf16d7542a5fc5ef19c76490, type: 2}

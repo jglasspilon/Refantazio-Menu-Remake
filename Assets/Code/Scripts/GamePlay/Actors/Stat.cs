@@ -36,12 +36,18 @@ public class Stat: ObservableProperty<int>
 
     public void AddModifier(StatModifier modifier)
     {
+        if (modifier == null)
+            return;
+
         m_modifiers.Add(modifier);
         Recalculate();
     }
 
     public void RemoveModifier(StatModifier modifier)
     {
+        if (modifier == null)
+            return;
+
         m_modifiers.Remove(modifier);
         Recalculate();
     }

@@ -9,20 +9,26 @@ public class CharacterSheet : UniqueScriptableObject
     [SerializeField] private string m_name;
     [SerializeField] private ArchetypeData m_startingArchetype;
     [SerializeField] private AnimationCurveAsset m_expCurve;
+
+    [Header("Level and Stats:")]
     [SerializeField] private int m_startingLevel;
     [SerializeField] private int m_hp, m_mp, m_str, m_mag, m_end, m_agi, m_luck;
-    [SerializeField] private Equipment m_startingWeapon, m_startingArmor, m_startingGear;
-    [SerializeField] private Accessory m_startingAccesory;
-    [SerializeField] private Sprite m_profileIcon, m_bannerIcon, m_armIcon;
+
+    [Header("Starting Equipment:")]
+    [SerializeField] private EquipmentData m_startingWeapon;
+    [SerializeField] private EquipmentData m_startingArmor, m_startingGear, m_startingAccesory;
+
+    [Header("Display Content:")]
     [SerializeField] private Mesh m_mesh;
+    [SerializeField] private Sprite m_profileIcon, m_bannerIcon, m_armIcon;  
 
     public ECharacterType CharacterType => m_characterType;
     public string Name => m_name;
     public ArchetypeData StartingArchetype => m_startingArchetype;
-    public Equipment StartingArmor => m_startingArmor;
-    public Equipment StartingWeapon => m_startingWeapon;
-    public Equipment StartingGear => m_startingGear;
-    public Accessory StartingAccessory => m_startingAccesory;
+    public EquipmentData StartingArmor => m_startingArmor;
+    public EquipmentData StartingWeapon => m_startingWeapon;
+    public EquipmentData StartingGear => m_startingGear;
+    public EquipmentData StartingAccessory => m_startingAccesory;
     public int HP => m_hp;
     public int MP => m_mp;
     public int Str => m_str;

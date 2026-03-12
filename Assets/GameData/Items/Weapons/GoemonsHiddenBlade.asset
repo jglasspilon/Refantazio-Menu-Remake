@@ -21,12 +21,18 @@ MonoBehaviour:
     Agility +5.
   m_equipType: 7
   m_mainModifier:
-    m_statType: 7
-    m_amount: 500
+    m_statType:
+      m_value: 7
+    m_amount:
+      m_value: 472
   m_secondaryModifier:
-    m_statType: 8
-    m_amount: 99
+    m_statType:
+      m_value: 8
+    m_amount:
+      m_value: 99
   m_modifiers:
-  - m_statType: 5
-    m_amount: 8
+  - m_statType:
+      m_value: 5
+    m_amount:
+      m_value: 5
   m_effect: {fileID: 11400000, guid: 96c2c20c347cd4440b29de95e0655bea, type: 2}

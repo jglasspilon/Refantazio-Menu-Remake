@@ -21,10 +21,14 @@ MonoBehaviour:
     else to wield.
   m_equipType: 0
   m_mainModifier:
-    m_statType: 7
-    m_amount: 15
+    m_statType:
+      m_value: 7
+    m_amount:
+      m_value: 0
   m_secondaryModifier:
-    m_statType: 8
-    m_amount: 10
+    m_statType:
+      m_value: 8
+    m_amount:
+      m_value: 0
   m_modifiers: []
   m_effect: {fileID: 0}
