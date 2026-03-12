@@ -18,5 +18,6 @@ MonoBehaviour:
   m_description: Increases one ally's Attack for 3 turns.
   m_manaCost: 8
   m_targetingType: 0
-  m_battleOnly: 1
+  m_usableInBattle: 1
+  m_usableInMenu: 0
   m_effects: []

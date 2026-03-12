@@ -83,7 +83,7 @@ public class Character: IPropertyProvider
         m_properties = Helper.DataHandling.BuildPropertyMap(this);
     }
 
-    public bool TryGetRawProperty(string key, out object value)
+    public bool TryGetPropertyRaw(string key, out object value)
     {
         if (m_properties.TryGetValue(key, out IObservableProperty raw))
         {

@@ -19,6 +19,7 @@ public class MenuSkill : PoolableObjectFromData<Skill>, ISelectable
 
     private Skill m_skill;
     private Character m_character;
+    private IBindableToProperty[] m_bindables;
     private IBindableToSkill[] m_skillBindables;
     private IBindableToCharacter[] m_characterBindables;
 
@@ -26,6 +27,7 @@ public class MenuSkill : PoolableObjectFromData<Skill>, ISelectable
 
     private void Awake()
     {
+        m_bindables = GetComponentsInChildren<IBindableToProperty>();
         m_skillBindables = GetComponentsInChildren<IBindableToSkill>(true);
         m_characterBindables = GetComponentsInChildren<IBindableToCharacter>(true);
     }
@@ -41,6 +43,7 @@ public class MenuSkill : PoolableObjectFromData<Skill>, ISelectable
         transform.localScale = Vector3.one;
         m_skill = skill;
         SetAsSelected(false);
+        m_bindables.ForEach(x => x.BindToProperty(skill));
         m_skillBindables.ForEach(x => x.BindToSkill(skill));
     }
 
@@ -58,6 +61,7 @@ public class MenuSkill : PoolableObjectFromData<Skill>, ISelectable
         SetAsSelected(false);
         m_skill = null;
         m_character = null;
+        m_bindables.ForEach(x => x.UnBind());
         m_skillBindables.ForEach(x => x.Unbind());
         m_characterBindables.ForEach(x => x.Unbind());
     }   

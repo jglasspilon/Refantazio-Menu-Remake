@@ -19,7 +19,7 @@ public class ArchetypeData: UniqueScriptableObject
     private Equipment m_defaultWeapon;
 
     [SerializeField]
-    private SerializedKeyValuePair<int, Skill[]>[] m_skillsByRank;
+    private SerializedKeyValuePair<int, SkillData[]>[] m_skillsByRank;
 
     [SerializeField]
     private AnimationCurveAsset m_rankExpCurve;
@@ -32,7 +32,7 @@ public class ArchetypeData: UniqueScriptableObject
     public Mesh Mesh => m_mesh;
     public EEquipmentType EquipableWeaponType => m_equipableWeaponType;
     public Equipment DefaultWeapon => m_defaultWeapon;
-    public SerializedKeyValuePair<int, Skill[]>[] SkillsByRank => m_skillsByRank;
+    public SerializedKeyValuePair<int, SkillData[]>[] SkillsByRank => m_skillsByRank;
     public SerializedKeyValuePair<EStatType, AnimationCurve>[] RankedStatCurves => m_rankedStatCurves;
     public AnimationCurveAsset RankExpCurve => m_rankExpCurve;
 }

@@ -166,8 +166,8 @@ GameObject:
   - component: {fileID: 605641824051579789}
   - component: {fileID: 9052469766807072763}
   - component: {fileID: 4849588067707024352}
-  - component: {fileID: 3361477357143163009}
   - component: {fileID: 4940194085949872515}
+  - component: {fileID: 6694354813338346797}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -232,18 +232,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3361477357143163009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1530094562253046180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5e9f68974756dc489ddc8425026043a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplaySkillIcon
 --- !u!114 &4940194085949872515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,6 +245,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TintOnNotSelectable
   m_tint: {r: 0.6830188, g: 0.6830188, b: 0.6830188, a: 1}
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+--- !u!114 &6694354813338346797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530094562253046180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1f2ecca0451d5a44ad23a9c4d623db6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImageBinder
+  m_selectedProviderType: Skill
+  m_selectedSourceType: Sprite
+  m_propertyKey: m_icon
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
 --- !u!1 &1662656558399391001
 GameObject:
@@ -683,9 +687,9 @@ GameObject:
   - component: {fileID: 1425397197840069283}
   - component: {fileID: 1113278931619582979}
   - component: {fileID: 7259517055617685330}
-  - component: {fileID: 7395757894677308440}
   - component: {fileID: 1506161128364375521}
   - component: {fileID: 283813973706485604}
+  - component: {fileID: 83191459400932281}
   m_Layer: 5
   m_Name: Cost
   m_TagString: Untagged
@@ -812,18 +816,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7395757894677308440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2743852423923211228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36d94e227f1de374bbf69b8a3e7870c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplaySkillCost
 --- !u!114 &1506161128364375521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -853,6 +845,24 @@ MonoBehaviour:
   m_canAffordColor: {r: 0.39607844, g: 0.62352943, b: 0.9098039, a: 1}
   m_cannotAffordColor: {r: 0.8784314, g: 0.17254902, b: 0.17254902, a: 1}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+--- !u!114 &83191459400932281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2743852423923211228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e13e1d2ef14a7741b2e869673095789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextBinder
+  m_selectedProviderType: Skill
+  m_selectedSourceType: int
+  m_propertyKey: m_manaCost
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_formatters:
+  - {fileID: 11400000, guid: 169af6213db84c241b1377bca47dcd94, type: 2}
 --- !u!1 &3018235985483180403
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,8 +874,8 @@ GameObject:
   - component: {fileID: 4240878169547264523}
   - component: {fileID: 7035664608826803161}
   - component: {fileID: 638522092380743151}
-  - component: {fileID: 4455476999632380625}
   - component: {fileID: 8599090158912938344}
+  - component: {fileID: 2722653586706878601}
   m_Layer: 5
   m_Name: SelectedCost
   m_TagString: Untagged
@@ -992,18 +1002,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &4455476999632380625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3018235985483180403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36d94e227f1de374bbf69b8a3e7870c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplaySkillCost
 --- !u!114 &8599090158912938344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1018,6 +1016,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TintOnNotSelectable
   m_tint: {r: 0.6830188, g: 0.6830188, b: 0.6830188, a: 1}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+--- !u!114 &2722653586706878601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3018235985483180403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e13e1d2ef14a7741b2e869673095789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextBinder
+  m_selectedProviderType: Skill
+  m_selectedSourceType: int
+  m_propertyKey: m_manaCost
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_formatters:
+  - {fileID: 11400000, guid: 169af6213db84c241b1377bca47dcd94, type: 2}
 --- !u!1 &4038426103759690764
 GameObject:
   m_ObjectHideFlags: 0
@@ -1197,8 +1213,8 @@ GameObject:
   - component: {fileID: 1778429460209867181}
   - component: {fileID: 8004124444177516293}
   - component: {fileID: 6016095592312158114}
-  - component: {fileID: 4882834753358007077}
   - component: {fileID: 7611161859531140827}
+  - component: {fileID: 7309543634984254049}
   m_Layer: 5
   m_Name: SkillName
   m_TagString: Untagged
@@ -1325,18 +1341,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &4882834753358007077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4168068792265245901}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30333b3afb66d93499798148da6aefe9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplaySkillName
 --- !u!114 &7611161859531140827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1351,6 +1355,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TintOnNotSelectable
   m_tint: {r: 0.6830188, g: 0.6830188, b: 0.6830188, a: 1}
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+--- !u!114 &7309543634984254049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4168068792265245901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e13e1d2ef14a7741b2e869673095789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextBinder
+  m_selectedProviderType: Skill
+  m_selectedSourceType: string
+  m_propertyKey: m_name
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_formatters: []
 --- !u!1 &4269797541421177668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1826,7 +1847,7 @@ GameObject:
   - component: {fileID: 4956415604889372971}
   - component: {fileID: 5797103445821503359}
   - component: {fileID: 2262566682736175551}
-  - component: {fileID: 5672613968990796011}
+  - component: {fileID: 1079987171571837952}
   m_Layer: 5
   m_Name: Description
   m_TagString: Untagged
@@ -1956,7 +1977,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &5672613968990796011
+--- !u!114 &1079987171571837952
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1965,9 +1986,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7752791500779317311}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3bbb161a87e4b343a026665579abb33, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e13e1d2ef14a7741b2e869673095789, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplaySkillDescription
+  m_EditorClassIdentifier: Assembly-CSharp::TextBinder
+  m_selectedProviderType: Skill
+  m_selectedSourceType: string
+  m_propertyKey: m_description
+  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
+  m_formatters:
+  - {fileID: 11400000, guid: 29c4393f0cd64f74dac364c5e9bf20dd, type: 2}
 --- !u!1 &9191174402784776503
 GameObject:
   m_ObjectHideFlags: 0

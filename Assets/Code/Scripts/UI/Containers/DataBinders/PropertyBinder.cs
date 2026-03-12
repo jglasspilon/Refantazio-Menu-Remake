@@ -71,7 +71,7 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
             return;
         }
 
-        if (!provider.TryGetRawProperty(m_propertyKey, out object raw))
+        if (!provider.TryGetPropertyRaw(m_propertyKey, out object raw))
         {
             Logger.LogError($"{name}: Could not bind property '{m_propertyKey}' from {provider.Name}.", m_logProfile);
             return;

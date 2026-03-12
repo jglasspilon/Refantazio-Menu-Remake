@@ -18,5 +18,6 @@ MonoBehaviour:
   m_description: Deals weak magic Wind damage to one enemy.
   m_manaCost: 4
   m_targetingType: 2
-  m_battleOnly: 1
+  m_usableInBattle: 1
+  m_usableInMenu: 0
   m_effects: []

@@ -30,7 +30,9 @@ public class Archetype: ISubPropertyProvider
         m_baseData = baseData;
         m_rank = new Level(1, 20, baseData.RankExpCurve);
         m_statModifiers = baseData.RankedStatCurves.ToDictionary(x => x.Key, x => new StatModifier(x.Key, (int)x.Value.Evaluate(m_rank.Value)));
-        m_skillsByRank = baseData.SkillsByRank.ToDictionary(x => x.Key, x => x.Value);
+        m_skillsByRank = baseData.SkillsByRank.ToDictionary(pair => pair.Key, pair => pair.Value.Select(skillData => skillData.CreateSkillFromData()).ToArray()
+    );
+
         m_weaponType = baseData.EquipableWeaponType;
         m_defaultWeapon = baseData.DefaultWeapon;
         m_icon.Value = baseData.Icon;
