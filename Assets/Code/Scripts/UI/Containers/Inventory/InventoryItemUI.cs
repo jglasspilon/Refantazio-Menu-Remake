@@ -9,12 +9,14 @@ public abstract class InventoryItemUI : PoolableObjectFromData<InventoryEntry>, 
     protected LoggingProfile m_logProfile;
 
     protected InventoryEntry m_inventoryEntry;
-    private IBindableToInventoryEntry[] m_bindables;
+    private IBindableToProperty[] m_bindables;
+    private IBindableToInventoryEntry[] m_bindableToItems;
     public InventoryEntry InventoryEntry => m_inventoryEntry;
 
     private void Awake()
     {
-        m_bindables = GetComponentsInChildren<IBindableToInventoryEntry>();
+        m_bindables = GetComponentsInChildren<IBindableToProperty>();
+        m_bindableToItems = GetComponentsInChildren<IBindableToInventoryEntry>();
     }
 
     public override void InitializeFromData(InventoryEntry entry)
@@ -30,14 +32,16 @@ public abstract class InventoryItemUI : PoolableObjectFromData<InventoryEntry>, 
         SetAsSelectable(entry.Item is not UsableItem usable || !usable.BattleOnly);
         SetAsSelected(false);
 
-        m_bindables.ForEach(x => x.BindToInventoryEntry(entry));
+        m_bindables.ForEach(x => x.BindToProperty(entry));
+        m_bindableToItems.ForEach(x => x.BindToInventoryEntry(entry));
     }
 
     public override void ResetForPool()
     {
         SetAsSelected(false);
         m_inventoryEntry = null;
-        m_bindables.ForEach(x => x.Unbind());
+        m_bindables.ForEach(x => x.UnBind());
+        m_bindableToItems.ForEach(x => x.Unbind());
     }
 
     public virtual void SetAsSelected(bool selected)

@@ -675,8 +675,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000051498413}
-  m_SizeDelta: {x: 64.827, y: -0.0001}
+  m_AnchoredPosition: {x: 5.8769, y: -0.000051498413}
+  m_SizeDelta: {x: 57.6501, y: -0.0001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9144010069366134121
 CanvasRenderer:
@@ -814,14 +814,11 @@ MonoBehaviour:
   PoolSize: 100
   MinSpare: 10
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
-  m_effectDescription: {fileID: 2316754291884278496}
   m_alphaGroup: {fileID: 3552725905722488508}
   m_selectionSplotch: {fileID: 4950043066000167238}
   m_selectionFrame: {fileID: 4893519303711824802}
   m_shadow: {fileID: 1763334413391849715}
-  m_effectContent: {fileID: 1515383970713575706}
   m_anim: {fileID: 2884353944926902883}
-  m_markupDescriptionColor: {r: 0.11372549, g: 0.5647059, b: 0.8117647, a: 1}
 --- !u!1 &2468494652117630965
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,7 +1968,7 @@ MonoBehaviour:
   m_Color: {r: 0.7735849, g: 0.29045916, b: 0.5452583, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

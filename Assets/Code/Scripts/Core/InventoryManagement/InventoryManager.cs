@@ -6,7 +6,7 @@ public class InventoryManager : MonoBehaviour
     private InventoryData m_inventoryData;
 
     [SerializeField]
-    private InventoryEntry[] m_startingInventory;
+    private InventoryEntryData[] m_startingInventory;
 
     void Awake()
     {
@@ -16,7 +16,7 @@ public class InventoryManager : MonoBehaviour
 
     private void InitializeStartingInventory()
     {
-        foreach (InventoryEntry entry in m_startingInventory)
+        foreach (InventoryEntryData entry in m_startingInventory)
         {
             m_inventoryData.AddOrRemoveItem(entry.Item, entry.Count);
         }

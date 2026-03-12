@@ -6,22 +6,15 @@ using UnityEngine;
 
 [Serializable]
 public class InventoryData
-{
+{   
+    [SerializeField] private List<InventoryEntry> m_orderedEntries = new List<InventoryEntry>();
+    [SerializeField] private Resource m_money = new Resource(9999999);
+    [SerializeField] private Resource m_magla = new Resource(9999999);
+    [SerializeField] private LoggingProfile m_logProfile;
+
     public event Action<InventoryEntry> OnItemAdded;
     public event Action<InventoryEntry> OnItemRemoved;
     public event Action<EItemCategories> OnLastMarkUnseen;
-    
-    [SerializeField]
-    private List<InventoryEntry> m_orderedEntries = new List<InventoryEntry>();
-
-    [SerializeField]
-    private LoggingProfile m_logProfile;
-
-    [SerializeField]
-    private Resource m_money = new Resource(9999999);
-
-    [SerializeField]
-    private Resource m_magla = new Resource(9999999);
 
     private Dictionary<string, InventoryEntry> m_entries = new Dictionary<string, InventoryEntry>();
     public Resource Money => m_money;
@@ -49,7 +42,7 @@ public class InventoryData
         return null;
     }
 
-    public void AddOrRemoveItem(Item newItem, int amount)
+    public void AddOrRemoveItem(ItemData newItem, int amount)
     {
         if(!m_entries.TryGetValue(newItem.ID, out InventoryEntry entry))
         {
@@ -85,29 +78,57 @@ public class InventoryData
 }
 
 [Serializable]
-public class InventoryEntry
+public class InventoryEntry: IPropertyProvider
 {
+    [SerializeField] private Item m_item;
+    [SerializeField] private int m_count;
+    [SerializeField] private bool m_isNew = true;
+
+    private Dictionary<string, IObservableProperty> m_properties;
+
     public event Action<int> OnAmountChanged;
     public event Action<InventoryEntry> OnMarkAsSeen;
 
-    [SerializeField]
-    private Item m_item;
-
-    [SerializeField]
-    private int m_count;
-
-    [SerializeField]
-    private bool m_isNew = true;
-
+    public string Name => m_item.Name;
     public string ID => m_item.ID;
     public Item Item => m_item; 
     public int Count => m_count;
     public bool IsNew => m_isNew;
 
-    public InventoryEntry(Item item)
+    public InventoryEntry(ItemData itemData)
     {
-        m_item = item;
+        m_item = itemData.CreateItemFromData();
         m_isNew = true;
+        InitializeProperties();
+    }
+
+    private void InitializeProperties()
+    {
+        m_properties = Helper.DataHandling.BuildPropertyMap(this);
+    }
+
+    public bool TryGetPropertyRaw(string key, out object value)
+    {
+        if (m_properties.TryGetValue(key, out IObservableProperty raw))
+        {
+            value = raw;
+            return true;
+        }
+
+        value = null;
+        return false;
+    }
+
+    public bool TryGetProperty<T>(string key, out ObservableProperty<T> value)
+    {
+        if (m_properties.TryGetValue(key, out IObservableProperty raw) && raw is ObservableProperty<T> typed)
+        {
+            value = typed;
+            return true;
+        }
+
+        value = null;
+        return false;
     }
 
     public void ApplyAmount(int amount)
@@ -120,6 +141,22 @@ public class InventoryEntry
     {
         m_isNew = false;
         OnMarkAsSeen?.Invoke(this);
+    }
+}
+
+[Serializable]
+public class InventoryEntryData
+{
+    [SerializeField] private ItemData m_item;
+    [SerializeField] private int m_count;
+
+    public string ID => m_item.ID;
+    public ItemData Item => m_item;
+    public int Count => m_count;
+
+    public InventoryEntry CreateInventoryEntryFromData()
+    {
+        return new InventoryEntry(m_item);
     }
 }
 
