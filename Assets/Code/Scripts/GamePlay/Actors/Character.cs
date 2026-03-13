@@ -76,6 +76,7 @@ public class Character: IPropertyProvider
         Level.OnLevelChange += HandleLevelChange;
         Stats.Endurance.OnChanged += ApplyHp;
         Stats.Magic.OnChanged += ApplyMp;
+        Equipment.OnArchetypeChanged += InitializeProperties;
 
         InitializeProperties();
     }

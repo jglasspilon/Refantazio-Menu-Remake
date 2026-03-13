@@ -10,6 +10,9 @@ public class PartyTester : MonoBehaviour
     private CharacterSheet m_characterToAdd;
 
     [SerializeField]
+    private ArchetypeData m_archetypeToEquip;
+
+    [SerializeField]
     private LoggingProfile m_logProfile;
 
     private PartyData m_partyData;
@@ -68,6 +71,12 @@ public class PartyTester : MonoBehaviour
             m_testingMode = EMode.Archetype;
             Logger.Log($"Changed to archetype testing mode.", gameObject, m_logProfile);            
         }    
+
+        if(Input.GetKeyUp(KeyCode.Z))
+        {
+            m_testingMode = EMode.ArchetypeChange;
+            Logger.Log($"Changed to archetype equip testing mode.", gameObject, m_logProfile);
+        }
 
         if (Input.GetKeyUp(KeyCode.Keypad0))
         {
@@ -161,6 +170,14 @@ public class PartyTester : MonoBehaviour
                     m_partyData.AddActivePartyMember(characterToAddActive);
                 }
                 break;
+            case EMode.ArchetypeChange:
+                {
+                    if (m_partyData.TryGetPartyMember(index, out Character characterToChangeArchetype))
+                    {
+                        characterToChangeArchetype.Equipment.EquipArchetype(new Archetype(m_archetypeToEquip));
+                    }
+                }
+                break;
         }
     }
 
@@ -203,7 +220,8 @@ public class PartyTester : MonoBehaviour
         RemoveFromActiveParty,
         AddToActiveParty,
         Exp,
-        Archetype
+        Archetype,
+        ArchetypeChange
     }
 }
 
