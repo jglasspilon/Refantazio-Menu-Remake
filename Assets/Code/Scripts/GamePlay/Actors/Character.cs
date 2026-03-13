@@ -6,9 +6,6 @@ using UnityEngine;
 [Serializable]
 public class Character: IPropertyProvider
 {
-    public event Action<Archetype> OnArchetypeChange;
-    public event Action<int, int> OnLevelChange;
-
     [SerializeField] private CharacterStats m_stats;
     [SerializeField] private Level m_level;
     [SerializeField] private Resource m_health = new Resource(0);
@@ -23,6 +20,7 @@ public class Character: IPropertyProvider
 
     private CharacterSheet m_characterBase;
     private Dictionary<string, IObservableProperty> m_properties;
+    private bool m_hpCalculated, m_mpCalculated;
     public string ID => m_characterBase.ID;
     public bool IsValid => m_characterBase != null;
     public string Name => m_name.Value;
@@ -73,7 +71,8 @@ public class Character: IPropertyProvider
         ApplyMp(Stats.Magic.Value);
 
         m_health.OnEmpty += HandleOnHealthEmpty;
-        Level.OnLevelChange += HandleLevelChange;
+        Level.OnChanged += ApplyHp;
+        Level.OnChanged += ApplyMp;
         Stats.Endurance.OnChanged += ApplyHp;
         Stats.Magic.OnChanged += ApplyMp;
         Equipment.OnArchetypeChanged += InitializeProperties;
@@ -159,11 +158,6 @@ public class Character: IPropertyProvider
         m_mana.Apply(amount);
     }
 
-    private void HandleLevelChange(int level, int levelDelta)
-    {
-        OnLevelChange?.Invoke(level, levelDelta);
-    }
-
     private void HandleOnHealthEmpty(bool isEmpty)
     {
         if (m_health.Max > 0)
@@ -174,16 +168,20 @@ public class Character: IPropertyProvider
     #endregion
 
     #region Stats Functions
-    private void ApplyHp(int enduranceValue)
+    private void ApplyHp(int newValue)
     {
-        int value = Mathf.FloorToInt(Stats.HP.Value * m_level.Value * (1f + (enduranceValue / 100f)));
-        m_health.SetMax(value, EResourceSetProcedure.Fill);
+        EResourceSetProcedure prc = m_hpCalculated ? EResourceSetProcedure.Keep : EResourceSetProcedure.Fill;
+        int value = Helper.GameMath.GetMaxHpFromEndurance(Stats.HP.Value, Stats.Endurance.Value, Level.Value);
+        m_health.SetMax(value, prc);
+        m_hpCalculated = true;
     }
 
-    private void ApplyMp(int magicValue)
+    private void ApplyMp(int newValue)
     {
-        int value = Mathf.FloorToInt(Stats.MP.Value * m_level.Value * (1f + (magicValue / 100f)));
-        m_mana.SetMax(value, EResourceSetProcedure.Fill);
+        EResourceSetProcedure prc = m_mpCalculated ? EResourceSetProcedure.Keep : EResourceSetProcedure.Fill;
+        int value = Helper.GameMath.GetMapMpFromMagic(Stats.MP.Value, Stats.Magic.Value, Level.Value);
+        m_mana.SetMax(value, prc);
+        m_mpCalculated = true;
     }
     #endregion
 }

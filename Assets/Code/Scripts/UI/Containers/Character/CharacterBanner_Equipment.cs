@@ -6,6 +6,7 @@ public class CharacterBanner_Equipment : CharacterBanner
     {
         base.InitializeFromData(character);    
         m_bindables.ForEach(x => x.BindToProperty(character));
+        character.Equipment.OnArchetypeChanged += HandleOnArchetypeChanged;
     }
 
     public override void ResetForPool()
@@ -14,7 +15,7 @@ public class CharacterBanner_Equipment : CharacterBanner
         m_character = null;
     }
 
-    private async void OnArchetypeChanged()
+    private async void HandleOnArchetypeChanged()
     {
         m_bindables.ForEach((x) => x.UnBind());
         await UniTask.Yield();

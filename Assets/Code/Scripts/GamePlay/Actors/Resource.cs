@@ -23,6 +23,9 @@ public class Resource: ISubPropertyProvider
         {
             Value = initialMax
         };
+
+        m_current.OnChanged += HandleOnCurrentChanged;
+        m_max.OnChanged += HandleOnMaxChanged;
     }
 
     public IEnumerable<KeyValuePair<string, IObservableProperty>> GetSubProperties(string parentKey)
@@ -64,6 +67,18 @@ public class Resource: ISubPropertyProvider
         {
             OnEmpty?.Invoke(true);
         }
+    }
+
+    private void HandleOnCurrentChanged(int newValue)
+    {
+        int delta = m_max.Value - m_current.Value;
+        OnResourceChange?.Invoke(this, delta);
+    }
+
+    private void HandleOnMaxChanged(int newMax)
+    {
+        int delta = m_max.Value - m_current.Value;
+        OnResourceChange?.Invoke(this, delta);
     }
 }
 

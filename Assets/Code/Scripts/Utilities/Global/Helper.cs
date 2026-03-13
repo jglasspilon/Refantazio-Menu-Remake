@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -90,6 +91,22 @@ public static class Helper
             percent = Mathf.Clamp01(percent);
             int alpha = Mathf.RoundToInt(percent * 255f);
             return alpha.ToString("X2");
+        }
+    }
+
+    public static class GameMath
+    {
+        private static readonly float HP_LEVEL_FACTOR = 0.1f;
+        private static readonly float MP_LEVEL_FACTOR = 0.075f;
+
+        public static int GetMaxHpFromEndurance(int baseHp, int endurance, int level)
+        {
+            return Mathf.FloorToInt(baseHp * (1f + level * HP_LEVEL_FACTOR) * (1f + endurance / 100f));
+        }
+
+        public static int GetMapMpFromMagic(int baseMp, int magic, int level)
+        {
+            return Mathf.FloorToInt(baseMp * (1f + level * MP_LEVEL_FACTOR) * (1f + magic / 100f));
         }
     }
 
