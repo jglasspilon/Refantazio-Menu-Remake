@@ -30,7 +30,6 @@ public class Character: IPropertyProvider
     public Level Level => m_level;
     public Resource HP => m_health;
     public Resource MP => m_mana;
-    public Resource Exp => m_level.Exp;
     public CharacterStats Stats => m_stats;
     public EquipmentExecutor Equipment => m_equipment;
     public ObservableProperty<bool> IsDead => m_isDead;
@@ -75,8 +74,7 @@ public class Character: IPropertyProvider
         Level.OnChanged += ApplyMp;
         Stats.Endurance.OnChanged += ApplyHp;
         Stats.Magic.OnChanged += ApplyMp;
-        Equipment.OnArchetypeChanged += InitializeProperties;
-
+        Equipment.OnEquipmentChanged += InitializeProperties;
         InitializeProperties();
     }
     #endregion

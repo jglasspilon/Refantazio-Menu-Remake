@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Mage
   m_icon: {fileID: 643252401, guid: 757bc685569f551418ce514f927343c3, type: 3}
   m_mesh: {fileID: 0}
-  m_equipableWeaponType: 0
+  m_equipableWeaponType: 1
   m_defaultWeapon: {fileID: 11400000, guid: 1256ee39faca7cb469944f60d6ea8279, type: 2}
   m_skillsByRank:
   - Key: 1

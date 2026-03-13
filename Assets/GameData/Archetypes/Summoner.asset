@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Summoner
   m_icon: {fileID: -348355929, guid: 757bc685569f551418ce514f927343c3, type: 3}
   m_mesh: {fileID: 0}
-  m_equipableWeaponType: 0
+  m_equipableWeaponType: 12
   m_defaultWeapon: {fileID: 11400000, guid: 1badcd2807259d24c85159caa001e756, type: 2}
   m_skillsByRank:
   - Key: 1

@@ -2,12 +2,15 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, CharacterBannerGenerator, Character, PartyData>
     ,IHandleOnConfirm, IHandleOnBack
 {
-    [SerializeField]
-    private bool m_generateCharactersOnEnable;
+    [SerializeField] private bool m_generateCharactersOnEnable;
+    [SerializeField] private bool m_resetSelectionOnExit = true;
+    [Space]
+    [SerializeField] private UnityEvent m_onEnter;
 
     protected override void OnEnable()
     {
@@ -22,6 +25,7 @@ public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, 
     public override UniTask EnterSection()
     {
         m_selecter.SelectCurrent();
+        m_onEnter?.Invoke();
         return default;
     }
 
@@ -29,7 +33,9 @@ public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, 
     {
         m_selecter.SetApplicableToSelectable(x => false);
         m_selecter.UnselectAll();
-        m_selecter.ResetSelecter();
+
+        if(m_resetSelectionOnExit)
+            m_selecter.ResetSelecter();
         return default;
     }
 

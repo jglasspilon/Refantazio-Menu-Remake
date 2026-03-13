@@ -17,7 +17,7 @@ public class EquipmentExecutor: ISubPropertyProvider
     [NonSerialized]
     private Character m_equiper;
 
-    public event Action OnArchetypeChanged;
+    public event Action OnEquipmentChanged;
 
     public Archetype Archetype => m_archetype;
     public Equipment Weapon => m_weapon;
@@ -54,7 +54,6 @@ public class EquipmentExecutor: ISubPropertyProvider
         m_archetype.StatModifiers.ForEach(x => m_equiper.Stats.GetStat(x.Type).AddModifier(x));
         m_archetype.OnStatModifiersChanged += HandleArchetypeStatModifierChange;
         EquipWeapon(m_archetype.DefaultWeapon);
-        OnArchetypeChanged?.Invoke();
     }
 
     public void EquipWeapon(Equipment weapon)
@@ -67,6 +66,7 @@ public class EquipmentExecutor: ISubPropertyProvider
 
         ChangeEquipment(weapon, m_weapon);
         m_weapon = weapon;
+        OnEquipmentChanged?.Invoke();
     }
 
     public void EquipArmor(Equipment armor)
@@ -76,6 +76,7 @@ public class EquipmentExecutor: ISubPropertyProvider
 
         ChangeEquipment(armor, m_armor);
         m_armor = armor;
+        OnEquipmentChanged?.Invoke();
     }
 
     public void EquipGear(Equipment gear)
@@ -85,6 +86,7 @@ public class EquipmentExecutor: ISubPropertyProvider
 
         ChangeEquipment(gear, m_gear);
         m_gear = gear;
+        OnEquipmentChanged?.Invoke();
     }
 
     public void EquipAccessory(Equipment accessory)
@@ -94,6 +96,7 @@ public class EquipmentExecutor: ISubPropertyProvider
 
         ChangeEquipment(accessory, m_accessorySlot);
         m_accessorySlot = accessory;
+        OnEquipmentChanged?.Invoke();
     }
 
     private void ChangeEquipment(Equipment newEquip, Equipment oldEquip)

@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Thief
   m_icon: {fileID: 589304414, guid: 757bc685569f551418ce514f927343c3, type: 3}
   m_mesh: {fileID: 0}
-  m_equipableWeaponType: 0
+  m_equipableWeaponType: 7
   m_defaultWeapon: {fileID: 11400000, guid: 72db0e3cd60f8bd46b9f55fd98760f1d, type: 2}
   m_skillsByRank:
   - Key: 1

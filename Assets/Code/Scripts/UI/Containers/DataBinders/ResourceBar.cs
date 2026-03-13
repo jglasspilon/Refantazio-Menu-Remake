@@ -23,6 +23,7 @@ public class ResourceBar : MonoBehaviour, IBindableToProperty
         Hp,
         Mp,
         Exp,
+        ArchetypeExp
     }
 
     public void BindToProperty(IPropertyProvider provider)
@@ -108,7 +109,8 @@ public class ResourceBar : MonoBehaviour, IBindableToProperty
         {
             case EBindableResource.Hp: return character.HP;
             case EBindableResource.Mp: return character.MP;
-            case EBindableResource.Exp: return character.Exp;
+            case EBindableResource.Exp: return character.Level.Exp;
+            case EBindableResource.ArchetypeExp: return character.Equipment.Archetype.Rank.Exp;
         }
 
         return null;

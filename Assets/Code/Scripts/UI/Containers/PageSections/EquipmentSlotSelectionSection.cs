@@ -1,0 +1,39 @@
+using Cysharp.Threading.Tasks;
+using System;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.Events;
+
+public class EquipmentSlotSelectionSection: PageSection
+{
+    [SerializeField] private EquipmentSlotSelecter m_selecter;
+    [Space]
+    [SerializeField] private UnityEvent m_onEnter;
+
+    protected void Awake()
+    {
+        //TODO: update selecter with equipment slots
+        //m_selecter.UpdateObjects(m_generater.GetGeneratedContent());
+    }
+    
+    public override UniTask EnterSection()
+    {
+        m_selecter.SelectCurrent();
+        m_onEnter?.Invoke();
+        return default;
+    }
+
+    public override UniTask ExitSection()
+    {
+        m_selecter.SetApplicableToSelectable(x => false);
+        m_selecter.UnselectAll();
+        m_selecter.ResetSelecter();
+        return default;
+    }
+
+    public override void ResetSection()
+    {
+        m_selecter.UnselectAll();
+        m_selecter.ResetSelecter();
+    }
+}

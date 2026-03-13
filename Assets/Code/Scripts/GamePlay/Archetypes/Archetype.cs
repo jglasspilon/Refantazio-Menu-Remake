@@ -13,12 +13,13 @@ public class Archetype: ISubPropertyProvider
     [SerializeField] private EEquipmentType m_weaponType;
     [SerializeField] private Equipment m_defaultWeapon;
     [SerializeField] private Skill[] m_availableSkills;
+    [SerializeField] private ObservableProperty<string> m_name = new ObservableProperty<string>();
     [SerializeField] private ObservableProperty<Sprite> m_icon = new ObservableProperty<Sprite>();
 
     private Dictionary<EStatType, StatModifier> m_statModifiers;
     private Dictionary<int, Skill[]> m_skillsByRank;
 
-    public string Name => m_baseData.name;
+    public string Name => m_name.Value;
     public Mesh Mesh => m_baseData.Mesh;
     public Level Rank => m_rank;
     public EEquipmentType EquipableWeaponType => m_weaponType;
@@ -28,11 +29,12 @@ public class Archetype: ISubPropertyProvider
     public Archetype(ArchetypeData baseData)
     { 
         m_baseData = baseData;
+        m_name.Value = m_baseData.name;
         m_rank = new Level(1, 20, baseData.RankExpCurve);
         m_statModifiers = baseData.RankedStatCurves.ToDictionary(x => x.Key, x => new StatModifier(x.Key, (int)x.Value.Evaluate(m_rank.Value)));
         m_skillsByRank = baseData.SkillsByRank.ToDictionary(pair => pair.Key, pair => pair.Value.Select(skillData => skillData.CreateSkillFromData()).ToArray());
         m_weaponType = baseData.EquipableWeaponType;
-        m_defaultWeapon = baseData.DefaultWeapon;
+        m_defaultWeapon = baseData.DefaultWeapon.CreateItemFromData() as Equipment;
         m_icon.Value = baseData.Icon;
         m_availableSkills = GetAvailableSkills();
         m_rank.OnLevelChange += HandleRankUp;

@@ -2,23 +2,24 @@ using UnityEngine;
 
 public class EquipmentMenuPage : MenuPage
 {
-    public override void Confirm()
-    {
+    [SerializeField] private CharacterSelecter m_characterSelecter;
+    [SerializeField] private EquipmentSlotSelectionSection m_equipmentSlotSelectionSection;
 
+    private Character m_selectedCharacter;
+
+    private void OnEnable()
+    {
+        m_characterSelecter.OnCharacterSelected += HandleOnSelectedCharacter;
     }
 
-    public override void CycleDown()
+    private void OnDisable()
     {
-        
+        m_characterSelecter.OnCharacterSelected -= HandleOnSelectedCharacter;
     }
 
-    public override void CycleUp()
+    private void HandleOnSelectedCharacter(Character character)
     {
-        
-    }
-
-    public override void ResetPage()
-    {
-        
+        m_selectedCharacter = character;
+        EnterSection(m_equipmentSlotSelectionSection);
     }
 }

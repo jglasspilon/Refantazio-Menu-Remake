@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game Data/Items/Equipment")]
@@ -33,6 +34,7 @@ public class EquipmentData : ItemData
     }
 }
 
+[Serializable]
 public class Equipment : Item
 {
     [SerializeField] private EEquipmentType m_equipType;

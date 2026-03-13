@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Berserker
   m_icon: {fileID: 1037101209, guid: 757bc685569f551418ce514f927343c3, type: 3}
   m_mesh: {fileID: 0}
-  m_equipableWeaponType: 0
+  m_equipableWeaponType: 13
   m_defaultWeapon: {fileID: 11400000, guid: f4b161e7255f55e46ba8e87191a26e60, type: 2}
   m_skillsByRank:
   - Key: 1

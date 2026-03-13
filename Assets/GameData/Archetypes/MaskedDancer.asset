@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Masked Dancer
   m_icon: {fileID: 935963957, guid: 757bc685569f551418ce514f927343c3, type: 3}
   m_mesh: {fileID: 0}
-  m_equipableWeaponType: 0
+  m_equipableWeaponType: 11
   m_defaultWeapon: {fileID: 11400000, guid: 2ec3dbd5fea0f114fadf19d5cb172db6, type: 2}
   m_skillsByRank:
   - Key: 1

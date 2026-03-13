@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Knight
   m_icon: {fileID: 1194125508, guid: 757bc685569f551418ce514f927343c3, type: 3}
   m_mesh: {fileID: 0}
-  m_equipableWeaponType: 0
+  m_equipableWeaponType: 3
   m_defaultWeapon: {fileID: 11400000, guid: 7810cd8f2139fa2489f62220fde7530a, type: 2}
   m_skillsByRank:
   - Key: 1

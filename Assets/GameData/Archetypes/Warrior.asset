@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Warrior
   m_icon: {fileID: -522669220, guid: 757bc685569f551418ce514f927343c3, type: 3}
   m_mesh: {fileID: 0}
-  m_equipableWeaponType: 0
+  m_equipableWeaponType: 2
   m_defaultWeapon: {fileID: 11400000, guid: 6ebed7049bc69f343b49e4ef0e71c6c3, type: 2}
   m_skillsByRank:
   - Key: 1
