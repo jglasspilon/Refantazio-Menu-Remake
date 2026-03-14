@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game Data/Characters")]
+[CreateAssetMenu(menuName = "Game Data/Character")]
 public class CharacterSheet : UniqueScriptableObject
 {
     [SerializeField] private ECharacterType m_characterType;

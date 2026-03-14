@@ -6,13 +6,10 @@ using UnityEngine;
 [Serializable]
 public class PartyData
 {
+    [SerializeField] private List<Character> m_orderedParty = new List<Character>();
+    [SerializeField] private Character[] m_activeParty;
+
     public event Action OnPartyChanged, OnActivePartyChanged, OnLeaderRemoveAttempt, OnActivePartyOverloadAttempt;
-
-    [SerializeField]
-    private List<Character> m_orderedParty = new List<Character>();
-
-    [SerializeField]
-    private Character[] m_activeParty;
 
     private Dictionary<string, Character> m_party = new Dictionary<string, Character>();
     private Character m_guide;
