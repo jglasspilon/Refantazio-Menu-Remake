@@ -126,12 +126,9 @@ public static class Helper
 
             string valueParse = value.ToString(format);
 
-            if (value < 10)
-                insertAlphaAt = minSize - 1;
-            else if (value < 100)
-                insertAlphaAt = minSize - 2;
+            insertAlphaAt = valueParse.TakeWhile(c => c == '0').Count();
 
-            if (insertAlphaAt > 0)
+            if (insertAlphaAt > 0 && valueParse.Length > insertAlphaAt)
             {
                 return $"{lowOpacity}{valueParse.Insert(insertAlphaAt, normalOpacity)}";
             }

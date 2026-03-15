@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73a70e15483e9c64bbc5320865a66287, type: 3}
   m_Name: IsFalseCondition
   m_EditorClassIdentifier: Assembly-CSharp::SimpleBooleanCondition
-  m_isFalse: 0
+  m_isFalse: 1
