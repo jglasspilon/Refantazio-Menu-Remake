@@ -225,6 +225,7 @@ public class PartyData
         {
             OnLeaderRemoveAttempt?.Invoke();
             Logger.Log("Cannot remove leader from active party", m_logProfile);
+            return;
         }
 
         int slot = FindSlotForCharacterInActiveParty(activePartyMember);

@@ -123,7 +123,7 @@ public class Character: IPropertyProvider
 
     public void RemoveCharacterFromActiveParty()
     {
-        m_characterType.Value = m_characterBase.CharacterType;
+        m_characterType.Value = ECharacterType.Reserve;
     }
 
     public void SetCharacterBattlePosition(EBattlePosition battlePosition)

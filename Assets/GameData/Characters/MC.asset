@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf56b077aa21c04ba7ca1fc34cce76b, type: 3}
   m_Name: MC
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSheet
-  m_characterType: 1
+  m_characterType: 0
   m_name: Will
   m_startingArchetype: {fileID: 11400000, guid: 33fadd89d541c0045927d7100355d271, type: 2}
   m_expCurve: {fileID: 11400000, guid: 4047c5867cc7e6244a3a06ea095cb97a, type: 2}
@@ -28,7 +28,7 @@ MonoBehaviour:
   m_startingArmor: {fileID: 11400000, guid: 92f3500ac5b0ca449a0574c86fc0f445, type: 2}
   m_startingGear: {fileID: 0}
   m_startingAccesory: {fileID: 0}
+  m_mesh: {fileID: 0}
   m_profileIcon: {fileID: 251317697, guid: ad2202cadb0480543807b54952da6334, type: 3}
   m_bannerIcon: {fileID: 1990312413, guid: f895790a5f7cbc04a906e42db2c954aa, type: 3}
   m_armIcon: {fileID: -2132053288, guid: f5b362e1af057e94988533c485eb38f8, type: 3}
-  m_mesh: {fileID: 0}
