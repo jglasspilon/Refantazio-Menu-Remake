@@ -12,7 +12,7 @@ public class CharacterProfileDisplay : MonoBehaviour
 
     private Image m_image;
     private Character m_shownCharacter;
-    private bool m_visible;
+    private bool m_visible, m_isShowing, m_isHiding;
 
     private void Awake()
     {
@@ -39,28 +39,51 @@ public class CharacterProfileDisplay : MonoBehaviour
 
     private async UniTask ChangeCharacterAsync(CharacterBanner characterBanner)
     {
-        if (characterBanner == null || characterBanner.Character == null || characterBanner.Character == m_shownCharacter)
+        if (characterBanner == null || characterBanner.Character == null)
             return;
 
-        if (m_shownCharacter != null)
-            await HideCharacter();
+        Character characterToShow = characterBanner.Character;
+        Character currentCharacter = m_shownCharacter;
+        m_shownCharacter = characterToShow;
 
-        m_shownCharacter = characterBanner.Character;
+        if (characterToShow == currentCharacter || m_isHiding)
+        {
+            return;
+        }
+
+        if (m_isShowing)
+        {
+            m_image.sprite = m_shownCharacter.Profile;
+            return;
+        }
+
+        if (currentCharacter != null)
+        {
+            await HideCharacter();
+        }
+        
         await ShowCharacter();
+        m_isShowing = false;
     }
 
     private async UniTask ShowCharacter()
     {
         if (m_visible || !gameObject.activeInHierarchy)
+        {
+            m_image.sprite = m_shownCharacter.Profile;
             return;
+        }
 
         List<UniTask> tasks = new List<UniTask>();
+        m_isShowing = true;
         m_visible = true;
         m_image.sprite = m_shownCharacter.Profile;
+        m_isShowing = false;
         tasks.Add(m_mover.MoveInAsync());
         tasks.Add(m_fader.FadeIn());
 
         await UniTask.WhenAll(tasks);
+        m_isShowing = false;
     }
 
     private async UniTask HideCharacter()
@@ -69,10 +92,12 @@ public class CharacterProfileDisplay : MonoBehaviour
             return;
 
         List<UniTask> tasks = new List<UniTask>();
+        m_isHiding = true;
         m_visible = false;
         tasks.Add(m_mover.MoveOutAsync());
         tasks.Add(m_fader.FadeOut());
 
         await UniTask.WhenAll(tasks);
+        m_isHiding = false;
     }
 }
