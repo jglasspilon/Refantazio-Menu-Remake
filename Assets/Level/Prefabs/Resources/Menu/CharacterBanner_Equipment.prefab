@@ -1403,7 +1403,7 @@ MonoBehaviour:
   m_propertyKey: m_stats.Defence
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
   m_formatters:
-  - {fileID: 11400000, guid: 873db71cbc7ff4b4ca63aacbfb5650dc, type: 2}
+  - {fileID: 11400000, guid: 169af6213db84c241b1377bca47dcd94, type: 2}
 --- !u!1 &4052068084178248928
 GameObject:
   m_ObjectHideFlags: 0
@@ -2026,7 +2026,7 @@ MonoBehaviour:
   m_propertyKey: m_stats.Attack
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
   m_formatters:
-  - {fileID: 11400000, guid: 873db71cbc7ff4b4ca63aacbfb5650dc, type: 2}
+  - {fileID: 11400000, guid: 169af6213db84c241b1377bca47dcd94, type: 2}
 --- !u!1 &6034840498641158935
 GameObject:
   m_ObjectHideFlags: 0

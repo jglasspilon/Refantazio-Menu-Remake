@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Fairy Charm
   m_sortOrder: 0
   m_category: 7
-  m_icon: {fileID: 0}
+  m_icon: {fileID: 21300000, guid: 2918ac79656abe847820f762c4904370, type: 3}
   m_price: 0
   m_description: A tiny charm that fairies carry. Gallica only.
   m_equipType: 23

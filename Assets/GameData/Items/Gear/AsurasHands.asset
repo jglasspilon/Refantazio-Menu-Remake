@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Asura's Hands
   m_sortOrder: 0
   m_category: 6
-  m_icon: {fileID: 0}
+  m_icon: {fileID: 21300000, guid: 61676a5ffa5733a47a8f63f4f538e8cd, type: 3}
   m_price: 10000
   m_description: Asura's unleashed power courses through these gauntlets.
   m_equipType: 18

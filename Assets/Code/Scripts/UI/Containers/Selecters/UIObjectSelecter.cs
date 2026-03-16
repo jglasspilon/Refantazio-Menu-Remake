@@ -66,7 +66,7 @@ public class UIObjectSelecter<T>: MonoBehaviour where T: MonoBehaviour, ISelecta
         Select(m_selectedIndex + 1);
     }
 
-    public void UpdateObjects(T[] items)
+    public void UpdateObjects(params T[] items)
     {
         if (items == null || items.Length == 0)
             return;

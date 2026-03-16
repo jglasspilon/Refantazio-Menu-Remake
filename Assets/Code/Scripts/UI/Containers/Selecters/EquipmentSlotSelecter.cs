@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
-public class EquipmentSlotSelecter : UIObjectSelecter<EquipmentSlot>
+public class EquipmentSlotSelecter : UIObjectSelecter<SelectableSlot>
 {
-    public event Action<Equipment> OnCharacterSelected;
+    public event Action<ESlotType, object> OnSlotSelected;
 
     protected override void Awake()
     {
@@ -13,6 +13,6 @@ public class EquipmentSlotSelecter : UIObjectSelecter<EquipmentSlot>
 
     public void SelectSlot()
     {
-        OnCharacterSelected?.Invoke(SelectedObject == null ? null : SelectedObject.Equipment);
+        OnSlotSelected?.Invoke(SelectedObject == null ? ESlotType.Undetermined : SelectedObject.SlotType, SelectedObject == null ? null : SelectedObject.SlotContent);
     }
 }

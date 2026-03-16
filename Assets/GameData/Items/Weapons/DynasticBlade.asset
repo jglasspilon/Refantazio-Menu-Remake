@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Dynastic Blade
   m_sortOrder: 0
   m_category: 4
-  m_icon: {fileID: 0}
+  m_icon: {fileID: 21300000, guid: 39ac075e0a95fa84eafda90533ef1ee6, type: 3}
   m_price: 0
   m_description: The greatsword of a peerless king who led in troubled times.
   m_equipType: 2

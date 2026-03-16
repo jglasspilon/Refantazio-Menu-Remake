@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Fairy's Clothes
   m_sortOrder: 0
   m_category: 5
-  m_icon: {fileID: 0}
+  m_icon: {fileID: 21300000, guid: 5dee2176b5ef7314bb47c18b40944af0, type: 3}
   m_price: 0
   m_description: Special protective gear for fairies. Too small for others to wear.
     Gallica only.

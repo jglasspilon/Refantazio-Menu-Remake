@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Innocent Fan
   m_sortOrder: 0
   m_category: 4
-  m_icon: {fileID: 0}
+  m_icon: {fileID: 21300000, guid: 2e4ad3471a693a440a5850128857858e, type: 3}
   m_price: 0
   m_description: An unremarkable fan given by More.
   m_equipType: 11

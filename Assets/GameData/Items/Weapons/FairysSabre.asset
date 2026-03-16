@@ -15,11 +15,11 @@ MonoBehaviour:
   m_name: Fairy's Sabre
   m_sortOrder: 0
   m_category: 4
-  m_icon: {fileID: 0}
+  m_icon: {fileID: 21300000, guid: 0f2ba41737043bd4695966770f67e99f, type: 3}
   m_price: 0
   m_description: A sword used by fairies for self-defence, it is too small for anyone
     else to wield.
-  m_equipType: 0
+  m_equipType: 1
   m_mainModifier:
     m_statType:
       m_value: 7

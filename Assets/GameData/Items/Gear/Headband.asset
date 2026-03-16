@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Headband
   m_sortOrder: 0
   m_category: 6
-  m_icon: {fileID: 0}
+  m_icon: {fileID: 21300000, guid: e029097a20260e74ebb19b28ba7a5c1d, type: 3}
   m_price: 0
   m_description: When worn around the foreheard, this cloth is said to increase focus.
   m_equipType: 17

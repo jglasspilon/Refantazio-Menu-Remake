@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Captain's Uniform
   m_sortOrder: 0
   m_category: 5
-  m_icon: {fileID: 0}
+  m_icon: {fileID: 21300000, guid: 5dee2176b5ef7314bb47c18b40944af0, type: 3}
   m_price: 0
   m_description: An impressive uniform that designates its wearer as an army captain.<m>
     Endurance +1, Agility +1

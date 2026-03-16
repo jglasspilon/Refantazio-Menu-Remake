@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Innocent Axe
   m_sortOrder: 0
   m_category: 4
-  m_icon: {fileID: 0}
+  m_icon: {fileID: 21300000, guid: 464a68b41f89a9d43b0164114debccda, type: 3}
   m_price: 0
   m_description: An unremarkable axe given by More.
   m_equipType: 13

@@ -53,7 +53,7 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
     {
         if (provider == null)
         {
-            Logger.LogError($"{name}: No source assigned for binder.", m_logProfile);
+            Logger.LogError($"{name}: No Provider assigned for binder.", m_logProfile);
             return;
         }
 
