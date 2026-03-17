@@ -22,7 +22,9 @@ public class EquipmentSlotsContainer : MonoBehaviour
 
     private void OnDisable()
     {
+        m_slots.ForEach(x => x.ResetBinding());
         m_characterSelecter.OnSelectedObjectChanged -= ProvideCharacterDataToSlots;
+        m_registeredCharacter = null;
     }
 
     private void ProvideCharacterDataToSlots(CharacterBanner characterBanner)
@@ -31,9 +33,6 @@ public class EquipmentSlotsContainer : MonoBehaviour
             return;
 
         Character character = characterBanner.Character;
-
-        if (character == m_registeredCharacter)
-            return;
 
         m_registeredCharacter = character;
         m_slotSelecter.UnselectAll();

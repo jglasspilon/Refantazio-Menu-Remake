@@ -15,6 +15,14 @@ MonoBehaviour:
   m_characterType: 0
   m_name: Will
   m_startingArchetype: {fileID: 11400000, guid: 33fadd89d541c0045927d7100355d271, type: 2}
+  m_availableArchetypes:
+  - {fileID: 11400000, guid: 38f3efdd2d3a60249a0521c2c601251b, type: 2}
+  - {fileID: 11400000, guid: 74dcab87985e99948b038c98c418d276, type: 2}
+  - {fileID: 11400000, guid: cf348cce9192a7c41815d7cfe5abeb12, type: 2}
+  - {fileID: 11400000, guid: dbfcc102a183ae2469a5becf24412ff4, type: 2}
+  - {fileID: 11400000, guid: 3fe835073c233e64fa72b6a09c7479cf, type: 2}
+  - {fileID: 11400000, guid: 23a257b9bcd5dbc43935bcfd310aa2df, type: 2}
+  - {fileID: 11400000, guid: 2655f70b22a88fb44a116fb47813bbb9, type: 2}
   m_expCurve: {fileID: 11400000, guid: 4047c5867cc7e6244a3a06ea095cb97a, type: 2}
   m_startingLevel: 1
   m_hp: 100

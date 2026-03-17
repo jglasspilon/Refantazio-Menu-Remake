@@ -9,12 +9,6 @@ public class EquipmentSlotSelectionSection: PageSection
     [SerializeField] private EquipmentSlotSelecter m_selecter;
     [Space]
     [SerializeField] private UnityEvent m_onEnter;
-
-    protected void Awake()
-    {
-        //TODO: update selecter with equipment slots
-        //m_selecter.UpdateObjects(m_generater.GetGeneratedContent());
-    }
     
     public override UniTask EnterSection()
     {

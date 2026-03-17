@@ -8,6 +8,7 @@ public class CharacterSheet : UniqueScriptableObject
     [SerializeField] private ECharacterType m_characterType;
     [SerializeField] private string m_name;
     [SerializeField] private ArchetypeData m_startingArchetype;
+    [SerializeField] private ArchetypeData[] m_availableArchetypes;
     [SerializeField] private AnimationCurveAsset m_expCurve;
 
     [Header("Level and Stats:")]
@@ -25,6 +26,7 @@ public class CharacterSheet : UniqueScriptableObject
     public ECharacterType CharacterType => m_characterType;
     public string Name => m_name;
     public ArchetypeData StartingArchetype => m_startingArchetype;
+    public ArchetypeData[] AvailableArchetypes => m_availableArchetypes;
     public EquipmentData StartingArmor => m_startingArmor;
     public EquipmentData StartingWeapon => m_startingWeapon;
     public EquipmentData StartingGear => m_startingGear;

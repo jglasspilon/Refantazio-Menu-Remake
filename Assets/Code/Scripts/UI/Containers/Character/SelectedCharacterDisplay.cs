@@ -28,9 +28,6 @@ public class SelectedCharacterDisplay : MonoBehaviour
             return;
 
         Character character = characterProvider.Character;
-        m_bindables.ForEach(x => x.UnBind());
         m_bindables.ForEach(x => x.BindToProperty(character));
     }
-
-    
 }

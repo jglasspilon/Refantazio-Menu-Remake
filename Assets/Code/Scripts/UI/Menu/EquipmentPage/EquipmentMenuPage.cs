@@ -5,19 +5,23 @@ public class EquipmentMenuPage : MenuPage
 {
     [SerializeField] private CharacterSelecter m_characterSelecter;
     [SerializeField] private EquipmentSlotSelecter m_slotSelecter;
+    [SerializeField] private ArchetypeSelecter m_archetypeSelecter;
     [SerializeField] private EquipmentSlotSelectionSection m_equipmentSlotSelectionSection;
+    [SerializeField] private ArchetypeSelectionSection m_archetypeSelectionSection;
 
     private Character m_selectedCharacter;
     private ESlotType m_selectedSlotType;
 
     private void OnEnable()
     {
+        m_archetypeSelecter.OnArchetypeSelected += HandleOnArchetypeSelected;
         m_characterSelecter.OnCharacterSelected += HandleOnSelectedCharacter;
         m_slotSelecter.OnSlotSelected += HandleSlotSelected;
     }
 
     private void OnDisable()
     {
+        m_archetypeSelecter.OnArchetypeSelected -= HandleOnArchetypeSelected;
         m_characterSelecter.OnCharacterSelected -= HandleOnSelectedCharacter;
         m_slotSelecter.OnSlotSelected -= HandleSlotSelected;
     }
@@ -28,13 +32,13 @@ public class EquipmentMenuPage : MenuPage
         EnterSection(m_equipmentSlotSelectionSection);
     }
 
-    private void HandleSlotSelected(ESlotType slotType, object obj)
+    private void HandleSlotSelected(ESlotType slotType)
     {
         m_selectedSlotType = slotType;
 
         if (slotType == ESlotType.Archetype)
         {
-            Debug.Log("Open archetype selection menu");
+            EnterSection(m_archetypeSelectionSection);
             return;
         }
 
@@ -43,5 +47,13 @@ public class EquipmentMenuPage : MenuPage
             Debug.Log("Open equipment selection menu");
             return;
         }
+    }
+
+    private void HandleOnArchetypeSelected(Archetype archetype)
+    {
+        if(m_selectedCharacter != null)
+            m_selectedCharacter.Equipment.EquipArchetype(archetype);
+
+        TryExitCurrentSection();
     }
 }

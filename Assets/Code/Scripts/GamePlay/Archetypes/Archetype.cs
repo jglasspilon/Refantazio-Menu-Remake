@@ -8,6 +8,7 @@ public class Archetype: IPropertyProvider, ISubPropertyProvider
 {
     public event Action<StatModifier[], StatModifier[]> OnStatModifiersChanged;
 
+    [SerializeField] private string m_id;
     [SerializeField] private ArchetypeData m_baseData;
     [SerializeField] private Level m_rank;
     [SerializeField] private EEquipmentType m_weaponType;
@@ -16,10 +17,13 @@ public class Archetype: IPropertyProvider, ISubPropertyProvider
     [SerializeField] private ObservableProperty<string> m_name = new ObservableProperty<string>();
     [SerializeField] private ObservableProperty<Sprite> m_icon = new ObservableProperty<Sprite>();
 
+    private int m_sortOrder;
     private Dictionary<string, IObservableProperty> m_properties;
     private Dictionary<EStatType, StatModifier> m_statModifiers;
     private Dictionary<int, Skill[]> m_skillsByRank;
 
+    public int SortOrder => m_sortOrder;
+    public string ID => m_id;
     public string Name => m_name.Value;
     public Mesh Mesh => m_baseData.Mesh;
     public Level Rank => m_rank;
@@ -28,9 +32,11 @@ public class Archetype: IPropertyProvider, ISubPropertyProvider
     public StatModifier[] StatModifiers => m_statModifiers.Values.ToArray();
 
     public Archetype(ArchetypeData baseData)
-    { 
+    {
+        m_id = baseData.ID;
+        m_sortOrder = baseData.SortOrder;
         m_baseData = baseData;
-        m_name.Value = m_baseData.name;
+        m_name.Value = m_baseData.Name;
         m_rank = new Level(1, 20, baseData.RankExpCurve);
         m_statModifiers = baseData.RankedStatCurves.ToDictionary(x => x.Key, x => new StatModifier(x.Key, (int)x.Value.Evaluate(m_rank.Value)));
         m_skillsByRank = baseData.SkillsByRank.ToDictionary(pair => pair.Key, pair => pair.Value.Select(skillData => skillData.CreateSkillFromData()).ToArray());

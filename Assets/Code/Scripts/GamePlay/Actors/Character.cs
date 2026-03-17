@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -35,15 +35,15 @@ public class Character: IPropertyProvider
     public ObservableProperty<bool> IsDead => m_isDead;
     public ObservableProperty<EBattlePosition> BattlePosition => m_battlePosition;
     public ObservableProperty<ECharacterType> CharacterType => m_characterType;
-    public Skill[] Skills => m_equipment?.Archetype?.GetAvailableSkills() ?? Array.Empty<Skill>();   
+    public Skill[] Skills => m_equipment?.Archetype?.GetAvailableSkills() ?? Array.Empty<Skill>();
+    public Archetype[] Archetypes => m_availableArchetypes.ToArray();
     public bool IsLeader => m_characterType.Value == ECharacterType.Leader;
     public bool IsGuide => m_characterType.Value == ECharacterType.Guide;
     public bool IsInActiveParty => m_characterType.Value == ECharacterType.Party || IsLeader;
 
     #region Life Cycle Functions
     public Character(CharacterSheet sheet)
-    {
-        Archetype startArchetype = null;
+    {        
         m_characterBase = sheet;
         m_name.Value = sheet.Name;
         m_stats = new CharacterStats(sheet.HP, sheet.MP, sheet.Str, sheet.Mag, sheet.End, sheet.Agi, sheet.Luck);
@@ -52,19 +52,22 @@ public class Character: IPropertyProvider
         m_banner.Value = sheet.BannerIcon;
         m_battlePosition.Value = m_characterType.Value == ECharacterType.Guide ? EBattlePosition.Undetermined : EBattlePosition.Front;
 
-        if (m_characterBase.StartingArchetype != null)
-        {
-            startArchetype = new Archetype(m_characterBase.StartingArchetype);
-
-            if(!m_availableArchetypes.Contains(startArchetype)) 
-                m_availableArchetypes.Add(startArchetype);
-        }
-
+        Archetype startArchetype = new Archetype(m_characterBase.StartingArchetype);
         Equipment startingWeapon = sheet.StartingWeapon == null ? null : sheet.StartingWeapon.CreateItemFromData() as Equipment;
         Equipment startingArmor = sheet.StartingArmor == null ? null : sheet.StartingArmor.CreateItemFromData() as Equipment;
         Equipment startingGear = sheet.StartingGear == null ? null : sheet.StartingGear.CreateItemFromData() as Equipment;
         Equipment startingAccessory = sheet.StartingAccessory == null ? null : sheet.StartingAccessory.CreateItemFromData() as Equipment;
         m_equipment = new EquipmentExecutor(startingWeapon, startingArmor, startingGear, startingAccessory, startArchetype, this);
+
+        m_availableArchetypes.Add(startArchetype);
+        foreach (ArchetypeData archetypeData in m_characterBase.AvailableArchetypes)
+        {
+            if (m_availableArchetypes.Any(a => a.ID == archetypeData.ID))
+                continue;
+
+            var newArchetype = new Archetype(archetypeData);
+            m_availableArchetypes.Add(newArchetype);
+        }
 
         ApplyHp(Stats.Endurance.Value);
         ApplyMp(Stats.Magic.Value);

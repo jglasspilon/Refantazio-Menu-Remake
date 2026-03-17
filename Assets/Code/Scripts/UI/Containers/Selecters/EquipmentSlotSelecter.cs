@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EquipmentSlotSelecter : UIObjectSelecter<SelectableSlot>
 {
-    public event Action<ESlotType, object> OnSlotSelected;
+    public event Action<ESlotType> OnSlotSelected;
 
     protected override void Awake()
     {
@@ -13,6 +13,6 @@ public class EquipmentSlotSelecter : UIObjectSelecter<SelectableSlot>
 
     public void SelectSlot()
     {
-        OnSlotSelected?.Invoke(SelectedObject == null ? ESlotType.Undetermined : SelectedObject.SlotType, SelectedObject == null ? null : SelectedObject.SlotContent);
+        OnSlotSelected?.Invoke(SelectedObject == null ? ESlotType.Undetermined : SelectedObject.SlotType);
     }
 }

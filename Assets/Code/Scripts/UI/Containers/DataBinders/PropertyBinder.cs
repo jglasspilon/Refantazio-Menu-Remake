@@ -86,6 +86,10 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
             return;
         }
 
+        // Unbind from old bindings before binding anew
+        if (m_property != null)
+            UnBind();
+
         // Prepare Apply<TSource>
         m_property = raw;     
         m_sourceType = valueType;
@@ -197,6 +201,8 @@ public abstract class PropertyBinder : MonoBehaviour, IBindableToProperty
     ///     protected void Apply(int value) { ... }
     ///     protected void Apply(float value) { ... }
     ///     protected void Apply(MyEnum value) { ... }
+    /// Fallback:
+    /// protected override void Apply(object value) { ... } 
     /// </summary>
     protected abstract void Apply(object value);
 }

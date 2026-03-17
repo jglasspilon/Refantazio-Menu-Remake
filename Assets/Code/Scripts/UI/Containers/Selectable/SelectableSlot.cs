@@ -1,8 +1,7 @@
 using System;
-using System.Linq;
 using UnityEngine;
 
-public abstract class SelectableSlot : MonoBehaviour, ISelectable
+public class SelectableSlot : MonoBehaviour, ISelectable
 {
     [SerializeField] private ESlotType m_slotType;
     [SerializeField] private LoggingProfile m_logProfile;
@@ -20,6 +19,18 @@ public abstract class SelectableSlot : MonoBehaviour, ISelectable
     private void Awake()
     {
         m_bindables = GetComponentsInChildren<IBindableToProperty>();
+    }
+
+    public void ResetBinding()
+    {
+        if(m_character != null)
+        {
+            m_character.Equipment.OnEquipmentChanged -= HandleOnEquipmentChange;
+            m_character = null;
+        }
+
+        m_slotContent = null;
+        m_bindables.ForEach(x => x.UnBind());
     }
 
     public void InitializeEquipedCharacter(Character character)

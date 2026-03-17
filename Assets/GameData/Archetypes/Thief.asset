@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b7bbf16193cce7499ff6f8215c30ac3, type: 3}
   m_Name: Thief
   m_EditorClassIdentifier: Assembly-CSharp::ArchetypeData
+  m_sortOrder: 4
   m_name: Thief
   m_icon: {fileID: 589304414, guid: 757bc685569f551418ce514f927343c3, type: 3}
   m_mesh: {fileID: 0}

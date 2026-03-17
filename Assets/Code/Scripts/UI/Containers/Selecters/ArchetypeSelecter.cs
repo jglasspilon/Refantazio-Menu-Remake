@@ -1,18 +1,18 @@
 using System;
 using UnityEngine;
 
-public class ArchetypeSelecter : UIObjectSelecter<ArchetypeSlot>
+public class ArchetypeSelecter : UIObjectSelecter<ArchetypeBanner>
 {
-    public event Action<Archetype> OnSlotSelected;
+    public event Action<Archetype> OnArchetypeSelected;
 
     protected override void Awake()
     {
         base.Awake();
-        m_parentSection.OnConfirm += SelectSlot;
+        m_parentSection.OnConfirm += SelectArchetype;
     }
 
-    public void SelectSlot()
+    private void SelectArchetype()
     {
-        OnSlotSelected?.Invoke(SelectedObject == null ? null : SelectedObject.Archetype);
+        OnArchetypeSelected?.Invoke(SelectedObject == null ? null : SelectedObject.Archetype);
     }
 }
