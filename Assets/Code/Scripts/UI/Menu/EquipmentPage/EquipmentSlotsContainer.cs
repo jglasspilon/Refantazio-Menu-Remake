@@ -1,23 +1,28 @@
+using System.Linq;
 using UnityEngine;
 
 public class EquipmentSlotsContainer : MonoBehaviour
 {
     [SerializeField] private CharacterSelecter m_characterSelecter;
     [SerializeField] private EquipmentSlotSelecter m_slotSelecter;
-    [SerializeField] private ArchetypeSlot m_archetypeSlot;
-    [SerializeField] private EquipmentSlot m_weaponSlot;
-    [SerializeField] private EquipmentSlot m_armorSlot;
-    [SerializeField] private EquipmentSlot m_gearSlot;
-    [SerializeField] private EquipmentSlot m_accessorySlot;
 
+    private SelectableSlot[] m_slots;
     private Character m_registeredCharacter;
+
+    private void Awake()
+    {
+        m_slots = GetComponentsInChildren<SelectableSlot>();
+    }
 
     private void OnEnable()
     {
-        foreach (ISelectable selectable in GetComponentsInChildren<ISelectable>())
-            selectable.SetAsSelected(false);
-
+        m_slots.ForEach(x => x.SetAsSelected(false));
         m_characterSelecter.OnSelectedObjectChanged += ProvideCharacterDataToSlots;
+    }
+
+    private void OnDisable()
+    {
+        m_characterSelecter.OnSelectedObjectChanged -= ProvideCharacterDataToSlots;
     }
 
     private void ProvideCharacterDataToSlots(CharacterBanner characterBanner)
@@ -30,22 +35,40 @@ public class EquipmentSlotsContainer : MonoBehaviour
         if (character == m_registeredCharacter)
             return;
 
+        m_registeredCharacter = character;
         m_slotSelecter.UnselectAll();
         m_slotSelecter.ResetSelecter();
-        m_archetypeSlot.gameObject.SetActive(character.CharacterType.Value != ECharacterType.Guide);
 
         if (character.CharacterType.Value != ECharacterType.Guide)
-        {
-            m_slotSelecter.UpdateObjects(m_archetypeSlot, m_weaponSlot, m_armorSlot, m_gearSlot, m_accessorySlot);
-            m_archetypeSlot.InitializeWithProvider(character);
-        }
+            m_slotSelecter.UpdateObjects(m_slots);
         else
-            m_slotSelecter.UpdateObjects(m_weaponSlot, m_armorSlot, m_gearSlot, m_accessorySlot);
+            m_slotSelecter.UpdateObjects(m_slots.Where(s => s.SlotType != ESlotType.Archetype).ToArray());
 
-        m_weaponSlot.InitializeWithProvider(character.Equipment.Weapon);
-        m_armorSlot.InitializeWithProvider(character.Equipment.Armor);
-        m_gearSlot.InitializeWithProvider(character.Equipment.Gear);
-        m_accessorySlot.InitializeWithProvider(character.Equipment.Accessory);
+        m_slots.ForEach(s => InitializeSlotWithProviderAndCharacter(s, m_registeredCharacter));       
         m_slotSelecter.SelectCurrent();
+    }
+
+    private void InitializeSlotWithProviderAndCharacter(SelectableSlot slot, Character character)
+    {
+        slot.InitializeEquipedCharacter(character);
+        switch(slot.SlotType)
+        {
+            case ESlotType.Archetype:
+                slot.gameObject.SetActive(character.CharacterType.Value != ECharacterType.Guide);
+                slot.InitializeWithProvider(character.Equipment.Archetype);
+                break;
+            case ESlotType.Weapon:
+                slot.InitializeWithProvider(character.Equipment.Weapon);
+                break;
+            case ESlotType.Armor:
+                slot.InitializeWithProvider(character.Equipment.Armor);
+                break;
+            case ESlotType.Gear:
+                slot.InitializeWithProvider(character.Equipment.Gear);
+                break;
+            case ESlotType.Accessory:
+                slot.InitializeWithProvider(character.Equipment.Accessory);
+                break;
+        }
     }
 }

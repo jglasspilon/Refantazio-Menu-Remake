@@ -150,9 +150,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e13e1d2ef14a7741b2e869673095789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextBinder
-  m_selectedProviderType: Character
+  m_selectedProviderType: Archetype
   m_selectedSourceType: int
-  m_propertyKey: m_equipment.m_archetype.m_rank
+  m_propertyKey: m_rank
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
   m_formatters:
   - {fileID: 11400000, guid: 873db71cbc7ff4b4ca63aacbfb5650dc, type: 2}
@@ -855,9 +855,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e13e1d2ef14a7741b2e869673095789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextBinder
-  m_selectedProviderType: Character
+  m_selectedProviderType: Archetype
   m_selectedSourceType: string
-  m_propertyKey: m_equipment.m_archetype.m_name
+  m_propertyKey: m_name
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
   m_formatters: []
 --- !u!1 &4045592633103275614
@@ -1223,7 +1223,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5447327308628818971}
   - component: {fileID: 4602950973842007364}
-  - component: {fileID: 9199633616763644866}
   m_Layer: 5
   m_Name: RankBar
   m_TagString: Untagged
@@ -1273,24 +1272,6 @@ MonoBehaviour:
   m_healEffect: []
   m_damageEffect: []
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
---- !u!114 &9199633616763644866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5350397763322938417}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8274faedb987a84b894a42abd60fa65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SetActiveBinder
-  m_selectedProviderType: Character
-  m_selectedSourceType: ECharacterType
-  m_propertyKey: m_characterType
-  m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
-  m_conditionsToMeet:
-  - {fileID: 11400000, guid: 7e82c618e438be049a5f81456062fa45, type: 2}
 --- !u!1 &5983168370191011993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1658,9 +1639,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1f2ecca0451d5a44ad23a9c4d623db6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ImageBinder
-  m_selectedProviderType: Character
+  m_selectedProviderType: Archetype
   m_selectedSourceType: Sprite
-  m_propertyKey: m_equipment.m_archetype.m_icon
+  m_propertyKey: m_icon
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
 --- !u!1 &7107931736699663718
 GameObject:

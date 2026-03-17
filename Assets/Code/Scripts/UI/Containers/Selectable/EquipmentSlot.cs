@@ -5,6 +5,8 @@ public class EquipmentSlot : SelectableSlot
 {
     [SerializeField] private Animator m_anim;
 
+    public Equipment Equipment => SlotContent as Equipment;
+
     public override void SetAsSelected(bool selected)
     {
         base.SetAsSelected(selected);

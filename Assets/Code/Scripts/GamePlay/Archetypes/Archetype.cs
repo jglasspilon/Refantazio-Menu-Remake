@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public class Archetype: ISubPropertyProvider
+public class Archetype: IPropertyProvider, ISubPropertyProvider
 {
     public event Action<StatModifier[], StatModifier[]> OnStatModifiersChanged;
 
@@ -16,6 +16,7 @@ public class Archetype: ISubPropertyProvider
     [SerializeField] private ObservableProperty<string> m_name = new ObservableProperty<string>();
     [SerializeField] private ObservableProperty<Sprite> m_icon = new ObservableProperty<Sprite>();
 
+    private Dictionary<string, IObservableProperty> m_properties;
     private Dictionary<EStatType, StatModifier> m_statModifiers;
     private Dictionary<int, Skill[]> m_skillsByRank;
 
@@ -38,6 +39,36 @@ public class Archetype: ISubPropertyProvider
         m_icon.Value = baseData.Icon;
         m_availableSkills = GetAvailableSkills();
         m_rank.OnLevelChange += HandleRankUp;
+        InitializeProperties();
+    }
+
+    private void InitializeProperties()
+    {
+        m_properties = Helper.DataHandling.BuildPropertyMap(this);
+    }
+
+    public bool TryGetPropertyRaw(string key, out object value)
+    {
+        if (m_properties.TryGetValue(key, out IObservableProperty raw))
+        {
+            value = raw;
+            return true;
+        }
+
+        value = null;
+        return false;
+    }
+
+    public bool TryGetProperty<T>(string key, out ObservableProperty<T> value)
+    {
+        if (m_properties.TryGetValue(key, out IObservableProperty raw) && raw is ObservableProperty<T> typed)
+        {
+            value = typed;
+            return true;
+        }
+
+        value = null;
+        return false;
     }
 
     public IEnumerable<KeyValuePair<string, IObservableProperty>> GetSubProperties(string parentKey)

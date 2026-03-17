@@ -28,15 +28,24 @@ public class ResourceBar : MonoBehaviour, IBindableToProperty
 
     public void BindToProperty(IPropertyProvider provider)
     {
-        if(provider is not Character character)
+        if(provider is Character character)
         {
-            Logger.LogError($"Received unrecognized provider. ResourceBar only accepts Character as provider.", m_logProfile);
+            m_resource = GetResourceFromCharacter(m_resourceType, character);
+            m_resource.OnResourceChange += Display;
+            DisplayInstant(m_resource.Current, m_resource.CurrentProportion);
             return;
         }
 
-        m_resource = GetResourceFromCharacter(m_resourceType, character);
-        m_resource.OnResourceChange += Display;
-        DisplayInstant(m_resource.Current, m_resource.CurrentProportion);
+        if(m_resourceType == EBindableResource.ArchetypeExp && provider is Archetype archetype)
+        {
+            m_resource = archetype.Rank.Exp;
+            m_resource.OnResourceChange += Display;
+            DisplayInstant(m_resource.Current, m_resource.CurrentProportion);
+            return;
+        }
+
+        Logger.LogError($"Received unrecognized provider. ResourceBar only accepts Character as provider.", m_logProfile);
+        return;       
     }
 
     public void UnBind()

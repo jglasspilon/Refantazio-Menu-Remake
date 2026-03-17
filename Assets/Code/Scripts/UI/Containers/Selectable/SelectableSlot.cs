@@ -9,6 +9,7 @@ public abstract class SelectableSlot : MonoBehaviour, ISelectable
 
     private object m_slotContent;
     private IBindableToProperty[] m_bindables;
+    private Character m_character;
 
     public event Action<bool> OnSetAsSelected;
     public event Action<bool> OnSetAsSelectable;
@@ -21,9 +22,25 @@ public abstract class SelectableSlot : MonoBehaviour, ISelectable
         m_bindables = GetComponentsInChildren<IBindableToProperty>();
     }
 
+    public void InitializeEquipedCharacter(Character character)
+    {
+        if (character == m_character)
+            return;
+
+        if (m_character != null)
+            m_character.Equipment.OnEquipmentChanged -= HandleOnEquipmentChange;
+
+        m_character = character;
+        m_character.Equipment.OnEquipmentChanged += HandleOnEquipmentChange;
+    }
+
     public void InitializeWithProvider(IPropertyProvider provider)
     {
-        m_bindables.ForEach(x => x.BindToProperty(provider));
+        if (provider == null)
+            return;
+
+        m_slotContent = provider;
+        m_bindables.ForEach(x => x.BindToProperty(provider));        
     }
 
     public void PauseSelection()
@@ -44,6 +61,35 @@ public abstract class SelectableSlot : MonoBehaviour, ISelectable
     public ESlotType Select()
     {
         return m_slotType;
+    }
+
+    private void HandleOnEquipmentChange()
+    {
+        if (m_character == null)
+            return;
+
+        IPropertyProvider newProvider = null;
+
+        switch (m_slotType)
+        {
+            case ESlotType.Archetype:
+                newProvider = m_character.Equipment.Archetype;
+                break;
+            case ESlotType.Weapon:
+                newProvider = m_character.Equipment.Weapon;
+                break;
+            case ESlotType.Armor:
+                newProvider = m_character.Equipment.Armor;
+                break;
+            case ESlotType.Gear:
+                newProvider = m_character.Equipment.Gear;
+                break;
+            case ESlotType.Accessory:
+                newProvider = m_character.Equipment.Weapon;
+                break;
+        }
+
+        InitializeWithProvider(newProvider);
     }
 }
 
