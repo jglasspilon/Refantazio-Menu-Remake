@@ -1,8 +1,7 @@
 using UnityEngine;
 
 public class SelectedCharacterDisplay : MonoBehaviour
-{
-    [SerializeField] private PageSection m_parentSection;
+{ 
     [SerializeField] private CharacterSelecter m_characterSelecter;
 
     private IBindableToProperty[] m_bindables;
@@ -15,16 +14,12 @@ public class SelectedCharacterDisplay : MonoBehaviour
     private void OnEnable()
     {
         m_characterSelecter.OnSelectedObjectChanged += SelectCharacter;
-        m_parentSection.OnPageLeftLv1 += PreviousCharacter;
-        m_parentSection.OnPageRightLv1 += NextCharacter;
     }
 
     private void OnDisable()
     {
         m_bindables.ForEach(x => x.UnBind());
         m_characterSelecter.OnSelectedObjectChanged -= SelectCharacter;
-        m_parentSection.OnPageLeftLv1 -= PreviousCharacter;
-        m_parentSection.OnPageRightLv1 -= NextCharacter;
     }
 
     private void SelectCharacter(CharacterBanner characterProvider)
@@ -37,13 +32,5 @@ public class SelectedCharacterDisplay : MonoBehaviour
         m_bindables.ForEach(x => x.BindToProperty(character));
     }
 
-    private void NextCharacter()
-    {
-        m_characterSelecter.SelectNext();
-    }
-
-    private void PreviousCharacter()
-    {
-        m_characterSelecter.SelectPrevious();
-    }
+    
 }
