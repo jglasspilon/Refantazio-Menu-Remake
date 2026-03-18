@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
@@ -15,6 +16,7 @@ public class ResourceBar : MonoBehaviour, IBindableToProperty
     [SerializeField] private LoggingProfile m_logProfile;
 
     private Resource m_resource;
+    private CancellationTokenSource cts;
 
     public Type ProviderType => typeof(Character); 
 
@@ -63,8 +65,10 @@ public class ResourceBar : MonoBehaviour, IBindableToProperty
     }
 
     private void Display(Resource resource, int delta)
-    {    
-        LerpSlider(resource.CurrentProportion);      
+    {
+        cts?.Cancel();
+        cts = new CancellationTokenSource();
+        Helper.Animation.LerpSlider(m_valueSlider, resource.CurrentProportion, m_sliderAnimCurve.Curve, cts.Token);      
 
         if (delta == 0)
             return;
@@ -76,22 +80,6 @@ public class ResourceBar : MonoBehaviour, IBindableToProperty
         }
 
         PlayDamageEffects();
-    }
-
-    private async UniTask LerpSlider(float newProportion)
-    {
-        float oldProportion = m_valueSlider.value;
-        float duration = m_sliderAnimCurve.GetDuration();
-        float timer = 0f;
-
-        while (timer < duration)
-        {
-            m_valueSlider.value = Mathf.Lerp(oldProportion, newProportion, m_sliderAnimCurve.Evaluate(timer));
-            await UniTask.Yield(PlayerLoopTiming.Update);
-            timer += Time.deltaTime;
-        }
-
-        m_valueSlider.value = newProportion;
     }
 
     private void PlayHealingEffects()

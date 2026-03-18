@@ -55,7 +55,8 @@ public class UIEffect_ColoredAlpha : UIEffect
 
     private async UniTask ApplyAlphaFromCurve(CancellationToken token)
     {
-        await Helper.Animation.ApplyAlphaToGraphicFromCurve(m_appliedTo, m_effectColor, m_alphaCurve.Curve, token);
+        m_appliedTo.color = m_effectColor;
+        await Helper.Animation.ApplyAlphaToGraphicFromCurve(m_appliedTo, m_alphaCurve.Curve, token);
         m_appliedTo.color = m_originalColor; 
     }
 }

@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PartyFormationSelecter : UIObjectSelecter<CharacterBanner>
 {
+    [SerializeField] private UnityEvent<Character> OnCharacterChanged;
+
     protected override void Awake()
     {
         base.Awake();
@@ -35,5 +38,10 @@ public class PartyFormationSelecter : UIObjectSelecter<CharacterBanner>
     public void MoveToBack()
     {
         SelectedObject.Character.SetCharacterBattlePosition(EBattlePosition.Back);
+    }
+
+    protected override void VirtualInvoke()
+    {
+        OnCharacterChanged?.Invoke(SelectedObject.Character);
     }
 }

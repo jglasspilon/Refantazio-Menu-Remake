@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public abstract class CharacterBanner : PoolableObjectFromData<Character>, ISelectable
+public class CharacterBanner : PoolableObjectFromData<Character>, ISelectable
 {
     public event Action<bool> OnSetAsSelected, OnSetAsSelectable;
     protected Character m_character;

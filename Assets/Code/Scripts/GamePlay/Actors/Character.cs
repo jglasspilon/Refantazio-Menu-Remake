@@ -69,16 +69,28 @@ public class Character: IPropertyProvider
             m_availableArchetypes.Add(newArchetype);
         }
 
-        ApplyHp(Stats.Endurance.Value);
-        ApplyMp(Stats.Magic.Value);
+        ApplyHp(Stats.Endurance.Final.Value);
+        ApplyMp(Stats.Magic.Final.Value);
 
         m_health.OnEmpty += HandleOnHealthEmpty;
         Level.OnChanged += ApplyHp;
         Level.OnChanged += ApplyMp;
-        Stats.Endurance.OnChanged += ApplyHp;
-        Stats.Magic.OnChanged += ApplyMp;
+        Stats.Endurance.Final.OnChanged += ApplyHp;
+        Stats.Magic.Final.OnChanged += ApplyMp;
         Equipment.OnEquipmentChanged += InitializeProperties;
         InitializeProperties();
+    }
+
+    public Character CreateSimulatedCharacter()
+    {
+        Character simCharacter = new Character(m_characterBase);
+        simCharacter.Equipment.EquipArchetype(this.Equipment.Archetype);
+        simCharacter.Equipment.EquipWeapon(this.Equipment.Weapon);
+        simCharacter.Equipment.EquipArmor(this.Equipment.Armor);
+        simCharacter.Equipment.EquipGear(this.Equipment.Gear);
+        simCharacter.Equipment.EquipAccessory(this.Equipment.Accessory);
+
+        return simCharacter;
     }
     #endregion
 
@@ -172,7 +184,7 @@ public class Character: IPropertyProvider
     private void ApplyHp(int newValue)
     {
         EResourceSetProcedure prc = m_hpCalculated ? EResourceSetProcedure.Keep : EResourceSetProcedure.Fill;
-        int value = Helper.GameMath.GetMaxHpFromEndurance(Stats.HP.Value, Stats.Endurance.Value, Level.Value);
+        int value = Helper.GameMath.GetMaxHpFromEndurance(Stats.HP.Final.Value, Stats.Endurance.Final.Value, Level.Value);
         m_health.SetMax(value, prc);
         m_hpCalculated = true;
     }
@@ -180,7 +192,7 @@ public class Character: IPropertyProvider
     private void ApplyMp(int newValue)
     {
         EResourceSetProcedure prc = m_mpCalculated ? EResourceSetProcedure.Keep : EResourceSetProcedure.Fill;
-        int value = Helper.GameMath.GetMapMpFromMagic(Stats.MP.Value, Stats.Magic.Value, Level.Value);
+        int value = Helper.GameMath.GetMapMpFromMagic(Stats.MP.Final.Value, Stats.Magic.Final.Value, Level.Value);
         m_mana.SetMax(value, prc);
         m_mpCalculated = true;
     }

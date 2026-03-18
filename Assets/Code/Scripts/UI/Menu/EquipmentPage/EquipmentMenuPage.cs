@@ -10,7 +10,7 @@ public class EquipmentMenuPage : MenuPage
     [SerializeField] private ArchetypeSelectionSection m_archetypeSelectionSection;
 
     private Character m_selectedCharacter;
-    private ESlotType m_selectedSlotType;
+    private EEquipmentSlotType m_selectedSlotType;
 
     private void OnEnable()
     {
@@ -32,11 +32,11 @@ public class EquipmentMenuPage : MenuPage
         EnterSection(m_equipmentSlotSelectionSection);
     }
 
-    private void HandleSlotSelected(ESlotType slotType)
+    private void HandleSlotSelected(EEquipmentSlotType slotType)
     {
         m_selectedSlotType = slotType;
 
-        if (slotType == ESlotType.Archetype)
+        if (slotType == EEquipmentSlotType.Archetype)
         {
             EnterSection(m_archetypeSelectionSection);
             return;

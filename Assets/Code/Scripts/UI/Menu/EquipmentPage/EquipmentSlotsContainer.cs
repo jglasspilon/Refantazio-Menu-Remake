@@ -41,7 +41,7 @@ public class EquipmentSlotsContainer : MonoBehaviour
         if (character.CharacterType.Value != ECharacterType.Guide)
             m_slotSelecter.UpdateObjects(m_slots);
         else
-            m_slotSelecter.UpdateObjects(m_slots.Where(s => s.SlotType != ESlotType.Archetype).ToArray());
+            m_slotSelecter.UpdateObjects(m_slots.Where(s => s.SlotType != EEquipmentSlotType.Archetype).ToArray());
 
         m_slots.ForEach(s => InitializeSlotWithProviderAndCharacter(s, m_registeredCharacter));       
         m_slotSelecter.SelectCurrent();
@@ -52,20 +52,20 @@ public class EquipmentSlotsContainer : MonoBehaviour
         slot.InitializeEquipedCharacter(character);
         switch(slot.SlotType)
         {
-            case ESlotType.Archetype:
+            case EEquipmentSlotType.Archetype:
                 slot.gameObject.SetActive(character.CharacterType.Value != ECharacterType.Guide);
                 slot.InitializeWithProvider(character.Equipment.Archetype);
                 break;
-            case ESlotType.Weapon:
+            case EEquipmentSlotType.Weapon:
                 slot.InitializeWithProvider(character.Equipment.Weapon);
                 break;
-            case ESlotType.Armor:
+            case EEquipmentSlotType.Armor:
                 slot.InitializeWithProvider(character.Equipment.Armor);
                 break;
-            case ESlotType.Gear:
+            case EEquipmentSlotType.Gear:
                 slot.InitializeWithProvider(character.Equipment.Gear);
                 break;
-            case ESlotType.Accessory:
+            case EEquipmentSlotType.Accessory:
                 slot.InitializeWithProvider(character.Equipment.Accessory);
                 break;
         }

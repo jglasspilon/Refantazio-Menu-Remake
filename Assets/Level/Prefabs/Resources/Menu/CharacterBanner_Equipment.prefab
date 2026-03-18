@@ -1400,7 +1400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextBinder
   m_selectedProviderType: Character
   m_selectedSourceType: int
-  m_propertyKey: m_stats.Defence
+  m_propertyKey: m_stats.Defence.m_final
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
   m_formatters:
   - {fileID: 11400000, guid: 169af6213db84c241b1377bca47dcd94, type: 2}
@@ -2023,7 +2023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextBinder
   m_selectedProviderType: Character
   m_selectedSourceType: int
-  m_propertyKey: m_stats.Attack
+  m_propertyKey: m_stats.Attack.m_final
   m_logProfile: {fileID: 11400000, guid: d1c47df871739ee4d902a803f7e84840, type: 2}
   m_formatters:
   - {fileID: 11400000, guid: 169af6213db84c241b1377bca47dcd94, type: 2}

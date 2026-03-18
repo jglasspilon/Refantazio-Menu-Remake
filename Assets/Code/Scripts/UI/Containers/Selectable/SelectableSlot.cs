@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SelectableSlot : MonoBehaviour, ISelectable
 {
-    [SerializeField] private ESlotType m_slotType;
+    [SerializeField] private EEquipmentSlotType m_slotType;
     [SerializeField] private LoggingProfile m_logProfile;
 
     private object m_slotContent;
@@ -14,7 +14,7 @@ public class SelectableSlot : MonoBehaviour, ISelectable
     public event Action<bool> OnSetAsSelectable;
 
     public object SlotContent => m_slotContent;
-    public ESlotType SlotType => m_slotType;
+    public EEquipmentSlotType SlotType => m_slotType;
 
     private void Awake()
     {
@@ -69,7 +69,7 @@ public class SelectableSlot : MonoBehaviour, ISelectable
         OnSetAsSelected?.Invoke(selected);
     }
 
-    public ESlotType Select()
+    public EEquipmentSlotType Select()
     {
         return m_slotType;
     }
@@ -83,19 +83,19 @@ public class SelectableSlot : MonoBehaviour, ISelectable
 
         switch (m_slotType)
         {
-            case ESlotType.Archetype:
+            case EEquipmentSlotType.Archetype:
                 newProvider = m_character.Equipment.Archetype;
                 break;
-            case ESlotType.Weapon:
+            case EEquipmentSlotType.Weapon:
                 newProvider = m_character.Equipment.Weapon;
                 break;
-            case ESlotType.Armor:
+            case EEquipmentSlotType.Armor:
                 newProvider = m_character.Equipment.Armor;
                 break;
-            case ESlotType.Gear:
+            case EEquipmentSlotType.Gear:
                 newProvider = m_character.Equipment.Gear;
                 break;
-            case ESlotType.Accessory:
+            case EEquipmentSlotType.Accessory:
                 newProvider = m_character.Equipment.Weapon;
                 break;
         }
@@ -104,7 +104,7 @@ public class SelectableSlot : MonoBehaviour, ISelectable
     }
 }
 
-public enum ESlotType
+public enum EEquipmentSlotType
 {
     Archetype,
     Weapon, 

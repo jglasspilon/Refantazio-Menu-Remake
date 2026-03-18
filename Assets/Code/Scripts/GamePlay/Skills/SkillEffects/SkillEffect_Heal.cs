@@ -19,7 +19,7 @@ public class SkillEffect_Heal : SkillEffect
         if (target.IsDead.Value) 
             return;
 
-        int amount = Mathf.FloorToInt(m_baseAmount * (1f + (caster.Stats.Magic.Value * m_magicFactor / 100f)));
+        int amount = Mathf.FloorToInt(m_baseAmount * (1f + (caster.Stats.Magic.Final.Value * m_magicFactor / 100f)));
         target.HP.Apply(amount);
     }
 }

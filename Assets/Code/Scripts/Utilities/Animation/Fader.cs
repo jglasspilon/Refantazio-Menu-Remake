@@ -77,7 +77,7 @@ public class Fader : MonoBehaviour
     {
         cts?.Cancel();
         cts = new CancellationTokenSource();
-        await Helper.Animation.ApplyAlphaToGraphicFromCurve(m_graphic, m_graphic.color, curve, cts.Token);
+        await Helper.Animation.ApplyAlphaToGraphicFromCurve(m_graphic, curve, cts.Token);
     }
 
     private async UniTask FadeCanvasGroup(AnimationCurve curve)

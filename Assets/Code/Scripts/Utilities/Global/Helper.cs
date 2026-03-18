@@ -46,19 +46,27 @@ public static class Helper
             await Timing.DelaySeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         }
 
-        public static async UniTask ApplyAlphaToGraphicFromCurve(MaskableGraphic graphic, Color color, AnimationCurve curve, CancellationToken token)
+        public static async UniTask ApplyAlphaToGraphicFromCurve(MaskableGraphic graphic, AnimationCurve curve, CancellationToken token)
         {
             float duration = curve.GetDuration();
             float timer = 0f;
 
-            while (timer < duration)
+            try
             {
-                Color alphaed = color;
-                alphaed.a = curve.Evaluate(timer);
-                graphic.color = alphaed;
+                while (timer < duration)
+                {
+                    token.ThrowIfCancellationRequested();
+                    Color alphaed = graphic.color;
+                    alphaed.a = curve.Evaluate(timer);
+                    graphic.color = alphaed;
 
-                await UniTask.Yield(PlayerLoopTiming.Update, token).SuppressCancellationThrow();
-                timer += Time.deltaTime;
+                    await UniTask.Yield(PlayerLoopTiming.Update, token);
+                    timer += Time.deltaTime;
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                
             }
         }
 
@@ -67,11 +75,45 @@ public static class Helper
             float duration = curve.GetDuration();
             float timer = 0f;
 
-            while (timer < duration)
+            try
             {
-                group.alpha = curve.Evaluate(timer);
-                await UniTask.Yield(PlayerLoopTiming.Update, token).SuppressCancellationThrow();
-                timer += Time.deltaTime;
+                while (timer < duration)
+                {
+                    token.ThrowIfCancellationRequested();
+                    group.alpha = curve.Evaluate(timer);
+
+                    await UniTask.Yield(PlayerLoopTiming.Update, token);
+                    timer += Time.deltaTime;
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                
+            }
+        }
+
+        public static async UniTask LerpSlider(Slider slider, float newProportion, AnimationCurve curve, CancellationToken token)
+        {
+            float oldProportion = slider.value;
+            float duration = curve.GetDuration();
+            float timer = 0f;
+
+            try
+            {
+                while (timer < duration)
+                {
+                    token.ThrowIfCancellationRequested();
+                    slider.value = Mathf.Lerp(oldProportion, newProportion, curve.Evaluate(timer));
+                    
+                    await UniTask.Yield(PlayerLoopTiming.Update, token);
+                    timer += Time.deltaTime;
+                }
+
+                slider.value = newProportion;
+            }
+            catch (OperationCanceledException)
+            {
+                
             }
         }
     }
@@ -114,26 +156,21 @@ public static class Helper
     {
         public static string FormatIntForUI(int value, int minSize, float opacityPercent)
         {
-            int insertAlphaAt = 0;
             string lowOpacity = $"<alpha=#{Math.PercentToHex(opacityPercent)}>";
             string normalOpacity = "<alpha=#FF>";
-            string format = "";
 
-            for (int i = 0; i < minSize; i++)
-            {
-                format += "0";
-            }
-
+            string format = new string('0', minSize);
             string valueParse = value.ToString(format);
 
-            insertAlphaAt = valueParse.TakeWhile(c => c == '0').Count();
+            int firstNonZero = valueParse.TakeWhile(c => c == '0').Count();
+            int normalStartIndex = value == 0 ? valueParse.Length - 1 : firstNonZero;
 
-            if (insertAlphaAt > 0 && valueParse.Length > insertAlphaAt)
+            if (normalStartIndex == 0)
             {
-                return $"{lowOpacity}{valueParse.Insert(insertAlphaAt, normalOpacity)}";
+                return $"{normalOpacity}{valueParse}";
             }
 
-            return valueParse;
+            return $"{lowOpacity}{valueParse.Insert(normalStartIndex, normalOpacity)}";
         }
 
         public static string PrettifyStat(EStatType stat)

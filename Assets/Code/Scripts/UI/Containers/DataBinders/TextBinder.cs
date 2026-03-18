@@ -19,7 +19,7 @@ public class TextBinder : PropertyBinder
 
         foreach (StringFormatter formatter in m_formatters)
         {
-            formattedText = formatter.Format(value, out string message);
+            formattedText = formatter.Format(formattedText, out string message);
 
             if (message != null)
                 Logger.LogError(message, m_logProfile);

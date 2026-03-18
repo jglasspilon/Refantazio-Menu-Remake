@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EquipmentSlotSelecter : UIObjectSelecter<SelectableSlot>
 {
-    public event Action<ESlotType> OnSlotSelected;
+    [SerializeField] private UnityEvent<EEquipmentSlotType> OnSlotChanged;
+    public event Action<EEquipmentSlotType> OnSlotSelected;
 
     protected override void Awake()
     {
@@ -13,6 +15,11 @@ public class EquipmentSlotSelecter : UIObjectSelecter<SelectableSlot>
 
     public void SelectSlot()
     {
-        OnSlotSelected?.Invoke(SelectedObject == null ? ESlotType.Undetermined : SelectedObject.SlotType);
+        OnSlotSelected?.Invoke(SelectedObject == null ? EEquipmentSlotType.Undetermined : SelectedObject.SlotType);
+    }
+
+    protected override void VirtualInvoke()
+    {
+        OnSlotChanged?.Invoke(SelectedObject == null ? EEquipmentSlotType.Undetermined : SelectedObject.SlotType);
     }
 }

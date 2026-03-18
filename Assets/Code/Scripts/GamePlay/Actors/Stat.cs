@@ -4,14 +4,20 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public class Stat: ObservableProperty<int>
+public class Stat: ISubPropertyProvider
 {
     [SerializeField] private EStatType m_type;
     [SerializeField] private int m_baseValue, m_levelValue;
+    [SerializeField] private ObservableProperty<int> m_final = new ObservableProperty<int>();
+    [SerializeField] private ObservableProperty<int> m_raw = new ObservableProperty<int>();
+    [SerializeField] private ObservableProperty<int> m_delta = new ObservableProperty<int>();
     [SerializeField] private List<StatModifier> m_modifiers = new List<StatModifier>();
 
     public int BaseValue => m_baseValue;
     public int LevelValue => m_levelValue;
+    public ObservableProperty<int> Raw => m_raw;
+    public ObservableProperty<int> Final => m_final;
+    public ObservableProperty<int> Delta => m_delta;
 
     public EStatType Type => m_type;
 
@@ -20,6 +26,11 @@ public class Stat: ObservableProperty<int>
         m_type = type;
         m_baseValue = baseValue;
         Recalculate();
+    }
+
+    public IEnumerable<KeyValuePair<string, IObservableProperty>> GetSubProperties(string parentKey)
+    {
+        return Helper.DataHandling.GetObservableFields(this, parentKey);
     }
 
     public void AddToBase(int amount)
@@ -54,7 +65,9 @@ public class Stat: ObservableProperty<int>
 
     private void Recalculate()
     {
-        Value = Mathf.Clamp(m_baseValue + m_levelValue + m_modifiers.Sum(x => x.Amount), 0, 99);
+        m_raw.Value = m_baseValue + m_levelValue;
+        m_final.Value = Mathf.Clamp(m_baseValue + m_levelValue + m_modifiers.Sum(x => x.Amount), 0, 99);
+        m_delta.Value = m_final.Value - m_raw.Value;
     }
 }
 

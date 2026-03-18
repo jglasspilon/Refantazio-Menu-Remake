@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(PageSection))]
 [DisallowMultipleComponent]
-public class UIObjectSelecter<T>: MonoBehaviour where T: MonoBehaviour, ISelectable 
+public abstract class UIObjectSelecter<T>: MonoBehaviour where T: MonoBehaviour, ISelectable 
 {
     [SerializeField]
     private bool m_reverseOrder;
@@ -86,6 +86,7 @@ public class UIObjectSelecter<T>: MonoBehaviour where T: MonoBehaviour, ISelecta
         m_selectedIndex = Helper.Arrays.GetSafeIndex(index, m_objects.Length - 1, loop);
         m_selectedObject = m_objects[m_selectedIndex];
         m_selectedObject.SetAsSelected(true);
+        VirtualInvoke();
         OnSelectedObjectChanged?.Invoke(m_selectedObject);
         m_onSelectedObjectChanged?.Invoke(m_selectedObject.gameObject);
     }
@@ -124,4 +125,6 @@ public class UIObjectSelecter<T>: MonoBehaviour where T: MonoBehaviour, ISelecta
             obj.SetAsSelectable(selectablePredicate(obj));
         }
     }
+
+    protected abstract void VirtualInvoke();
 }
