@@ -111,6 +111,14 @@ public class MenuManager : MonoBehaviour
         m_activePage.Confirm();
     }
 
+    public void ExtraOption()
+    {
+        if (m_activePage == null)
+            return;
+
+        m_activePage.ExtraOption();
+    }
+
     public void CycleUp()
     {
         if (m_activePage == null)

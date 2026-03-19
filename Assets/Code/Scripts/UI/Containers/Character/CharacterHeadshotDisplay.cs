@@ -35,12 +35,24 @@ public class CharacterHeadshotDisplay : MonoBehaviour
     private void OnEnable()
     {
         m_partyData ??= ObjectResolver.Instance.Resolve((PartyData party) => m_partyData = party);
+        HideCharacterInstant();
 
         if (m_partyData == null)
             return;
 
         m_partyData.OnActivePartyChanged += HandlePartyCompositionChanged;
         UpdateCharacterSlot();
+    }
+
+    private void OnDisable()
+    {        
+        m_character = null;
+        m_visible = false;
+
+        if (m_partyData == null)
+            return;
+
+        m_partyData.OnActivePartyChanged -= HandlePartyCompositionChanged;
     }
 
     private void ShowCharacter()
@@ -57,13 +69,21 @@ public class CharacterHeadshotDisplay : MonoBehaviour
 
     private void HideCharacter()
     {
-        if (!m_visible)
+        if (!m_visible && m_character != null)
             return;
 
         m_visible = false;
         m_footerMover.gameObject.SetActive(false);
         m_anim.MoveOutAsync();
         m_fader.FadeOut();
+    }
+
+    private void HideCharacterInstant()
+    {
+        m_visible = false;
+        m_footerMover.gameObject.SetActive(false);
+        m_anim.MoveOut();
+        m_fader.ResetFader(false);
     }
 
     private void UpdateCharacterSlot()
@@ -79,7 +99,8 @@ public class CharacterHeadshotDisplay : MonoBehaviour
             return;
         }
 
-        HideCharacter();
+        if(m_visible)
+            HideCharacter();
     }
 
     private void HandlePartyCompositionChanged()

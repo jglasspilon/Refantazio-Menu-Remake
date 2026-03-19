@@ -3,6 +3,11 @@ public interface IHandleOnConfirm
     void HandleOnConfirm();
 }
 
+public interface IHandleOnExtraOption
+{
+    void HandleOnExtraOption();
+}
+
 public interface IHandleOnBack
 {
     void HandleOnBack();

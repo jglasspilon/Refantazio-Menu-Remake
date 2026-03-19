@@ -1,11 +1,15 @@
 using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
-public abstract class PageSection: MonoBehaviour, IHandleOnConfirm, IHandleOnBack, IHandleOnCycleDown, IHandleOnCycleUp, IHandlePageLeftLv1, 
+public abstract class PageSection: MonoBehaviour, IHandleOnConfirm, IHandleOnExtraOption, IHandleOnBack, IHandleOnCycleDown, IHandleOnCycleUp, IHandlePageLeftLv1, 
     IHandlePageLeftLv2, IHandlePageRightLv1, IHandlePageRightLv2
 {
-    public event Action OnBack, OnConfirm, OnCycleUp, OnCycleDown, OnPageLeftLv1, OnPageLeftLv2, OnPageRightLv1, OnPageRightLv2;
+    [Header("Input Events:")]
+    [Space]
+    public UnityEvent OnBack;
+    public UnityEvent OnConfirm, OnExtraOption, OnCycleUp, OnCycleDown, OnPageLeftLv1, OnPageLeftLv2, OnPageRightLv1, OnPageRightLv2;
     public abstract UniTask EnterSection();
     public abstract UniTask ExitSection();
 
@@ -17,6 +21,11 @@ public abstract class PageSection: MonoBehaviour, IHandleOnConfirm, IHandleOnBac
     public virtual void HandleOnConfirm()
     {
         OnConfirm?.Invoke();
+    }
+
+    public void HandleOnExtraOption()
+    {
+        OnExtraOption?.Invoke();
     }
 
     public virtual void HandleOnCycleDown()

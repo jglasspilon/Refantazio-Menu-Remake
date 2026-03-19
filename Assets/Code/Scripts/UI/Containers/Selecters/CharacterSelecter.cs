@@ -7,10 +7,14 @@ public class CharacterSelecter : UIObjectSelecter<CharacterBanner>
     [SerializeField] private UnityEvent<Character> OnCharacterChanged; 
     public event Action<Character> OnCharacterSelected;
 
-    protected override void Awake()
+    protected void OnEnable()
     {
-        base.Awake();
-        m_parentSection.OnConfirm += SelectCharacter;
+        m_parentSection.OnConfirm.AddListener(SelectCharacter);
+    }
+
+    protected void OnDisable()
+    {
+        m_parentSection.OnConfirm.RemoveListener(SelectCharacter);
     }
 
     public void SelectCharacter()

@@ -14,15 +14,15 @@ public class ArchetypeSortingCycler : MonoBehaviour
 
     private void OnEnable()
     {
-        m_parentSection.OnPageRightLv1 += NextCategory;
-        m_parentSection.OnPageLeftLv1 += PreviousCategory;
+        m_parentSection.OnPageRightLv1.AddListener(NextCategory);
+        m_parentSection.OnPageLeftLv1.AddListener(PreviousCategory);
     }
 
     private void OnDisable()
     {
         m_index = 0;
-        m_parentSection.OnPageRightLv1 -= NextCategory;
-        m_parentSection.OnPageLeftLv1 -= PreviousCategory;
+        m_parentSection.OnPageRightLv1.RemoveListener(NextCategory);
+        m_parentSection.OnPageLeftLv1.RemoveListener(PreviousCategory);
     }
 
     private void PreviousCategory()

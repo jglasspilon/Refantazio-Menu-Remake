@@ -5,7 +5,7 @@ using UnityEngine;
 public class LeftRightMover : MonoBehaviour
 {
     [SerializeField]
-    private bool m_enabledByDefault;
+    private bool m_enabledByDefault = true;
 
     [SerializeField]
     protected Vector2 m_leftPosition, m_rightPosition;

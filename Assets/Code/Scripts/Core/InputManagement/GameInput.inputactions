@@ -103,6 +103,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "ExtraOption",
+                    "type": "Button",
+                    "id": "ab28627a-5bfd-47d3-8dde-e65e57c2ee58",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "CycleUp",
                     "type": "Button",
                     "id": "cde5b423-9fce-464a-8f70-b78eba2f2173",
@@ -373,6 +382,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "PageRightLevel2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb33ef9b-2c63-4efc-8888-d71beedc6d3d",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExtraOption",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b79238f4-fe9a-4b79-bd40-edb1c6008968",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExtraOption",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

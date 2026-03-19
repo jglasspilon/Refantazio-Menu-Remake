@@ -28,13 +28,13 @@ public abstract class UIObjectSelecter<T>: MonoBehaviour where T: MonoBehaviour,
 
         if(m_reverseOrder)
         {
-            m_parentSection.OnCycleDown += SelectPrevious;
-            m_parentSection.OnCycleUp += SelectNext;
+            m_parentSection.OnCycleDown.AddListener(SelectPrevious);
+            m_parentSection.OnCycleUp.AddListener(SelectNext);
             return;
         }
 
-        m_parentSection.OnCycleDown += SelectNext;
-        m_parentSection.OnCycleUp += SelectPrevious;
+        m_parentSection.OnCycleDown.AddListener(SelectNext);
+        m_parentSection.OnCycleUp.AddListener(SelectPrevious);
     }
 
     public T[] GetSelectableObjects()

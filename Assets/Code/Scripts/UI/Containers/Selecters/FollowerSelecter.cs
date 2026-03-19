@@ -7,10 +7,14 @@ public class FollowerSelecter : UIObjectSelecter<FollowerBanner>
     [SerializeField] private UnityEvent<Follower> OnFollowerChanged;
     public event Action<Follower> OnFollowerSelected;
 
-    protected override void Awake()
+    protected void OnEnable()
     {
-        base.Awake();
-        m_parentSection.OnConfirm += SelectCharacter;
+        m_parentSection.OnConfirm.AddListener(SelectCharacter);
+    }
+
+    protected void OnDisable()
+    {
+        m_parentSection.OnConfirm.RemoveListener(SelectCharacter);
     }
 
     public void SelectCharacter()

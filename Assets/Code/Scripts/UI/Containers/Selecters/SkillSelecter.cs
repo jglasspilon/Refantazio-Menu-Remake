@@ -7,10 +7,14 @@ public class SkillSelecter : UIObjectSelecter<MenuSkill>
     [SerializeField] private UnityEvent<Skill> OnSkillChanged;
     public event Action<Skill> OnSkillSelected;
 
-    protected override void Awake()
+    protected void OnEnable()
     {
-        base.Awake();
-        m_parentSection.OnConfirm += SelectSkill;
+        m_parentSection.OnConfirm.AddListener(SelectSkill);
+    }
+
+    private void OnDisable()
+    {
+        m_parentSection.OnConfirm.RemoveListener(SelectSkill);
     }
 
     public void SelectSkill()

@@ -7,14 +7,14 @@ public class CharacterCycler : MonoBehaviour
 
     private void OnEnable()
     {
-        m_parentSection.OnPageLeftLv1 += PreviousCharacter;
-        m_parentSection.OnPageRightLv1 += NextCharacter;
+        m_parentSection.OnPageLeftLv1.AddListener(PreviousCharacter);
+        m_parentSection.OnPageRightLv1.AddListener(NextCharacter);
     }
 
     private void OnDisable()
     {
-        m_parentSection.OnPageLeftLv1 -= PreviousCharacter;
-        m_parentSection.OnPageRightLv1 -= NextCharacter;
+        m_parentSection.OnPageLeftLv1.RemoveListener(PreviousCharacter);
+        m_parentSection.OnPageRightLv1.RemoveListener(NextCharacter);
     }
 
     private void NextCharacter()

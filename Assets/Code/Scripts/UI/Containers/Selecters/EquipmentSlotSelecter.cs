@@ -7,10 +7,14 @@ public class EquipmentSlotSelecter : UIObjectSelecter<SelectableSlot>
     [SerializeField] private UnityEvent<EEquipmentSlotType> OnSlotChanged;
     public event Action<EEquipmentSlotType> OnSlotSelected;
 
-    protected override void Awake()
+    protected void OnEnable()
     {
-        base.Awake();
-        m_parentSection.OnConfirm += SelectSlot;
+        m_parentSection.OnConfirm.AddListener(SelectSlot);
+    }
+
+    private void OnDisable()
+    {
+        m_parentSection.OnConfirm.RemoveListener(SelectSlot);
     }
 
     public void SelectSlot()

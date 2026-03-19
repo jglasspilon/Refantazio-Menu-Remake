@@ -7,10 +7,14 @@ public class ItemSelecter : UIObjectSelecter<InventoryItemUI>
     [SerializeField] private UnityEvent<InventoryEntry> OnItemChanged;
     public Action<InventoryEntry> OnItemSelected;
 
-    protected override void Awake()
+    protected void OnEnable()
     {
-        base.Awake();
-        m_parentSection.OnConfirm += SelectItem;
+        m_parentSection.OnConfirm.AddListener(SelectItem);
+    }
+
+    private void OnDisable()
+    {
+        m_parentSection.OnConfirm.RemoveListener(SelectItem);
     }
 
     public void SelectItem()

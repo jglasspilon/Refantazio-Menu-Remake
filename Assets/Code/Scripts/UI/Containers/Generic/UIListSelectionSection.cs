@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public abstract class UIListSelectionSection<T, TGenerater, TData, TModel>: PageSection, IHandleOnCycleDown, IHandleOnCycleUp 
+public abstract class UIListSelectionSection<T, TGenerater, TData, TModel>: PageSection 
     where TGenerater: UIObjectGeneraterFromPool<T, TData>, new()
     where T: PoolableObjectFromData<TData>, ISelectable
 {

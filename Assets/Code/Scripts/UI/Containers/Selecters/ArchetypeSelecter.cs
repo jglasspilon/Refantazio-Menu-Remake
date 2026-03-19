@@ -7,10 +7,14 @@ public class ArchetypeSelecter : UIObjectSelecter<ArchetypeBanner>
     [SerializeField] private UnityEvent<Archetype> OnArchetypeChanged;
     public event Action<Archetype> OnArchetypeSelected;
 
-    protected override void Awake()
+    protected void OnEnable()
     {
-        base.Awake();
-        m_parentSection.OnConfirm += SelectArchetype;
+        m_parentSection.OnConfirm.AddListener(SelectArchetype);
+    }
+
+    private void OnDisable()
+    {
+        m_parentSection.OnConfirm.RemoveListener(SelectArchetype);
     }
 
     private void SelectArchetype()

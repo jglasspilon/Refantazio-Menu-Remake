@@ -18,14 +18,20 @@ public class InventoryCategoryCycler: MonoBehaviour
 
     private void Awake()
     {
-        m_parentSection = GetComponent<PageSection>();
-        m_parentSection.OnPageLeftLv1 += CycleCategoryLeft;
-        m_parentSection.OnPageRightLv1 += CycleCategoryRight;
+        m_parentSection = GetComponent<PageSection>();        
     }
 
     private void OnEnable()
     {
         m_data = ObjectResolver.Instance.Resolve<InventoryData>();
+        m_parentSection.OnPageLeftLv1.AddListener(CycleCategoryLeft);
+        m_parentSection.OnPageRightLv1.AddListener(CycleCategoryRight);
+    }
+
+    private void OnDisable()
+    {
+        m_parentSection.OnPageLeftLv1.RemoveListener(CycleCategoryLeft);
+        m_parentSection.OnPageRightLv1.RemoveListener(CycleCategoryRight);
     }
 
     public void ResetSelection()

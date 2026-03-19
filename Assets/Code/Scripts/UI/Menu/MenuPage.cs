@@ -133,6 +133,14 @@ public class MenuPage : MonoBehaviour
         handler.HandleOnConfirm();
     }
 
+    public virtual void ExtraOption()
+    {
+        if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandleOnExtraOption handler)
+            return;
+
+        handler.HandleOnExtraOption();
+    }
+
     public virtual void CycleUp()
     {
         if (m_breadcrumb.Count == 0 || m_breadcrumb.Peek() is not IHandleOnCycleUp handler)

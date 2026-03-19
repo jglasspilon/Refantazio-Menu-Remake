@@ -35,6 +35,7 @@ public class MenuInputHandler : InputHandler
         }
 
         m_input.Menu.Confirm.performed += OnConfirm;
+        m_input.Menu.ExtraOption.performed += OnExtraOption;
         m_input.Menu.CycleUp.performed += OnCycleUp;
         m_input.Menu.CycleDown.performed += OnCycleDown;
         m_input.Menu.Back.performed += OnBack;
@@ -55,6 +56,7 @@ public class MenuInputHandler : InputHandler
         }
 
         m_input.Menu.Confirm.performed -= OnConfirm;
+        m_input.Menu.ExtraOption.performed -= OnExtraOption;
         m_input.Menu.CycleUp.performed -= OnCycleUp;
         m_input.Menu.CycleDown.performed -= OnCycleDown;
         m_input.Menu.Back.performed -= OnBack;
@@ -70,6 +72,12 @@ public class MenuInputHandler : InputHandler
     {
         m_menu.Confirm();
         Logger.Log("Confirm", gameObject, m_logProfile);
+    }
+
+    private void OnExtraOption(InputAction.CallbackContext context)
+    {
+        m_menu.ExtraOption();
+        Logger.Log("Extra Option", gameObject, m_logProfile);
     }
 
     private void OnCycleUp(InputAction.CallbackContext context)

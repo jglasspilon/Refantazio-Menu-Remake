@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -63,6 +64,10 @@ public static class Helper
                     await UniTask.Yield(PlayerLoopTiming.Update, token);
                     timer += Time.deltaTime;
                 }
+
+                Color final = graphic.color;
+                final.a = curve.Evaluate(curve.keys.Last(x => true).time);
+                graphic.color = final;
             }
             catch (OperationCanceledException)
             {
@@ -85,6 +90,8 @@ public static class Helper
                     await UniTask.Yield(PlayerLoopTiming.Update, token);
                     timer += Time.deltaTime;
                 }
+
+                group.alpha = curve.Evaluate(curve.keys.Last(x => true).time);
             }
             catch (OperationCanceledException)
             {
