@@ -30,7 +30,7 @@ public class SelectableSlot : MonoBehaviour, ISelectable
         }
 
         m_slotContent = null;
-        m_bindables.ForEach(x => x.UnBind());
+        m_bindables?.ForEach(x => x.UnBind());
     }
 
     public void InitializeEquipedCharacter(Character character)
@@ -96,7 +96,7 @@ public class SelectableSlot : MonoBehaviour, ISelectable
                 newProvider = m_character.Equipment.Gear;
                 break;
             case EEquipmentSlotType.Accessory:
-                newProvider = m_character.Equipment.Weapon;
+                newProvider = m_character.Equipment.Accessory;
                 break;
         }
 

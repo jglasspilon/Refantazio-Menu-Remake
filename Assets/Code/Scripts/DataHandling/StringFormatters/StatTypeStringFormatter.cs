@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(menuName = "Data/String Formatter/Stat Type Formatter")]
 public class StatTypeStringFormatter : StringFormatter
@@ -6,6 +7,11 @@ public class StatTypeStringFormatter : StringFormatter
     public override string Format(object value, out string message)
     {
         message = null;
+
+        if(value is string text && Enum.TryParse(text, out EStatType result))
+        {
+            return Helper.StringFormatting.PrettifyStat(result);
+        }
 
         if(value is not EStatType type)
         {

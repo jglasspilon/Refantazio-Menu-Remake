@@ -9,10 +9,7 @@ public class EquipmentExecutor: ISubPropertyProvider
     private Archetype m_archetype;
 
     [SerializeField]
-    private Equipment m_weapon, m_armor, m_gear;
-
-    [SerializeField]
-    private Equipment m_accessorySlot;
+    private Equipment m_weapon, m_armor, m_gear, m_accessory;
 
     [NonSerialized]
     private Character m_equiper;
@@ -23,7 +20,7 @@ public class EquipmentExecutor: ISubPropertyProvider
     public Equipment Weapon => m_weapon;
     public Equipment Armor => m_armor;
     public Equipment Gear => m_gear;
-    public Equipment Accessory => m_accessorySlot;
+    public Equipment Accessory => m_accessory;
 
     public EquipmentExecutor(Equipment weapon, Equipment armor, Equipment gear, Equipment accessory, Archetype startingArchetype, Character equiper)
     {
@@ -94,8 +91,8 @@ public class EquipmentExecutor: ISubPropertyProvider
         if (accessory == null)
             return;
 
-        ChangeEquipment(accessory, m_accessorySlot);
-        m_accessorySlot = accessory;
+        ChangeEquipment(accessory, m_accessory);
+        m_accessory = accessory;
         OnEquipmentChanged?.Invoke();
     }
 

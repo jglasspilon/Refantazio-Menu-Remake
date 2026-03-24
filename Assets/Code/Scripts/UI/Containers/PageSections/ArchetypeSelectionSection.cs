@@ -8,9 +8,7 @@ using UnityEngine.Events;
 public class ArchetypeSelectionSection: UIListSelectionSection<ArchetypeBanner, ArchetypeBannerGenerator, Archetype, Character>
 {
     [SerializeField] private CharacterSelecter m_characterSelecter;
-    [Space]
-    [SerializeField] private UnityEvent m_onEnter;
-    [SerializeField] private UnityEvent m_onExit;
+
     private EArchetypeSortType m_sortType;
 
     public override UniTask EnterSection()

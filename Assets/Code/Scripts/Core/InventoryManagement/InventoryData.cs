@@ -12,23 +12,31 @@ public class InventoryData
     [SerializeField] private Resource m_magla = new Resource(9999999);
     [SerializeField] private LoggingProfile m_logProfile;
 
+    private Dictionary<string, InventoryEntry> m_entries = new Dictionary<string, InventoryEntry>();
+    private EItemCategories[] m_equipmentCategories = new EItemCategories[] 
+    { 
+        EItemCategories.Weapon, EItemCategories.Armor, EItemCategories.Gear, EItemCategories.Accessory 
+    };
+
     public event Action<InventoryEntry> OnItemAdded;
     public event Action<InventoryEntry> OnItemRemoved;
     public event Action<EItemCategories> OnLastMarkUnseen;
 
-    private Dictionary<string, InventoryEntry> m_entries = new Dictionary<string, InventoryEntry>();
     public Resource Money => m_money;
     public Resource Magla => m_magla;
 
-    public InventoryEntry[] GetAllItems(EItemCategories category)
+    public InventoryEntry[] GetAllItems(EItemCategories categoryFilter, EEquipmentType optionalEquipTypeFilter = EEquipmentType.None)
     {
-        if (category == EItemCategories.All)
+        if (categoryFilter == EItemCategories.All)
             return m_orderedEntries.Where(x => x.Count > 0).OrderBy(x => x.Item.Category).ThenBy(x => x.Item.SortOrder).ToArray();
 
-        IEnumerable<InventoryEntry> entries = m_orderedEntries.Where(x => x.Item.Category == category && x.Count > 0);
+        IEnumerable<InventoryEntry> entries = m_orderedEntries.Where(x => x.Item.Category == categoryFilter && x.Count > 0);
 
-        if (category == EItemCategories.Usable)
+        if (categoryFilter == EItemCategories.Usable)
             return entries.OrderBy(x => (x.Item as UsableItem).BattleOnly == true).ThenBy(x => x.Item.SortOrder).ToArray();
+
+        if(m_equipmentCategories.Contains(categoryFilter) && optionalEquipTypeFilter != EEquipmentType.None)
+            return entries.Where(x => (x.Item as Equipment).EquipType == optionalEquipTypeFilter).ToArray();
 
         return entries.OrderBy(x => x.Item.SortOrder).ToArray();
     }

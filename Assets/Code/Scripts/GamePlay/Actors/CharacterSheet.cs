@@ -66,17 +66,17 @@ public class CharacterStats: ISubPropertyProvider
 
     public CharacterStats(int hp, int mp, int str, int mag, int end, int agi, int luck)
     {
-        HP = new Stat(EStatType.HP, hp);
-        MP = new Stat(EStatType.MP, mp);
-        Strength = new Stat(EStatType.Strength, str);
-        Magic = new Stat(EStatType.Magic, mag);
-        Endurance = new Stat(EStatType.Endurance, end);
-        Agility = new Stat(EStatType.Agility, agi);
-        Luck = new Stat(EStatType.Luck, luck);
-        Attack = new Stat(EStatType.Attack, 0);
-        Hit = new Stat(EStatType.Hit, 0);
-        Defence = new Stat(EStatType.Defence, 0);
-        Evasion = new Stat(EStatType.Evasion, 0);
+        HP = new Stat(EStatType.HP, hp, 9999);
+        MP = new Stat(EStatType.MP, mp, 999);
+        Strength = new Stat(EStatType.Strength, str, 99);
+        Magic = new Stat(EStatType.Magic, mag, 99);
+        Endurance = new Stat(EStatType.Endurance, end, 99);
+        Agility = new Stat(EStatType.Agility, agi, 99);
+        Luck = new Stat(EStatType.Luck, luck, 99);
+        Attack = new Stat(EStatType.Attack, 0, 999);
+        Hit = new Stat(EStatType.Hit, 0, 99);
+        Defence = new Stat(EStatType.Defence, 0, 999);
+        Evasion = new Stat(EStatType.Evasion, 0, 99);
     }
 
     public Stat GetStat(EStatType statType)

@@ -7,8 +7,6 @@ using UnityEngine.Events;
 public class EquipmentSlotSelectionSection: PageSection
 {
     [SerializeField] private EquipmentSlotSelecter m_selecter;
-    [Space]
-    [SerializeField] private UnityEvent m_onEnter;
     
     public override UniTask EnterSection()
     {
@@ -21,7 +19,7 @@ public class EquipmentSlotSelectionSection: PageSection
     {
         m_selecter.SetApplicableToSelectable(x => false);
         m_selecter.UnselectAll();
-        m_selecter.ResetSelecter();
+        m_onExit?.Invoke();
         return default;
     }
 

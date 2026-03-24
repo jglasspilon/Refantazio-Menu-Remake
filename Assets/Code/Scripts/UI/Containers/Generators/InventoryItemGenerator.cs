@@ -8,9 +8,6 @@ public class InventoryItemGenerator: UIObjectGeneraterFromPool<InventoryItemUI, 
     [SerializeField]
     private InventoryItemUI m_equipmentPrefab;
 
-    [SerializeField]
-    private InventoryItemUI m_accessoryPrefab;
-
     protected override void GeneratePoolableFromData(InventoryEntry entry)
     {
         InventoryItemUI chosenPrefab = GetPrefabFromItemType(entry.Item);

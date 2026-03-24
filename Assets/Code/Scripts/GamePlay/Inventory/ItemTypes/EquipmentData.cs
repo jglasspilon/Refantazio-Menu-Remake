@@ -63,6 +63,7 @@ public class Equipment : Item
 
 public enum EEquipmentType
 {
+    None = -99,
     Sword,
     Staff,
     Greatsword,

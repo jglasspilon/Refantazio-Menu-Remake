@@ -28,7 +28,7 @@ MonoBehaviour:
     m_statType:
       m_value: 10
     m_amount:
-      m_value: 0
+      m_value: 2
   m_modifiers:
   - m_statType:
       m_value: 4

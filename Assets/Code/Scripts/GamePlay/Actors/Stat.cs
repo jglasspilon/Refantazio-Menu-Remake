@@ -13,6 +13,7 @@ public class Stat: ISubPropertyProvider
     [SerializeField] private ObservableProperty<int> m_delta = new ObservableProperty<int>();
     [SerializeField] private List<StatModifier> m_modifiers = new List<StatModifier>();
 
+    private int m_maxValue;
     public int BaseValue => m_baseValue;
     public int LevelValue => m_levelValue;
     public ObservableProperty<int> Raw => m_raw;
@@ -21,9 +22,10 @@ public class Stat: ISubPropertyProvider
 
     public EStatType Type => m_type;
 
-    public Stat(EStatType type, int baseValue)
+    public Stat(EStatType type, int baseValue, int maxValue)
     {
         m_type = type;
+        m_maxValue = maxValue;
         m_baseValue = baseValue;
         Recalculate();
     }
@@ -66,7 +68,7 @@ public class Stat: ISubPropertyProvider
     private void Recalculate()
     {
         m_raw.Value = m_baseValue + m_levelValue;
-        m_final.Value = Mathf.Clamp(m_baseValue + m_levelValue + m_modifiers.Sum(x => x.Amount), 0, 99);
+        m_final.Value = Mathf.Clamp(m_baseValue + m_levelValue + m_modifiers.Sum(x => x.Amount), 0, m_maxValue);
         m_delta.Value = m_final.Value - m_raw.Value;
     }
 }

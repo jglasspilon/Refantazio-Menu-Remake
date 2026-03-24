@@ -9,8 +9,6 @@ public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, 
 {
     [SerializeField] private bool m_generateCharactersOnEnable;
     [SerializeField] private bool m_resetSelectionOnExit = true;
-    [Space]
-    [SerializeField] private UnityEvent m_onEnter;
 
     protected override void OnEnable()
     {
@@ -36,6 +34,8 @@ public class CharacterSelectionSection: UIListSelectionSection<CharacterBanner, 
 
         if(m_resetSelectionOnExit)
             m_selecter.ResetSelecter();
+
+        m_onExit?.Invoke();
         return default;
     }
 

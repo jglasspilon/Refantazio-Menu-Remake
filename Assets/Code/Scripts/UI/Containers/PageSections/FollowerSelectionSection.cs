@@ -9,8 +9,6 @@ public class FollowerSelectionSection: UIListSelectionSection<FollowerBanner, Fo
 {
     [SerializeField] private bool m_generateCharactersOnEnable;
     [SerializeField] private bool m_resetSelectionOnExit = true;
-    [Space]
-    [SerializeField] private UnityEvent m_onEnter;
 
     protected override void OnEnable()
     {

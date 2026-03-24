@@ -6,6 +6,11 @@ using UnityEngine.Events;
 public abstract class PageSection: MonoBehaviour, IHandleOnConfirm, IHandleOnExtraOption, IHandleOnBack, IHandleOnCycleDown, IHandleOnCycleUp, IHandlePageLeftLv1, 
     IHandlePageLeftLv2, IHandlePageRightLv1, IHandlePageRightLv2
 {
+    [Header("Life Cycle Events:")]
+    [Space]
+    [SerializeField] protected UnityEvent m_onEnter;
+    [SerializeField] protected UnityEvent m_onExit;
+
     [Header("Input Events:")]
     [Space]
     public UnityEvent OnBack;
