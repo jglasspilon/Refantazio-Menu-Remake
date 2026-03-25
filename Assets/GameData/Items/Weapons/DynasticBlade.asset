@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14930da3c37e05f49b394c25140db055, type: 3}
   m_Name: DynasticBlade
   m_EditorClassIdentifier: Assembly-CSharp::Equipment
+  m_id: fb94f4a3-ae32-4a72-8491-2d812fe39040
   m_name: Dynastic Blade
   m_sortOrder: 0
   m_category: 4

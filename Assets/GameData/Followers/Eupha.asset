@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76dedbf2cf11fb64aae513907868aa3f, type: 3}
   m_Name: Eupha
   m_EditorClassIdentifier: Assembly-CSharp::FollowerData
+  m_id: cbb788ac-09a1-4e0e-adf7-f3080aab1bd2
   m_name: Eupha
   m_portrait: {fileID: 249410267, guid: dd12ccdf5cca7c248a6b57cb1d28c3e2, type: 3}
   m_relatedArchetye: {fileID: 11400000, guid: 3fe835073c233e64fa72b6a09c7479cf, type: 2}

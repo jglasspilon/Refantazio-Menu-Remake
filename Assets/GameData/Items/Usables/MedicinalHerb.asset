@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15af231b7146c6b4f91ddf17a96cf165, type: 3}
   m_Name: MedicinalHerb
   m_EditorClassIdentifier: Assembly-CSharp::UsableItem
+  m_id: 37f5fd87-035e-4928-9013-4ade4fc6833d
   m_name: Medicinal Herb
   m_sortOrder: 0
   m_category: 0

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 450fa67aa3e3fe849bd946fb635b81d6, type: 3}
   m_Name: Pebble
   m_EditorClassIdentifier: Assembly-CSharp::Item
+  m_id: 0da5cfd2-039e-46d2-a082-29b6564fb580
   m_name: Pebble
   m_sortOrder: 0
   m_category: 1

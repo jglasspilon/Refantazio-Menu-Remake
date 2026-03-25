@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf56b077aa21c04ba7ca1fc34cce76b, type: 3}
   m_Name: Basilio
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSheet
+  m_id: a49604c8-8e41-46dd-a940-0a815ea7a125
   m_characterType: 1
   m_name: Basilio
   m_startingArchetype: {fileID: 11400000, guid: 38f3efdd2d3a60249a0521c2c601251b, type: 2}
+  m_availableArchetypes: []
   m_expCurve: {fileID: 11400000, guid: 4047c5867cc7e6244a3a06ea095cb97a, type: 2}
   m_startingLevel: 1
   m_hp: 120

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9c739c490e3a942afdc4ea115be906, type: 3}
   m_Name: LightHeal
   m_EditorClassIdentifier: Assembly-CSharp::SkillEffect_Heal
+  m_id: 316e3a87-9d57-4388-ab06-127b74c5662f
   m_baseAmount: 40
   m_magicFactor: 5

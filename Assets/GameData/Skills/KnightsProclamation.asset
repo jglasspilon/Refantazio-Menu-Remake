@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2fb54320a03d441bf5f167ce8248fe, type: 3}
   m_Name: KnightsProclamation
   m_EditorClassIdentifier: Assembly-CSharp::Skill
+  m_id: cf3d0805-f334-49a5-9dc6-3de5e9f573e3
   m_name: Knight's Proclamation
   m_skillType: 1
   m_icon: {fileID: 2118336916, guid: 0b085ec75e4708147bfae16742860276, type: 3}

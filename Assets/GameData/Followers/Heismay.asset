@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76dedbf2cf11fb64aae513907868aa3f, type: 3}
   m_Name: Heismay
   m_EditorClassIdentifier: Assembly-CSharp::FollowerData
+  m_id: ce0e4b24-ec1c-4f2a-b20b-b280149b0d04
   m_name: Heismay
   m_portrait: {fileID: -1802879358, guid: dd12ccdf5cca7c248a6b57cb1d28c3e2, type: 3}
   m_relatedArchetye: {fileID: 11400000, guid: 23a257b9bcd5dbc43935bcfd310aa2df, type: 2}

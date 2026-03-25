@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf56b077aa21c04ba7ca1fc34cce76b, type: 3}
   m_Name: Gallica
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSheet
+  m_id: 4e6ecc4e-e3aa-49eb-896e-2a9e0f02aec6
   m_characterType: 3
   m_name: Gallica
   m_startingArchetype: {fileID: 11400000, guid: cf348cce9192a7c41815d7cfe5abeb12, type: 2}
+  m_availableArchetypes: []
   m_expCurve: {fileID: 11400000, guid: 4047c5867cc7e6244a3a06ea095cb97a, type: 2}
   m_startingLevel: 1
   m_hp: 0

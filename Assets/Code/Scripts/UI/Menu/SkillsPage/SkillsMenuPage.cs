@@ -1,9 +1,6 @@
-using Cysharp.Threading.Tasks;
 using System;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.Progress;
-using static UnityEngine.Rendering.DebugUI;
 
 public class SkillsMenuPage : MenuPage
 {

@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   m_id: 7d7b8dbe-f51f-4edb-8750-725af4a5b678
   m_name: Embroidered Jacket
+  m_sortOrder: 0
   m_category: 3
+  m_icon: {fileID: 0}
   m_price: 0
   m_description: A jacket embroidered with the crest of House Haliaetus, gifted by
     the manor's servants. As the only finery he owns, he keeps it clean and tailored.

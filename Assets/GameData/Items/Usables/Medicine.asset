@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15af231b7146c6b4f91ddf17a96cf165, type: 3}
   m_Name: Medicine
   m_EditorClassIdentifier: Assembly-CSharp::UsableItem
+  m_id: fa63566f-0661-4cad-a0da-d94df05a5996
   m_name: Medicine
   m_sortOrder: 1
   m_category: 0

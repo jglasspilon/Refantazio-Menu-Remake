@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b7bbf16193cce7499ff6f8215c30ac3, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: Assembly-CSharp::ArchetypeData
+  m_id: 77f873b7-87ab-4ddc-9e34-3e248c907b5f
   m_sortOrder: 2
   m_name: Warrior
   m_icon: {fileID: -522669220, guid: 757bc685569f551418ce514f927343c3, type: 3}

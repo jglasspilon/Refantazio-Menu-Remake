@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76dedbf2cf11fb64aae513907868aa3f, type: 3}
   m_Name: More
   m_EditorClassIdentifier: Assembly-CSharp::FollowerData
+  m_id: a81ecd10-1dea-4481-bd92-1352bcb7ec30
   m_name: More
   m_portrait: {fileID: 1683069772, guid: dd12ccdf5cca7c248a6b57cb1d28c3e2, type: 3}
   m_relatedArchetye: {fileID: 11400000, guid: 33fadd89d541c0045927d7100355d271, type: 2}

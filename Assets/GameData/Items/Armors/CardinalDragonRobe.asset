@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14930da3c37e05f49b394c25140db055, type: 3}
   m_Name: CardinalDragonRobe
   m_EditorClassIdentifier: Assembly-CSharp::Equipment
+  m_id: 3e76d6ae-355a-46b8-804c-f526cb25f882
   m_name: "Cardinal Dragon Robe\t"
   m_sortOrder: 0
   m_category: 5

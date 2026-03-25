@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2fb54320a03d441bf5f167ce8248fe, type: 3}
   m_Name: Kande
   m_EditorClassIdentifier: Assembly-CSharp::Skill
+  m_id: 9cec1914-9673-483b-8e3e-c79f005bef05
   m_name: Kande
   m_skillType: 7
   m_icon: {fileID: -1270107232, guid: 0b085ec75e4708147bfae16742860276, type: 3}

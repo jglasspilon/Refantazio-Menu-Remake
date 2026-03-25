@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15af231b7146c6b4f91ddf17a96cf165, type: 3}
   m_Name: FairyDust
   m_EditorClassIdentifier: Assembly-CSharp::UsableItem
+  m_id: 2448c199-8062-4c54-a874-aa7dce541cb6
   m_name: Fairy Dust
   m_sortOrder: 2
   m_category: 0

@@ -8,7 +8,7 @@ using UnityEditor;
 
 public abstract class UniqueScriptableObject : ScriptableObject
 {
-    protected string m_id = "";
+    [SerializeField] protected string m_id = "";
 
     public string ID => m_id;
 

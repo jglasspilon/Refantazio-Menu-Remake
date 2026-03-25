@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15af231b7146c6b4f91ddf17a96cf165, type: 3}
   m_Name: MaglaPill
   m_EditorClassIdentifier: Assembly-CSharp::UsableItem
+  m_id: 64e03720-7d35-4c2a-996f-9b59fa27830f
   m_name: Magla Pill
   m_sortOrder: 5
   m_category: 0

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14930da3c37e05f49b394c25140db055, type: 3}
   m_Name: FairyCharm
   m_EditorClassIdentifier: Assembly-CSharp::Accessory
+  m_id: 080679bb-bab7-48ef-aa97-00cac7931a6f
   m_name: Fairy Charm
   m_sortOrder: 0
   m_category: 7

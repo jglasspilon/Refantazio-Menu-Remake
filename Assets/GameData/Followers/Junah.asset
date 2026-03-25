@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76dedbf2cf11fb64aae513907868aa3f, type: 3}
   m_Name: Junah
   m_EditorClassIdentifier: Assembly-CSharp::FollowerData
+  m_id: e9129495-b5fc-45db-8972-33e0dc97e0b1
   m_name: Junah
   m_portrait: {fileID: -939621220, guid: dd12ccdf5cca7c248a6b57cb1d28c3e2, type: 3}
   m_relatedArchetye: {fileID: 11400000, guid: dbfcc102a183ae2469a5becf24412ff4, type: 2}

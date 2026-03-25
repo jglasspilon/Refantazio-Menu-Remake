@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2fb54320a03d441bf5f167ce8248fe, type: 3}
   m_Name: SlamStrike
   m_EditorClassIdentifier: Assembly-CSharp::Skill
+  m_id: 54cdc7f5-c241-4404-99bb-ad6a6dede0d3
   m_name: Slam Strike
   m_skillType: 4
   m_icon: {fileID: -687520594, guid: 0b085ec75e4708147bfae16742860276, type: 3}

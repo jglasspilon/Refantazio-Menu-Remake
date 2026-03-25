@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76dedbf2cf11fb64aae513907868aa3f, type: 3}
   m_Name: Hulkenberg
   m_EditorClassIdentifier: Assembly-CSharp::FollowerData
+  m_id: 3779b3ed-e8c0-4334-831a-2b86d0d51b76
   m_name: Hulkenberg
   m_portrait: {fileID: 1561898103, guid: dd12ccdf5cca7c248a6b57cb1d28c3e2, type: 3}
   m_relatedArchetye: {fileID: 11400000, guid: 74dcab87985e99948b038c98c418d276, type: 2}

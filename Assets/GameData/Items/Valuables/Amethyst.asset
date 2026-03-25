@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   m_id: 799daba2-223b-48ae-9f07-d43067af52d0
   m_name: Amethyst
+  m_sortOrder: 0
   m_category: 1
+  m_icon: {fileID: 0}
   m_price: 3000
   m_description: A gemstone with high trade value. Consider selling it.

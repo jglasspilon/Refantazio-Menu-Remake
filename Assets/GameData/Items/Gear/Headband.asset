@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14930da3c37e05f49b394c25140db055, type: 3}
   m_Name: Headband
   m_EditorClassIdentifier: Assembly-CSharp::Equipment
+  m_id: bd9335a8-6835-497c-8922-e42ff0120681
   m_name: Headband
   m_sortOrder: 0
   m_category: 6

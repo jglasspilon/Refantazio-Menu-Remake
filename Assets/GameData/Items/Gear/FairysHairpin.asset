@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14930da3c37e05f49b394c25140db055, type: 3}
   m_Name: FairysHairpin
   m_EditorClassIdentifier: Assembly-CSharp::Equipment
+  m_id: 7829447c-b84b-4db5-a885-4b836feb64fc
   m_name: Fairy's Hairpin
   m_sortOrder: 0
   m_category: 6

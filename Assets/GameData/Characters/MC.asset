@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf56b077aa21c04ba7ca1fc34cce76b, type: 3}
   m_Name: MC
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSheet
+  m_id: b1f83c52-0c6e-4ea1-a418-77086ca08da8
   m_characterType: 0
   m_name: Will
   m_startingArchetype: {fileID: 11400000, guid: 33fadd89d541c0045927d7100355d271, type: 2}

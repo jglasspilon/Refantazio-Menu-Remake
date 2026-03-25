@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   m_id: 24de39d9-77f5-4ce9-b522-23dc217a65b7
   m_name: "Enchanted Pottage Recipe\t"
+  m_sortOrder: 0
   m_category: 2
+  m_icon: {fileID: 0}
   m_price: 0
   m_description: Altabury Wheat Flour x1, Monster Bome x2, Lord of the Lake x1

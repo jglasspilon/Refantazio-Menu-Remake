@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   m_id: 92000f6d-5a12-4a5b-9fc6-2cf09170e4b0
   m_name: Empty Vial
+  m_sortOrder: 0
   m_category: 3
+  m_icon: {fileID: 0}
   m_price: 0
   m_description: A vial received from a merchant in Altabury, to be filled with bathing
     water from the hot spring.

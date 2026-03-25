@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15af231b7146c6b4f91ddf17a96cf165, type: 3}
   m_Name: RevivalMedicine
   m_EditorClassIdentifier: Assembly-CSharp::UsableItem
+  m_id: a60f97ac-cdb1-45c3-94ab-78737fd8b3bd
   m_name: Revival Medicine
   m_sortOrder: 10
   m_category: 0

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2fb54320a03d441bf5f167ce8248fe, type: 3}
   m_Name: HeatUp
   m_EditorClassIdentifier: Assembly-CSharp::Skill
+  m_id: b52eca16-73d3-4e8a-ba38-59a2da4f47fa
   m_name: Heat Up
   m_skillType: 12
   m_icon: {fileID: 1137281994, guid: 0b085ec75e4708147bfae16742860276, type: 3}
