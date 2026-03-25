@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ArchetypeBanner : PoolableObjectFromData<Archetype>, ISelectable
 {
+    [SerializeField] private GameObject m_isEquipedContent;
+
     private Archetype m_archetype;
     private IBindableToProperty[] m_bindables;
 
@@ -27,6 +29,7 @@ public class ArchetypeBanner : PoolableObjectFromData<Archetype>, ISelectable
     {
         m_archetype = null;
         m_bindables.ForEach(x => x.UnBind());
+        ShowAsEquiped(false);
     }
 
     public void PauseSelection()
@@ -42,5 +45,10 @@ public class ArchetypeBanner : PoolableObjectFromData<Archetype>, ISelectable
     public virtual void SetAsSelected(bool selected)
     {
         OnSetAsSelected?.Invoke(selected);
+    }
+
+    public void ShowAsEquiped(bool isEquiped)
+    {
+        m_isEquipedContent.SetActive(isEquiped);
     }
 }

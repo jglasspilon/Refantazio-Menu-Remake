@@ -1,9 +1,6 @@
 using Cysharp.Threading.Tasks;
-using System;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class ArchetypeSelectionSection: UIListSelectionSection<ArchetypeBanner, ArchetypeBannerGenerator, Archetype, Character>
 {
@@ -48,7 +45,21 @@ public class ArchetypeSelectionSection: UIListSelectionSection<ArchetypeBanner, 
 
         Archetype[] archetypesToGenerate = GetSortedArchetyps(m_sortType, m_dataModel.Archetypes);
         ArchetypeBanner[] archetypeBanners = m_generater.GenerateContent(archetypesToGenerate);
-        DelaySelectionOnGenerate(archetypeBanners);
+
+        int equipedIndex = -99;
+        Archetype equiped = m_characterSelecter.SelectedObject.Character.Equipment.Archetype;
+
+        for (int i = 0; i < archetypeBanners.Length; i++)
+        {
+            if (equiped.ID == archetypeBanners[i].Archetype.ID)
+            {
+                equipedIndex = i;
+            }
+
+            archetypeBanners[i].ShowAsEquiped(equipedIndex == i);
+        }
+
+        DelaySelectionOnGenerate(archetypeBanners, equipedIndex);
     }
 
     private Archetype[] GetSortedArchetyps(EArchetypeSortType sortType, Archetype[] unsorted)
@@ -64,10 +75,10 @@ public class ArchetypeSelectionSection: UIListSelectionSection<ArchetypeBanner, 
         return unsorted;
     }
 
-    private async UniTask DelaySelectionOnGenerate(ArchetypeBanner[] banners)
+    private async UniTask DelaySelectionOnGenerate(ArchetypeBanner[] banners, int index)
     {
         await Helper.Timing.DelaySeconds(0.1f);
         m_selecter.UpdateObjects(banners);
-        m_selecter.SelectCurrent();
+        m_selecter.Select(index, false);
     }
 }

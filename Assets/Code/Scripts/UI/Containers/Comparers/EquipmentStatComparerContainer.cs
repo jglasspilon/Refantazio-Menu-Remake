@@ -30,7 +30,11 @@ public class EquipmentStatComparerContainer : MonoBehaviour
         if(character == null) 
             return;
 
+        if (m_selectedCharacter != null)
+            m_selectedCharacter.Equipment.OnEquipmentChanged -= HandleOnEquipmentChanged;
+
         m_selectedCharacter = character;
+        m_selectedCharacter.Equipment.OnEquipmentChanged += HandleOnEquipmentChanged;
         m_simulatedCharacter = m_selectedCharacter.CreateSimulatedCharacter();
 
         m_bindableToEquiped.ForEach(x => x.BindToProperty(m_selectedCharacter));
@@ -49,5 +53,10 @@ public class EquipmentStatComparerContainer : MonoBehaviour
 
         m_simulatedCharacter.Equipment.EquipArchetype(archetype);
         m_bindableToProspective.ForEach(x => x.BindToProperty(m_simulatedCharacter));
+    }
+
+    private void HandleOnEquipmentChanged()
+    {
+        m_bindableToEquiped.ForEach(x => x.BindToProperty(m_selectedCharacter));
     }
 }
