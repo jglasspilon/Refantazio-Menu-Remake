@@ -18475,7 +18475,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 459553559}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07d22c405e58f6b46b6e9e8e43b442df, type: 3}
   m_Name: 
@@ -44718,12 +44718,12 @@ MonoBehaviour:
       m_current:
         m_value: 0
       m_max:
-        m_value: 0
+        m_value: 999999
     m_magla:
       m_current:
         m_value: 0
       m_max:
-        m_value: 0
+        m_value: 999999
     m_logProfile: {fileID: 11400000, guid: 1834041ff06467642b00cab91a8771c8, type: 2}
   m_startingInventory:
   - m_item: {fileID: 11400000, guid: 76d7cff1be816a4458f25d09bd2bc455, type: 2}
@@ -44794,6 +44794,8 @@ MonoBehaviour:
     m_count: 1
   - m_item: {fileID: 11400000, guid: fbcec2e1655285c48a9f39f2bf0be0f5, type: 2}
     m_count: 1
+  m_startingMoney: 1500
+  m_startingMag: 100
 --- !u!1001 &1155849957
 PrefabInstance:
   m_ObjectHideFlags: 0
