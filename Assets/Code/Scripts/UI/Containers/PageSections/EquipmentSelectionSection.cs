@@ -58,12 +58,20 @@ public class EquipmentSelectionSection : UIListSelectionSection<InventoryItemUI,
         InventoryItemUI[] generatedItems = m_generater.GenerateContent(sortedItems);
         m_selecter.UpdateObjects(generatedItems);
 
+        int equipedIndex = -99;
+
         for (int i = 0; i < generatedItems.Length; i++)
         {
             if (generatedItems[i].InventoryEntry.Item.ID == equipedItem.ID)
             {
+                equipedIndex = i;
                 m_selecter.Select(i, false);
-                break;
+            }
+
+            if (generatedItems[i] is InventoryItem_Equipable equipable)
+            {
+                equipable.SetAsEquiped(equipedIndex == i);
+                equipable.InitializeWithCharacter(m_characterSelecter.SelectedObject.Character);
             }
         }
     }

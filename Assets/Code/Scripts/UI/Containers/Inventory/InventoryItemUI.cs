@@ -17,7 +17,7 @@ public abstract class InventoryItemUI : PoolableObjectFromData<InventoryEntry>, 
     private IBindableToInventoryEntry[] m_bindableToItems;
     public InventoryEntry InventoryEntry => m_inventoryEntry;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         IBindableToProperty[] allProperties = GetComponentsInChildren<IBindableToProperty>();
         List<IBindableToProperty> entryList = new List<IBindableToProperty>();

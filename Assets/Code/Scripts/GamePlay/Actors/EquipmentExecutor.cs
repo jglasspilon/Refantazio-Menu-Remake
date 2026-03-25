@@ -37,6 +37,42 @@ public class EquipmentExecutor: ISubPropertyProvider
         return Helper.DataHandling.GetObservableFields(this, parentKey);
     }
 
+    public Equipment GetEquipmentFromType(EItemCategories slotType)
+    {
+        switch (slotType)
+        {
+            case EItemCategories.Weapon:
+                return m_weapon;
+            case EItemCategories.Armor:
+                return m_armor;
+            case EItemCategories.Gear:
+                return m_gear;
+            case EItemCategories.Accessory:
+                return m_accessory;
+        }
+
+        return null;
+    }
+
+    public void EquipFromType(EItemCategories slotType, Equipment equipment)
+    {
+        switch (slotType)
+        {
+            case EItemCategories.Weapon:
+                EquipWeapon(equipment);
+                return;
+            case EItemCategories.Armor:
+                EquipArmor(equipment);
+                return;
+            case EItemCategories.Gear:
+                EquipGear(equipment);
+                return;
+            case EItemCategories.Accessory:
+                EquipAccessory(equipment);
+                return;
+        }
+    }
+
     public void EquipArchetype(Archetype archetype)
     {
         if (archetype == null)
