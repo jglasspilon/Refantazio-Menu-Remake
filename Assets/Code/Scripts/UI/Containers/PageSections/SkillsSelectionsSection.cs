@@ -59,6 +59,12 @@ public class SkillsSelectionsSection : UIListSelectionSection<MenuSkill, MenuSki
 
     protected override void GenerateUIContent()
     {
+        if(m_displayedCaster.IsGuide)
+        {
+            m_generater.ClearGeneratedContent();
+            return;
+        }
+
         Skill[] skillsToGenerate = m_displayedCaster == null ? Array.Empty<Skill>() : m_displayedCaster.Skills;
         var generatedItems = m_generater.GenerateContent(skillsToGenerate);
         generatedItems.ForEach(x => x.InjectCharacter(m_displayedCaster));

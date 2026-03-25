@@ -40,7 +40,7 @@ public class SkillsMenuPage : MenuPage
 
     private void SelectCaster(Character character)
     {
-        if (character.Skills.Length == 0)
+        if (character.Skills.Length == 0 || character.IsGuide)
             return;
 
         m_selectedCaster = character;
