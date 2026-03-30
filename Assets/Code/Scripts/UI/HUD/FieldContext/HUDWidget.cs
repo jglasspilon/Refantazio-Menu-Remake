@@ -1,12 +1,15 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class HUDWidget_Controls : MonoBehaviour, IHUDWidget
+public class HUDWidget : MonoBehaviour, IHUDWidget
 {
     [SerializeField]
     private Animator m_anim;
 
-    public EWidgetTypes WidgetType => EWidgetTypes.Controls;
+    [SerializeField]
+    private EWidgetTypes m_widgetType;
+
+    public EWidgetTypes WidgetType => m_widgetType;
 
     public async UniTask ShowAsync()
     {

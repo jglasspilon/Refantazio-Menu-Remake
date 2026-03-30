@@ -161,6 +161,27 @@ public static class Helper
 
     public static class StringFormatting
     {
+        public static string StylizeWords(string input, int sizePercent = 100)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return input;
+
+            string size = sizePercent.ToString();
+            string[] words = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                string w = words[i];
+                char first = char.ToUpper(w[0]);
+                string rest = w.Substring(1);
+
+                words[i] = $"<size={size}%>{first}</size>{rest}";
+            }
+
+            return string.Join(" ", words);
+        }
+
+
         public static string FormatIntForUI(int value, int minSize, float opacityPercent)
         {
             string lowOpacity = $"<alpha=#{Math.PercentToHex(opacityPercent)}>";

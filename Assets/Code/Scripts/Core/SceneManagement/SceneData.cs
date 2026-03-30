@@ -13,9 +13,15 @@ public class SceneData: ScriptableObject
 [Serializable]
 public struct SSceneData
 {
-    public ESceneTypes SceneType;
-    public EScenes SceneName;
-    public EGameStates SceneState;
-    public string ParentAreaName;
-    public string AreaName;
+    [SerializeField] private ESceneTypes m_sceneType;
+    [SerializeField] private EScenes m_sceneName;
+    [SerializeField] private EGameStates m_sceneState;
+    [SerializeField] private string m_parentAreaName;
+    [SerializeField] private string m_areaName;
+
+    public ESceneTypes SceneType { get { return m_sceneType; } }
+    public EScenes SceneName { get { return m_sceneName; } }
+    public EGameStates SceneState { get { return m_sceneState; } }
+    public string ParentAreaName { get { return m_parentAreaName; } }
+    public string AreaName { get { return m_areaName; } }
 }

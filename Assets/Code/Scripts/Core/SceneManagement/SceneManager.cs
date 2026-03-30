@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,11 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
 
     private Dictionary<EScenes, string> m_mappedScenesDict;
     private Dictionary<string, SceneLoader> m_loadedScenes = new Dictionary<string, SceneLoader>();
-    private SceneData m_currentGameplaySceneData;
+    private SSceneData m_currentGameplaySceneData;
 
-    public SceneData CurrentGameplaySceneData => m_currentGameplaySceneData;
+    public event Action<SSceneData> OnGameplaySceneChanged;
+
+    public SSceneData CurrentGameplaySceneData => m_currentGameplaySceneData;
 
     protected void Awake()
     {
@@ -47,7 +50,10 @@ public class SceneManager : MonoBehaviour, ISceneLoaderService
         m_loadedScenes[sceneName] = loader;
 
         if (loader.SceneData.Data.SceneType == ESceneTypes.Gameplay)
-            m_currentGameplaySceneData = loader.SceneData;
+        {
+            m_currentGameplaySceneData = loader.SceneData.Data;
+            OnGameplaySceneChanged?.Invoke(m_currentGameplaySceneData);
+        }
     }
 
     public void UnregisterSceneLoader(EScenes scene)

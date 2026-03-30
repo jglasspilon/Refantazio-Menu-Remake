@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DemoScene
   m_EditorClassIdentifier: Assembly-CSharp::SceneData
   m_sceneData:
-    SceneType: 0
-    SceneName: 1
-    SceneState: 2
-    ParentAreaName: Demo Scene
-    AreaName: Town UI
+    m_sceneType: 0
+    m_sceneName: 1
+    m_sceneState: 2
+    m_parentAreaName: Demo Scene
+    m_areaName: UI Demo
