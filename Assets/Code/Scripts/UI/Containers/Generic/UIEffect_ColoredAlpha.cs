@@ -42,7 +42,7 @@ public class UIEffect_ColoredAlpha : UIEffect
             return;
         }
 
-        cts?.Cancel();
+        StopEffect();
         cts = new CancellationTokenSource();
         ApplyAlphaFromCurve(cts.Token);
     }

@@ -51,13 +51,15 @@ public static class Helper
         {
             float duration = curve.GetDuration();
             float timer = 0f;
+            Color cachedColor = graphic.color;
 
             try
             {
+                await UniTask.Yield(PlayerLoopTiming.Update, token);
                 while (timer < duration)
                 {
                     token.ThrowIfCancellationRequested();
-                    Color alphaed = graphic.color;
+                    Color alphaed = cachedColor;
                     alphaed.a = curve.Evaluate(timer);
                     graphic.color = alphaed;
 
@@ -65,7 +67,7 @@ public static class Helper
                     timer += Time.deltaTime;
                 }
 
-                Color final = graphic.color;
+                Color final = cachedColor;
                 final.a = curve.Evaluate(curve.keys.Last(x => true).time);
                 graphic.color = final;
             }
