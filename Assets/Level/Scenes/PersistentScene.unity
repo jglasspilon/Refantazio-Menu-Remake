@@ -22117,6 +22117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a70a7fe876dcb4fa035beb93a104de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TownInputHandler
+  m_menu: {fileID: 1315482834}
   m_logProfile: {fileID: 11400000, guid: 8720fe4d716954b4393e434f3f7ce8f8, type: 2}
 --- !u!1 &570895145
 GameObject:
@@ -91272,6 +91273,10 @@ PrefabInstance:
     - target: {fileID: 2469916088815289878, guid: daf6d81b646b01849840122763d27152, type: 3}
       propertyPath: m_Name
       value: HUDAreaDisplayWidget
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681827778504862948, guid: daf6d81b646b01849840122763d27152, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6096572882768157210, guid: daf6d81b646b01849840122763d27152, type: 3}
       propertyPath: m_Pivot.x

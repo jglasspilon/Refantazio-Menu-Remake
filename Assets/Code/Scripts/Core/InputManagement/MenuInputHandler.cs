@@ -4,11 +4,8 @@ using Unity.VisualScripting;
 
 public class MenuInputHandler : InputHandler
 {
-    [SerializeField]
-    private MenuManager m_menu;
-
-    [SerializeField]
-    private LoggingProfile m_logProfile;
+    [SerializeField] private MenuManager m_menu;
+    [SerializeField] private LoggingProfile m_logProfile;
 
     protected override void BindEvents()
     {

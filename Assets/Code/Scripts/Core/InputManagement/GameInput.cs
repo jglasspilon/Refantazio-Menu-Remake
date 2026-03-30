@@ -139,6 +139,42 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ItemsShortcut"",
+                    ""type"": ""Button"",
+                    ""id"": ""0e279d58-d2f1-4341-89a7-5029970bb251"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkillsShortcut"",
+                    ""type"": ""Button"",
+                    ""id"": ""499b4c50-c0c1-4e2c-802b-9b35adaf3460"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PartyShortcut"",
+                    ""type"": ""Button"",
+                    ""id"": ""430f35b6-a259-4a6b-87af-c59aafbd07ce"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FollowersShortcut"",
+                    ""type"": ""Button"",
+                    ""id"": ""a2f5a727-6901-4573-a12a-71926ebe58c9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -161,6 +197,94 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""OpenMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e5d41bd-82c7-4a6f-b28b-5ec8233a91f7"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ItemsShortcut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11c461da-396f-4635-9e93-c62077e9def4"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ItemsShortcut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d774740f-c099-4aec-8081-291752aa3996"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillsShortcut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64efdd20-d173-4e7f-8e2e-bcd5afc0a868"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillsShortcut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b3a91ebb-eef3-4385-b7d1-880d2cb55a47"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PartyShortcut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""119f7bb0-bd88-4e43-b804-4350f427ebc0"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PartyShortcut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""13fe21e3-9f1e-491b-a3ff-01fd5fd9fa03"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FollowersShortcut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e5988203-6e53-497b-99f4-537af24b620f"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FollowersShortcut"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -504,6 +628,10 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         // Town
         m_Town = asset.FindActionMap("Town", throwIfNotFound: true);
         m_Town_OpenMenu = m_Town.FindAction("OpenMenu", throwIfNotFound: true);
+        m_Town_ItemsShortcut = m_Town.FindAction("ItemsShortcut", throwIfNotFound: true);
+        m_Town_SkillsShortcut = m_Town.FindAction("SkillsShortcut", throwIfNotFound: true);
+        m_Town_PartyShortcut = m_Town.FindAction("PartyShortcut", throwIfNotFound: true);
+        m_Town_FollowersShortcut = m_Town.FindAction("FollowersShortcut", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Back = m_Menu.FindAction("Back", throwIfNotFound: true);
@@ -695,6 +823,10 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Town;
     private List<ITownActions> m_TownActionsCallbackInterfaces = new List<ITownActions>();
     private readonly InputAction m_Town_OpenMenu;
+    private readonly InputAction m_Town_ItemsShortcut;
+    private readonly InputAction m_Town_SkillsShortcut;
+    private readonly InputAction m_Town_PartyShortcut;
+    private readonly InputAction m_Town_FollowersShortcut;
     /// <summary>
     /// Provides access to input actions defined in input action map "Town".
     /// </summary>
@@ -710,6 +842,22 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Town/OpenMenu".
         /// </summary>
         public InputAction @OpenMenu => m_Wrapper.m_Town_OpenMenu;
+        /// <summary>
+        /// Provides access to the underlying input action "Town/ItemsShortcut".
+        /// </summary>
+        public InputAction @ItemsShortcut => m_Wrapper.m_Town_ItemsShortcut;
+        /// <summary>
+        /// Provides access to the underlying input action "Town/SkillsShortcut".
+        /// </summary>
+        public InputAction @SkillsShortcut => m_Wrapper.m_Town_SkillsShortcut;
+        /// <summary>
+        /// Provides access to the underlying input action "Town/PartyShortcut".
+        /// </summary>
+        public InputAction @PartyShortcut => m_Wrapper.m_Town_PartyShortcut;
+        /// <summary>
+        /// Provides access to the underlying input action "Town/FollowersShortcut".
+        /// </summary>
+        public InputAction @FollowersShortcut => m_Wrapper.m_Town_FollowersShortcut;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -739,6 +887,18 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @OpenMenu.started += instance.OnOpenMenu;
             @OpenMenu.performed += instance.OnOpenMenu;
             @OpenMenu.canceled += instance.OnOpenMenu;
+            @ItemsShortcut.started += instance.OnItemsShortcut;
+            @ItemsShortcut.performed += instance.OnItemsShortcut;
+            @ItemsShortcut.canceled += instance.OnItemsShortcut;
+            @SkillsShortcut.started += instance.OnSkillsShortcut;
+            @SkillsShortcut.performed += instance.OnSkillsShortcut;
+            @SkillsShortcut.canceled += instance.OnSkillsShortcut;
+            @PartyShortcut.started += instance.OnPartyShortcut;
+            @PartyShortcut.performed += instance.OnPartyShortcut;
+            @PartyShortcut.canceled += instance.OnPartyShortcut;
+            @FollowersShortcut.started += instance.OnFollowersShortcut;
+            @FollowersShortcut.performed += instance.OnFollowersShortcut;
+            @FollowersShortcut.canceled += instance.OnFollowersShortcut;
         }
 
         /// <summary>
@@ -753,6 +913,18 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @OpenMenu.started -= instance.OnOpenMenu;
             @OpenMenu.performed -= instance.OnOpenMenu;
             @OpenMenu.canceled -= instance.OnOpenMenu;
+            @ItemsShortcut.started -= instance.OnItemsShortcut;
+            @ItemsShortcut.performed -= instance.OnItemsShortcut;
+            @ItemsShortcut.canceled -= instance.OnItemsShortcut;
+            @SkillsShortcut.started -= instance.OnSkillsShortcut;
+            @SkillsShortcut.performed -= instance.OnSkillsShortcut;
+            @SkillsShortcut.canceled -= instance.OnSkillsShortcut;
+            @PartyShortcut.started -= instance.OnPartyShortcut;
+            @PartyShortcut.performed -= instance.OnPartyShortcut;
+            @PartyShortcut.canceled -= instance.OnPartyShortcut;
+            @FollowersShortcut.started -= instance.OnFollowersShortcut;
+            @FollowersShortcut.performed -= instance.OnFollowersShortcut;
+            @FollowersShortcut.canceled -= instance.OnFollowersShortcut;
         }
 
         /// <summary>
@@ -1010,6 +1182,34 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnOpenMenu(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ItemsShortcut" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnItemsShortcut(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SkillsShortcut" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSkillsShortcut(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "PartyShortcut" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPartyShortcut(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "FollowersShortcut" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnFollowersShortcut(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Menu" which allows adding and removing callbacks.

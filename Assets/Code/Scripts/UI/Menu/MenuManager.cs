@@ -6,16 +6,14 @@ using Cysharp.Threading.Tasks;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField]
-    private float m_launchDelay;
-
-    [SerializeField]
-    private LoggingProfile m_logProfile;
+    [SerializeField] private float m_launchDelay;
+    [SerializeField] private LoggingProfile m_logProfile;
 
     public event Action OnPageChange, OnPageChangeComplete;
 
     private IGameStateManagementService m_gameState;
     private Dictionary<EMenuPages, MenuPage> m_menuPages;
+    private EMenuPages m_launchPage = EMenuPages.Main;
     private MenuPage m_activePage;
     private int m_pageCount;
 
@@ -55,10 +53,15 @@ public class MenuManager : MonoBehaviour
             Teardown();
     }
 
-    public void Launch(EMenuPages launchPage = EMenuPages.Main)
+    public void SetLaunchPage(EMenuPages launchPage)
+    {
+        m_launchPage = launchPage;
+    }
+
+    public void Launch()
     {
         gameObject.SetActive(true);
-        ChangePageAsync(launchPage);
+        ChangePageAsync(m_launchPage);
     }
 
     public async UniTask ChangePageAsync(EMenuPages page)

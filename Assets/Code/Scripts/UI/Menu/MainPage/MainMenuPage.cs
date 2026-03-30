@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class MainMenuPage : MenuPage
 {
-    public event Action<int> OnPageIndexChanged;
-
-    [SerializeField]
-    private int m_startPageIndex;
-
-    [SerializeField]
-    private PageSelecterList m_pageSelecterList;
+    [SerializeField] private int m_startPageIndex;
+    [SerializeField] private PageSelecterList m_pageSelecterList;
 
     private MenuManager m_menuParent;
     private int m_currentPageIndex;
     private const int MIN_INDEX = 1;
+
+    public event Action<int> OnPageIndexChanged;
 
     public int CurrentPageIndex {  get { return m_currentPageIndex == 0 ? m_startPageIndex : m_currentPageIndex; } } 
 
