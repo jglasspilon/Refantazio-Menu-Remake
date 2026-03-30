@@ -10,11 +10,12 @@ public class LeftRightMoverBinder : PropertyBinder
 
     private void Awake()
     {
-        m_mover = GetComponent<LeftRightMover>();    
+        Initialize();
     }
 
     protected override void Apply(object value)
     {
+        Initialize();
         bool moveRight = true;
         bool moveLeft = true;
 
@@ -61,5 +62,11 @@ public class LeftRightMoverBinder : PropertyBinder
         }
 
         m_mover.SetPosition(ECardinalPosition.Left);
+    }
+
+    private void Initialize()
+    {
+        if(m_mover == null)
+            m_mover = GetComponent<LeftRightMover>();
     }
 }

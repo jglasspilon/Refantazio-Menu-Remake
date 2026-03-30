@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ public class ColorBinder : PropertyBinder
 
     private void Awake()
     {
-        m_graphic = GetComponent<MaskableGraphic>();
+        Initialize();
     }
 
     protected void Apply(int value)
@@ -22,6 +23,7 @@ public class ColorBinder : PropertyBinder
             return;
         }
 
+        Initialize();
         foreach (ColorOption option in m_colorOptions)
         {
             if(option.Condition.IsMet(value, out string message))
@@ -42,6 +44,7 @@ public class ColorBinder : PropertyBinder
             return;
         }
 
+        Initialize();
         foreach (ColorOption option in m_colorOptions)
         {
             if (option.Condition.IsMet(value, out string message))
@@ -56,12 +59,19 @@ public class ColorBinder : PropertyBinder
 
     protected void Apply(Color color)
     {
+        Initialize();
         m_graphic.color = color;
     }
 
     protected override void Apply(object value)
     {
         Logger.Log($"Failed to bind property to Color of {gameObject.name}. Property type {value.GetType()} is not supported.", m_logProfile);
+    }
+
+    private void Initialize()
+    {
+        if(m_graphic == null)
+            m_graphic = GetComponent<MaskableGraphic>();
     }
 }
 

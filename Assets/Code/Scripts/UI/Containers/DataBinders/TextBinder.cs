@@ -10,11 +10,12 @@ public class TextBinder : PropertyBinder
 
     private void Awake()
     {
-        m_text = GetComponent<TextMeshProUGUI>();
+        Initialize();
     }
 
     protected override void Apply(object value)
     {
+        Initialize();
         string formattedText = value.ToString();
 
         foreach (StringFormatter formatter in m_formatters)
@@ -26,5 +27,11 @@ public class TextBinder : PropertyBinder
         }
 
         m_text.text = formattedText;
+    }
+
+    private void Initialize()
+    {
+        if(m_text == null)
+            m_text = GetComponent<TextMeshProUGUI>();
     }
 }

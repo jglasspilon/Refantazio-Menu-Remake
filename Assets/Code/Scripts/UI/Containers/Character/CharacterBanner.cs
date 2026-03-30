@@ -12,11 +12,12 @@ public class CharacterBanner : PoolableObjectFromData<Character>, ISelectable
 
     private void Awake()
     {
-        m_bindables = GetComponentsInChildren<IBindableToProperty>(true);
+        InitializeComponents();
     }
 
     public override void InitializeFromData(Character character)
     {
+        InitializeComponents();
         m_character = character;
         transform.localScale = Vector3.one;
         SetAsSelected(false);
@@ -42,6 +43,12 @@ public class CharacterBanner : PoolableObjectFromData<Character>, ISelectable
     public virtual void PauseSelection()
     {
 
+    }
+
+    private void InitializeComponents()
+    {
+        if (m_bindables == null)
+            m_bindables = GetComponentsInChildren<IBindableToProperty>(true);
     }
 }
 

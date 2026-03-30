@@ -14,11 +14,18 @@ public class SliderBinder : PropertyBinder
 
     private void Awake()
     {
-        m_slider = GetComponent<Slider>();
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        if (m_slider == null)
+            m_slider = GetComponent<Slider>();
     }
 
     protected void Apply(int value)
     {
+        Initialize();
         float proportrion = Mathf.Abs(value * m_proportionFactor);
         cts?.Cancel();
         cts = new CancellationTokenSource();
@@ -27,6 +34,7 @@ public class SliderBinder : PropertyBinder
 
     protected void Apply(float value)
     {
+        Initialize();
         float proportrion = Mathf.Abs(value * m_proportionFactor);
         cts?.Cancel();
         cts = new CancellationTokenSource();
@@ -36,5 +44,5 @@ public class SliderBinder : PropertyBinder
     protected override void Apply(object value)
     {
         Logger.Log($"Failed to bind property to Slider {gameObject.name}. Property type {value.GetType()} is not supported.", m_logProfile);
-    }
+    }  
 }
