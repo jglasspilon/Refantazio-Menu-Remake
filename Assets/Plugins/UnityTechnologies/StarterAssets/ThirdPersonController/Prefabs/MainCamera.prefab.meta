@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f6d148d888ffbf54b9afe9936dfaec1f
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 4696
+  packageName: Robot Kyle | URP
+  packageVersion: 4.0
+  assetPath: Assets/UnityTechnologies/StarterAssets/ThirdPersonController/Prefabs/MainCamera.prefab
+  uploadId: 847474

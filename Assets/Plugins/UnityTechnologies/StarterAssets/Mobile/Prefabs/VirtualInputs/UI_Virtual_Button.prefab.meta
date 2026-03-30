@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 9e55d9b4642484f41be20c69a9b48063
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 4696
+  packageName: Robot Kyle | URP
+  packageVersion: 4.0
+  assetPath: Assets/UnityTechnologies/StarterAssets/Mobile/Prefabs/VirtualInputs/UI_Virtual_Button.prefab
+  uploadId: 847474

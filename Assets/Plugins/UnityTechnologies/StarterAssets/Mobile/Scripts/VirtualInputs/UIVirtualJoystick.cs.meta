@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: f2cb8c4d669392748bb924209de33b85
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 4696
+  packageName: Robot Kyle | URP
+  packageVersion: 4.0
+  assetPath: Assets/UnityTechnologies/StarterAssets/Mobile/Scripts/VirtualInputs/UIVirtualJoystick.cs
+  uploadId: 847474
