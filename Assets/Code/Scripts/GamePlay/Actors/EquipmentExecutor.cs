@@ -86,7 +86,9 @@ public class EquipmentExecutor: ISubPropertyProvider
         m_archetype = archetype;
         m_archetype.StatModifiers.ForEach(x => m_equiper.Stats.GetStat(x.Type).AddModifier(x));
         m_archetype.OnStatModifiersChanged += HandleArchetypeStatModifierChange;
-        EquipWeapon(m_archetype.DefaultWeapon);
+
+        if(m_weapon == null || m_weapon.EquipType != archetype.EquipableWeaponType)
+            EquipWeapon(m_archetype.DefaultWeapon);
     }
 
     public void EquipWeapon(Equipment weapon)
