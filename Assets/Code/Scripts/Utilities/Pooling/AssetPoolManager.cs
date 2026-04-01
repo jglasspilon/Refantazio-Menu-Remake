@@ -6,8 +6,7 @@ using UnityEngine;
 
 public class AssetPoolManager : MonoBehaviour
 {
-    [SerializeField]
-    private string[] m_prefabsResourcePaths = new string[] { "PooledPrefabs" };
+    [SerializeField] private string[] m_prefabsResourcePaths = new string[] { "PooledPrefabs" };
 
     private List<PoolableObject> m_poolPrefabs = new List<PoolableObject>();
     private Dictionary<Type, List<PoolableObject>> m_pools;
