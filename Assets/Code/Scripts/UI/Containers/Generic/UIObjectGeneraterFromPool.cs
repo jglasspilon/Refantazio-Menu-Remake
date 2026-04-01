@@ -12,6 +12,9 @@ public abstract class UIObjectGeneraterFromPool<T, TData> : MonoBehaviour, IGene
     protected GameObject m_owner;
     protected bool m_isInitialized;
 
+    /// <summary>
+    /// Event invoked whenever content is generated.>.
+    /// </summary>
     public event Action OnGenerate;
 
     /// <summary>
