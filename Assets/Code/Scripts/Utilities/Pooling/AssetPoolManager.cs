@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +13,10 @@ public class AssetPoolManager : MonoBehaviour
     private Dictionary<Type, List<PoolableObject>> m_pools;
     private Dictionary<Type, PoolableObject> m_mappedPoolPrefabs;
 
+    /// <summary>
+    /// Initializes the pool manager by registering it with the ObjectResolver, loading all poolable prefabs from the configured Resources paths,
+    /// mapping prefab types, and pre‑filling all pools.
+    /// </summary>
     private void Awake()
     {
         ObjectResolver.Instance.Register(this);
@@ -26,6 +30,10 @@ public class AssetPoolManager : MonoBehaviour
         FillPools();
     }
 
+    /// <summary>
+    /// Creates the initial pool instances for each registered prefab type, instantiating the configured PoolSize for every prefab and storing them
+    /// in their respective pools in an inactive state.
+    /// </summary>
     private void FillPools()
     {
         foreach (var prefab in m_poolPrefabs)
@@ -43,6 +51,10 @@ public class AssetPoolManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Ensures that the pool for the given type maintains the required minimum number of spare instances. If the available count falls below MinSpare,
+    /// new instances are instantiated and added to the pool.
+    /// </summary>
     private void CheckPool(Type type, int min)
     {
         if (!m_pools.ContainsKey(type))
@@ -51,7 +63,6 @@ public class AssetPoolManager : MonoBehaviour
             return;
         }
   
-
         while ((m_pools[type].Count - min) < m_mappedPoolPrefabs[type].MinSpare)
         {
             PoolableObject newInstance = Instantiate(m_mappedPoolPrefabs[type], this.transform);
@@ -60,6 +71,10 @@ public class AssetPoolManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Retrieves a single pooled instance of type <typeparamref name="T"/>. Ensures the pool has enough spare objects, removes one from the pool,
+    /// prepares it for use, and returns it.
+    /// </summary>
     public T PullFrom<T>(Transform parent = null) where T : PoolableObject
     {
         if (!m_pools.ContainsKey(typeof(T)))
@@ -77,6 +92,10 @@ public class AssetPoolManager : MonoBehaviour
         return tmp;
     }
 
+    /// <summary>
+    /// Retrieves a single pooled instance of the specified type. Ensures the pool has enough spare objects, removes one from the pool, prepares it
+    /// for use, and returns it.
+    /// </summary>
     public PoolableObject PullFrom(Type poolableObjectType, Transform parent = null)
     {
         if (!m_pools.ContainsKey(poolableObjectType))
@@ -94,6 +113,10 @@ public class AssetPoolManager : MonoBehaviour
         return tmp;
     }
 
+    /// <summary>
+    /// Retrieves multiple pooled instances of type <typeparamref name="T"/>. Ensures the pool contains at least the requested count, removes the
+    /// instances, prepares each for use, and returns them as an array.
+    /// </summary>
     public T[] PullFromMulti<T>(int count, Transform parent = null) where T : PoolableObject
     {
         if (!m_pools.ContainsKey(typeof(T)))
@@ -113,6 +136,10 @@ public class AssetPoolManager : MonoBehaviour
         return tmp;
     }
 
+    /// <summary>
+    /// Retrieves multiple pooled instances of the specified type. Ensures the pool contains at least the requested count, removes the instances,
+    /// prepares each for use, and returns them as an array.
+    /// </summary>
     public PoolableObject[] PullFromMulti(Type poolableObjectType, int count, Transform parent = null)
     {
         if (!m_pools.ContainsKey(poolableObjectType))
@@ -132,6 +159,9 @@ public class AssetPoolManager : MonoBehaviour
         return tmp;
     }
 
+    /// <summary>
+    /// Returns a single pooled object back to its corresponding pool. Resets the object, reassigns its parent, deactivates it, and re‑adds it to the pool.
+    /// </summary>
     public void ReturnToPool(PoolableObject returned)
     {
         if (!m_pools.ContainsKey(returned.GetType()))
@@ -143,6 +173,10 @@ public class AssetPoolManager : MonoBehaviour
         CleanupFromReturn(returned);
     }
 
+    /// <summary>
+    /// Returns a collection of pooled objects back to their corresponding pool. Validates the collection, ensures the pool exists, resets each object,
+    /// and re‑adds them to the pool.
+    /// </summary>
     public void ReturnToPool(IEnumerable<PoolableObject> returned)
     {
         if(returned == null || !returned.Any())
@@ -162,6 +196,9 @@ public class AssetPoolManager : MonoBehaviour
             CleanupFromReturn(o);
     }
 
+    /// <summary>
+    /// Prepares a pooled object for use by assigning its parent (if provided), resetting its local position, and activating its GameObject.
+    /// </summary>
     private void PrepareForPull(PoolableObject poolable, Transform parent)
     {
         if (parent != null)
@@ -172,6 +209,9 @@ public class AssetPoolManager : MonoBehaviour
         poolable.gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// Resets a returned pooled object to its default state, reassigns it to the manager’s transform, deactivates it, and ensures it is re‑added to its pool.
+    /// </summary>
     private void CleanupFromReturn(PoolableObject returned)
     {
         returned.ResetForPool();
